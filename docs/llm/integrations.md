@@ -10,7 +10,7 @@ llmstxt:
 
 PikaCSS supports a wide range of build tools via `unplugin`.
 
-> **Note**: `@pikacss/vite-pikacss` is **deprecated**. Use the unplugin subpath exports instead.
+> **Note**: `@pikacss/vite-plugin-pikacss` is **deprecated**. Use the unplugin subpath exports instead.
 
 ## Vite
 ```typescript

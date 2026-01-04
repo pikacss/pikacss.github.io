@@ -74,8 +74,9 @@ const classList = pika.arr({ color: 'red', fontSize: '16px' })
 Returns a space-separated string of atomic class names, similar to `pika.str()`:
 
 ```ts
-const classes = pika.inl({ color: 'red' })
-// Returns: "a" (class name)
+// pika.inl(...) - Returns inline class string (unquoted)
+const inline = `class="${pika.inl({ color: 'red' })}"`
+// Returns: "class=a"
 ```
 
 ::: info Note

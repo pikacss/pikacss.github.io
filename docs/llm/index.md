@@ -103,7 +103,7 @@ This knowledge base is split into modular files for efficient context retrieval.
 | `@pikacss/plugin-typography` | Beautiful typographic defaults with modular shortcuts |
 | `@pikacss/plugin-reset` | CSS reset/normalize utilities |
 
-> **Note**: `@pikacss/vite-pikacss` is deprecated. Use `@pikacss/unplugin-pikacss/vite` instead.
+> **Note**: `@pikacss/vite-plugin-pikacss` is deprecated. Use `@pikacss/unplugin-pikacss/vite` instead.
 
 ### Main Function
 
@@ -114,7 +114,7 @@ const className = pika({ color: 'red', fontSize: '16px' })
 // Variants
 pika.str({ ... })  // Returns string (default)
 pika.arr({ ... })  // Returns array
-pika.inl({ ... })  // Returns string (same as str)
+pika.inl({ ... })  // Returns unquoted string
 
 // Special properties
 pika({

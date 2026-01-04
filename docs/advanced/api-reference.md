@@ -95,8 +95,8 @@ const classList = pika.arr({ color: 'red' })
 Returns a space-separated string of class names, same as `pika.str()`.
 
 ```typescript
-const classes = pika.inl({ color: 'red' })
-// Returns: "a"
+const inline = `class="${pika.inl({ color: 'red' })}"`
+// Returns: "class=a" (unquoted string interpolation)
 ```
 
 ### Special Properties

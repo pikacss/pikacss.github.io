@@ -3,7 +3,7 @@ name: pikacss-expert
 description: Expert guidance for using PikaCSS—an Atomic CSS-in-JS engine that combines CSS-in-JS syntax with Atomic CSS output. Use when users ask about PikaCSS styling, configuration, plugins, shortcuts, selectors, TypeScript integration, or need help writing PikaCSS code.
 license: MIT
 metadata:
-  version: 0.0.34
+  version: 0.0.38
   category: css-in-js
   framework: agnostic
 allowed-tools: read
@@ -55,9 +55,9 @@ const classes = pika.str({ color: 'red', fontSize: '16px' })
 const classList = pika.arr({ color: 'red', fontSize: '16px' })
 // Returns: ["a", "b"]
 
-// pika.inl(...) - Returns inline class string (same as .str)
-const inline = pika.inl({ color: 'red' })
-// Returns: "a"
+// pika.inl(...) - Returns inline class string (unquoted)
+const inline = `class="${pika.inl({ color: 'red' })}"`
+// Returns: "class=a"
 
 // Short form defaults to .str
 const shorthand = pika({ color: 'red' })
@@ -306,7 +306,7 @@ Create `pika.config.ts` in your project root:
 
 import { defineEngineConfig } from '@pikacss/core'
 // Or from integration packages:
-// import { defineEngineConfig } from '@pikacss/vite'
+// import { defineEngineConfig } from '@pikacss/unplugin-pikacss/vite'
 // import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
 
 export default defineEngineConfig({
@@ -478,13 +478,13 @@ export default defineEngineConfig({
 
 ### Vite
 ```bash
-npm install -D @pikacss/vite
+npm install -D @pikacss/unplugin-pikacss
 ```
 
 ```ts
 // vite.config.ts
 import { defineConfig } from 'vite'
-import { pikacss } from '@pikacss/vite'
+import pikacss from '@pikacss/unplugin-pikacss/vite'
 
 export default defineConfig({
   plugins: [
@@ -734,7 +734,6 @@ export default defineEngineConfig({
 
 ```tsx
 // App.tsx
-import { pika } from '#pika'
 
 function App() {
   return (
@@ -766,7 +765,7 @@ function App() {
 
 ### Common Fixes
 - **No styles**: Import pika.css, check gen files, verify Network tab
-- **pika undefined**: Add `/// <reference path="./pika.gen.ts" />`, restart TS
+- **pika undefined**: Add `/// <reference path="./pika.gen.ts" />`, ensure file is in `scan.include`, restart TS
 - **TS errors**: Update tsconfig.json includes, restart TS server
 - **No HMR**: Check scan patterns, restart dev
 

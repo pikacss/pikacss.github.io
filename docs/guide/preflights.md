@@ -23,7 +23,7 @@ In PikaCSS, preflights are processed and injected before any atomic CSS styles. 
 You can add preflights in your `pika.config.ts` file:
 
 ```ts
-import { defineEngineConfig } from '@pikacss/vite-plugin-pikacss'
+import { defineEngineConfig } from '@pikacss/unplugin-pikacss/vite'
 
 export default defineEngineConfig({
 	preflights: [

@@ -85,7 +85,7 @@ const classList = pika.arr({ color: 'red' }) // ["a"]
 ### `pika.inl(...)`
 Returns a space-separated string of atomic class names, similar to `pika.str()`. This variant is provided for semantic clarity when the result is intended for use in contexts where inline-like behavior is expected.
 ```typescript
-const style = pika.inl({ color: 'red' }) // "a" (class name)
+const style = `class="${pika.inl({ color: 'red' })}"` // "class=a" (unquoted string interpolation)
 ```
 
 > **Note**: Despite the name, `pika.inl()` does NOT return raw CSS properties. All `pika` variants generate atomic classes.

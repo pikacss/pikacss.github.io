@@ -118,7 +118,7 @@ The original `pika({ ... })` call in the source code is replaced with the genera
 
 - Default: `pika(...)` → `"a b"` (string)
 - `pika.arr(...)` → `["a", "b"]` (array)
-- `pika.inl(...)` → `"a b"` (string, same as default)
+- `pika.inl(...)` → `a b` (unquoted string content)
 
 ### 5. CSS Generation
 

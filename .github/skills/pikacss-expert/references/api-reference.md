@@ -388,10 +388,10 @@ export function myPlugin(): Plugin {
 ### Vite Plugin
 
 ```ts
-import { pikacss } from '@pikacss/vite'
+import pikacss from '@pikacss/unplugin-pikacss/vite'
 
 pikacss({
-  // VitePluginOptions
+  // Plugin options
   config?: string | EngineConfig,
   include?: string | RegExp | (string | RegExp)[],
   exclude?: string | RegExp | (string | RegExp)[],
@@ -403,7 +403,7 @@ pikacss({
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ['@pikacss/nuxt'],
+  modules: ['@pikacss/nuxt-pikacss'],
   
   pikacss: {
     // NuxtModuleOptions
@@ -415,7 +415,7 @@ export default defineNuxtConfig({
 ### Unplugin
 
 ```ts
-import { pikacss } from '@pikacss/unplugin-pikacss/webpack'
+import pikacss from '@pikacss/unplugin-pikacss/webpack'
 // or '@pikacss/unplugin-pikacss/rspack'
 // or '@pikacss/unplugin-pikacss/esbuild'
 // or '@pikacss/unplugin-pikacss/farm'

@@ -22,7 +22,7 @@ In PikaCSS, CSS variables can be defined in your configuration and automatically
 You can define variables in your `pika.config.ts` file:
 
 ```ts
-import { defineEngineConfig } from '@pikacss/vite-plugin-pikacss'
+import { defineEngineConfig } from '@pikacss/unplugin-pikacss/vite'
 
 export default defineEngineConfig({
 	variables: {

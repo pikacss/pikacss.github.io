@@ -30,7 +30,7 @@ export default defineConfig({
 })
 ```
 
-> **Note**: `@pikacss/vite-pikacss` is **deprecated**. Use `@pikacss/unplugin-pikacss/vite` instead.
+> **Note**: `@pikacss/vite-plugin-pikacss` is **deprecated**. Use `@pikacss/unplugin-pikacss/vite` instead.
 
 ### 3. Create Config File
 Create `pika.config.ts` in your project root:

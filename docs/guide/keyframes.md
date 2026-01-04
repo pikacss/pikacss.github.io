@@ -22,7 +22,7 @@ In PikaCSS, keyframes animations are defined in your configuration and automatic
 You can define keyframes in your `pika.config.ts` file:
 
 ```ts
-import { defineEngineConfig } from '@pikacss/vite-plugin-pikacss'
+import { defineEngineConfig } from '@pikacss/unplugin-pikacss/vite'
 
 export default defineEngineConfig({
 	keyframes: {

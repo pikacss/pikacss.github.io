@@ -24,7 +24,7 @@ The important system works by adding the `!important` declaration to each CSS pr
 You can configure the default important behavior in your `pika.config.ts` file:
 
 ```ts
-import { defineEngineConfig } from '@pikacss/vite-plugin-pikacss'
+import { defineEngineConfig } from '@pikacss/unplugin-pikacss/vite'
 
 export default defineEngineConfig({
 	important: {

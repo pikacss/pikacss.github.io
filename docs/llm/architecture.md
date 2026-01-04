@@ -52,7 +52,7 @@ The evaluated object is passed to `engine.use()`.
 The original `pika({ ... })` call in the source code is replaced with the generated class names.
 - Default: `pika(...)` -> `"a b"` (string)
 - `pika.arr(...)` -> `["a", "b"]` (array)
-- `pika.inl(...)` -> `color: red; ...` (inline style string, rare usage)
+- `pika.inl(...)` -> `a b` (unquoted string content)
 
 ### 5. CSS Generation
 The `generate` function iterates through the stored `AtomicStyle`s and converts them into CSS rules.
