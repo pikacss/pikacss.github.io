@@ -752,3 +752,54 @@ function App() {
   )
 }
 ```
+
+## Debugging and Troubleshooting
+
+### Quick Debug Checklist
+1. Verify `pika.gen.{css,ts}` exist
+2. Check `import 'pika.css'` in entry
+3. Inspect element → classes → computed styles
+4. Network tab → CSS loaded?
+5. Console → errors?
+6. Source → pika() transformed?
+7. Config → plugin loaded?
+
+### Common Fixes
+- **No styles**: Import pika.css, check gen files, verify Network tab
+- **pika undefined**: Add `/// <reference path="./pika.gen.ts" />`, restart TS
+- **TS errors**: Update tsconfig.json includes, restart TS server
+- **No HMR**: Check scan patterns, restart dev
+
+## Performance Tips
+
+**Build**: Optimize scan patterns, use shortcuts for repeated styles
+**Runtime**: CSS bundle 5-100KB (atomic, auto-optimized)
+**Loading**: Inline critical CSS or preload, enable minification
+
+## Migration Quick Reference
+
+**Tailwind → PikaCSS**: `class="flex p-4"` → `pika({ display: 'flex', padding: '1rem' })`
+**Styled → PikaCSS**: Replace `&` with `$`, use shortcuts for reuse
+**Key**: Build-time only - use CSS variables for runtime values
+
+## Testing Best Practice
+
+Test computed styles, not class names:
+```typescript
+const styles = window.getComputedStyle(button)
+expect(styles.backgroundColor).toBe('rgb(59, 130, 246)')
+```
+
+## Additional Documentation
+
+- [Real-World Examples](/docs/examples/components.md)
+- [Performance Optimization](/docs/advanced/performance.md)
+- [Testing & Debugging](/docs/advanced/testing.md)
+- [SSR/SSG Guide](/docs/advanced/ssr.md)
+- [Plugin Development](/docs/advanced/plugin-development.md)
+- [Comparison Guide](/docs/getting-started/comparison.md)
+- [Migration Guide](/docs/guide/migration.md)
+- [FAQ](/docs/community/faq.md)
+- [Contributing](/docs/community/contributing.md)
+
+````

@@ -1,4 +1,3 @@
-````markdown
 ---
 title: Reset
 description: Learn how to use reset plugin in PikaCSS
@@ -86,5 +85,3 @@ The following reset styles are available:
 ## How It Works
 
 The plugin uses the `configureEngine` hook to inject the reset styles into the engine's `preflights`. These styles will be rendered at the beginning of your generated CSS.
-
-````

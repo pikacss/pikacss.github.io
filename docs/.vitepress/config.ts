@@ -20,8 +20,10 @@ export default withMermaid({
 		// https://vitepress.dev/reference/default-theme-config
 		nav: [
 			{ text: 'Guide', link: '/getting-started/what-is-pikacss' },
+			{ text: 'Examples', link: '/examples/components' },
 			{ text: 'Advanced', link: '/advanced/architecture' },
 			{ text: 'Integrations', link: '/integrations/vite' },
+			{ text: 'Community', link: '/community/faq' },
 		],
 
 		sidebar: {
@@ -31,6 +33,7 @@ export default withMermaid({
 					items: [
 						{ text: 'What is PikaCSS?', link: '/getting-started/what-is-pikacss' },
 						{ text: 'Installation', link: '/getting-started/installation' },
+						{ text: 'Comparison', link: '/getting-started/comparison' },
 					],
 				},
 				{
@@ -44,6 +47,7 @@ export default withMermaid({
 						{ text: 'Selectors', link: '/guide/selectors' },
 						{ text: 'Shortcuts', link: '/guide/shortcuts' },
 						{ text: 'Important', link: '/guide/important' },
+						{ text: 'Migration', link: '/guide/migration' },
 						{ text: 'Plugin System', link: '/guide/plugin-system' },
 					],
 				},
@@ -55,12 +59,29 @@ export default withMermaid({
 						{ text: 'Typography', link: '/plugins/typography' },
 					],
 				},
+				{
+					text: 'Examples',
+					items: [
+						{ text: 'Components', link: '/examples/components' },
+					],
+				},
+				{
+					text: 'Community',
+					items: [
+						{ text: 'FAQ', link: '/community/faq' },
+						{ text: 'Contributing', link: '/community/contributing' },
+						{ text: 'Ecosystem', link: '/community/ecosystem' },
+					],
+				},
 			],
 			'/advanced/': [
 				{
 					text: 'Advanced',
 					items: [
 						{ text: 'Architecture', link: '/advanced/architecture' },
+						{ text: 'SSR/SSG', link: '/advanced/ssr' },
+						{ text: 'Performance', link: '/advanced/performance' },
+						{ text: 'Testing', link: '/advanced/testing' },
 						{ text: 'Plugin Development', link: '/advanced/plugin-development' },
 						{ text: 'Plugin Hooks', link: '/advanced/plugin-hooks' },
 						{ text: 'Module Augmentation', link: '/advanced/module-augmentation' },
@@ -79,6 +100,25 @@ export default withMermaid({
 						{ text: 'Rspack', link: '/integrations/rspack' },
 						{ text: 'Esbuild', link: '/integrations/esbuild' },
 						{ text: 'Farm', link: '/integrations/farm' },
+						{ text: 'Rolldown', link: '/integrations/rolldown' },
+					],
+				},
+			],
+			'/examples/': [
+				{
+					text: 'Examples',
+					items: [
+						{ text: 'Components', link: '/examples/components' },
+					],
+				},
+			],
+			'/community/': [
+				{
+					text: 'Community',
+					items: [
+						{ text: 'FAQ', link: '/community/faq' },
+						{ text: 'Contributing', link: '/community/contributing' },
+						{ text: 'Ecosystem', link: '/community/ecosystem' },
 					],
 				},
 			],
