@@ -234,18 +234,77 @@ function useTransform({
 			const start = matched.index
 			let end = start + fnName.length
 			let depth = 1
-			let inString: '\'' | '"' | false = false
-			while (depth > 0) {
+			let inString: '\'' | '"' | '`' | false = false
+			let isEscaped = false
+
+			// Prevent infinite loop by checking boundaries
+			while (depth > 0 && end < code.length) {
 				end++
-				if (inString === false && code[end] === '(')
+				const char = code[end]
+
+				// Handle escape sequences
+				if (isEscaped) {
+					isEscaped = false
+					continue
+				}
+
+				if (char === '\\') {
+					isEscaped = true
+					continue
+				}
+
+				// Inside string
+				if (inString !== false) {
+					if (char === inString) {
+						inString = false
+					}
+					// Handle template literal ${} expressions
+					else if (inString === '`' && char === '$' && code[end + 1] === '{') {
+						end++ // Skip '{'
+						depth++
+					}
+					continue
+				}
+
+				// Not inside string
+				if (char === '(') {
 					depth++
-				else if (inString === false && code[end] === ')')
+				}
+				else if (char === ')') {
 					depth--
-				else if (inString === false && (code[end] === '\'' || code[end] === '"'))
-					inString = code[end] as '\'' | '"'
-				else if (inString === code[end])
-					inString = false
+				}
+				else if (char === '\'' || char === '"' || char === '`') {
+					inString = char
+				}
+				// Handle single-line comments
+				else if (char === '/' && code[end + 1] === '/') {
+					const lineEnd = code.indexOf('\n', end)
+					if (lineEnd === -1) {
+						// Comment extends to end of file, function call may be incomplete
+						log.warn(`Unclosed function call at position ${start}`)
+						break
+					}
+					end = lineEnd
+				}
+				// Handle multi-line comments
+				else if (char === '/' && code[end + 1] === '*') {
+					const commentEnd = code.indexOf('*/', end + 2)
+					if (commentEnd === -1) {
+						// Unclosed comment
+						log.warn(`Unclosed comment in function call at position ${start}`)
+						break
+					}
+					end = commentEnd + 1 // +1 because we'll increment again
+				}
 			}
+
+			// Check if we terminated normally
+			if (depth !== 0) {
+				log.warn(`Malformed function call at position ${start}, skipping`)
+				matched = RE.exec(code)
+				continue
+			}
+
 			const snippet = code.slice(start, end + 1)
 			result.push({ fnName, start, end, snippet })
 			matched = RE.exec(code)
