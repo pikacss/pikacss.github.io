@@ -12,12 +12,12 @@ Thank you for your interest in contributing to PikaCSS! This guide will help you
 
 There are many ways to contribute to PikaCSS:
 
-- 🐛 **Report bugs** - Found a bug? [Open an issue](https://github.com/pikacss/pikacss/issues/new)
-- ✨ **Suggest features** - Have an idea? [Start a discussion](https://github.com/pikacss/pikacss/discussions/new)
+- 🐛 **Report bugs** - Found a bug? [Open an issue](https://github.com/pikacss/pikacss.github.io/issues/new)
+- ✨ **Suggest features** - Have an idea? [Start a discussion](https://github.com/pikacss/pikacss.github.io/discussions/new)
 - 📖 **Improve documentation** - Fix typos, add examples, clarify explanations
-- 🔧 **Fix issues** - Browse [open issues](https://github.com/pikacss/pikacss/issues) and submit PRs
+- 🔧 **Fix issues** - Browse [open issues](https://github.com/pikacss/pikacss.github.io/issues) and submit PRs
 - 🎨 **Create plugins** - Share your custom plugins with the community
-- 💬 **Help others** - Answer questions in [Discussions](https://github.com/pikacss/pikacss/discussions)
+- 💬 **Help others** - Answer questions in [Discussions](https://github.com/pikacss/pikacss.github.io/discussions)
 - 🌟 **Spread the word** - Write blog posts, create tutorials, share on social media
 
 ## Development Setup
@@ -32,7 +32,7 @@ There are many ways to contribute to PikaCSS:
 
 1. **Fork the repository**
 
-   Visit [pikacss/pikacss](https://github.com/pikacss/pikacss) and click "Fork"
+   Visit [pikacss/pikacss](https://github.com/pikacss/pikacss.github.io) and click "Fork"
 
 2. **Clone your fork**
 
@@ -429,7 +429,7 @@ Releases are managed by maintainers:
 ## Questions?
 
 - Check [FAQ](/community/faq)
-- Ask in [Discussions](https://github.com/pikacss/pikacss/discussions)
+- Ask in [Discussions](https://github.com/pikacss/pikacss.github.io/discussions)
 - Read [Troubleshooting](/advanced/troubleshooting)
 
 ## Thank You!

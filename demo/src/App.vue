@@ -24,7 +24,7 @@ function toggleDarkMode() {
 				padding: '2rem 10rem 1rem 10rem',
 				cursor: 'pointer',
 			})"
-			href="https://github.com/pikacss/pikacss"
+			href="https://github.com/pikacss/pikacss.github.io"
 			target="_blank"
 			rel="noopener noreferrer"
 		>

@@ -511,7 +511,7 @@ See [Contributing Guide](/community/contributing) for details.
 
 ### Where should I report bugs?
 
-[GitHub Issues](https://github.com/pikacss/pikacss/issues/new)
+[GitHub Issues](https://github.com/pikacss/pikacss.github.io/issues/new)
 
 Include:
 - Description
@@ -521,11 +521,11 @@ Include:
 
 ### Can I suggest features?
 
-Yes! Start a [GitHub Discussion](https://github.com/pikacss/pikacss/discussions/new) to discuss your idea.
+Yes! Start a [GitHub Discussion](https://github.com/pikacss/pikacss.github.io/discussions/new) to discuss your idea.
 
 ## Still Have Questions?
 
 - 📖 Check [Documentation](/guide/basics)
-- 💬 Ask in [GitHub Discussions](https://github.com/pikacss/pikacss/discussions)
-- 🐛 Report bugs in [GitHub Issues](https://github.com/pikacss/pikacss/issues)
+- 💬 Ask in [GitHub Discussions](https://github.com/pikacss/pikacss.github.io/discussions)
+- 🐛 Report bugs in [GitHub Issues](https://github.com/pikacss/pikacss.github.io/issues)
 - 📧 Contact maintainers (see GitHub profile)

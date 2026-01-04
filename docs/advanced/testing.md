@@ -661,9 +661,9 @@ When something goes wrong, check:
 
 If you're still stuck:
 
-1. Check [GitHub Issues](https://github.com/pikacss/pikacss/issues)
+1. Check [GitHub Issues](https://github.com/pikacss/pikacss.github.io/issues)
 2. Review [API Reference](/advanced/api-reference)
-3. Ask in [GitHub Discussions](https://github.com/pikacss/pikacss/discussions)
+3. Ask in [GitHub Discussions](https://github.com/pikacss/pikacss.github.io/discussions)
 4. Provide:
    - PikaCSS version
    - Build tool and version

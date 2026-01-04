@@ -35,7 +35,7 @@ Explore the growing ecosystem of plugins, tools, integrations, and resources for
 
 ## Community Plugins
 
-> Share your plugin! [Submit a PR](https://github.com/pikacss/pikacss/edit/main/docs/community/ecosystem.md) to add it here.
+> Share your plugin! [Submit a PR](https://github.com/pikacss/pikacss.github.io/edit/main/docs/community/ecosystem.md) to add it here.
 
 ### Styling
 
@@ -71,7 +71,7 @@ Coming soon! Official starter templates for popular frameworks.
 
 ### Community Templates
 
-> Share your template! [Submit a PR](https://github.com/pikacss/pikacss/edit/main/docs/community/ecosystem.md) to add it here.
+> Share your template! [Submit a PR](https://github.com/pikacss/pikacss.github.io/edit/main/docs/community/ecosystem.md) to add it here.
 
 <!-- Add community templates here -->
 
@@ -80,19 +80,19 @@ Coming soon! Official starter templates for popular frameworks.
 ### Official Resources
 
 - 📖 [Documentation](/) - Complete guides and references
-- 💬 [GitHub Discussions](https://github.com/pikacss/pikacss/discussions) - Ask questions, share ideas
-- 🐛 [GitHub Issues](https://github.com/pikacss/pikacss/issues) - Report bugs, request features
-- 📊 [Changelog](https://github.com/pikacss/pikacss/releases) - Release notes and updates
+- 💬 [GitHub Discussions](https://github.com/pikacss/pikacss.github.io/discussions) - Ask questions, share ideas
+- 🐛 [GitHub Issues](https://github.com/pikacss/pikacss.github.io/issues) - Report bugs, request features
+- 📊 [Changelog](https://github.com/pikacss/pikacss.github.io/releases) - Release notes and updates
 
 ### Tutorials
 
-> Share your tutorial! [Submit a PR](https://github.com/pikacss/pikacss/edit/main/docs/community/ecosystem.md) to add it here.
+> Share your tutorial! [Submit a PR](https://github.com/pikacss/pikacss.github.io/edit/main/docs/community/ecosystem.md) to add it here.
 
 <!-- Add blog posts, tutorials, courses here -->
 
 ### Videos
 
-> Share your video! [Submit a PR](https://github.com/pikacss/pikacss/edit/main/docs/community/ecosystem.md) to add it here.
+> Share your video! [Submit a PR](https://github.com/pikacss/pikacss.github.io/edit/main/docs/community/ecosystem.md) to add it here.
 
 <!-- Add YouTube videos, courses, etc. here -->
 
@@ -117,7 +117,7 @@ Coming soon! Official starter templates for popular frameworks.
 
 ### Community Integrations
 
-> Building an integration? [Submit a PR](https://github.com/pikacss/pikacss/edit/main/docs/community/ecosystem.md) to add it here.
+> Building an integration? [Submit a PR](https://github.com/pikacss/pikacss.github.io/edit/main/docs/community/ecosystem.md) to add it here.
 
 <!-- Add community framework integrations here -->
 
@@ -129,7 +129,7 @@ Coming soon! Official component library with common UI patterns.
 
 ### Community Libraries
 
-> Built components with PikaCSS? [Submit a PR](https://github.com/pikacss/pikacss/edit/main/docs/community/ecosystem.md) to add it here.
+> Built components with PikaCSS? [Submit a PR](https://github.com/pikacss/pikacss.github.io/edit/main/docs/community/ecosystem.md) to add it here.
 
 <!-- Add community component libraries here -->
 
@@ -137,13 +137,13 @@ Coming soon! Official component library with common UI patterns.
 
 ### Open Source Projects
 
-> Using PikaCSS in your open source project? [Submit a PR](https://github.com/pikacss/pikacss/edit/main/docs/community/ecosystem.md) to add it here.
+> Using PikaCSS in your open source project? [Submit a PR](https://github.com/pikacss/pikacss.github.io/edit/main/docs/community/ecosystem.md) to add it here.
 
 <!-- Add open source projects here -->
 
 ### Websites and Apps
 
-> Using PikaCSS in production? [Submit a PR](https://github.com/pikacss/pikacss/edit/main/docs/community/ecosystem.md) to add it here.
+> Using PikaCSS in production? [Submit a PR](https://github.com/pikacss/pikacss.github.io/edit/main/docs/community/ecosystem.md) to add it here.
 
 <!-- Add production websites/apps here -->
 
@@ -151,7 +151,7 @@ Coming soon! Official component library with common UI patterns.
 
 ### Design System Implementations
 
-> Built a design system with PikaCSS? [Submit a PR](https://github.com/pikacss/pikacss/edit/main/docs/community/ecosystem.md) to add it here.
+> Built a design system with PikaCSS? [Submit a PR](https://github.com/pikacss/pikacss.github.io/edit/main/docs/community/ecosystem.md) to add it here.
 
 <!-- Add design system implementations here -->
 
@@ -159,13 +159,13 @@ Coming soon! Official component library with common UI patterns.
 
 ### Official Channels
 
-- 💬 [GitHub Discussions](https://github.com/pikacss/pikacss/discussions) - Q&A, ideas, show & tell
-- 🐛 [GitHub Issues](https://github.com/pikacss/pikacss/issues) - Bug reports, feature requests
-- 📝 [GitHub Repo](https://github.com/pikacss/pikacss) - Source code, contributions
+- 💬 [GitHub Discussions](https://github.com/pikacss/pikacss.github.io/discussions) - Q&A, ideas, show & tell
+- 🐛 [GitHub Issues](https://github.com/pikacss/pikacss.github.io/issues) - Bug reports, feature requests
+- 📝 [GitHub Repo](https://github.com/pikacss/pikacss.github.io) - Source code, contributions
 
 ### Community Channels
 
-> Running a PikaCSS community? [Submit a PR](https://github.com/pikacss/pikacss/edit/main/docs/community/ecosystem.md) to add it here.
+> Running a PikaCSS community? [Submit a PR](https://github.com/pikacss/pikacss.github.io/edit/main/docs/community/ecosystem.md) to add it here.
 
 <!-- Add Discord, Twitter, etc. here -->
 
@@ -176,7 +176,7 @@ Coming soon! Official component library with common UI patterns.
 1. Build your plugin following [Plugin Development Guide](/advanced/plugin-development)
 2. Publish to npm as `@your-org/pikacss-plugin-name`
 3. Add README with usage examples
-4. [Submit a PR](https://github.com/pikacss/pikacss/edit/main/docs/community/ecosystem.md) to list it here
+4. [Submit a PR](https://github.com/pikacss/pikacss.github.io/edit/main/docs/community/ecosystem.md) to list it here
 
 **Plugin naming convention:**
 - `@org/pikacss-plugin-{name}` for scoped packages
@@ -187,7 +187,7 @@ Coming soon! Official component library with common UI patterns.
 Have a blog post, tutorial, video, or tool? Share it with the community:
 
 1. Create content about PikaCSS
-2. [Submit a PR](https://github.com/pikacss/pikacss/edit/main/docs/community/ecosystem.md) to add link
+2. [Submit a PR](https://github.com/pikacss/pikacss.github.io/edit/main/docs/community/ecosystem.md) to add link
 3. Include title, description, and link
 
 ### Share Your Project
@@ -195,7 +195,7 @@ Have a blog post, tutorial, video, or tool? Share it with the community:
 Using PikaCSS in production? Showcase your work:
 
 1. Build something awesome with PikaCSS
-2. [Submit a PR](https://github.com/pikacss/pikacss/edit/main/docs/community/ecosystem.md) to add it
+2. [Submit a PR](https://github.com/pikacss/pikacss.github.io/edit/main/docs/community/ecosystem.md) to add it
 3. Include project name, description, and link (if public)
 
 ## Ecosystem Guidelines
@@ -247,9 +247,9 @@ We recommend MIT or similar permissive licenses for community packages to ensure
 
 ## Stay Updated
 
-- ⭐ [Star on GitHub](https://github.com/pikacss/pikacss) for updates
-- 📢 [Watch releases](https://github.com/pikacss/pikacss/releases) for new versions
-- 💬 [Join discussions](https://github.com/pikacss/pikacss/discussions) for announcements
+- ⭐ [Star on GitHub](https://github.com/pikacss/pikacss.github.io) for updates
+- 📢 [Watch releases](https://github.com/pikacss/pikacss.github.io/releases) for new versions
+- 💬 [Join discussions](https://github.com/pikacss/pikacss.github.io/discussions) for announcements
 
 ## Support the Project
 
@@ -274,9 +274,9 @@ See [Contributing Guide](/community/contributing) for details.
 ## Questions?
 
 - Check [FAQ](/community/faq)
-- Ask in [Discussions](https://github.com/pikacss/pikacss/discussions)
+- Ask in [Discussions](https://github.com/pikacss/pikacss.github.io/discussions)
 - Read [Documentation](/guide/basics)
 
 ---
 
-**Want to add to this page?** [Edit on GitHub](https://github.com/pikacss/pikacss/edit/main/docs/community/ecosystem.md)
+**Want to add to this page?** [Edit on GitHub](https://github.com/pikacss/pikacss.github.io/edit/main/docs/community/ecosystem.md)

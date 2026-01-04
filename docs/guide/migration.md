@@ -636,8 +636,8 @@ If you encounter issues during migration:
 
 1. Check the [Troubleshooting Guide](/advanced/troubleshooting)
 2. Review [Build-Time Constraints](/getting-started/what-is-pikacss#zero-runtime)
-3. Search [GitHub Issues](https://github.com/pikacss/pikacss/issues)
-4. Ask in [GitHub Discussions](https://github.com/pikacss/pikacss/discussions)
+3. Search [GitHub Issues](https://github.com/pikacss/pikacss.github.io/issues)
+4. Ask in [GitHub Discussions](https://github.com/pikacss/pikacss.github.io/discussions)
 
 ## Next Steps
 
