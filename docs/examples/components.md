@@ -14,6 +14,8 @@ This section provides complete, production-ready examples of common UI component
 
 ```typescript
 // pika.config.ts
+import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
+
 export default defineEngineConfig({
   shortcuts: {
     shortcuts: [

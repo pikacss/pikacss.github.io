@@ -306,7 +306,6 @@ Create `pika.config.ts` in your project root:
 
 import { defineEngineConfig } from '@pikacss/core'
 // Or from integration packages:
-// import { defineEngineConfig } from '@pikacss/unplugin-pikacss/vite'
 // import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
 
 export default defineEngineConfig({

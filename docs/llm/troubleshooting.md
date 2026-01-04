@@ -145,6 +145,8 @@ export default defineEngineConfig({
 
 **Solution**: Plugin configs go at the root level, not inside `plugins`:
 ```typescript
+import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
+
 export default defineEngineConfig({
 	plugins: [icons()],
 	icons: { // Plugin config at root
