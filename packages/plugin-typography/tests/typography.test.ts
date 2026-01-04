@@ -46,11 +46,12 @@ describe('plugin-typography', () => {
 
 	it('should support custom variables', async () => {
 		const engine = await createEngine({
-			plugins: [typography({
+			plugins: [typography()],
+			typography: {
 				variables: {
 					'--pk-prose-color-body': '#333',
 				},
-			})],
+			},
 		})
 
 		await engine.use('prose')

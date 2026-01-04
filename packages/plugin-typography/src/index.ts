@@ -21,10 +21,6 @@ export interface TypographyPluginOptions {
 	 * Custom variables to override the default typography variables.
 	 */
 	variables?: Partial<typeof typographyVariables>
-
-	/**
-	 *
-	 */
 }
 
 declare module '@pikacss/core' {
@@ -33,14 +29,19 @@ declare module '@pikacss/core' {
 	}
 }
 
-export function typography(options: TypographyPluginOptions = {}): EnginePlugin {
+export function typography(): EnginePlugin {
+	let typographyConfig: TypographyPluginOptions = {}
 	return defineEnginePlugin({
 		name: 'typography',
+		configureRawConfig: (config) => {
+			if (config.typography)
+				typographyConfig = config.typography
+		},
 		configureEngine: async (engine) => {
 			// Add variables
 			engine.variables.add({
 				...typographyVariables,
-				...options.variables,
+				...typographyConfig.variables,
 			})
 
 			// Add modular shortcuts

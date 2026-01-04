@@ -16,7 +16,9 @@ import { defineEngineConfig } from '@pikacss/core'
 import { typography } from '@pikacss/plugin-typography'
 
 export default defineEngineConfig({
-  plugins: [typography()]
+  plugins: [
+    typography() // Note: must call function
+  ]
 })
 ```
 
@@ -185,7 +187,7 @@ Size modifiers apply the complete `prose` styles with different font sizes:
 
 ### Customization
 
-Override color variables when creating the plugin:
+Override color variables in the engine configuration:
 
 **pika.config.ts**:
 ```typescript
@@ -194,14 +196,15 @@ import { typography } from '@pikacss/plugin-typography'
 
 export default defineEngineConfig({
   plugins: [
-    typography({
-      variables: {
-        '--pk-prose-color-body': '#374151',
-        '--pk-prose-color-headings': '#111827',
-        '--pk-prose-color-links': '#2563eb',
-      }
-    })
-  ]
+    typography() // Note: must call function
+  ],
+  typography: {
+    variables: {
+      '--pk-prose-color-body': '#374151',
+      '--pk-prose-color-headings': '#111827',
+      '--pk-prose-color-links': '#2563eb',
+    }
+  }
 })
 ```
 
