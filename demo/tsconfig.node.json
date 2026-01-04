@@ -1,12 +1,7 @@
 {
-	"extends": "@tsconfig/node24/tsconfig.json",
+	"extends": "@deviltea/tsconfig/node",
 	"compilerOptions": {
-		"tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-
-		"module": "ESNext",
-		"moduleResolution": "Bundler",
-		"types": ["node"],
-		"noEmit": true
+		"tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo"
 	},
 	"include": [
 		"vite.config.*",
