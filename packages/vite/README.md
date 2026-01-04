@@ -175,7 +175,7 @@ Full HMR support is provided:
 
 ## Documentation
 
-For complete documentation, visit: [PikaCSS Documentation](https://pikacss.dev)
+For complete documentation, visit: [PikaCSS Documentation](https://pikacss.github.io/pikacss/)
 
 ## License
 
