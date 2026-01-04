@@ -102,14 +102,15 @@ Since execution happens in a sandboxed context, it cannot access external variab
 
 ### 3. Processing (Core Engine)
 
-The evaluated object is passed to `engine.process()`:
+The evaluated object is passed to `engine.use()`:
 
 1. **Resolution**: Plugins resolve strings (e.g., `flex-center`) into style objects.
 2. **Extraction**: The `extract` function flattens nested `StyleDefinition` objects into a list of `AtomicStyle` candidates.
    - Example: `{ '$:hover': { color: 'red' } }` becomes `color: red` with selector `$:hover`.
 3. **Atomization**: The engine generates a unique, short ID (e.g., `a`, `b`) for each unique style.
    - If `color: red` already exists, its existing ID is reused.
-4. **Storage**: New atomic styles are stored in the cache.
+4. **Storage**: New atomic styles are stored in the engine's internal store.
+5. **Return**: Returns an array of class names (e.g., `['a', 'b']`).
 
 ### 4. Rewriting
 

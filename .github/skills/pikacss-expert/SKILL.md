@@ -388,7 +388,7 @@ import { reset } from '@pikacss/plugin-reset'
 
 export default defineEngineConfig({
   plugins: [reset()],
-  reset: 'modern-normalize' // or 'normalize' or 'reset-css'
+  reset: 'modern-normalize' // 'modern-normalize' | 'normalize' | 'andy-bell' | 'eric-meyer' | 'the-new-css-reset'
 })
 ```
 

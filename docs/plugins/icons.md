@@ -35,29 +35,37 @@ npm install -D @pikacss/plugin-icons
 
 ```ts  [Vite Project]
 // pika.config.ts
-import Icons from '@pikacss/plugin-icons'
+import { icons } from '@pikacss/plugin-icons'
 import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
 
 export default defineEngineConfig({
 	plugins: [
-		Icons({
-			// options
-		}),
+		icons()  // Register plugin
 	],
+	icons: {
+		// Configure options here
+		scale: 1,
+		mode: 'auto',
+		prefix: 'i-',
+	}
 })
 ```
 
 ```ts  [Nuxt Project]
 // pika.config.ts
 import { defineEngineConfig } from '@pikacss/nuxt-pikacss'
-import Icons from '@pikacss/plugin-icons'
+import { icons } from '@pikacss/plugin-icons'
 
 export default defineEngineConfig({
 	plugins: [
-		Icons({
-			// options
-		}),
+		icons()  // Register plugin
 	],
+	icons: {
+		// Configure options here
+		scale: 1,
+		mode: 'auto',
+		prefix: 'i-',
+	}
 })
 ```
 
@@ -93,34 +101,47 @@ pika('i-mdi:home?bg')
 
 ## Configuration Options
 
+The plugin configuration consists of two parts:
+
 ```ts
-Icons({
-	// Icon scale multiplier (default: 1)
-	scale: 1.2,
+import { icons } from '@pikacss/plugin-icons'
+import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
 
-	// Rendering mode: 'auto' | 'mask' | 'bg' (default: 'auto')
-	mode: 'auto',
+export default defineEngineConfig({
+	// 1. Register plugin in the plugins array
+	plugins: [
+		icons()  // Must call the function
+	],
+	
+	// 2. Configure options at root level
+	icons: {
+		// Icon scale multiplier (default: 1)
+		scale: 1.2,
 
-	// Class prefix (default: 'i-')
-	prefix: 'i-',
+		// Rendering mode: 'auto' | 'mask' | 'bg' (default: 'auto')
+		mode: 'auto',
 
-	// CDN URL for loading icons (optional)
-	cdn: 'https://esm.sh/',
+		// Class prefix (default: 'i-')
+		prefix: 'i-',
 
-	// Extra CSS properties applied to all icons
-	extraProperties: {
-		'display': 'inline-block',
-		'vertical-align': 'middle'
-	},
+		// CDN URL for loading icons (optional)
+		cdn: 'https://esm.sh/',
 
-	// Icons to include in autocomplete suggestions
-	autocomplete: ['mdi:home', 'mdi:account', 'mdi:settings'],
+		// Extra CSS properties applied to all icons
+		extraProperties: {
+			'display': 'inline-block',
+			'vertical-align': 'middle'
+		},
 
-	// Auto-install icon packages when encountered
-	autoInstall: false,
+		// Icons to include in autocomplete suggestions
+		autocomplete: ['mdi:home', 'mdi:account', 'mdi:settings'],
 
-	// CSS unit for icon size
-	unit: 'em'
+		// Auto-install icon packages when encountered
+		autoInstall: false,
+
+		// CSS unit for icon size
+		unit: 'em'
+	}
 })
 ```
 
@@ -152,11 +173,16 @@ Icons({
 You can define custom icon collections:
 
 ```ts
-Icons({
-	collections: {
-		'my-icons': {
-			logo: '<svg>...</svg>',
-			custom: '<svg>...</svg>'
+export default defineEngineConfig({
+	plugins: [
+		icons()
+	],
+	icons: {
+		collections: {
+			'my-icons': {
+				logo: '<svg>...</svg>',
+				custom: '<svg>...</svg>'
+			}
 		}
 	}
 })

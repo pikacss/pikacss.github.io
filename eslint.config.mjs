@@ -10,7 +10,6 @@ export default await deviltea({
 		'**/README.md',
 		'docs/**/*.md',
 		'.github/skills/**/*.md',
-		'agent_todos/**/*.md',
-		'playground/public/coi-serviceworker.js',
+		'**/AGENTS.md',
 	],
 })

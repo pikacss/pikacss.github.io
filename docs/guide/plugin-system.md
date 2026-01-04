@@ -125,7 +125,9 @@ npm install -D @pikacss/plugin-typography
 import { typography } from '@pikacss/plugin-typography'
 
 export default defineEngineConfig({
-	plugins: [typography()],
+	plugins: [
+		typography() // Note: must call function
+	],
 	typography: {
 		variables: {
 			'--pk-prose-color-body': '#374151',

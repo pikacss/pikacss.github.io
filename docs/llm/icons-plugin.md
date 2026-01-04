@@ -19,14 +19,17 @@ npm install -D @pikacss/plugin-icons
 ## Configuration
 
 ```typescript
-import { icons } from '@pikacss/plugin-icons'
 // pika.config.ts
 import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
+import { icons } from '@pikacss/plugin-icons'
 
 export default defineEngineConfig({
+	// 1. Register plugin in the plugins array
 	plugins: [
-		icons()
+		icons()  // Must call the function
 	],
+	
+	// 2. Configure options at root level
 	icons: {
 		// Icon scale multiplier (default: 1)
 		scale: 1.2,
@@ -47,7 +50,10 @@ export default defineEngineConfig({
 		},
 
 		// Icons to include in autocomplete suggestions
-		autocomplete: ['mdi:home', 'mdi:account', 'mdi:settings']
+		autocomplete: ['mdi:home', 'mdi:account', 'mdi:settings'],
+		
+		// Auto-install icon packages when encountered
+		autoInstall: false
 	}
 })
 ```
@@ -113,11 +119,16 @@ Append `?mask` or `?bg` to force a specific rendering mode:
 You can define custom icon collections:
 
 ```typescript
-icons({
-	collections: {
-		'my-icons': {
-			logo: '<svg>...</svg>',
-			custom: '<svg>...</svg>'
+export default defineEngineConfig({
+	plugins: [
+		icons()
+	],
+	icons: {
+		collections: {
+			'my-icons': {
+				logo: '<svg>...</svg>',
+				custom: '<svg>...</svg>'
+			}
 		}
 	}
 })
