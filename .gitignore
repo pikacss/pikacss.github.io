@@ -191,3 +191,4 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+docs/.vitepress/dist

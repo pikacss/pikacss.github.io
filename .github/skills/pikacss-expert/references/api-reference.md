@@ -1,50 +1,22 @@
 # API Reference
 
-## Core Functions
+**⚠️ Note**: This file is now a summary reference. For complete API documentation, see the [main API Reference](/advanced/api-reference.md).
 
-### `pika()`
-The main function for generating atomic CSS classes.
+## Quick Summary
 
-#### Signatures
+### Main Functions
+
+**`pika(...styles)`** - Generate atomic CSS classes
 ```ts
-// Default (returns string)
-pika(...styles: (StyleObject | string)[]): string
-
-// Explicit variants
-pika.str(...styles: (StyleObject | string)[]): string
-pika.arr(...styles: (StyleObject | string)[]): string
-pika.inl(...styles: (StyleObject | string)[]): string
+pika({ color: 'red' })                           // → "a"
+pika.str({ color: 'red' })                       // → "a"
+pika.arr({ color: 'red' })                       // → ["a"]
+pika.inl({ color: 'red' })                       // → "a" (for templates)
 ```
 
-#### Parameters
-- `styles`: Array of style objects or shortcut strings
-
-#### Returns
-- `pika.str()`: Space-separated string of class names
-- `pika.arr()`: Array of class names
-- `pika.inl()`: Space-separated string (same as `.str()`)
-
-#### Examples
-```ts
-// Single style object
-pika({ color: 'red' })
-
-// Multiple style objects
-pika({ color: 'red' }, { fontSize: '16px' })
-
-// With shortcuts
-pika('flex-center', { padding: '1rem' })
-
-// Array variant
-pika.arr({ color: 'red' })
-```
-
-### `pikap()`
-Preview variant of `pika()`. When you hover over this function in your IDE, it shows the generated CSS.
-
-```ts
-pikap({ color: 'red' }) // Hover to see: color: red;
-```
+**`createEngine(config?)`** - Create PikaCSS engine instance
+**`defineEngineConfig(config)`** - Type-safe config definition
+**`defineEnginePlugin(plugin)`** - Define custom plugin
 
 ## Configuration
 
