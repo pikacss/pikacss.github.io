@@ -93,12 +93,22 @@ export function Button({
   className,
   ...props 
 }: ButtonProps) {
-  const variantClass = pika(`btn-${variant}`)
-  const sizeClass = size !== 'md' ? pika(`btn-${size}`) : ''
+  // Define all variant and size classes statically
+  const variantClasses: Record<string, string> = {
+    'primary': pika('btn-primary'),
+    'secondary': pika('btn-secondary'),
+    'outline': pika('btn-outline'),
+  }
+  
+  const sizeClasses: Record<string, string> = {
+    'sm': pika('btn-sm'),
+    'md': '',
+    'lg': pika('btn-lg'),
+  }
   
   return (
     <button 
-      className={`${variantClass} ${sizeClass} ${className || ''}`}
+      className={`${variantClasses[variant]} ${sizeClasses[size]} ${className || ''}`}
       {...props}
     >
       {children}
