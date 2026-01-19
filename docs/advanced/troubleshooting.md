@@ -227,6 +227,8 @@ export default config
 
 ### Using runtime variables in `pika()`
 
+This violates PikaCSS's core constraint: all `pika()` arguments must be statically analyzable at build time. See [Important Concepts](/guide/important-concepts) for a comprehensive explanation.
+
 ❌ **Won't work** (evaluated at build time):
 
 ```typescript
@@ -243,7 +245,7 @@ function Button({ variant }) {
 }
 ```
 
-✅ **Use CSS variables instead**:
+✅ **Solution 1: Use CSS variables** (Recommended)
 
 ```typescript
 // Define styles with CSS variables
@@ -265,7 +267,7 @@ function Button({ variant }) {
 }
 ```
 
-✅ **Or use conditional shortcuts**:
+✅ **Solution 2: Use conditional shortcuts**
 
 ```typescript
 function Button({ variant }) {
@@ -275,14 +277,6 @@ function Button({ variant }) {
   return <button className={classes}>Click me</button>
 }
 ```
-
-:::tip Why This Limitation?
-PikaCSS is a **zero runtime** library, meaning all style transformations happen at **build time**. The bundler plugin analyzes your source code and extracts `pika()` calls to generate atomic CSS. Runtime values don't exist during the build process, so they cannot be included in the generated CSS.
-
-**Benefits of this approach:**
-- Zero JavaScript overhead in the browser
-- Optimal CSS bundle size (only used styles)
-- Better performance (no style computation at runtime)
 
 **For dynamic styling needs:**
 - Use CSS custom properties (CSS variables)

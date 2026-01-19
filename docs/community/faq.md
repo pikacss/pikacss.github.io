@@ -53,7 +53,7 @@ Yes! PikaCSS works perfectly with Server-Side Rendering and Static Site Generati
 
 ### Why can't I use runtime variables?
 
-PikaCSS transforms styles at **build time**, not runtime. This means:
+This is due to PikaCSS's **build-time evaluation model**—all style arguments must be statically analyzable before your application runs. See [Important Concepts: Build-Time Evaluation](/guide/important-concepts) for a complete explanation.
 
 ```tsx
 // ❌ Won't work - runtime variable
@@ -66,10 +66,7 @@ pika({ color: 'var(--user-color)' })
 <div style={{ '--user-color': color }} />
 ```
 
-**Why?** Build-time transformation ensures:
-- Zero runtime overhead
-- Optimal bundle size
-- Better performance
+This ensures **zero runtime overhead**, optimal bundle size, and better performance.
 
 ### How do I handle dynamic styling?
 

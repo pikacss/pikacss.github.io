@@ -302,7 +302,7 @@ function Button({ primary, children }) {
 }
 ```
 
-Wait! ❌ This won't work because PikaCSS evaluates at build time.
+Wait! ❌ This won't work because PikaCSS evaluates at build time. (See [Important Concepts](/guide/important-concepts) for details)
 
 **Correct approach using shortcuts:**
 

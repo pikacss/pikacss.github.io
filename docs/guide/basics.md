@@ -8,12 +8,10 @@ outline: deep
 
 PikaCSS provides a `pika()` function for writing styles, allowing you to use pure CSS-in-JS syntax without the need to memorize any special class names.
 
-:::warning Zero Runtime Constraint
-PikaCSS transforms styles at **build time**, which means all arguments passed to `pika()` must be **statically analyzable**:
+:::warning Build-Time Constraint
+This is a critical concept in PikaCSS. All arguments passed to `pika()` must be **statically analyzable** at build time—no runtime variables or dynamic expressions.
 
-- ✅ **Allowed**: String literals, object literals, static constants
-- ❌ **Not Allowed**: Runtime variables, function calls, dynamic expressions (props, state, etc.)
-- 💡 **Solution**: Use CSS custom properties (CSS variables) for values that need to change at runtime
+For a comprehensive explanation, see [Important Concepts: Build-Time Evaluation](/guide/important-concepts).
 
 ```ts
 // ❌ This will NOT work - runtime variable
@@ -24,6 +22,11 @@ pika({ color: userColor })
 pika({ color: 'var(--user-theme-color)' })
 // Then set it at runtime: <div style={{ '--user-theme-color': userColor }}>
 ```
+
+**Key Points**:
+- ✅ String literals, object literals, static constants are allowed
+- ❌ Runtime variables, function calls, dynamic expressions are not allowed
+- 💡 Use CSS custom properties for values that change at runtime
 :::
 
 ## Style Object
@@ -256,3 +259,14 @@ The `pikap()` function is automatically generated and is intended for IDE integr
 :::
 
 ![Preview Demo](/images/guide-basics-preview-demo.png)
+
+## Next Steps
+
+Now that you understand the basics, explore these topics:
+
+- **[Important Concepts](/guide/important-concepts)** - Understand build-time evaluation
+- **[Configuration](/guide/configuration)** - Customize PikaCSS for your project
+- **[Shortcuts](/guide/shortcuts)** - Create reusable style combinations
+- **[Selectors](/guide/selectors)** - Advanced selector syntax
+- **[Troubleshooting](/advanced/troubleshooting)** - Common issues and solutions
+- **[TypeScript Support](/advanced/typescript)** - Full IDE integration

@@ -808,6 +808,233 @@ pnpm docs:build
 
 ---
 
+## Documentation Contribution Guidelines
+
+### For Contributors: How to Update Documentation
+
+This section provides guidance for developers and community members contributing to PikaCSS documentation.
+
+#### 1. Before Writing Documentation
+
+**Research and Planning:**
+- Check if documentation already exists for the topic
+- Review similar documentation to maintain consistency
+- Verify the feature/API is finalized (not experimental)
+- Check `docs/llm/README.md` to understand the LLM documentation folder
+
+**Key Files to Review:**
+- `docs/guide/important-concepts.md` - Canonical source for build-time constraint
+- `docs/advanced/typescript.md` - Canonical source for TypeScript setup
+- `docs/integrations/index.md` - Overview of integration patterns
+- `.github/skills/pikacss-expert/SKILL.md` - Complete API documentation
+
+#### 2. Creating New Documentation
+
+**Location Decision:**
+- **Guides** (`docs/guide/`) - User-facing tutorials and walkthroughs
+- **Advanced** (`docs/advanced/`) - Technical deep-dives and architecture
+- **Plugins** (`docs/plugins/`) - Individual plugin documentation
+- **Integrations** (`docs/integrations/`) - Framework/bundler setup
+- **Examples** (`docs/examples/`) - Real-world usage examples
+- **Getting Started** (`docs/getting-started/`) - Onboarding content
+
+**File Structure Template:**
+```markdown
+---
+title: Feature Name
+description: Short one-line description
+outline: deep
+---
+
+# Feature Name
+
+Brief introduction (1-2 sentences)
+
+## Overview
+Explain what this is and why users need it
+
+## Basic Usage
+Simplest example first
+
+## Advanced Usage
+More complex examples
+
+## Common Patterns
+Real-world usage
+
+## Troubleshooting
+Common issues and solutions
+
+## See Also
+- [Related Guide](/guide/...)
+- [API Reference](/advanced/api-reference)
+```
+
+#### 3. Documentation Standards
+
+**Content Guidelines:**
+- Write in clear, simple English
+- Use "you/your" to address the reader
+- Include working code examples
+- Show both ✅ good and ❌ bad patterns
+- Add warnings for edge cases (use `:::warning` syntax)
+- Keep examples minimal and focused
+- Test all code examples before submitting
+
+**Markdown Standards:**
+- Use ATX headings (#, ##, ###)
+- Use code fences with language tags
+- Use inline code for variable/function names
+- Use bold for UI elements and emphasis
+- Use bullet lists for simple lists
+- Use tables for comparisons
+- Use blockquotes for notes/tips
+
+**Code Examples:**
+```typescript
+// ✅ GOOD - Clear, minimal, shows the feature
+const classes = pika({ color: 'red', padding: '1rem' })
+
+// ❌ BAD - Too complex, confusing
+const myComplexStyles = pika({ 
+  color: getUserThemeColor(), 
+  padding: handleDynamicPadding()
+})
+```
+
+**Special Content:**
+- Use `::: tip` for helpful tips
+- Use `::: warning` for critical information
+- Use `::: info` for additional context
+- Use code-group for multi-language examples
+
+#### 4. Cross-Referencing and Links
+
+**Link to Canonical Sources:**
+
+When explaining build-time constraints, link to canonical source:
+```markdown
+See [Important Concepts: Build-Time Evaluation](/guide/important-concepts)
+```
+
+When explaining TypeScript setup, link to canonical source:
+```markdown
+See [TypeScript Configuration](/advanced/typescript)
+```
+
+When explaining integrations, link to overview:
+```markdown
+See [Integration Overview](/integrations/)
+```
+
+**Avoid Duplication:**
+- Don't duplicate explanations if they exist elsewhere
+- Link to single source of truth
+- Update all references when one source changes
+
+#### 5. Version and Compatibility
+
+**Version Metadata:**
+- Include version when introducing new features
+- Use format: "Available since PikaCSS 0.0.39"
+- Document breaking changes with version
+- Link to migration guide if applicable
+
+**Compatibility Notes:**
+```markdown
+## Framework Support
+
+| Framework | Support | Notes |
+|-----------|---------|-------|
+| React | ✅ Full | Works with hooks |
+| Vue | ✅ Full | Works with Composition API |
+| Svelte | ✅ Full | Direct integration |
+```
+
+#### 6. Testing Examples
+
+Before submitting documentation:
+```bash
+# Start docs dev server
+pnpm docs:dev
+
+# Verify:
+1. All links work
+2. Code examples are correct
+3. Formatting looks good
+4. No typos
+5. Examples run without errors
+```
+
+#### 7. Managing LLM Documentation
+
+The `docs/llm/` folder contains documentation optimized for AI agents. When updating main docs:
+
+1. **Update main docs first** - `docs/` folder
+2. **Update LLM folder** - Mirror key sections in `docs/llm/`
+3. **Keep index sync** - `docs/llm/index.md` mirrors `docs/index.md`
+4. **Reference README** - See `docs/llm/README.md` for folder purpose
+
+LLM folder sections to maintain:
+- `docs/llm/basics.md` - Mirrors core concepts
+- `docs/llm/architecture.md` - Mirrors architecture docs
+- `docs/llm/configuration.md` - Mirrors configuration guide
+- `docs/llm/integrations.md` - Consolidated integration guide
+
+#### 8. Common Mistakes to Avoid
+
+| Mistake | Solution |
+|---------|----------|
+| Duplicating build-time explanation | Link to `/guide/important-concepts.md` |
+| Copy-pasting code without testing | Test all examples before submission |
+| Broken links to related docs | Verify all links with `pnpm docs:build` |
+| Inconsistent formatting | Follow markdown standards above |
+| Missing code examples | Every feature should have at least one example |
+| Outdated version numbers | Verify version is current (0.0.39) |
+| No "See Also" links | Connect related documentation |
+
+#### 9. Submitting Documentation Changes
+
+**Commit Message Format:**
+```
+docs(<scope>): <description>
+
+docs(guide): add CSS variables explanation
+docs(advanced): fix TypeScript configuration example
+docs(plugins): document icons plugin setup
+```
+
+**PR Checklist:**
+- [ ] Examples tested and working
+- [ ] Spelling and grammar checked
+- [ ] Links verified
+- [ ] Version numbers correct
+- [ ] No duplication of canonical sources
+- [ ] "See Also" sections added
+- [ ] Code follows style conventions
+- [ ] Docs build without warnings: `pnpm docs:build`
+
+#### 10. Documentation Maintenance Tasks
+
+**Weekly:**
+- Check for reported documentation issues
+- Verify broken links
+
+**With Each Release:**
+- Update API reference
+- Update plugin documentation
+- Verify all examples still work
+- Update version numbers (0.0.39)
+- Review and update AGENTS.md
+
+**Monthly:**
+- Audit for duplication
+- Check link health
+- Review user feedback
+- Update FAQ if needed
+
+---
+
 ## Resources & References
 
 ### Internal

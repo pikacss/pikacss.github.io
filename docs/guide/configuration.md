@@ -114,3 +114,10 @@ export default defineEngineConfig({
   }
 })
 ```
+
+## Next Steps
+
+- **[Plugin System](/guide/plugin-system)** - Extend PikaCSS with plugins
+- **[Advanced Configuration](/advanced/plugin-development)** - Creating custom plugins
+- **[TypeScript Setup](/advanced/typescript)** - Configure IDE support
+- **[Troubleshooting](/advanced/troubleshooting)** - Debug configuration issues

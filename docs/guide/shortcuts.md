@@ -394,3 +394,12 @@ export default defineEngineConfig({
 		]
 	}
 })
+```
+
+## Next Steps
+
+- **[Important Concepts](/guide/important-concepts)** - Understand static vs runtime values
+- **[Configuration](/guide/configuration)** - Configure all PikaCSS options
+- **[Plugin System](/guide/plugin-system)** - Extend shortcuts with plugins
+- **[API Reference](/advanced/api-reference)** - Complete API documentation
+- **[Examples](/examples/components)** - Real-world usage examples
