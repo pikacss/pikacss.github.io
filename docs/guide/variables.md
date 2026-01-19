@@ -57,6 +57,14 @@ export default defineEngineConfig({
 })
 ```
 
+::: info Note on Configuration Structure
+The configuration has a nested `variables` structure:
+- **Outer `variables`**: The variables plugin configuration key
+- **Inner `variables`**: The actual CSS variable definitions object
+
+This allows PikaCSS to support multiple plugins, each with their own configuration namespace.
+:::
+
 ## Variable Configuration Options
 
 Each variable can be defined with the following options:

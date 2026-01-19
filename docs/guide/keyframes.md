@@ -148,10 +148,10 @@ You can also add keyframes programmatically using the Engine API:
 ```ts
 import { createEngine } from '@pikacss/core'
 
-const engine = createEngine()
+const engine = await createEngine()
 
 // Add keyframes
-engine.extra.keyframes.add(
+engine.keyframes.add(
 	['dynamic-fade', {
 		from: { opacity: 0 },
 		to: { opacity: 1 }

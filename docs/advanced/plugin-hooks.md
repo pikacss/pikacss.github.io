@@ -220,17 +220,22 @@ preflightUpdated() {
 
 **Type**: `sync`
 
-Called when a new atomic style is added to the engine.
+Called when a new atomic style is added to the engine. The hook receives the `AtomicStyle` object containing:
 
 ```typescript
 atomicStyleAdded(atomicStyle) {
+  // atomicStyle: { id: string, content: StyleContent }
   console.log('New style:', {
     id: atomicStyle.id,
     property: atomicStyle.content.property,
-    value: atomicStyle.content.value
+    value: atomicStyle.content.value,
+    selector: atomicStyle.content.selector
   })
 }
 ```
+
+**Parameters:**
+- `atomicStyle`: The newly added atomic style object with `id` and `content` properties
 
 ### `autocompleteConfigUpdated`
 

@@ -384,39 +384,83 @@ interface EnginePlugin {
 
 ## Utility Functions
 
-### `resolvePreflight(preflight)`
+### Preflight Utilities
 
-Converts a preflight to a normalized function format.
+#### `definePreflight(preflight)`
 
-```typescript
-import { resolvePreflight } from '@pikacss/core'
-
-const preflightFn = resolvePreflight('body { margin: 0; }')
-```
-
-### `getAtomicStyleId(options)`
-
-Generates a unique ID for an atomic style.
+Type-safe helper for defining preflights:
 
 ```typescript
-import { getAtomicStyleId } from '@pikacss/core'
+import { definePreflight } from '@pikacss/core'
 
-const id = getAtomicStyleId({
-	property: 'color',
-	value: ['red'],
-	selector: ['.%']
+export const myPreflight = definePreflight({
+	body: { margin: 0, fontFamily: 'sans-serif' }
 })
 ```
 
-### `renderAtomicStyles(payload)`
+### Autocomplete Utilities
 
-Low-level function to render atomic styles to CSS.
+These functions extend IDE autocomplete and are typically used by plugins:
+
+#### `appendAutocompleteSelectors(...selectors)`
+
+Add selector suggestions to autocomplete:
 
 ```typescript
-import { renderAtomicStyles } from '@pikacss/core'
+engine.appendAutocompleteSelectors(':hover', ':focus', '@dark')
+```
 
-const css = renderAtomicStyles({
-  atomicStyles: [...],
-  isFormatted: true
+#### `appendAutocompleteStyleItemStrings(...items)`
+
+Add shortcut names to autocomplete:
+
+```typescript
+engine.appendAutocompleteStyleItemStrings('btn', 'flex-center')
+```
+
+#### `appendAutocompleteExtraProperties(...properties)`
+
+Add custom CSS properties to autocomplete:
+
+```typescript
+engine.appendAutocompleteExtraProperties('--my-var', '--theme-color')
+```
+
+#### `appendAutocompleteExtraCssProperties(...properties)`
+
+Add CSS properties to autocomplete:
+
+```typescript
+engine.appendAutocompleteExtraCssProperties('aspect-ratio')
+```
+
+#### `appendAutocompletePropertyValues(property, ...tsTypes)`
+
+Add TypeScript type strings as property value suggestions:
+
+```typescript
+engine.appendAutocompletePropertyValues('display', '"flex"', '"grid"')
+```
+
+#### `appendAutocompleteCssPropertyValues(property, ...values)`
+
+Add CSS values to property autocomplete:
+
+```typescript
+engine.appendAutocompleteCssPropertyValues('display', 'flex', 'grid')
+```
+
+### Rendering Utilities
+
+#### `renderCSSStyleBlocks(styleBlocks)`
+
+Low-level utility to render CSS style blocks to string:
+
+```typescript
+import { renderCSSStyleBlocks } from '@pikacss/core'
+
+const css = renderCSSStyleBlocks({
+	preflights: [...],
+	atomicStyles: [...]
 })
 ```

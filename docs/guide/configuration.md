@@ -42,12 +42,75 @@ Please remember to add `/// <reference path="./src/pika.gen.ts" />` to the top o
 :::
 
 ## Core plugins' options:
-- ### [`variables`](/guide/variables)
 
-- ### [`keyframes`](/guide/keyframes)
+### [`variables`](/guide/variables)
 
-- ### [`selectors`](/guide/selectors)
+Define CSS custom properties that will be included in your generated CSS. See the [Variables guide](/guide/variables) for complete configuration options.
 
-- ### [`shortcuts`](/guide/shortcuts)
+```ts
+export default defineEngineConfig({
+  variables: {
+    variables: {
+      '--color-primary': '#007bff',
+      '--spacing-base': '1rem',
+    }
+  }
+})
+```
 
-- ### [`important`](/guide/important)
+### [`keyframes`](/guide/keyframes)
+
+Define `@keyframes` animations that can be referenced in your styles. See the [Keyframes guide](/guide/keyframes) for complete configuration options.
+
+```ts
+export default defineEngineConfig({
+  keyframes: {
+    keyframes: [
+      ['fade', { from: { opacity: 0 }, to: { opacity: 1 } }],
+      ['slide', { from: { transform: 'translateX(-100%)' }, to: { transform: 'translateX(0)' } }],
+    ]
+  }
+})
+```
+
+### [`selectors`](/guide/selectors)
+
+Define custom selector aliases that can be used in your styles. See the [Selectors guide](/guide/selectors) for complete configuration options.
+
+```ts
+export default defineEngineConfig({
+  selectors: {
+    selectors: [
+      [':hover', '$:hover'],
+      ['@dark', 'html.dark $'],
+    ]
+  }
+})
+```
+
+### [`shortcuts`](/guide/shortcuts)
+
+Define reusable style shortcuts that can be applied to reduce boilerplate. See the [Shortcuts guide](/guide/shortcuts) for complete configuration options.
+
+```ts
+export default defineEngineConfig({
+  shortcuts: {
+    shortcuts: [
+      ['btn', { padding: '10px 20px', borderRadius: '4px', border: 'none' }],
+      [/^flex-(.+)$/, ([, align]) => ({ display: 'flex', alignItems: align })],
+    ]
+  }
+})
+```
+
+### [`important`](/guide/important)
+
+Configure how `!important` flags are handled in your styles.
+
+```ts
+export default defineEngineConfig({
+  important: {
+    default: false,  // Default !important flag (optional)
+  }
+})
+```

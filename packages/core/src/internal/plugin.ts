@@ -93,8 +93,8 @@ export const hooks: EngineHooks = {
 		execAsyncHook(plugins, 'transformStyleDefinitions', styleDefinitions),
 	preflightUpdated: (plugins: EnginePlugin[]) =>
 		execSyncHook(plugins, 'preflightUpdated', void 0),
-	atomicStyleAdded: (plugins: EnginePlugin[]) =>
-		execSyncHook(plugins, 'atomicStyleAdded', void 0),
+	atomicStyleAdded: (plugins: EnginePlugin[], atomicStyle: AtomicStyle) =>
+		execSyncHook(plugins, 'atomicStyleAdded', atomicStyle),
 	autocompleteConfigUpdated: (plugins: EnginePlugin[]) =>
 		execSyncHook(plugins, 'autocompleteConfigUpdated', void 0),
 }
