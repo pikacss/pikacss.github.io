@@ -1,624 +1,594 @@
 ---
 name: pikacss-expert
-description: Complete PikaCSS API reference and usage guide for developers implementing PikaCSS in their projects. Use when writing style definitions, configuring PikaCSS, building components, or troubleshooting styling issues.
+description: Comprehensive user guidance for PikaCSS API, configuration, style definition, plugin usage, and best practices for building with atomic CSS.
 license: MIT
-compatibility: opencode
 metadata:
-  repo: pikacss
-  version: 0.0.39
-  audience: users
-  workflow: implementation
+  author: PikaCSS Team
+  version: "2.0.0"
+compatibility: Works with all PikaCSS setups - Vite, Nuxt, or other bundlers
 ---
 
-# PikaCSS Expert Skill
+# PikaCSS User & API Expert Guide
 
-Complete guidance for using PikaCSS to build styled components with atomic CSS generation.
+This skill provides comprehensive guidance for using PikaCSS, understanding its API, configuring projects, and implementing styles effectively.
 
-## Quick Overview
-
-PikaCSS provides an API for defining styles with atomic CSS generation at build time:
-
-```typescript
-// Define styles
-const classes = pika({ 
-  color: 'red',
-  padding: '1rem'
-})
-
-// All pika() calls processed at build time
-// Returns: "a b" (generated class names)
-// Generated CSS:
-//   .a { color: red; }
-//   .b { padding: 1rem; }
-```
-
-**⚠️ Critical Constraint**: All `pika()` arguments must be **statically analyzable** at build time. No runtime variables, props, or dynamic expressions allowed inside `pika()`.
-
----
-
-## Quick Navigation
-
-This skill provides progressive disclosure. Start with the overview below, then dive into reference guides.
-
-### For API Details & Configuration
-
-**See [Complete API Reference](./references/api-reference.md)**
-- All functions: `pika()`, `pika.arr()`, `pika.inl()`
-- Configuration options with examples
-- Shortcuts, variables, keyframes, selectors
-- Engine API and TypeScript types
-- ~1000 lines covering everything
-
-*Use this when you need to know what's available and how to use it.*
-
-### For Practical Code Examples
-
-**See [Real-World Examples](./references/examples.md)**
-- Button, Card, Badge, Input components
-- Form patterns (Checkbox, Select)
-- Layout patterns (Grid, Flex, Stack, Container)
-- Modal, Dropdown, Tabs components
-- Responsive design techniques
-- Dark mode and theming patterns
-- Animation and transitions
-- Advanced patterns (compounds, render props, context)
-- ~1000 lines of working code
-
-*Use this when you need to see how to build something specific.*
-
-### For Troubleshooting
-
-**See [Troubleshooting Guide](./references/troubleshooting.md)**
-- Setup and installation issues
-- Styling not applying
-- Build errors
-- TypeScript issues
-- Framework integration issues
-- Performance optimization
-- Advanced debugging
-- ~500 lines of solutions
-
-*Use this when something isn't working and you need help fixing it.*
-
-### For Plugin Development
-
-**See [Plugin Hooks Reference](./references/plugin-hooks.md)**
-- Plugin system architecture
-- All available hooks
-- Writing custom plugins
-- Module augmentation patterns
-- Publishing plugins
-
-*Use this when you want to extend PikaCSS with plugins.*
-
----
-
-## Core Concepts
-
-### The `pika()` Function
-
-Three variants for different use cases:
-
-```typescript
-// 1. String output (most common)
-const classes = pika({ color: 'red' })
-// Returns: "a b c" (space-separated)
-
-// 2. Array output
-const classList = pika.arr({ color: 'red' })
-// Returns: ["a", "b", "c"]
-
-// 3. Template string usage
-const html = `class="${pika.inl({ color: 'red' })}"`
-```
-
-### Build-Time Only
-
-**All `pika()` calls must be evaluable at build time:**
-
-```typescript
-// ✅ Allowed (static)
-const styles = pika({ color: 'red' })
-const COLORS = { primary: '#3b82f6' }
-const styles2 = pika({ color: COLORS.primary })
-
-// ❌ Not allowed (runtime)
-function Component({ color }) {
-  const styles = pika({ color })  // ERROR
-}
-
-// ✅ Solution: CSS variables
-const styles = pika({ color: 'var(--color)' })
-function Component({ color }) {
-  return <div className={styles} style={{ '--color': color }} />
-}
-```
-
----
-
-## Setup
-
-### 1. Install Packages
-
-```bash
-npm install @pikacss/core @pikacss/unplugin-pikacss
-```
-
-### 2. Create Configuration
-
-Create `pika.config.ts` in project root:
-
-```typescript
-/// <reference path="./src/pika.gen.ts" />
-
-import { defineEngineConfig } from '@pikacss/core'
-
-export default defineEngineConfig({
-  prefix: 'app-',
-  
-  plugins: [],
-  
-  variables: {
-    variables: {
-      '--color-primary': '#3b82f6',
-    }
-  },
-  
-  shortcuts: {
-    shortcuts: [
-      ['btn', { padding: '1rem', borderRadius: '4px' }],
-    ]
-  }
-})
-```
-
-### 3. Configure Bundler
-
-**For Vite:**
-```typescript
-// vite.config.ts
-import pikacss from '@pikacss/unplugin-pikacss/vite'
-
-export default {
-  plugins: [pikacss()]
-}
-```
-
-**For Nuxt:**
-```typescript
-// nuxt.config.ts
-export default defineNuxtConfig({
-  modules: ['@pikacss/nuxt-pikacss']
-})
-```
-
-**For Webpack:**
-```typescript
-// webpack.config.mjs
-import pikacss from '@pikacss/unplugin-pikacss/webpack'
-
-export default {
-  plugins: [pikacss()]
-}
-```
-
-### 4. Import CSS
-
-```typescript
-// main.ts or entry file
-import 'pika.css'
-```
-
----
-
-## Style Definitions
+## Quick Start
 
 ### Basic Usage
 
 ```typescript
-pika({
-  // Standard CSS properties (camelCase or kebab-case)
+import { pika } from '@pikacss/core'
+
+// Define styles
+const styles = pika({
   display: 'flex',
-  backgroundColor: '#fff',
-  'font-size': '16px',
-  
-  // Numbers become pixels
-  margin: 0,
-  padding: 16,
-  
-  // Pseudo-classes
-  '$:hover': { color: 'blue' },
-  
-  // Pseudo-elements
-  '$::before': { content: '"→"' },
-  
-  // Child selectors
-  '$ > span': { fontWeight: 'bold' },
-  
-  // Media queries
-  '@media (min-width: 768px)': {
-    padding: 32,
-  }
+  gap: '1rem',
+  padding: '2rem',
+  backgroundColor: 'white',
+  borderRadius: '0.5rem'
 })
+
+// Use generated class names
+console.log(styles.className)
 ```
 
-### All Pseudo-Classes
+### In Your Framework
 
-- `:hover`, `:active`, `:focus`, `:focus-visible`
-- `:disabled`, `:enabled`, `:checked`
-- `:first-child`, `:last-child`, `:nth-child()`
-- `:visited`, `:target`, and more
+**Vue/Nuxt:**
+```vue
+<template>
+  <div :class="styles.className">
+    Content here
+  </div>
+</template>
 
-### All Pseudo-Elements
+<script setup>
+import { pika } from '@pikacss/core'
 
-- `::before`, `::after`
-- `::first-line`, `::first-letter`
-- `::selection`, `::placeholder`
-
----
-
-## Shortcuts
-
-Reusable style combinations:
-
-```typescript
-shortcuts: {
-  shortcuts: [
-    // Basic shortcut
-    ['btn', { padding: '10px 20px', border: 'none' }],
-    
-    // Nested shortcut
-    ['btn-primary', {
-      __shortcut: 'btn',
-      backgroundColor: '#3b82f6',
-      color: 'white',
-    }],
-    
-    // Pattern-based shortcut
-    [/^gap-(\d+)$/, ([, size]) => ({
-      gap: `${size}px`
-    })],
-    
-    // String-based shortcut
-    ['flexcenter', 'display:flex justify-content:center']
-  ]
-}
-
-// Usage
-pika('btn')           // Single shortcut
-pika('btn-primary')   // Nested
-pika('gap-16')        // Pattern: matches gap-*
-pika('btn', { color: 'red' })  // Shortcut + inline styles
+const styles = pika({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1rem'
+})
+</script>
 ```
 
----
+**React:**
+```typescript
+import { pika } from '@pikacss/core'
 
-## CSS Variables
+const styles = pika({
+  padding: '1rem',
+  borderRadius: '0.25rem'
+})
+
+export function MyComponent() {
+  return <div className={styles.className}>Hello</div>
+}
+```
+
+## Core Concepts
+
+### Static Evaluation Requirement
+
+All `pika()` arguments must be statically determinable at build time:
 
 ```typescript
-// Define
-variables: {
-  variables: {
-    '--color-primary': '#3b82f6',
-    '--spacing-base': '1rem',
-    '--font-sans': 'system-ui, sans-serif',
-  }
+// ✅ Allowed (static values)
+const styles = pika({ color: 'red' })
+const COLOR = 'blue'
+const styles2 = pika({ color: COLOR })
+
+// ❌ Not allowed (runtime variables)
+function Component({ color }) {
+  const styles = pika({ color }) // Error!
 }
 
-// Use in styles
+// ✅ Solution: Use CSS variables for dynamic values
+const styles = pika({ color: 'var(--user-color)' })
+function Component({ color }) {
+  return <div style={{ '--user-color': color }} className={styles.className} />
+}
+```
+
+### Generated Output
+
+PikaCSS generates:
+1. **Atomic CSS** (`pika.gen.css`) - Tiny, reusable style rules
+2. **TypeScript definitions** (`pika.gen.ts`) - Full autocomplete and type safety
+
+```css
+/* pika.gen.css - atomic rules */
+.display-flex { display: flex; }
+.gap-1rem { gap: 1rem; }
+.padding-2rem { padding: 2rem; }
+```
+
+### Atomic CSS Advantage
+
+Each utility generates a single CSS rule:
+- **No duplication** - `.display-flex` appears once, shared by all uses
+- **Tiny output** - Compound 100 styles = 100 rules, not larger files
+- **Tree-shakable** - Unused styles don't make it to production
+- **Predictable** - Same input always generates same class
+
+## Style Definition API
+
+### Basic Properties
+
+Define styles using CSS property names:
+
+```typescript
 pika({
-  color: 'var(--color-primary)',
-  padding: 'var(--spacing-base)',
-  fontFamily: 'var(--font-sans)',
+  // Layout
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1rem',
+  
+  // Sizing
+  width: '100%',
+  minHeight: '500px',
+  
+  // Colors
+  color: 'white',
+  backgroundColor: '#1a1a1a',
+  
+  // Spacing
+  padding: '2rem',
+  margin: '1rem',
+  
+  // Borders
+  border: '1px solid #ddd',
+  borderRadius: '0.5rem'
 })
-
-// Update at runtime
-<div 
-  className={pika({ color: 'var(--theme-color)' })}
-  style={{ '--theme-color': isDark ? 'white' : 'black' }}
-/>
 ```
 
----
+### Pseudo-Elements
 
-## Common Patterns
+Use `$` prefix for pseudo-elements:
 
-### Dynamic Styling
-
-❌ **Don't:** Runtime variables in `pika()`
 ```typescript
-pika({ color: userColor })  // ERROR: userColor is runtime
+pika({
+  color: 'blue',
+  $before: {
+    content: '"→ "',
+    color: 'gray'
+  },
+  $after: {
+    content: ' ←"',
+    color: 'gray'
+  },
+  $firstLine: {
+    fontWeight: 'bold'
+  }
+})
 ```
 
-✅ **Do:** Use CSS variables
-```typescript
-const styles = pika({ color: 'var(--color)' })
-<div className={styles} style={{ '--color': userColor }} />
-```
+### Pseudo-Classes
 
-✅ **Do:** Conditional shortcuts
-```typescript
-const primary = pika('btn-primary')
-const secondary = pika('btn-secondary')
+Use `&` or state selectors:
 
-<button className={variant === 'primary' ? primary : secondary}>
-  Click
-</button>
+```typescript
+pika({
+  backgroundColor: 'white',
+  '&:hover': {
+    backgroundColor: '#f5f5f5'
+  },
+  '&:active': {
+    transform: 'scale(0.95)'
+  },
+  '&:focus-visible': {
+    outline: '2px solid blue'
+  }
+})
 ```
 
 ### Responsive Design
 
+Use media query syntax:
+
 ```typescript
 pika({
-  fontSize: '14px',
+  display: 'grid',
+  gridTemplateColumns: '1fr',
   
+  // Mobile-first
   '@media (min-width: 768px)': {
-    fontSize: '16px',
+    gridTemplateColumns: '1fr 1fr'
   },
-  
   '@media (min-width: 1024px)': {
-    fontSize: '18px',
-  },
-})
-```
-
-### Combining Styles
-
-```typescript
-// Use multiple shortcuts + inline
-const baseBtn = pika('btn')
-const sizeClass = pika('btn-lg')
-const colorClass = pika({ color: 'white' })
-
-// Combine
-`${baseBtn} ${sizeClass} ${colorClass}`
-```
-
----
-
-## Official Plugins
-
-### Icons Plugin
-
-```typescript
-import { icons } from '@pikacss/plugin-icons'
-
-export default defineEngineConfig({
-  plugins: [icons()],
-  icons: { prefix: 'i-' }
-})
-
-// Use any icon: i-<library>:<name>
-pika('i-mdi:home')
-pika('i-heroicons:star')
-```
-
-### Reset Plugin
-
-```typescript
-import { reset } from '@pikacss/plugin-reset'
-
-export default defineEngineConfig({
-  plugins: [reset()]
-})
-
-// Includes CSS reset/normalization
-```
-
-### Typography Plugin
-
-```typescript
-import { typography } from '@pikacss/plugin-typography'
-
-export default defineEngineConfig({
-  plugins: [typography()]
-})
-
-// Use typography shortcuts
-pika('prose')        // Normal
-pika('prose-sm')     // Small
-pika('prose-lg')     // Large
-```
-
----
-
-## TypeScript Support
-
-Automatic type hints with IDE support:
-
-```typescript
-/// <reference path="./src/pika.gen.ts" />
-
-// ✅ Autocomplete for CSS properties
-pika({ 
-  color: '',    // IDE suggests colors
-  padding: '',  // IDE suggests values
-})
-
-// ✅ Hover shows generated CSS
-const classes = pika({ color: 'red' })  // Hover to see CSS
-
-// ✅ Type checking
-const cls: string = pika({ color: 'red' })  // ✓ Correct
-const arr: string[] = pika.arr({ color: 'red' })  // ✓ Correct
-```
-
----
-
-## Configuration Options
-
-```typescript
-interface EngineConfig {
-  // Prefix for all generated class names
-  prefix?: string
-  
-  // Plugins to load
-  plugins?: EnginePlugin[]
-  
-  // CSS custom properties (--name: value)
-  variables?: VariablesConfig
-  
-  // @keyframes definitions
-  keyframes?: KeyframesConfig
-  
-  // Reusable combinations
-  shortcuts?: ShortcutsConfig
-  
-  // Custom selector aliases
-  selectors?: SelectorsConfig
-  
-  // !important handling
-  important?: ImportantConfig
-  
-  // Disable features
-  disable?: {
-    preflight?: boolean
-    shortcuts?: boolean
+    gridTemplateColumns: '1fr 1fr 1fr'
   }
-}
+})
 ```
 
-See [Complete API Reference](./references/api-reference.md) for all options.
+### Dark Mode
 
----
+Support dark mode with system preference:
 
-## Real-World Example
+```typescript
+pika({
+  backgroundColor: 'white',
+  color: 'black',
+  
+  '@media (prefers-color-scheme: dark)': {
+    backgroundColor: '#1a1a1a',
+    color: 'white'
+  }
+})
+```
 
-```tsx
-// pika.config.ts
-export default defineEngineConfig({
-  shortcuts: {
-    shortcuts: [
-      ['btn', {
-        display: 'inline-flex',
-        padding: '0.5rem 1rem',
-        borderRadius: '4px',
-        border: 'none',
-        cursor: 'pointer',
-        transition: 'all 0.2s',
-      }],
-      ['btn-primary', {
-        __shortcut: 'btn',
-        backgroundColor: '#3b82f6',
-        color: 'white',
-        '$:hover': { backgroundColor: '#2563eb' },
-      }],
-    ]
+## Shortcuts & Utilities
+
+### Using Built-in Shortcuts
+
+Shortcuts provide quick access to common patterns:
+
+```typescript
+// Icon shortcut from @pikacss/plugin-icons
+pika({
+  icon: {
+    name: 'chevron-right',
+    size: '24px',
+    color: 'blue'
   }
 })
 
-// Component
-function Button({ variant = 'primary', children }) {
-  return (
-    <button className={pika(`btn-${variant}`)}>
-      {children}
-    </button>
-  )
-}
+// Typography shortcuts from @pikacss/plugin-typography
+pika({
+  h1: true,
+  // Applies: fontSize, fontWeight, lineHeight for h1
+})
 
-// Usage
-<Button variant="primary">Click me</Button>
+// Button shortcut (if configured)
+pika({
+  btn: {
+    variant: 'primary',
+    size: 'md'
+  }
+})
 ```
 
-For more examples, see [Real-World Examples](./references/examples.md).
+### Shortcut Resolution
 
----
+Shortcuts resolve to full style definitions:
 
-## Common Issues
+```typescript
+// Icon shortcut resolves to:
+// {
+//   display: 'inline-block',
+//   width: '24px',
+//   height: '24px',
+//   backgroundColor: 'blue',
+//   maskImage: 'url(...)'
+// }
+```
 
-| Problem | Solution |
-|---------|----------|
-| Styles not applying | Add `import 'pika.css'` to entry file |
-| TypeScript errors | Add `/// <reference path="./src/pika.gen.ts" />` to config |
-| pika() not found | Add `import { pika } from '@pikacss/core'` |
-| Module not installed | Run `npm install @pikacss/core @pikacss/unplugin-pikacss` |
-| Dynamic values don't work | Use CSS variables instead: `pika({ color: 'var(--color)' })` |
+## Configuration
 
-See [Troubleshooting Guide](./references/troubleshooting.md) for comprehensive help.
+### Engine Configuration
 
----
+Configure the core engine:
+
+```typescript
+import { createEngine } from '@pikacss/core'
+import { iconPlugin } from '@pikacss/plugin-icons'
+import { resetPlugin } from '@pikacss/plugin-reset'
+import { typographyPlugin } from '@pikacss/plugin-typography'
+
+const engine = createEngine({
+  // Plugin configuration
+  plugins: [
+    resetPlugin(),
+    iconPlugin({
+      sets: ['heroicons', 'lucide']
+    }),
+    typographyPlugin({
+      defaultFontFamily: 'system-ui'
+    })
+  ],
+  
+  // Default theme values
+  theme: {
+    colors: {
+      primary: '#3b82f6',
+      secondary: '#10b981'
+    },
+    spacing: {
+      xs: '0.25rem',
+      sm: '0.5rem',
+      md: '1rem',
+      lg: '1.5rem'
+    }
+  }
+})
+```
+
+### Vite/Build Integration
+
+In your Vite config:
+
+```typescript
+// vite.config.ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import { VitePikaCSSPlugin } from '@pikacss/vite-plugin-pikacss'
+
+export default defineConfig({
+  plugins: [
+    vue(),
+    VitePikaCSSPlugin({
+      // Configuration
+      plugins: [/* your plugins */],
+      theme: {
+        // Theme configuration
+      }
+    })
+  ]
+})
+```
+
+### Nuxt Integration
+
+In your Nuxt config:
+
+```typescript
+// nuxt.config.ts
+export default defineNuxtConfig({
+  modules: ['@pikacss/nuxt-pikacss'],
+  
+  pikacss: {
+    plugins: [/* your plugins */],
+    theme: {
+      // Theme configuration
+    }
+  }
+})
+```
 
 ## Best Practices
 
-1. **Use Shortcuts** for repeated styles
-   - Define once, reuse everywhere
-   - Reduces CSS output size
+### 1. Use Shortcuts for Consistency
 
-2. **Use CSS Variables** for dynamic values
-   - Avoid runtime `pika()` calls
-   - Set from JavaScript
+```typescript
+// ❌ Avoid repeating common patterns
+pika({
+  padding: '0.75rem 1rem',
+  borderRadius: '0.375rem',
+  backgroundColor: '#3b82f6',
+  color: 'white',
+  fontWeight: '500'
+})
 
-3. **Organize Config**
-   - Group related variables, shortcuts, keyframes
-   - Add comments for clarity
-
-4. **Check Types**
-   - Reference `pika.gen.ts` for autocomplete
-   - Let TypeScript catch errors
-
-5. **Performance**
-   - Use shortcuts to reduce duplication
-   - Leverage CSS variables for theming
-   - Keep inline styles minimal
-
----
-
-## Next Steps
-
-1. **Starting out?**
-   - Review [Setup](#setup) section
-   - Check [Real-World Examples](./references/examples.md)
-   - Build a simple component
-
-2. **Need specific details?**
-   - See [Complete API Reference](./references/api-reference.md)
-   - Check [Examples](./references/examples.md) for your use case
-   - Review [Troubleshooting](./references/troubleshooting.md) if stuck
-
-3. **Want to extend?**
-   - See [Plugin Hooks Reference](./references/plugin-hooks.md)
-   - Build custom plugins
-   - Share with community
-
-4. **Having issues?**
-   - Check [Troubleshooting Guide](./references/troubleshooting.md)
-   - Search error message in [Common Issues](#common-issues)
-   - Review error messages vs solutions table
-
----
-
-## References
-
-- [Complete API Reference](./references/api-reference.md) - All functions and options (~1000 lines)
-- [Real-World Examples](./references/examples.md) - Practical code samples (~1000 lines)
-- [Troubleshooting Guide](./references/troubleshooting.md) - Solutions to common problems (~500 lines)
-- [Plugin Hooks Reference](./references/plugin-hooks.md) - Plugin development guide
-
----
-
-## Key Files
-
-- `pika.config.ts` - Your project's PikaCSS configuration
-- `pika.gen.css` - Generated atomic CSS (don't edit)
-- `pika.gen.ts` - Generated TypeScript types (don't edit)
-- `pika.css` - Import in your entry file to use styles
-
----
-
-## Command Reference
-
-```bash
-# Build
-npm run build
-
-# Dev server
-npm run dev
-
-# Type check
-npm run typecheck
+// ✅ Use shortcut instead
+pika({
+  btn: { variant: 'primary', size: 'md' }
+})
 ```
 
----
+### 2. Compose Styles
 
-**Last Updated:** 2026-01-19
-**Version:** 0.0.39
+```typescript
+// Create reusable style bases
+const flexCenter = pika({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center'
+})
+
+const card = pika({
+  backgroundColor: 'white',
+  borderRadius: '0.5rem',
+  boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+})
+
+// Combine them
+const button = pika({
+  ...flexCenter,
+  ...card,
+  gap: '0.5rem'
+})
+```
+
+### 3. Use CSS Variables for Dynamic Values
+
+```typescript
+// Static definition
+const styles = pika({
+  color: 'var(--button-color)',
+  backgroundColor: 'var(--button-bg)'
+})
+
+// Dynamic values via props
+<button 
+  :class="styles.className"
+  :style="{
+    '--button-color': isDanger ? 'red' : 'blue',
+    '--button-bg': isDanger ? '#fee' : '#eff'
+  }"
+>
+  Click me
+</button>
+```
+
+### 4. Responsive Design Pattern
+
+```typescript
+const grid = pika({
+  display: 'grid',
+  gap: '1rem',
+  gridTemplateColumns: '1fr',
+  
+  '@media (min-width: 640px)': {
+    gridTemplateColumns: 'repeat(2, 1fr)'
+  },
+  '@media (min-width: 1024px)': {
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gap: '2rem'
+  }
+})
+```
+
+### 5. Theme Customization
+
+```typescript
+// Define consistent theme
+const theme = {
+  colors: {
+    primary: '#3b82f6',
+    success: '#10b981',
+    danger: '#ef4444',
+    warning: '#f59e0b'
+  },
+  spacing: {
+    xs: '0.25rem',
+    sm: '0.5rem',
+    md: '1rem',
+    lg: '1.5rem',
+    xl: '2rem'
+  },
+  radius: {
+    sm: '0.25rem',
+    md: '0.375rem',
+    lg: '0.5rem',
+    xl: '0.75rem'
+  }
+}
+
+// Use consistently
+const btn = pika({
+  backgroundColor: theme.colors.primary,
+  borderRadius: theme.radius.md,
+  padding: `${theme.spacing.sm} ${theme.spacing.md}`
+})
+```
+
+### 6. Avoid These Patterns
+
+```typescript
+// ❌ DON'T: Try to use runtime values
+const Component = ({ size }) => {
+  const styles = pika({ 
+    width: size // ERROR - size is runtime
+  })
+}
+
+// ❌ DON'T: Nest pika() calls unnecessarily
+pika({
+  nested: pika({ color: 'red' })
+})
+
+// ❌ DON'T: Mix concerns in one pika call
+pika({
+  // Component state (should use CSS variables)
+  opacity: isDisabled ? 0.5 : 1,
+  
+  // Layout (separate concern)
+  display: 'flex'
+})
+
+// ✅ DO: Use CSS variables for runtime values
+const styles = pika({
+  width: 'var(--size)',
+  opacity: 'var(--opacity)'
+})
+
+// ✅ DO: Apply runtime values separately
+<div :style="{ '--size': size, '--opacity': isDisabled ? 0.5 : 1 }" />
+```
+
+## Common Patterns
+
+### Button Component
+
+```typescript
+// Base button styles
+const buttonBase = pika({
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '0.5rem',
+  padding: '0.75rem 1rem',
+  borderRadius: '0.375rem',
+  border: 'none',
+  fontWeight: '500',
+  cursor: 'pointer',
+  transition: 'all 0.2s ease',
+  '&:hover': {
+    transform: 'translateY(-2px)',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+  },
+  '&:active': {
+    transform: 'translateY(0)'
+  },
+  '&:disabled': {
+    opacity: '0.5',
+    cursor: 'not-allowed'
+  }
+})
+
+// Variant styles
+const buttonPrimary = pika({
+  backgroundColor: '#3b82f6',
+  color: 'white',
+  '&:hover': {
+    backgroundColor: '#2563eb'
+  }
+})
+```
+
+### Card Component
+
+```typescript
+const card = pika({
+  backgroundColor: 'white',
+  borderRadius: '0.5rem',
+  border: '1px solid #e5e7eb',
+  boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+  overflow: 'hidden',
+  
+  '@media (prefers-color-scheme: dark)': {
+    backgroundColor: '#1f2937',
+    borderColor: '#374151'
+  }
+})
+
+const cardHeader = pika({
+  padding: '1.5rem',
+  borderBottom: '1px solid #e5e7eb'
+})
+
+const cardBody = pika({
+  padding: '1.5rem'
+})
+
+const cardFooter = pika({
+  padding: '1rem 1.5rem',
+  backgroundColor: '#f9fafb'
+})
+```
+
+### Grid Layout
+
+```typescript
+const gridContainer = pika({
+  display: 'grid',
+  gridTemplateColumns: '1fr',
+  gap: '1rem',
+  
+  '@media (min-width: 640px)': {
+    gridTemplateColumns: 'repeat(2, 1fr)'
+  },
+  '@media (min-width: 1024px)': {
+    gridTemplateColumns: 'repeat(4, 1fr)',
+    gap: '2rem'
+  }
+})
+```
+
+## See Also
+
+For more details, see the reference guides:
+- [references/API-REFERENCE.md](references/API-REFERENCE.md) - Complete API documentation
+- [references/PLUGIN-GUIDE.md](references/PLUGIN-GUIDE.md) - Using plugins
+- [references/TROUBLESHOOTING.md](references/TROUBLESHOOTING.md) - Common issues and solutions
