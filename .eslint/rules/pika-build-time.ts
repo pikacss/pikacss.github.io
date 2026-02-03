@@ -39,8 +39,18 @@ export const pikaBuildTimeRule = createRule({
 				}
 
 				// Get TypeScript parser services for type checking
-				const services = ESLintUtils.getParserServices(context)
-				const checker = services.program.getTypeChecker()
+				// Gracefully handle cases where type info is not available (e.g., Vue files without proper parser config)
+				let services: ReturnType<typeof ESLintUtils.getParserServices> | null = null
+				let checker: ts.TypeChecker | null = null
+				try {
+					services = ESLintUtils.getParserServices(context)
+					checker = services.program.getTypeChecker()
+				}
+				catch {
+					// Type information not available - skip type-based analysis
+					// This can happen in Vue files or other non-TS contexts
+					return
+				}
 
 				// Check if argument is an object expression
 				if (arg.type === AST_NODE_TYPES.ObjectExpression) {
@@ -61,8 +71,8 @@ export const pikaBuildTimeRule = createRule({
 								? String(property.key.value)
 								: 'property'
 
-						// Check if value is runtime-dynamic
-						if (isRuntimeDynamic(value, checker, services)) {
+						// Check if value is runtime-dynamic (requires type info)
+						if (checker && services && isRuntimeDynamic(value, checker, services)) {
 							const varName = getVariableName(value)
 
 							context.report({
@@ -83,7 +93,7 @@ export const pikaBuildTimeRule = createRule({
 					}
 				}
 				// If the entire argument is a variable, check if it's static
-				else if (isRuntimeDynamic(arg, checker, services)) {
+				else if (checker && services && isRuntimeDynamic(arg, checker, services)) {
 					const varName = getVariableName(arg)
 
 					context.report({
