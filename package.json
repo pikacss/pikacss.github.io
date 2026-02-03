@@ -25,6 +25,7 @@
 		"docs:preview": "pnpm -r --filter=@pikacss/docs run preview",
 		"typecheck": "pnpm -r typecheck",
 		"test": "vitest run",
+		"test:eslint": "vitest run --config vitest.config.eslint.ts",
 		"lint": "eslint --fix .",
 		"prepare": "simple-git-hooks"
 	},
@@ -38,6 +39,7 @@
 		"@vitest/coverage-v8": "catalog:",
 		"bumpp": "catalog:",
 		"eslint": "catalog:",
+		"execa": "^9.6.1",
 		"happy-dom": "catalog:",
 		"lint-staged": "catalog:",
 		"pathe": "catalog:",
