@@ -17,6 +17,12 @@ This roadmap delivers systematic correction of 73 markdown files containing AI-g
 
 **Dependencies:** None (foundation)
 
+**Plans:** 2 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Configure ESLint for markdown validation
+- [ ] 01-02-PLAN.md — Set up link validation infrastructure with CI integration
+
 **Requirements Covered:**
 - VERIFY-01: Code examples reference actual test files via VitePress transclusion
 - VERIFY-02: All code examples execute successfully through Vitest test suite
