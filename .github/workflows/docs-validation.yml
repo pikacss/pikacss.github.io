@@ -1,0 +1,53 @@
+name: Documentation Validation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**/*.md'
+      - '**/*.md'
+      - '.github/skills/**/*.md'
+      - 'scripts/check-*.sh'
+      - scripts/run-all-checks.sh
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'docs/**/*.md'
+      - '**/*.md'
+      - '.github/skills/**/*.md'
+      - 'scripts/check-*.sh'
+      - scripts/run-all-checks.sh
+
+jobs:
+  structural-validation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+
+      - name: install dependencies
+        run: pnpm install
+
+      - name: run documentation validation
+        run: bash scripts/run-all-checks.sh
+
+      - name: upload validation report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-report
+          path: |
+            scripts/check-*.sh
+            scripts/run-all-checks.sh
+          retention-days: 7
