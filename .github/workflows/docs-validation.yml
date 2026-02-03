@@ -8,8 +8,10 @@ on:
       - 'docs/**/*.md'
       - '**/*.md'
       - '.github/skills/**/*.md'
+      - '.eslint/**'
       - 'scripts/check-*.sh'
       - scripts/run-all-checks.sh
+      - scripts/run-pikacss-validation.sh
 
   pull_request:
     branches:
@@ -18,11 +20,14 @@ on:
       - 'docs/**/*.md'
       - '**/*.md'
       - '.github/skills/**/*.md'
+      - '.eslint/**'
       - 'scripts/check-*.sh'
       - scripts/run-all-checks.sh
+      - scripts/run-pikacss-validation.sh
 
 jobs:
   structural-validation:
+    name: Structural Validation
     runs-on: ubuntu-latest
 
     steps:
@@ -50,4 +55,40 @@ jobs:
           path: |
             scripts/check-*.sh
             scripts/run-all-checks.sh
+          retention-days: 7
+
+  pikacss-validation:
+    name: PikaCSS Constraint Validation
+    runs-on: ubuntu-latest
+    needs: structural-validation
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: pnpm
+
+      - name: install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: build packages (needed for integration tests)
+        run: pnpm build
+
+      - name: run PikaCSS validation
+        run: pnpm validate:pikacss
+
+      - name: upload test results on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pikacss-validation-results
+          path: |
+            .eslint/tests/integration/
+            /tmp/pika-*/
           retention-days: 7
