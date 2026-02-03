@@ -20,9 +20,9 @@ This roadmap delivers systematic correction of 73 markdown files containing AI-g
 **Plans:** 3 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Configure ESLint for markdown validation
-- [ ] 01-02-PLAN.md — Set up link validation infrastructure with CI integration
-- [ ] 01-03-PLAN.md — Create file reference validator and placeholder detection scripts
+- [ ] 01-01-PLAN.md — Enable ESLint markdown validation by removing ignores
+- [ ] 01-02-PLAN.md — Create validation scripts (links, file refs, placeholders)
+- [ ] 01-03-PLAN.md — Integrate with CI and document quality baseline
 
 **Requirements Covered (Structural Validation Only):**
 - QUALITY-01: All internal markdown links resolve correctly
