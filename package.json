@@ -27,6 +27,7 @@
 		"test": "vitest run",
 		"test:eslint": "vitest run --config vitest.config.eslint.ts",
 		"lint": "NODE_OPTIONS='--import tsx' eslint --fix .",
+		"validate:pikacss": "./scripts/run-pikacss-validation.sh",
 		"prepare": "simple-git-hooks"
 	},
 	"devDependencies": {
