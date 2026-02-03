@@ -59,7 +59,7 @@ Plans:
 **Plans:** 4 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — ESLint custom rules (build-time, package boundaries)
+- [x] 02-01-PLAN.md — ESLint custom rules (build-time, package boundaries)
 - [ ] 02-02-PLAN.md — Module augmentation rule and custom formatter
 - [ ] 02-03-PLAN.md — Multi-bundler test infrastructure (Vite, Nuxt, Webpack)
 - [ ] 02-04-PLAN.md — Integration and CI configuration
