@@ -21,14 +21,14 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 ## Current Position
 
 **Phase:** 1 of 7 (Foundation & Verification Infrastructure)
-**Plan:** 01-01 complete, 01-02 and 01-03 pending
+**Plan:** 01-01 and 01-02 complete, 01-03 pending
 **Status:** In progress
-**Last activity:** 2026-02-03 - Completed 01-01-PLAN.md
-**Progress:** █▱▱▱▱▱▱▱▱▱ ~10% (baseline infrastructure started)
+**Last activity:** 2026-02-03 - Completed 01-02-PLAN.md
+**Progress:** ██▱▱▱▱▱▱▱▱ ~20% (validation scripts created)
 
 **Current Milestone:** Phase 1 - Foundation & Verification Infrastructure
 - ✅ ESLint markdown validation enabled (01-01)
-- ⏳ Validation scripts pending (links, file refs, placeholders)
+- ✅ Validation scripts created (links, file refs, placeholders) (01-02)
 - ⏳ CI integration pending
 - ⏳ Quality baseline documentation pending
 
@@ -46,8 +46,8 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 ### Quality
 - **Test coverage:** 0% (verification tests not yet written)
 - **Documentation accuracy:** Baseline established - 34/73 files have linting issues
-- **Link health:** Unknown (validation pending)
-- **Example success rate:** Unknown (execution testing pending)
+- **Link health:** Baseline established - multiple broken internal links detected
+- **Placeholder count:** 11 markers found (TODO, FIXME, "coming soon", etc.)
 
 ### Efficiency
 - **Phases completed:** 0/7 (0%)
@@ -68,13 +68,13 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 2026-02-03 | Dependency-ordered phases | Core → integration → frameworks → plugins prevents cascading failures | Phase 4 must complete before Phase 5 |
 | 2026-02-03 | Enable markdown validation with baseline | Removed markdown ignores from ESLint config; accept 213 issues as baseline for improvement | Structural validation active, code block false positives documented |
 | 2026-02-03 | Keep .planning/** gitignored | Planning docs remain separate from version control | Planning artifacts local-only for development process |
+| 2026-02-03 | Use temp files in bash scripts | macOS bash has nested loop issues; temp files more portable | Validation scripts reliable across platforms |
 
 ### Todos
 
 - [x] ~~Run `/gsd-plan-phase 1` to create execution plan for verification infrastructure~~ (Plans 01-01, 01-02, 01-03 created)
 - [x] ~~Enable ESLint markdown validation~~ (01-01 complete)
-- [ ] Set up markdown-link-check for link validation (01-02)
-- [ ] Create validation scripts for file references and placeholders (01-02)
+- [x] ~~Create validation scripts for links, file refs, placeholders~~ (01-02 complete)
 - [ ] Establish CI pipeline for verification tests (01-03)
 - [ ] Create test file structure for code examples (deferred to Phase 2)
 
@@ -86,6 +86,13 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 
 **Markdown Validation Baseline (01-01):**
 ESLint now validates all 73 markdown files. Current baseline: 213 issues (110 errors, 103 warnings) across 34 files, primarily code block false positives. These will be addressed in Phase 2 through VitePress transclusion or ESLint rule configuration.
+
+**Validation Scripts Baseline (01-02):**
+Three bash scripts created for structural validation:
+- check-links.sh: Validates internal markdown links and anchors (found multiple broken links)
+- check-file-refs.sh: Validates file:line patterns (0 references found in current docs)
+- check-placeholders.sh: Detects TODO/FIXME/TBD markers (11 placeholders found)
+All scripts use temp file approach to avoid macOS bash nested loop issues.
 
 **Build-Time Constraint Critical:**
 All `pika()` examples must use statically analyzable arguments. Examples with runtime variables will fail in user projects even if they type-check in monorepo. Test through actual bundler, not just TypeScript compilation.
@@ -114,10 +121,10 @@ Examples must be tested as external consumers (install packages separately), not
 - Existing infrastructure: Vitest, VitePress, TypeScript, pnpm workspace
 
 **Where we left off:**
-Plan 01-01 complete: ESLint markdown validation enabled with baseline established. Ready for Plan 01-02 (validation scripts) and 01-03 (CI integration).
+Plans 01-01 and 01-02 complete: ESLint markdown validation enabled, three validation scripts created (check-links.sh, check-file-refs.sh, check-placeholders.sh). Ready for Plan 01-03 (CI integration).
 
 **Immediate next action:**
-Execute Plan 01-02 to create link checker and file reference validation scripts.
+Execute Plan 01-03 to integrate validation scripts into CI pipeline and document quality baseline.
 
 ### Context Preservation
 
