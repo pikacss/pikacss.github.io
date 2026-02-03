@@ -56,6 +56,14 @@ Plans:
 
 **Dependencies:** Phase 1 (requires markdown parser and code extractor)
 
+**Plans:** 4 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — ESLint custom rules (build-time, package boundaries)
+- [ ] 02-02-PLAN.md — Module augmentation rule and custom formatter
+- [ ] 02-03-PLAN.md — Multi-bundler test infrastructure (Vite, Nuxt, Webpack)
+- [ ] 02-04-PLAN.md — Integration and CI configuration
+
 **Requirements Covered:**
 - PIKA-01: All `pika()` examples comply with build-time constraint (statically analyzable args)
 - PIKA-02: Package import paths respect monorepo layer boundaries (core → integration → unplugin → framework)
