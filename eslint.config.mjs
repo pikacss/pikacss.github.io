@@ -7,10 +7,6 @@ export default await deviltea({
 		},
 	},
 	ignores: [
-		'**/README.md',
-		'docs/**/*.md',
-		'.github/skills/**/*.md',
-		'**/AGENTS.md',
 		'.planning/**',
 	],
 })
