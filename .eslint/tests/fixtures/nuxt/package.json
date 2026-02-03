@@ -1,0 +1,16 @@
+{
+	"name": "pikacss-nuxt-fixture",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"build": "nuxt build"
+	},
+	"dependencies": {
+		"@pikacss/core": "workspace:*",
+		"@pikacss/nuxt-pikacss": "workspace:*"
+	},
+	"devDependencies": {
+		"nuxt": "^3.15.4",
+		"typescript": "catalog:"
+	}
+}
