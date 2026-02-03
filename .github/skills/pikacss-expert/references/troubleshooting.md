@@ -11,10 +11,10 @@
 1. **PikaCSS CSS not loaded**
    ```
    Check if pika.gen.css is imported in your project
-   
+
    ✅ Correct:
    import 'pika.gen.css'
-   
+
    or Vite automatically handles it
    ```
 
@@ -30,7 +30,7 @@
    // ❌ Specificity conflict
    pika({ color: 'blue' })
    /* Your CSS: .p { color: red !important; } */
-   
+
    // ✅ Solution: Use more specific selectors
    pika({ color: 'blue !important' })
    ```
@@ -50,7 +50,7 @@
 ```typescript
 // ❌ Error: color is runtime variable
 function Button({ color }) {
-  const styles = pika({ color })
+	const styles = pika({ color })
 }
 ```
 
@@ -67,7 +67,7 @@ const styles = pika({
 
 function Button({ color, bg }) {
   return (
-    <button 
+    <button
       className={styles.className}
       style={{
         '--button-color': color,
@@ -135,8 +135,8 @@ const btn2 = pika({ padding: '1rem', color: 'red' })
 
 ```typescript
 // Safe - PikaCSS generates different classes
-const btn1 = pika({ color: 'white' })      // .color-white
-const btn2 = pika({ color: 'red' })        // .color-red
+const btn1 = pika({ color: 'white' }) // .color-white
+const btn2 = pika({ color: 'red' }) // .color-red
 
 // Safe - Combined into one class
 const styles = pika({ color: 'blue', padding: '1rem' })
@@ -157,13 +157,13 @@ const styles = pika({ color: 'blue', padding: '1rem' })
        {items.map(item => pika({ color: item.color }))}
      </>
    )
-   
+
    // ✅ Efficient: use CSS variables
    const styles = pika({ color: 'var(--item-color)' })
    return (
      <>
        {items.map(item => (
-         <div style={{ '--item-color': item.color }} 
+         <div style={{ '--item-color': item.color }}
               className={styles.className} />
        ))}
      </>
@@ -176,10 +176,10 @@ const styles = pika({ color: 'blue', padding: '1rem' })
    async transformStyleDefinitions(defs) {
      return await expensiveProcessing(defs)
    }
-   
+
    // ✅ Fast: runs once during setup
    async configureEngine(engine) {
-     engine.registerShortcut('btn', 
+     engine.registerShortcut('btn',
        expensiveComputedShortcut())
    }
    ```
@@ -204,7 +204,7 @@ const styles = pika({ color: 'blue', padding: '1rem' })
 **1. Property not recognized**
 ```typescript
 // ❌ Error: 'colr' is not a valid property
-pika({ colr: 'red' })  // typo!
+pika({ colr: 'red' }) // typo!
 
 // ✅ Correct
 pika({ color: 'red' })
@@ -222,10 +222,10 @@ pika({ '@media (min-width: 640px)': { color: 'red' } })
 **3. Missing plugin types**
 ```typescript
 // ❌ Error: 'icon' shortcut not recognized
-pika({ icon: { name: 'check' } })
-
 // ✅ Add plugin import to get types
 import 'from @pikacss/plugin-icons'
+
+pika({ icon: { name: 'check' } })
 pika({ icon: { name: 'check' } })
 ```
 
@@ -244,16 +244,16 @@ pika({ icon: { name: 'check' } })
 ```typescript
 // ❌ Not working
 pika({
-  '@media (max-width: 768px)': {
-    fontSize: '14px'
-  }
+	'@media (max-width: 768px)': {
+		fontSize: '14px'
+	}
 })
 
 // ❌ Syntax error
 pika({
-  '@media mobile': {
-    fontSize: '14px'
-  }
+	'@media mobile': {
+		fontSize: '14px'
+	}
 })
 ```
 
@@ -261,21 +261,21 @@ pika({
 ```typescript
 // ✅ Correct
 pika({
-  fontSize: '16px',
-  '@media (max-width: 768px)': {
-    fontSize: '14px'
-  }
+	'fontSize': '16px',
+	'@media (max-width: 768px)': {
+		fontSize: '14px'
+	}
 })
 
 // ✅ Multiple breakpoints
 pika({
-  fontSize: '14px',
-  '@media (min-width: 640px)': {
-    fontSize: '16px'
-  },
-  '@media (min-width: 1024px)': {
-    fontSize: '18px'
-  }
+	'fontSize': '14px',
+	'@media (min-width: 640px)': {
+		fontSize: '16px'
+	},
+	'@media (min-width: 1024px)': {
+		fontSize: '18px'
+	}
 })
 ```
 
@@ -304,29 +304,29 @@ pika({
 ```typescript
 // ❌ Incorrect syntax
 pika({
-  color: 'blue',
-  'hover': { color: 'red' }  // Missing &
+	color: 'blue',
+	hover: { color: 'red' } // Missing &
 })
 
 // ✅ Correct
 pika({
-  color: 'blue',
-  '&:hover': { color: 'red' }
+	'color': 'blue',
+	'&:hover': { color: 'red' }
 })
 ```
 
 **Common Pseudo-Classes:**
 ```typescript
 pika({
-  backgroundColor: 'white',
-  
-  '&:hover': { backgroundColor: '#f5f5f5' },
-  '&:active': { transform: 'scale(0.95)' },
-  '&:focus': { outline: '2px solid blue' },
-  '&:focus-visible': { outline: '2px solid blue' },
-  '&:disabled': { opacity: '0.5' },
-  '&:visited': { color: 'purple' },
-  '&:checked': { backgroundColor: 'blue' }
+	'backgroundColor': 'white',
+
+	'&:hover': { backgroundColor: '#f5f5f5' },
+	'&:active': { transform: 'scale(0.95)' },
+	'&:focus': { outline: '2px solid blue' },
+	'&:focus-visible': { outline: '2px solid blue' },
+	'&:disabled': { opacity: '0.5' },
+	'&:visited': { color: 'purple' },
+	'&:checked': { backgroundColor: 'blue' }
 })
 ```
 
@@ -338,17 +338,17 @@ pika({
 ```typescript
 // ❌ Missing content property
 pika({
-  $before: {
-    color: 'gray'  // No content!
-  }
+	$before: {
+		color: 'gray' // No content!
+	}
 })
 
 // ✅ Correct
 pika({
-  $before: {
-    content: '"→ "',
-    color: 'gray'
-  }
+	$before: {
+		content: '"→ "',
+		color: 'gray'
+	}
 })
 ```
 
@@ -356,12 +356,12 @@ pika({
 
 ```typescript
 pika({
-  $after: {
-    content: '""',  // Empty content still required
-    display: 'block',
-    height: '1px',
-    backgroundColor: '#ddd'
-  }
+	$after: {
+		content: '""', // Empty content still required
+		display: 'block',
+		height: '1px',
+		backgroundColor: '#ddd'
+	}
 })
 ```
 
@@ -375,20 +375,20 @@ pika({
    ```typescript
    // ❌ Plugin not in array
    const engine = createEngine({
-     plugins: []  // Missing iconPlugin!
+   	plugins: [] // Missing iconPlugin!
    })
-   
+
    // ✅ Plugin activated
    const engine = createEngine({
-     plugins: [iconPlugin()]
+   	plugins: [iconPlugin()]
    })
    ```
 
 2. **Plugin not initialized**
    ```typescript
    // ❌ Missing parentheses
-   plugins: [myPlugin]  // Wrong!
-   
+   plugins: [myPlugin] // Wrong!
+
    // ✅ Correct
    plugins: [myPlugin()]
    ```
@@ -396,24 +396,24 @@ pika({
 3. **Import statement missing**
    ```typescript
    // ❌ Not imported
-   pika({ icon: { name: 'check' } })
-   
    // ✅ Import plugin
    import { iconPlugin } from '@pikacss/plugin-icons'
+
+   pika({ icon: { name: 'check' } })
    ```
 
 **Debug:**
 ```typescript
 // Check if plugin is loaded
 const engine = createEngine({
-  plugins: [iconPlugin()]
+	plugins: [iconPlugin()]
 })
 
 const result = await engine.process({
-  icon: { name: 'check' }
+	icon: { name: 'check' }
 })
 
-console.log(result.css)  // Should contain icon styles
+console.log(result.css) // Should contain icon styles
 ```
 
 ### Browser Compatibility
@@ -428,12 +428,12 @@ console.log(result.css)  // Should contain icon styles
 ```typescript
 // ✅ With fallback
 pika({
-  display: 'flex',
-  display: 'grid',  // Fallback to flex in old browsers
-  
-  // Vendor prefix for older Safari
-  WebkitBoxOrient: 'vertical',
-  WebkitLineClamp: '3'
+	display: 'flex',
+	display: 'grid', // Fallback to flex in old browsers
+
+	// Vendor prefix for older Safari
+	WebkitBoxOrient: 'vertical',
+	WebkitLineClamp: '3'
 })
 ```
 

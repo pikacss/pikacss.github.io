@@ -53,7 +53,7 @@ description: Comprehensive developer workflow guide for PikaCSS...
 - **When loaded**: When task matches skill description
 - **Token cost**: ~1000-3000 tokens
 - **Content**: Practical guidance, examples, decision trees
-- **Strategy**: 
+- **Strategy**:
   - `pikacss-dev/SKILL.md` (192 lines) - Lean main file
   - `pikacss-expert/SKILL.md` (594 lines) - Comprehensive main file
 
@@ -181,20 +181,20 @@ Each concept lives in exactly one place.
 1. Agent startup
    Loads: Skill metadata only (~100 tokens)
    - Discovers: pikacss-dev, pikacss-expert
-   
+
 2. User: "Fix bug in @pikacss/core where colors aren't..."
    Agent decides: Task matches pikacss-dev
-   
+
 3. Load Full Skill
    Loads: pikacss-dev/SKILL.md (~2000 tokens)
-   
+
 4. Agent searches for "find affected package"
    Gets: Link to references/IMPLEMENTATION-GUIDE.md
-   
+
 5. Load Reference On-Demand
    Loads: IMPLEMENTATION-GUIDE.md (~500 tokens)
    Shows bug fix decision tree
-   
+
 6. Total context for solving bug: ~2600 tokens (very efficient!)
 ```
 
@@ -203,22 +203,22 @@ Each concept lives in exactly one place.
 ```
 1. Agent startup
    Loads: Skill metadata only (~100 tokens)
-   
+
 2. User: "How do I define styles with responsive breakpoints?"
    Agent decides: Task matches pikacss-expert
-   
+
 3. Load Full Skill
    Loads: pikacss-expert/SKILL.md (~3500 tokens)
    Shows media query examples
-   
+
 4. User: "But what about all the pseudo-elements?"
    Agent searches SKILL.md for pseudo-elements
    Finds reference to API-REFERENCE.md
-   
+
 5. Load Reference On-Demand
    Loads: API-REFERENCE.md (~500 tokens)
    Shows all pseudo-element options
-   
+
 6. Total context: ~4100 tokens (comprehensive help without waste!)
 ```
 

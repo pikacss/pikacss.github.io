@@ -10,10 +10,10 @@ PikaCSS works seamlessly with Server-Side Rendering (SSR) and Static Site Genera
 
 ## Why PikaCSS Works Well with SSR/SSG
 
-✅ **Build-Time Transformation**: Styles are processed during build, not at runtime  
-✅ **No Hydration Issues**: No JavaScript needed for styles to work  
-✅ **Critical CSS Included**: All CSS is generated and can be inlined  
-✅ **Zero Flash of Unstyled Content (FOUC)**: Styles are present from initial render  
+✅ **Build-Time Transformation**: Styles are processed during build, not at runtime
+✅ **No Hydration Issues**: No JavaScript needed for styles to work
+✅ **Critical CSS Included**: All CSS is generated and can be inlined
+✅ **Zero Flash of Unstyled Content (FOUC)**: Styles are present from initial render
 ✅ **Framework Agnostic**: Works with any SSR/SSG framework
 
 ## General Principles
@@ -36,9 +36,9 @@ Make sure your build process includes PikaCSS plugin:
 ```typescript
 // Build tools must include PikaCSS
 export default {
-  plugins: [
-    pikacss() // Vite, Webpack, etc.
-  ]
+	plugins: [
+		pikacss() // Vite, Webpack, etc.
+	]
 }
 ```
 
@@ -71,87 +71,89 @@ import pikacss from '@pikacss/unplugin-pikacss/webpack'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: (config) => {
-    config.plugins.push(
-      pikacss({
-        scan: {
-          include: ['app/**/*.{js,ts,jsx,tsx}', 'components/**/*.{js,ts,jsx,tsx}']
-        }
-      })
-    )
-    return config
-  }
+	webpack: (config) => {
+		config.plugins.push(
+			pikacss({
+				scan: {
+					include: ['app/**/*.{js,ts,jsx,tsx}', 'components/**/*.{js,ts,jsx,tsx}']
+				}
+			})
+		)
+		return config
+	}
 }
 
 export default nextConfig
 ```
 
 ```tsx
+import type { Metadata } from 'next'
 // app/layout.tsx
 import 'pika.css'
-import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'My App',
-  description: 'App with PikaCSS'
+	title: 'My App',
+	description: 'App with PikaCSS'
 }
 
 export default function RootLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode
+	children: React.ReactNode
 }) {
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  )
+	return (
+		<html lang="en">
+			<body>{children}</body>
+		</html>
+	)
 }
 ```
 
 ```tsx
 // app/page.tsx
 export default function Home() {
-  return (
-    <main className={pika({
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    })}>
-      <h1 className={pika({ fontSize: '2rem', color: '#3b82f6' })}>
-        Hello Next.js + PikaCSS
-      </h1>
-    </main>
-  )
+	return (
+		<main className={pika({
+			minHeight: '100vh',
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'center'
+		})}
+		>
+			<h1 className={pika({ fontSize: '2rem', color: '#3b82f6' })}>
+				Hello Next.js + PikaCSS
+			</h1>
+		</main>
+	)
 }
 ```
 
 ### Pages Router (Next.js 12 and below)
 
 ```tsx
+import type { AppProps } from 'next/app'
 // pages/_app.tsx
 import 'pika.css'
-import type { AppProps } from 'next/app'
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+	return <Component {...pageProps} />
 }
 ```
 
 ```tsx
 // pages/index.tsx
 export default function Home() {
-  return (
-    <div className={pika({
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    })}>
-      <h1>Hello Next.js</h1>
-    </div>
-  )
+	return (
+		<div className={pika({
+			minHeight: '100vh',
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'center'
+		})}
+		>
+			<h1>Hello Next.js</h1>
+		</div>
+	)
 }
 ```
 
@@ -167,31 +169,33 @@ pnpm add -D @pikacss/nuxt-pikacss
 ```typescript
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ['@pikacss/nuxt-pikacss'],
-  
-  pikacss: {
-    // Options (all optional)
-    scan: {
-      include: ['**/*.vue', '**/*.tsx', '**/*.jsx'],
-      exclude: ['node_modules/**']
-    }
-  }
+	modules: ['@pikacss/nuxt-pikacss'],
+
+	pikacss: {
+		// Options (all optional)
+		scan: {
+			include: ['**/*.vue', '**/*.tsx', '**/*.jsx'],
+			exclude: ['node_modules/**']
+		}
+	}
 })
 ```
 
 ```vue
 <!-- app.vue -->
 <template>
-  <div :class="pika({
-    minHeight: '100vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  })">
-    <h1 :class="pika({ fontSize: '2rem', color: '#3b82f6' })">
-      Hello Nuxt + PikaCSS
-    </h1>
-  </div>
+	<div
+		:class="pika({
+			minHeight: '100vh',
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'center',
+		})"
+	>
+		<h1 :class="pika({ fontSize: '2rem', color: '#3b82f6' })">
+			Hello Nuxt + PikaCSS
+		</h1>
+	</div>
 </template>
 ```
 
@@ -211,14 +215,14 @@ pnpm add -D @pikacss/unplugin-pikacss
 ```
 
 ```typescript
+import pikacss from '@pikacss/unplugin-pikacss/vite'
 // astro.config.mjs
 import { defineConfig } from 'astro/config'
-import pikacss from '@pikacss/unplugin-pikacss/vite'
 
 export default defineConfig({
-  vite: {
-    plugins: [pikacss()]
-  }
+	vite: {
+		plugins: [pikacss()]
+	}
 })
 ```
 
@@ -282,59 +286,60 @@ pnpm add -D @pikacss/unplugin-pikacss
 ```
 
 ```typescript
+import pikacss from '@pikacss/unplugin-pikacss/vite'
+import { vitePlugin as remix } from '@remix-run/dev'
 // vite.config.ts
 import { defineConfig } from 'vite'
-import { vitePlugin as remix } from '@remix-run/dev'
-import pikacss from '@pikacss/unplugin-pikacss/vite'
 
 export default defineConfig({
-  plugins: [
-    remix(),
-    pikacss()
-  ]
+	plugins: [
+		remix(),
+		pikacss()
+	]
 })
 ```
 
 ```tsx
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react'
 // app/root.tsx
 import 'pika.css'
-import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react'
 
 export default function App() {
-  return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
-      </body>
-    </html>
-  )
+	return (
+		<html lang="en">
+			<head>
+				<meta charSet="utf-8" />
+				<meta name="viewport" content="width=device-width,initial-scale=1" />
+				<Meta />
+				<Links />
+			</head>
+			<body>
+				<Outlet />
+				<ScrollRestoration />
+				<Scripts />
+				<LiveReload />
+			</body>
+		</html>
+	)
 }
 ```
 
 ```tsx
 // app/routes/_index.tsx
 export default function Index() {
-  return (
-    <div className={pika({
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    })}>
-      <h1 className={pika({ fontSize: '2rem', color: '#3b82f6' })}>
-        Hello Remix + PikaCSS
-      </h1>
-    </div>
-  )
+	return (
+		<div className={pika({
+			minHeight: '100vh',
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'center'
+		})}
+		>
+			<h1 className={pika({ fontSize: '2rem', color: '#3b82f6' })}>
+				Hello Remix + PikaCSS
+			</h1>
+		</div>
+	)
 }
 ```
 
@@ -346,16 +351,16 @@ pnpm add -D @pikacss/unplugin-pikacss
 ```
 
 ```typescript
+import pikacss from '@pikacss/unplugin-pikacss/vite'
 // vite.config.ts
 import { sveltekit } from '@sveltejs/kit/vite'
-import pikacss from '@pikacss/unplugin-pikacss/vite'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  plugins: [
-    sveltekit(),
-    pikacss()
-  ]
+	plugins: [
+		sveltekit(),
+		pikacss()
+	]
 })
 ```
 
@@ -377,7 +382,7 @@ export default defineConfig({
     alignItems: 'center',
     justifyContent: 'center'
   })
-  
+
   const titleClass = pika({
     fontSize: '2rem',
     color: '#3b82f6'
@@ -396,14 +401,14 @@ export default defineConfig({
 ### Vite-based SSG (VitePress, etc.)
 
 ```typescript
+import pikacss from '@pikacss/unplugin-pikacss/vite'
 // .vitepress/config.ts
 import { defineConfig } from 'vitepress'
-import pikacss from '@pikacss/unplugin-pikacss/vite'
 
 export default defineConfig({
-  vite: {
-    plugins: [pikacss()]
-  }
+	vite: {
+		plugins: [pikacss()]
+	}
 })
 ```
 
@@ -419,9 +424,9 @@ pnpm add -D @pikacss/unplugin-pikacss
 const pikacss = require('@pikacss/unplugin-pikacss/webpack')
 
 exports.onCreateWebpackConfig = ({ actions }) => {
-  actions.setWebpackConfig({
-    plugins: [pikacss()]
-  })
+	actions.setWebpackConfig({
+		plugins: [pikacss()]
+	})
 }
 ```
 
@@ -477,24 +482,25 @@ This is automatic with PikaCSS's atomic generation - unused styles are never gen
 ```tsx
 'use client' // Next.js App Router
 
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export function ClientComponent() {
-  const [mounted, setMounted] = useState(false)
+	const [mounted, setMounted] = useState(false)
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+	useEffect(() => {
+		setMounted(true)
+	}, [])
 
-  // Styles work on both server and client
-  return (
-    <div className={pika({
-      backgroundColor: mounted ? '#3b82f6' : '#6b7280',
-      transition: 'background-color 0.3s'
-    })}>
-      {mounted ? 'Client Rendered' : 'Server Rendered'}
-    </div>
-  )
+	// Styles work on both server and client
+	return (
+		<div className={pika({
+			backgroundColor: mounted ? '#3b82f6' : '#6b7280',
+			transition: 'background-color 0.3s'
+		})}
+		>
+			{mounted ? 'Client Rendered' : 'Server Rendered'}
+		</div>
+	)
 }
 ```
 
@@ -505,17 +511,18 @@ export function ClientComponent() {
 import dynamic from 'next/dynamic'
 
 const HeavyComponent = dynamic(() => import('./HeavyComponent'), {
-  ssr: false,
-  loading: () => (
-    <div className={pika({
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: '200px'
-    })}>
-      Loading...
-    </div>
-  )
+	ssr: false,
+	loading: () => (
+		<div className={pika({
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'center',
+			height: '200px'
+		})}
+		>
+			Loading...
+		</div>
+	)
 })
 ```
 

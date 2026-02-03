@@ -8,13 +8,13 @@ All plugins must implement the `EnginePlugin` interface:
 
 ```typescript
 interface EnginePlugin {
-  name: string
-  order?: 'pre' | 'post'
-  hooks?: {
-    configureEngine?: Hook
-    transformStyleDefinitions?: Hook
-    // ... other hooks
-  }
+	name: string
+	order?: 'pre' | 'post'
+	hooks?: {
+		configureEngine?: Hook
+		transformStyleDefinitions?: Hook
+		// ... other hooks
+	}
 }
 ```
 
@@ -26,13 +26,13 @@ Use `defineEnginePlugin` helper:
 import { defineEnginePlugin } from '@pikacss/core'
 
 export function myPlugin(options?: Options): EnginePlugin {
-  return defineEnginePlugin({
-    name: 'my-plugin',
-    order: 'post', // Control execution order
-    async configureEngine(engine) {
-      // Configure engine here
-    }
-  })
+	return defineEnginePlugin({
+		name: 'my-plugin',
+		order: 'post', // Control execution order
+		async configureEngine(engine) {
+			// Configure engine here
+		}
+	})
 }
 ```
 
@@ -91,22 +91,22 @@ Plugins declare their configuration interface:
 ```typescript
 // packages/plugin-myfeature/src/index.ts
 declare module '@pikacss/core' {
-  interface EngineConfig {
-    myFeatureOption?: string
-    myFeatureSettings?: {
-      enabled: boolean
-      level: number
-    }
-  }
+	interface EngineConfig {
+		myFeatureOption?: string
+		myFeatureSettings?: {
+			enabled: boolean
+			level: number
+		}
+	}
 }
 
 export function myFeature(opts?: Options): EnginePlugin {
-  return defineEnginePlugin({
-    name: 'my-feature',
-    configureEngine(engine) {
-      // User can now pass myFeatureOption to engine config
-    }
-  })
+	return defineEnginePlugin({
+		name: 'my-feature',
+		configureEngine(engine) {
+			// User can now pass myFeatureOption to engine config
+		}
+	})
 }
 ```
 
@@ -116,14 +116,14 @@ Plugins can register new shortcuts:
 
 ```typescript
 declare module '@pikacss/core' {
-  interface Shortcuts {
-    btn: {
-      px: string
-      py: string
-      rounded: string
-      // ... other properties
-    }
-  }
+	interface Shortcuts {
+		btn: {
+			px: string
+			py: string
+			rounded: string
+			// ... other properties
+		}
+	}
 }
 ```
 
@@ -184,12 +184,12 @@ Plugins always list `@pikacss/core` as peer dependency:
 
 ```json
 {
-  "peerDependencies": {
-    "@pikacss/core": "workspace:*"
-  },
-  "devDependencies": {
-    "@pikacss/core": "workspace:*"
-  }
+	"peerDependencies": {
+		"@pikacss/core": "workspace:*"
+	},
+	"devDependencies": {
+		"@pikacss/core": "workspace:*"
+	}
 }
 ```
 
@@ -199,9 +199,9 @@ For external integrations, use optional dependencies:
 
 ```json
 {
-  "optionalDependencies": {
-    "some-external-lib": "^1.0.0"
-  }
+	"optionalDependencies": {
+		"some-external-lib": "^1.0.0"
+	}
 }
 ```
 
@@ -228,10 +228,10 @@ Runs during engine initialization:
 configureEngine(engine) {
   // Register shortcuts
   engine.registerShortcut('btn', {...})
-  
+
   // Add preflights
   engine.addPreflight('* { margin: 0; }')
-  
+
   // Configure defaults
   engine.setDefault('fontSize', '16px')
 }
@@ -261,45 +261,47 @@ async generateCSS(definitions) {
 ### Basic Plugin Test
 
 ```typescript
-import { describe, it, expect } from 'vitest'
 import { createEngine } from '@pikacss/core'
+import { describe, expect, it } from 'vitest'
 import { myPlugin } from '../src'
 
 describe('my-plugin', () => {
-  it('should register shortcuts', async () => {
-    const engine = createEngine({
-      plugins: [myPlugin()]
-    })
-    
-    const result = await engine.process({
-      btn: true
-    })
-    
-    expect(result.css).toContain('.btn')
-  })
+	it('should register shortcuts', async () => {
+		const engine = createEngine({
+			plugins: [myPlugin()]
+		})
 
-  it('should handle options', () => {
-    const engine = createEngine({
-      plugins: [myPlugin({ 
-        prefix: 'custom-'
-      })]
-    })
-    
-    // Test with options
-  })
+		const result = await engine.process({
+			btn: true
+		})
 
-  it('should gracefully handle errors', async () => {
-    const engine = createEngine({
-      plugins: [myPlugin()]
-    })
-    
-    const result = await engine.process({
-      invalidInput: Symbol('not serializable')
-    })
-    
-    // Should not throw
-    expect(result).toBeDefined()
-  })
+		expect(result.css)
+			.toContain('.btn')
+	})
+
+	it('should handle options', () => {
+		const engine = createEngine({
+			plugins: [myPlugin({
+				prefix: 'custom-'
+			})]
+		})
+
+		// Test with options
+	})
+
+	it('should gracefully handle errors', async () => {
+		const engine = createEngine({
+			plugins: [myPlugin()]
+		})
+
+		const result = await engine.process({
+			invalidInput: Symbol('not serializable')
+		})
+
+		// Should not throw
+		expect(result)
+			.toBeDefined()
+	})
 })
 ```
 
@@ -307,22 +309,25 @@ describe('my-plugin', () => {
 
 ```typescript
 describe('plugins together', () => {
-  it('should work with other plugins', async () => {
-    const engine = createEngine({
-      plugins: [
-        pluginA(),
-        myPlugin(),
-        pluginB()
-      ]
-    })
-    
-    const result = await engine.process(styles)
-    
-    // Verify all plugins contributed
-    expect(result.css).toContain('plugin-a-style')
-    expect(result.css).toContain('my-plugin-style')
-    expect(result.css).toContain('plugin-b-style')
-  })
+	it('should work with other plugins', async () => {
+		const engine = createEngine({
+			plugins: [
+				pluginA(),
+				myPlugin(),
+				pluginB()
+			]
+		})
+
+		const result = await engine.process(styles)
+
+		// Verify all plugins contributed
+		expect(result.css)
+			.toContain('plugin-a-style')
+		expect(result.css)
+			.toContain('my-plugin-style')
+		expect(result.css)
+			.toContain('plugin-b-style')
+	})
 })
 ```
 
@@ -354,18 +359,18 @@ async configureEngine(engine) {
 
 ```typescript
 class MyPlugin {
-  private cache = new Map()
+	private cache = new Map()
 
-  async transformStyleDefinitions(defs) {
-    const cacheKey = JSON.stringify(defs)
-    if (this.cache.has(cacheKey)) {
-      return this.cache.get(cacheKey)
-    }
+	async transformStyleDefinitions(defs) {
+		const cacheKey = JSON.stringify(defs)
+		if (this.cache.has(cacheKey)) {
+			return this.cache.get(cacheKey)
+		}
 
-    const result = await expensiveTransform(defs)
-    this.cache.set(cacheKey, result)
-    return result
-  }
+		const result = await expensiveTransform(defs)
+		this.cache.set(cacheKey, result)
+		return result
+	}
 }
 ```
 
@@ -377,13 +382,13 @@ Registers icon shortcuts:
 
 ```typescript
 declare module '@pikacss/core' {
-  interface Shortcuts {
-    icon: {
-      name: string
-      size?: string
-      color?: string
-    }
-  }
+	interface Shortcuts {
+		icon: {
+			name: string
+			size?: string
+			color?: string
+		}
+	}
 }
 ```
 
@@ -403,11 +408,11 @@ Registers typography shortcuts:
 
 ```typescript
 declare module '@pikacss/core' {
-  interface Shortcuts {
-    h1: TypographyDef
-    h2: TypographyDef
-    // ... other headings
-  }
+	interface Shortcuts {
+		h1: TypographyDef
+		h2: TypographyDef
+		// ... other headings
+	}
 }
 ```
 
@@ -435,23 +440,23 @@ export function myPlugin(options?: Options): EnginePlugin {
 ```typescript
 // Create base plugin
 function basePlugin(): EnginePlugin {
-  return defineEnginePlugin({
-    name: 'base',
-    async configureEngine(engine) {
-      // Base functionality
-    }
-  })
+	return defineEnginePlugin({
+		name: 'base',
+		async configureEngine(engine) {
+			// Base functionality
+		}
+	})
 }
 
 // Extend with specialized plugin
 export function extendedPlugin(): EnginePlugin {
-  return defineEnginePlugin({
-    name: 'extended',
-    order: 'post',
-    async configureEngine(engine) {
-      // Enhanced functionality
-    }
-  })
+	return defineEnginePlugin({
+		name: 'extended',
+		order: 'post',
+		async configureEngine(engine) {
+			// Enhanced functionality
+		}
+	})
 }
 ```
 
@@ -459,18 +464,18 @@ export function extendedPlugin(): EnginePlugin {
 
 ```typescript
 export function myPlugin(userConfig?: UserConfig): EnginePlugin {
-  return defineEnginePlugin({
-    name: 'my-plugin',
-    async configureEngine(engine) {
-      const mergedConfig = {
-        ...defaultConfig,
-        ...userConfig
-      }
-      
-      engine.registerShortcut('feature', {
-        ...mergedConfig.feature
-      })
-    }
-  })
+	return defineEnginePlugin({
+		name: 'my-plugin',
+		async configureEngine(engine) {
+			const mergedConfig = {
+				...defaultConfig,
+				...userConfig
+			}
+
+			engine.registerShortcut('feature', {
+				...mergedConfig.feature
+			})
+		}
+	})
 }
 ```

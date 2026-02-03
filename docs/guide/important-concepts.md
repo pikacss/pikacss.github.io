@@ -19,6 +19,9 @@ This is only possible if the style definitions are **static** and deterministic.
 
 ```typescript
 // ✅ Static values
+// ✅ Static module imports
+import { COLORS } from './constants'
+
 const styles = pika({ color: 'red' })
 
 // ✅ Static string literals
@@ -27,9 +30,6 @@ const primary = pika({ color: '#3b82f6' })
 // ✅ Static variables
 const COLOR = 'blue'
 const styles2 = pika({ color: COLOR })
-
-// ✅ Static module imports
-import { COLORS } from './constants'
 const text = pika({ color: COLORS.primary })
 ```
 
@@ -38,7 +38,7 @@ const text = pika({ color: COLORS.primary })
 ```typescript
 // ❌ Runtime variables
 function Component({ color }) {
-  const styles = pika({ color }) // ❌ color comes from props
+	const styles = pika({ color }) // ❌ color comes from props
 }
 
 // ❌ Function calls
@@ -78,8 +78,8 @@ const styles = pika({ color: 'var(--user-color)' })
 **React**:
 ```tsx
 function Button({ color }) {
-  const styles = pika({ color: 'var(--btn-color)' })
-  return <button style={{ '--btn-color': color }} className={styles} />
+	const styles = pika({ color: 'var(--btn-color)' })
+	return <button style={{ '--btn-color': color }} className={styles} />
 }
 ```
 
@@ -91,9 +91,12 @@ const color = ref('blue')
 </script>
 
 <template>
-  <button :style="{ '--btn-color': color }" :class="styles">
-    Button
-  </button>
+	<button
+		:style="{ '--btn-color': color }"
+		:class="styles"
+	>
+		Button
+	</button>
 </template>
 ```
 

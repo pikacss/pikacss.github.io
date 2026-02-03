@@ -35,9 +35,9 @@ These plugins are automatically loaded and configured through the engine configu
 To use a plugin, add it to the `plugins` array in your PikaCSS configuration:
 
 ```typescript
+import { icons } from '@pikacss/plugin-icons'
 // pika.config.ts
 import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
-import { icons } from '@pikacss/plugin-icons'
 
 export default defineEngineConfig({
 	plugins: [
@@ -55,9 +55,9 @@ Don't forget to call the plugin function! A common mistake is writing `plugins: 
 Many plugins accept configuration options. Plugin-specific configs are placed at the root level of the configuration:
 
 ```typescript
+import { icons } from '@pikacss/plugin-icons'
 // pika.config.ts
 import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
-import { icons } from '@pikacss/plugin-icons'
 
 export default defineEngineConfig({
 	plugins: [icons()],

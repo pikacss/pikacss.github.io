@@ -20,9 +20,9 @@ import { defineEngineConfig } from '@pikacss/core'
 import { typography } from '@pikacss/plugin-typography'
 
 export default defineEngineConfig({
-  plugins: [
-    typography() // Note: must call function
-  ]
+	plugins: [
+		typography() // Note: must call function
+	]
 })
 ```
 
@@ -47,7 +47,7 @@ The Typography plugin provides modular shortcuts that you can mix and match to i
 ### Why Modular?
 
 - ✅ **Smaller CSS Bundle**: Only include the styles you actually use
-- ✅ **Better Performance**: Less CSS to parse and apply  
+- ✅ **Better Performance**: Less CSS to parse and apply
 - ✅ **More Flexible**: Combine exactly what you need for each section
 - ✅ **Easier Debugging**: Know exactly which styles are applied
 - ✅ **Better Control**: Avoid style conflicts with unused elements
@@ -187,16 +187,16 @@ import { defineEngineConfig } from '@pikacss/core'
 import { typography } from '@pikacss/plugin-typography'
 
 export default defineEngineConfig({
-  plugins: [
-    typography() // Note: must call function
-  ],
-  typography: {
-    variables: {
-      '--pk-prose-color-body': '#374151',
-      '--pk-prose-color-headings': '#111827',
-      '--pk-prose-color-links': '#2563eb',
-    }
-  }
+	plugins: [
+		typography() // Note: must call function
+	],
+	typography: {
+		variables: {
+			'--pk-prose-color-body': '#374151',
+			'--pk-prose-color-headings': '#111827',
+			'--pk-prose-color-links': '#2563eb',
+		}
+	}
 })
 ```
 

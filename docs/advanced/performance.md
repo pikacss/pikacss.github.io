@@ -17,23 +17,23 @@ Limit the files PikaCSS needs to scan:
 ```typescript
 // vite.config.ts
 export default defineConfig({
-  plugins: [
-    pikacss({
-      scan: {
-        // ✅ Only scan necessary directories
-        include: ['src/**/*.{ts,tsx,vue}'],
-        
-        // ✅ Explicitly exclude large directories
-        exclude: [
-          'node_modules/**',
-          'dist/**',
-          'coverage/**',
-          '**/*.test.{ts,tsx}',
-          '**/*.spec.{ts,tsx}'
-        ]
-      }
-    })
-  ]
+	plugins: [
+		pikacss({
+			scan: {
+				// ✅ Only scan necessary directories
+				include: ['src/**/*.{ts,tsx,vue}'],
+
+				// ✅ Explicitly exclude large directories
+				exclude: [
+					'node_modules/**',
+					'dist/**',
+					'coverage/**',
+					'**/*.test.{ts,tsx}',
+					'**/*.spec.{ts,tsx}'
+				]
+			}
+		})
+	]
 })
 ```
 
@@ -45,25 +45,26 @@ export default defineConfig({
 ```tsx
 // Repeated in many components
 <button className={pika({
-  padding: '0.5rem 1rem',
-  backgroundColor: '#3b82f6',
-  color: 'white',
-  borderRadius: '0.25rem',
-  cursor: 'pointer'
-})} />
+	padding: '0.5rem 1rem',
+	backgroundColor: '#3b82f6',
+	color: 'white',
+	borderRadius: '0.25rem',
+	cursor: 'pointer'
+})}
+/>
 ```
 
 **✅ Good - Define once, reuse everywhere:**
 ```typescript
 // pika.config.ts
 shortcuts: [
-  ['btn', {
-    padding: '0.5rem 1rem',
-    backgroundColor: '#3b82f6',
-    color: 'white',
-    borderRadius: '0.25rem',
-    cursor: 'pointer'
-  }]
+	['btn', {
+		padding: '0.5rem 1rem',
+		backgroundColor: '#3b82f6',
+		color: 'white',
+		borderRadius: '0.25rem',
+		cursor: 'pointer'
+	}]
 ]
 ```
 
@@ -82,22 +83,22 @@ shortcuts: [
 **❌ Slower - Complex regex patterns:**
 ```typescript
 shortcuts: [
-  // This runs on every potential match
-  [/^m-(\d+)$/, m => ({
-    margin: `${m[1]}px`,
-    padding: `${m[1]}px`,
-    // ... complex logic
-  }), ['m-4', 'm-8', 'm-16', /* ... hundreds of options */]]
+	// This runs on every potential match
+	[/^m-(\d+)$/, m => ({
+		margin: `${m[1]}px`,
+		padding: `${m[1]}px`,
+		// ... complex logic
+	}), ['m-4', 'm-8', 'm-16',]]
 ]
 ```
 
 **✅ Faster - Static shortcuts when possible:**
 ```typescript
 shortcuts: [
-  ['m-4', { margin: '4px' }],
-  ['m-8', { margin: '8px' }],
-  ['m-16', { margin: '16px' }],
-  // Only create what you actually use
+	['m-4', { margin: '4px' }],
+	['m-8', { margin: '8px' }],
+	['m-16', { margin: '16px' }],
+	// Only create what you actually use
 ]
 ```
 
@@ -140,10 +141,10 @@ pnpm add -D vite-bundle-visualizer
 import { visualizer } from 'rollup-plugin-visualizer'
 
 export default defineConfig({
-  plugins: [
-    pikacss(),
-    visualizer({ open: true })
-  ]
+	plugins: [
+		pikacss(),
+		visualizer({ open: true })
+	]
 })
 ```
 
@@ -154,9 +155,9 @@ PikaCSS only generates CSS for styles you actually use:
 ```typescript
 // pika.config.ts with unused shortcuts
 shortcuts: [
-  ['btn-primary', { /* used */ }],
-  ['btn-secondary', { /* used */ }],
-  ['btn-tertiary', { /* NEVER USED - still in config */ }],  // ❌
+	['btn-primary', { /* used */ }],
+	['btn-secondary', { /* used */ }],
+	['btn-tertiary', { /* NEVER USED - still in config */ }], // ❌
 ]
 ```
 
@@ -187,24 +188,24 @@ For optimal First Contentful Paint (FCP):
 **Next.js example:**
 ```tsx
 // app/layout.tsx
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 
 // Read generated CSS at build time
 const pikaCSS = fs.readFileSync(
-  path.join(process.cwd(), 'src/pika.gen.css'),
-  'utf-8'
+	path.join(process.cwd(), 'src/pika.gen.css'),
+	'utf-8'
 )
 
 export default function RootLayout({ children }) {
-  return (
-    <html>
-      <head>
-        <style dangerouslySetInnerHTML={{ __html: pikaCSS }} />
-      </head>
-      <body>{children}</body>
-    </html>
-  )
+	return (
+		<html>
+			<head>
+				<style dangerouslySetInnerHTML={{ __html: pikaCSS }} />
+			</head>
+			<body>{children}</body>
+		</html>
+	)
 }
 ```
 
@@ -233,9 +234,9 @@ Enable CSS minification in production:
 ```typescript
 // vite.config.ts
 export default defineConfig({
-  build: {
-    cssMinify: true // Default in production
-  }
+	build: {
+		cssMinify: true // Default in production
+	}
 })
 ```
 
@@ -275,11 +276,11 @@ Use dynamic imports for large components:
 const HeavyFeature = lazy(() => import('./HeavyFeature'))
 
 function App() {
-  return (
-    <Suspense fallback={<div className={pika({ padding: '2rem' })}>Loading...</div>}>
-      <HeavyFeature />
-    </Suspense>
-  )
+	return (
+		<Suspense fallback={<div className={pika({ padding: '2rem' })}>Loading...</div>}>
+			<HeavyFeature />
+		</Suspense>
+	)
 }
 ```
 
@@ -290,14 +291,14 @@ Move global styles to preflights:
 ```typescript
 // pika.config.ts
 export default defineEngineConfig({
-  preflights: [
-    // ✅ Good - Global CSS in preflights
-    `* { box-sizing: border-box; margin: 0; padding: 0; }`,
-    `:root { 
+	preflights: [
+		// ✅ Good - Global CSS in preflights
+		`* { box-sizing: border-box; margin: 0; padding: 0; }`,
+		`:root {
       --color-primary: #3b82f6;
       --color-secondary: #6b7280;
     }`
-  ]
+	]
 })
 ```
 
@@ -306,11 +307,11 @@ export default defineEngineConfig({
 ```tsx
 // ❌ Bad - Global styles via pika()
 const globalStyles = pika({
-  '*': {
-    boxSizing: 'border-box',
-    margin: '0',
-    padding: '0'
-  }
+	'*': {
+		boxSizing: 'border-box',
+		margin: '0',
+		padding: '0'
+	}
 })
 ```
 
@@ -323,17 +324,17 @@ PikaCSS supports HMR out of the box. Optimize by:
 ```typescript
 // vite.config.ts
 export default defineConfig({
-  server: {
-    hmr: true // Enabled by default
-  },
-  plugins: [
-    pikacss({
-      // Faster HMR with focused scanning
-      scan: {
-        include: ['src/**/*.{ts,tsx}']
-      }
-    })
-  ]
+	server: {
+		hmr: true // Enabled by default
+	},
+	plugins: [
+		pikacss({
+			// Faster HMR with focused scanning
+			scan: {
+				include: ['src/**/*.{ts,tsx}']
+			}
+		})
+	]
 })
 ```
 
@@ -344,14 +345,14 @@ Generated `pika.gen.ts` provides autocomplete. Keep it fast:
 ```typescript
 // pika.config.ts
 export default defineEngineConfig({
-  // ✅ Limit shortcuts to what you need
-  shortcuts: {
-    shortcuts: [
-      // 50 shortcuts: Fast
-      // 500 shortcuts: Slower TypeScript
-      // 5000 shortcuts: Very slow
-    ]
-  }
+	// ✅ Limit shortcuts to what you need
+	shortcuts: {
+		shortcuts: [
+			// 50 shortcuts: Fast
+			// 500 shortcuts: Slower TypeScript
+			// 5000 shortcuts: Very slow
+		]
+	}
 })
 ```
 
@@ -364,10 +365,10 @@ Enable persistent caching:
 ```typescript
 // vite.config.ts
 export default defineConfig({
-  cacheDir: '.vite-cache', // Cache build artifacts
-  optimizeDeps: {
-    force: false // Use cache when possible
-  }
+	cacheDir: '.vite-cache', // Cache build artifacts
+	optimizeDeps: {
+		force: false // Use cache when possible
+	}
 })
 ```
 
@@ -440,7 +441,7 @@ PikaCSS has **zero runtime cost** - all processing happens at build time.
 scan: { include: ['**/*'] }
 
 // ❌ No shortcuts, repeated styles
-<Button className={pika({ 
+<Button className={pika({
   padding: '0.5rem 1rem',
   backgroundColor: '#3b82f6',
   color: 'white',
@@ -449,7 +450,7 @@ scan: { include: ['**/*'] }
 // Repeated 50+ times across codebase
 
 // ❌ Complex dynamic shortcuts
-[/^m-(\d{1,3})$/, m => ({ margin: `${m[1]}px` }), 
+[/^m-(\d{1,3})$/, m => ({ margin: `${m[1]}px` }),
   Array.from({length: 1000}, (_, i) => `m-${i}`)] // 1000 suggestions!
 
 // Result:
@@ -462,7 +463,7 @@ scan: { include: ['**/*'] }
 
 ```typescript
 // ✅ Focused scanning
-scan: { 
+scan: {
   include: ['src/**/*.{ts,tsx}'],
   exclude: ['**/*.test.ts']
 }
@@ -480,7 +481,7 @@ shortcuts: [
 <Button className={pika('btn-primary')} />
 
 // ✅ Limited dynamic shortcuts
-[/^m-(\d+)$/, m => ({ margin: `${m[1]}px` }), 
+[/^m-(\d+)$/, m => ({ margin: `${m[1]}px` }),
   ['m-4', 'm-8', 'm-16', 'm-24']] // Only common values
 
 // Result:
@@ -496,10 +497,10 @@ shortcuts: [
 ```typescript
 // vite.config.ts
 export default defineConfig({
-  plugins: [
-    // Only run PikaCSS in development and production builds
-    process.env.NODE_ENV !== 'test' && pikacss()
-  ].filter(Boolean)
+	plugins: [
+		// Only run PikaCSS in development and production builds
+		process.env.NODE_ENV !== 'test' && pikacss()
+	].filter(Boolean)
 })
 ```
 
@@ -508,16 +509,16 @@ export default defineConfig({
 ```typescript
 // vite.config.ts
 export default defineConfig({
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          // Split vendor and app CSS
-          'pika-styles': ['pika.css']
-        }
-      }
-    }
-  }
+	build: {
+		rollupOptions: {
+			output: {
+				manualChunks: {
+					// Split vendor and app CSS
+					'pika-styles': ['pika.css']
+				}
+			}
+		}
+	}
 })
 ```
 
@@ -532,12 +533,12 @@ pnpm add -D purgecss
 ```javascript
 // postcss.config.js
 module.exports = {
-  plugins: [
-    process.env.NODE_ENV === 'production' && require('@fullhuman/postcss-purgecss')({
-      content: ['./src/**/*.{ts,tsx}'],
-      defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
-    })
-  ].filter(Boolean)
+	plugins: [
+		process.env.NODE_ENV === 'production' && require('@fullhuman/postcss-purgecss')({
+			content: ['./src/**/*.{ts,tsx}'],
+			defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
+		})
+	].filter(Boolean)
 }
 ```
 

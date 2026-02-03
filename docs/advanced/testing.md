@@ -30,7 +30,7 @@ describe('Button', () => {
   it('renders with correct classes', () => {
     render(<Button>Click me</Button>)
     const button = screen.getByRole('button')
-    
+
     // PikaCSS generates atomic class names
     expect(button.className).toBeTruthy()
     expect(button.className).toMatch(/\w+/) // Has classes
@@ -39,7 +39,7 @@ describe('Button', () => {
   it('applies styles correctly', () => {
     render(<Button>Click me</Button>)
     const button = screen.getByRole('button')
-    
+
     // Check computed styles instead of class names
     const styles = window.getComputedStyle(button)
     expect(styles.backgroundColor).toBe('rgb(59, 130, 246)') // #3b82f6
@@ -71,7 +71,7 @@ describe('Button variants', () => {
   it('renders primary variant', () => {
     const { container } = render(<Button variant="primary" />)
     const button = container.querySelector('button')
-    
+
     // Test computed styles
     const styles = window.getComputedStyle(button!)
     expect(styles.backgroundColor).toBe('rgb(59, 130, 246)')
@@ -80,7 +80,7 @@ describe('Button variants', () => {
   it('renders secondary variant', () => {
     const { container } = render(<Button variant="secondary" />)
     const button = container.querySelector('button')
-    
+
     const styles = window.getComputedStyle(button!)
     expect(styles.backgroundColor).toBe('rgb(107, 114, 128)')
   })
@@ -92,30 +92,34 @@ describe('Button variants', () => {
 Test that styles are generated and applied correctly:
 
 ```typescript
+import fs from 'node:fs'
+import path from 'node:path'
 // integration.test.ts
 import { describe, expect, it } from 'vitest'
-import fs from 'fs'
-import path from 'path'
 
 describe('PikaCSS Integration', () => {
-  it('generates CSS file', () => {
-    const cssPath = path.join(__dirname, '../src/pika.gen.css')
-    expect(fs.existsSync(cssPath)).toBe(true)
-  })
+	it('generates CSS file', () => {
+		const cssPath = path.join(__dirname, '../src/pika.gen.css')
+		expect(fs.existsSync(cssPath))
+			.toBe(true)
+	})
 
-  it('generates TypeScript definitions', () => {
-    const tsPath = path.join(__dirname, '../src/pika.gen.ts')
-    expect(fs.existsSync(tsPath)).toBe(true)
-  })
+	it('generates TypeScript definitions', () => {
+		const tsPath = path.join(__dirname, '../src/pika.gen.ts')
+		expect(fs.existsSync(tsPath))
+			.toBe(true)
+	})
 
-  it('CSS contains expected styles', () => {
-    const cssPath = path.join(__dirname, '../src/pika.gen.css')
-    const css = fs.readFileSync(cssPath, 'utf-8')
-    
-    // Check for specific property-value pairs
-    expect(css).toContain('color')
-    expect(css).toContain('background-color')
-  })
+	it('CSS contains expected styles', () => {
+		const cssPath = path.join(__dirname, '../src/pika.gen.css')
+		const css = fs.readFileSync(cssPath, 'utf-8')
+
+		// Check for specific property-value pairs
+		expect(css)
+			.toContain('color')
+		expect(css)
+			.toContain('background-color')
+	})
 })
 ```
 
@@ -128,30 +132,35 @@ Use tools like Playwright or Cypress to test visual appearance:
 import { expect, test } from '@playwright/test'
 
 test('button has correct styles', async ({ page }) => {
-  await page.goto('/components/button')
-  
-  const button = page.locator('button').first()
-  
-  // Check computed styles
-  const bgColor = await button.evaluate(
-    el => window.getComputedStyle(el).backgroundColor
-  )
-  expect(bgColor).toBe('rgb(59, 130, 246)')
-  
-  // Visual regression
-  await expect(button).toHaveScreenshot('button.png')
+	await page.goto('/components/button')
+
+	const button = page.locator('button')
+		.first()
+
+	// Check computed styles
+	const bgColor = await button.evaluate(
+		el => window.getComputedStyle(el).backgroundColor
+	)
+	expect(bgColor)
+		.toBe('rgb(59, 130, 246)')
+
+	// Visual regression
+	await expect(button)
+		.toHaveScreenshot('button.png')
 })
 
 test('hover state works', async ({ page }) => {
-  await page.goto('/components/button')
-  
-  const button = page.locator('button').first()
-  await button.hover()
-  
-  const bgColor = await button.evaluate(
-    el => window.getComputedStyle(el).backgroundColor
-  )
-  expect(bgColor).toBe('rgb(37, 99, 235)') // hover color
+	await page.goto('/components/button')
+
+	const button = page.locator('button')
+		.first()
+	await button.hover()
+
+	const bgColor = await button.evaluate(
+		el => window.getComputedStyle(el).backgroundColor
+	)
+	expect(bgColor)
+		.toBe('rgb(37, 99, 235)') // hover color
 })
 ```
 
@@ -206,9 +215,10 @@ cat src/pika.gen.ts
 console.log(document.styleSheets)
 
 // Check if pika.gen.css is loaded
-Array.from(document.styleSheets).forEach(sheet => {
-  console.log(sheet.href)
-})
+Array.from(document.styleSheets)
+	.forEach((sheet) => {
+		console.log(sheet.href)
+	})
 ```
 
 #### Debug Style Specificity
@@ -221,8 +231,8 @@ console.log(styles.backgroundColor) // Current value
 console.log(styles.color) // Current value
 
 // Check all applied styles
-for (let prop of styles) {
-  console.log(prop, styles.getPropertyValue(prop))
+for (const prop of styles) {
+	console.log(prop, styles.getPropertyValue(prop))
 }
 ```
 
@@ -231,17 +241,17 @@ for (let prop of styles) {
 ```typescript
 // vite.config.ts
 export default defineConfig({
-  plugins: [
-    pikacss({
-      // Add logging
-      scan: {
-        include: ['src/**/*.{ts,tsx}'],
-        exclude: ['node_modules/**']
-      }
-    })
-  ],
-  // Enable debug mode
-  logLevel: 'info'
+	plugins: [
+		pikacss({
+			// Add logging
+			scan: {
+				include: ['src/**/*.{ts,tsx}'],
+				exclude: ['node_modules/**']
+			}
+		})
+	],
+	// Enable debug mode
+	logLevel: 'info'
 })
 ```
 
@@ -259,7 +269,7 @@ Verify that `pika()` calls are being transformed:
 const styles = pika({ color: 'red' })
 
 // After transformation (check browser sources)
-const styles = "a" // Should be transformed to class name
+const styles = 'a' // Should be transformed to class name
 ```
 
 **How to check:**
@@ -365,7 +375,7 @@ Error: Cannot find module 'pika.css'
 ```typescript
 // vite.config.ts
 plugins: [
-  pikacss() // Must be present
+	pikacss() // Must be present
 ]
 ```
 
@@ -381,7 +391,7 @@ pnpm build
 ```typescript
 // pika.config.ts
 export default defineEngineConfig({
-  // Make sure no syntax errors
+	// Make sure no syntax errors
 })
 ```
 
@@ -409,7 +419,7 @@ Property 'pika' does not exist on type 'Window'
 2. **Verify in tsconfig.json:**
 ```json
 {
-  "include": ["src/**/*", "pika.gen.ts"]
+	"include": ["src/**/*", "pika.gen.ts"]
 }
 ```
 
@@ -462,11 +472,11 @@ Changes to styles don't hot reload.
 1. **Check plugin configuration:**
 ```typescript
 plugins: [
-  pikacss({
-    scan: {
-      include: ['src/**/*.{ts,tsx}'] // Must include your files
-    }
-  })
+	pikacss({
+		scan: {
+			include: ['src/**/*.{ts,tsx}'] // Must include your files
+		}
+	})
 ]
 ```
 
@@ -573,33 +583,33 @@ import 'pika.css' // Present in entry?
 
 ```tsx
 // DebugStyles.tsx
-export function DebugStyles({ children, label }: { 
-  children: React.ReactNode
-  label?: string 
+export function DebugStyles({ children, label }: {
+	children: React.ReactNode
+	label?: string
 }) {
-  const ref = useRef<HTMLDivElement>(null)
+	const ref = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    if (ref.current) {
-      const styles = window.getComputedStyle(ref.current)
-      console.group(label || 'Debug Styles')
-      console.log('Classes:', ref.current.className)
-      console.log('Computed styles:', {
-        color: styles.color,
-        backgroundColor: styles.backgroundColor,
-        padding: styles.padding,
-        margin: styles.margin
-      })
-      console.groupEnd()
-    }
-  }, [label])
+	useEffect(() => {
+		if (ref.current) {
+			const styles = window.getComputedStyle(ref.current)
+			console.group(label || 'Debug Styles')
+			console.log('Classes:', ref.current.className)
+			console.log('Computed styles:', {
+				color: styles.color,
+				backgroundColor: styles.backgroundColor,
+				padding: styles.padding,
+				margin: styles.margin
+			})
+			console.groupEnd()
+		}
+	}, [label])
 
-  return <div ref={ref}>{children}</div>
+	return <div ref={ref}>{children}</div>
 }
 
 // Usage
 <DebugStyles label="My Button">
-  <Button>Click me</Button>
+	<Button>Click me</Button>
 </DebugStyles>
 ```
 

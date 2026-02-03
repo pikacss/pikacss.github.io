@@ -45,9 +45,9 @@ export default defineEngineConfig({
 ```
 
 ```ts [Nuxt Project]
+import { defineEngineConfig } from '@pikacss/nuxt-pikacss'
 // pika.config.ts
 import { reset } from '@pikacss/plugin-reset'
-import { defineEngineConfig } from '@pikacss/nuxt-pikacss'
 
 export default defineEngineConfig({
 	plugins: [

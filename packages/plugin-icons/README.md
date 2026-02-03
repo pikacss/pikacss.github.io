@@ -18,15 +18,15 @@ import { defineEngineConfig } from '@pikacss/core'
 import { icons } from '@pikacss/plugin-icons'
 
 export default defineEngineConfig({
-  plugins: [
-    icons()
-  ],
-  icons: {
-    // Configure icons plugin here
-    prefix: 'i-',
-    scale: 1,
-    mode: 'auto',
-  }
+	plugins: [
+		icons()
+	],
+	icons: {
+		// Configure icons plugin here
+		prefix: 'i-',
+		scale: 1,
+		mode: 'auto',
+	}
 })
 ```
 
@@ -37,14 +37,14 @@ const iconClass = pika('i-mdi:home')
 
 // Method 2: With additional styles (shortcut as first argument)
 const styledIcon = pika('i-mdi:home', {
-  fontSize: '24px',
-  color: 'blue'
+	fontSize: '24px',
+	color: 'blue'
 })
 
 // Method 3: Using __shortcut property in style object
 const iconWithStyles = pika({
-  __shortcut: 'i-mdi:home',
-  fontSize: '24px'
+	__shortcut: 'i-mdi:home',
+	fontSize: '24px'
 })
 ```
 
@@ -70,14 +70,14 @@ const iconClass = pika('i-mdi:home')
 
 // Combine shortcut with styles (recommended)
 const styledIcon = pika('i-mdi:home', {
-  fontSize: '24px',
-  color: 'blue'
+	fontSize: '24px',
+	color: 'blue'
 })
 
 // Or use __shortcut property
 const iconWithStyles = pika({
-  __shortcut: 'i-mdi:home',
-  display: 'inline-block'
+	__shortcut: 'i-mdi:home',
+	display: 'inline-block'
 })
 ```
 
@@ -104,25 +104,25 @@ const homeIcon = pika('i-mdi:home')
 
 // Icon with size and color
 const largeIcon = pika('i-mdi:account', {
-  fontSize: '48px',
-  color: '#3b82f6'
+	fontSize: '48px',
+	color: '#3b82f6'
 })
 
 // Icon with hover effect
 const hoverIcon = pika('i-mdi:heart', {
-  fontSize: '24px',
-  color: 'red',
-  cursor: 'pointer',
-  '$:hover': {
-    transform: 'scale(1.2)'
-  }
+	'fontSize': '24px',
+	'color': 'red',
+	'cursor': 'pointer',
+	'$:hover': {
+		transform: 'scale(1.2)'
+	}
 })
 
 // Combining multiple shortcuts
 const buttonWithIcon = pika('btn', 'i-mdi:send', {
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '0.5rem'
+	display: 'inline-flex',
+	alignItems: 'center',
+	gap: '0.5rem'
 })
 ```
 
@@ -131,9 +131,9 @@ const buttonWithIcon = pika('btn', 'i-mdi:send', {
 Icons follow the pattern: `{prefix}{collection}:{icon-name}` (default prefix is `i-`)
 
 ```typescript
-pika('i-mdi:home')              // Material Design home icon
-pika('i-heroicons:user')        // Heroicons user icon
-pika('i-carbon:cloud-upload')   // Carbon cloud upload icon
+pika('i-mdi:home') // Material Design home icon
+pika('i-heroicons:user') // Heroicons user icon
+pika('i-carbon:cloud-upload') // Carbon cloud upload icon
 ```
 
 ### Icon Rendering Modes
@@ -141,9 +141,9 @@ pika('i-carbon:cloud-upload')   // Carbon cloud upload icon
 Append `?mask`, `?bg`, or `?auto` to specify the rendering mode:
 
 ```typescript
-pika('i-mdi:home?mask')  // Mask mode (uses currentColor)
-pika('i-mdi:home?bg')    // Background mode
-pika('i-mdi:home?auto')  // Auto-detect (default)
+pika('i-mdi:home?mask') // Mask mode (uses currentColor)
+pika('i-mdi:home?bg') // Background mode
+pika('i-mdi:home?auto') // Auto-detect (default)
 ```
 
 - **auto**: Automatically selects mask or bg based on whether icon contains `currentColor`
@@ -157,15 +157,15 @@ Icons inherit text properties:
 ```typescript
 // Using shortcut with styles
 pika('i-mdi:home', {
-  fontSize: '32px',
-  color: '#3b82f6'  // Works with mask mode
+	fontSize: '32px',
+	color: '#3b82f6' // Works with mask mode
 })
 
 // Using __shortcut property
 pika({
-  __shortcut: 'i-mdi:home',
-  fontSize: '32px',
-  color: '#3b82f6'
+	__shortcut: 'i-mdi:home',
+	fontSize: '32px',
+	color: '#3b82f6'
 })
 ```
 
@@ -180,20 +180,20 @@ import { defineEngineConfig } from '@pikacss/core'
 import { icons } from '@pikacss/plugin-icons'
 
 export default defineEngineConfig({
-  // 1. Register plugin in plugins array
-  plugins: [
-    icons()  // Note: Call the function!
-  ],
-  
-  // 2. Configure at root level
-  icons: {
-    prefix: 'i-',        // Shortcut prefix
-    scale: 1,            // Icon scale multiplier
-    mode: 'auto',        // 'auto' | 'mask' | 'bg'
-    cdn: 'https://esm.sh/', // CDN for icon collections
-    autoInstall: false,  // Auto-install icon packages
-    // ... other options
-  }
+	// 1. Register plugin in plugins array
+	plugins: [
+		icons() // Note: Call the function!
+	],
+
+	// 2. Configure at root level
+	icons: {
+		prefix: 'i-', // Shortcut prefix
+		scale: 1, // Icon scale multiplier
+		mode: 'auto', // 'auto' | 'mask' | 'bg'
+		cdn: 'https://esm.sh/', // CDN for icon collections
+		autoInstall: false, // Auto-install icon packages
+		// ... other options
+	}
 })
 ```
 
@@ -205,62 +205,62 @@ Always call the plugin function: `plugins: [icons()]` not `plugins: [icons]`
 
 ```typescript
 interface IconsConfig {
-  /**
-   * Icon shortcut prefix.
-   * @default 'i-'
-   */
-  prefix?: string | string[]
+	/**
+	 * Icon shortcut prefix.
+	 * @default 'i-'
+	 */
+	prefix?: string | string[]
 
-  /**
-   * Scale factor for icons.
-   * @default 1
-   */
-  scale?: number
+	/**
+	 * Scale factor for icons.
+	 * @default 1
+	 */
+	scale?: number
 
-  /**
-   * Icon rendering mode.
-   * - 'auto': Auto-detect based on currentColor
-   * - 'mask': Use mask with currentColor
-   * - 'bg': Use background image
-   * @default 'auto'
-   */
-  mode?: 'auto' | 'mask' | 'bg'
+	/**
+	 * Icon rendering mode.
+	 * - 'auto': Auto-detect based on currentColor
+	 * - 'mask': Use mask with currentColor
+	 * - 'bg': Use background image
+	 * @default 'auto'
+	 */
+	mode?: 'auto' | 'mask' | 'bg'
 
-  /**
-   * CDN base URL for loading icon collections.
-   */
-  cdn?: string
+	/**
+	 * CDN base URL for loading icon collections.
+	 */
+	cdn?: string
 
-  /**
-   * Custom icon collections.
-   */
-  collections?: Record<string, any>
+	/**
+	 * Custom icon collections.
+	 */
+	collections?: Record<string, any>
 
-  /**
-   * Auto-install icon collections from npm.
-   * @default false
-   */
-  autoInstall?: boolean
+	/**
+	 * Auto-install icon collections from npm.
+	 * @default false
+	 */
+	autoInstall?: boolean
 
-  /**
-   * Unit for icon size (when specified).
-   */
-  unit?: string
+	/**
+	 * Unit for icon size (when specified).
+	 */
+	unit?: string
 
-  /**
-   * Extra CSS properties to apply to all icons.
-   */
-  extraProperties?: Record<string, string>
+	/**
+	 * Extra CSS properties to apply to all icons.
+	 */
+	extraProperties?: Record<string, string>
 
-  /**
-   * Custom processor for icon styles.
-   */
-  processor?: (styleItem: StyleItem, meta: IconMeta) => void
+	/**
+	 * Custom processor for icon styles.
+	 */
+	processor?: (styleItem: StyleItem, meta: IconMeta) => void
 
-  /**
-   * Icons for auto-completion.
-   */
-  autocomplete?: string[]
+	/**
+	 * Icons for auto-completion.
+	 */
+	autocomplete?: string[]
 }
 ```
 
@@ -270,10 +270,10 @@ Change the shortcut prefix:
 
 ```typescript
 export default defineEngineConfig({
-  plugins: [icons()],
-  icons: {
-    prefix: 'icon-'  // Now use icon-mdi:home
-  }
+	plugins: [icons()],
+	icons: {
+		prefix: 'icon-' // Now use icon-mdi:home
+	}
 })
 ```
 
@@ -283,10 +283,10 @@ Adjust the default scale of all icons:
 
 ```typescript
 export default defineEngineConfig({
-  plugins: [icons()],
-  icons: {
-    scale: 1.2  // Make all icons 20% larger
-  }
+	plugins: [icons()],
+	icons: {
+		scale: 1.2 // Make all icons 20% larger
+	}
 })
 ```
 

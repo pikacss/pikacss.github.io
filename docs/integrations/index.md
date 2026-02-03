@@ -14,22 +14,22 @@ npm install -D @pikacss/unplugin-pikacss
 
 **vite.config.ts:**
 ```typescript
-import { defineConfig } from 'vite'
 import pikacss from '@pikacss/unplugin-pikacss/vite'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
-  plugins: [
-    pikacss({
-      scan: {
-        include: ['**/*.{tsx,ts,vue}'],
-        exclude: ['node_modules/**']
-      }
-    })
-  ]
+	plugins: [
+		pikacss({
+			scan: {
+				include: ['**/*.{tsx,ts,vue}'],
+				exclude: ['node_modules/**']
+			}
+		})
+	]
 })
 ```
 
-**Features**: 
+**Features**:
 - Fast HMR (hot module replacement)
 - Zero-config TypeScript support
 - Best DX (developer experience)
@@ -49,10 +49,10 @@ npm install -D @pikacss/nuxt-pikacss
 **nuxt.config.ts:**
 ```typescript
 export default defineNuxtConfig({
-  modules: ['@pikacss/nuxt-pikacss'],
-  pikacss: {
-    // options (optional)
-  }
+	modules: ['@pikacss/nuxt-pikacss'],
+	pikacss: {
+		// options (optional)
+	}
 })
 ```
 
@@ -78,13 +78,13 @@ npm install -D @pikacss/unplugin-pikacss
 const PikaCSS = require('@pikacss/unplugin-pikacss/webpack')
 
 module.exports = {
-  plugins: [
-    new PikaCSS({
-      scan: {
-        include: ['**/*.{tsx,ts,jsx,js}']
-      }
-    })
-  ]
+	plugins: [
+		new PikaCSS({
+			scan: {
+				include: ['**/*.{tsx,ts,jsx,js}']
+			}
+		})
+	]
 }
 ```
 
@@ -105,13 +105,13 @@ npm install -D @pikacss/unplugin-pikacss
 const PikaCSS = require('@pikacss/unplugin-pikacss/rspack')
 
 module.exports = {
-  plugins: [
-    new PikaCSS({
-      scan: {
-        include: ['**/*.{tsx,ts,jsx,js}']
-      }
-    })
-  ]
+	plugins: [
+		new PikaCSS({
+			scan: {
+				include: ['**/*.{tsx,ts,jsx,js}']
+			}
+		})
+	]
 }
 ```
 
@@ -129,11 +129,11 @@ npm install -D @pikacss/unplugin-pikacss
 
 **build.js:**
 ```javascript
-const esbuild = require('esbuild')
 const PikaCSS = require('@pikacss/unplugin-pikacss/esbuild')
+const esbuild = require('esbuild')
 
 esbuild.build({
-  plugins: [PikaCSS.default()]
+	plugins: [PikaCSS.default()]
 })
 ```
 
@@ -155,7 +155,7 @@ import { defineConfig } from '@farmfe/core'
 import PikaCSS from '@pikacss/unplugin-pikacss/farm'
 
 export default defineConfig({
-  plugins: [PikaCSS()]
+	plugins: [PikaCSS()]
 })
 ```
 
@@ -173,11 +173,11 @@ npm install -D @pikacss/unplugin-pikacss
 
 **rolldown.config.ts:**
 ```typescript
-import { defineConfig } from 'rolldown'
 import PikaCSS from '@pikacss/unplugin-pikacss/rolldown'
+import { defineConfig } from 'rolldown'
 
 export default defineConfig({
-  plugins: [PikaCSS()]
+	plugins: [PikaCSS()]
 })
 ```
 
@@ -243,19 +243,19 @@ import { icons } from '@pikacss/plugin-icons'
 import { reset } from '@pikacss/plugin-reset'
 
 export default defineEngineConfig({
-  plugins: [icons(), reset()],
-  
-  prefix: 'pika-',
-  
-  shortcuts: {
-    shortcuts: [
-      ['flex-center', {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }]
-    ]
-  }
+	plugins: [icons(), reset()],
+
+	prefix: 'pika-',
+
+	shortcuts: {
+		shortcuts: [
+			['flex-center', {
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'center'
+			}]
+		]
+	}
 })
 ```
 
@@ -263,9 +263,9 @@ Or pass config directly to plugin:
 
 ```typescript
 pikacss({
-  config: {
-    prefix: 'pika-'
-  }
+	config: {
+		prefix: 'pika-'
+	}
 })
 ```
 
@@ -273,34 +273,34 @@ pikacss({
 
 **React/Next.js** (Vite):
 ```typescript
+import pikacss from '@pikacss/unplugin-pikacss/vite'
 // vite.config.ts
 import react from '@vitejs/plugin-react'
-import pikacss from '@pikacss/unplugin-pikacss/vite'
 
 export default defineConfig({
-  plugins: [pikacss(), react()]
+	plugins: [pikacss(), react()]
 })
 ```
 
 **Vue** (Vite):
 ```typescript
+import pikacss from '@pikacss/unplugin-pikacss/vite'
 // vite.config.ts
 import vue from '@vitejs/plugin-vue'
-import pikacss from '@pikacss/unplugin-pikacss/vite'
 
 export default defineConfig({
-  plugins: [pikacss(), vue()]
+	plugins: [pikacss(), vue()]
 })
 ```
 
 **Svelte** (Vite):
 ```typescript
+import pikacss from '@pikacss/unplugin-pikacss/vite'
 // vite.config.ts
 import { svelte } from 'vite-plugin-svelte'
-import pikacss from '@pikacss/unplugin-pikacss/vite'
 
 export default defineConfig({
-  plugins: [pikacss(), svelte()]
+	plugins: [pikacss(), svelte()]
 })
 ```
 

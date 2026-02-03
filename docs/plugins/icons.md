@@ -40,7 +40,7 @@ import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
 
 export default defineEngineConfig({
 	plugins: [
-		icons()  // Register plugin
+		icons() // Register plugin
 	],
 	icons: {
 		// Configure options here
@@ -58,7 +58,7 @@ import { icons } from '@pikacss/plugin-icons'
 
 export default defineEngineConfig({
 	plugins: [
-		icons()  // Register plugin
+		icons() // Register plugin
 	],
 	icons: {
 		// Configure options here
@@ -110,9 +110,9 @@ import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
 export default defineEngineConfig({
 	// 1. Register plugin in the plugins array
 	plugins: [
-		icons()  // Must call the function
+		icons() // Must call the function
 	],
-	
+
 	// 2. Configure options at root level
 	icons: {
 		// Icon scale multiplier (default: 1)

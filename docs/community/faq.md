@@ -90,7 +90,7 @@ const classes = {
 **3. Multiple `pika()` Calls**
 ```tsx
 const baseStyles = pika({ padding: '1rem' })
-const variantStyles = variant === 'primary' 
+const variantStyles = variant === 'primary'
   ? pika({ backgroundColor: 'blue' })
   : pika({ backgroundColor: 'gray' })
 
@@ -103,9 +103,9 @@ PikaCSS generates one class per CSS property-value pair:
 
 ```typescript
 pika({
-  color: 'red',
-  fontSize: '16px',
-  padding: '1rem'
+	color: 'red',
+	fontSize: '16px',
+	padding: '1rem'
 })
 // Generates: "a b c"
 
@@ -172,7 +172,7 @@ See [Testing & Debugging Guide](/advanced/testing) for more.
 2. **Update tsconfig.json**
    ```json
    {
-     "include": ["src/**/*", "pika.gen.ts"]
+   	"include": ["src/**/*", "pika.gen.ts"]
    }
    ```
 
@@ -205,18 +205,18 @@ Define shortcuts in `pika.config.ts`:
 
 ```typescript
 export default defineEngineConfig({
-  shortcuts: {
-    shortcuts: [
-      // Static shortcut
-      ['btn', {
-        padding: '0.5rem 1rem',
-        borderRadius: '0.25rem'
-      }],
-      
-      // Dynamic shortcut
-      [/^m-(\d+)$/, m => ({ margin: `${m[1]}px` }), ['m-4', 'm-8']]
-    ]
-  }
+	shortcuts: {
+		shortcuts: [
+			// Static shortcut
+			['btn', {
+				padding: '0.5rem 1rem',
+				borderRadius: '0.25rem'
+			}],
+
+			// Dynamic shortcut
+			[/^m-(\d+)$/, m => ({ margin: `${m[1]}px` }), ['m-4', 'm-8']]
+		]
+	}
 })
 ```
 
@@ -228,13 +228,13 @@ Yes! Use `$` to represent the current element:
 
 ```typescript
 pika({
-  'color': 'blue',
-  '$:hover': {
-    color: 'red'
-  },
-  '$:focus': {
-    outline: '2px solid blue'
-  }
+	'color': 'blue',
+	'$:hover': {
+		color: 'red'
+	},
+	'$:focus': {
+		outline: '2px solid blue'
+	}
 })
 ```
 
@@ -246,11 +246,11 @@ Use `preflights` in config:
 
 ```typescript
 export default defineEngineConfig({
-  preflights: [
-    '* { box-sizing: border-box; }',
-    ':root { --primary: #3b82f6; }',
-    '@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }'
-  ]
+	preflights: [
+		'* { box-sizing: border-box; }',
+		':root { --primary: #3b82f6; }',
+		'@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }'
+	]
 })
 ```
 
@@ -260,13 +260,13 @@ Yes!
 
 ```typescript
 pika({
-  'width': '100%',
-  '@media (min-width: 768px)': {
-    width: '50%'
-  },
-  '@media (min-width: 1024px)': {
-    width: '33.333%'
-  }
+	'width': '100%',
+	'@media (min-width: 768px)': {
+		width: '50%'
+	},
+	'@media (min-width: 1024px)': {
+		width: '33.333%'
+	}
 })
 ```
 
@@ -276,12 +276,12 @@ Use `prefers-color-scheme` media query:
 
 ```typescript
 pika({
-  'backgroundColor': '#ffffff',
-  'color': '#000000',
-  '@media (prefers-color-scheme: dark)': {
-    backgroundColor: '#000000',
-    color: '#ffffff'
-  }
+	'backgroundColor': '#ffffff',
+	'color': '#000000',
+	'@media (prefers-color-scheme: dark)': {
+		backgroundColor: '#000000',
+		color: '#ffffff'
+	}
 })
 ```
 
@@ -302,8 +302,8 @@ Or use CSS variables:
 
 // In components:
 pika({
-  backgroundColor: 'var(--bg)',
-  color: 'var(--text)'
+	backgroundColor: 'var(--bg)',
+	color: 'var(--text)'
 })
 ```
 
@@ -313,12 +313,12 @@ Yes! Define keyframes in preflights:
 
 ```typescript
 export default defineEngineConfig({
-  preflights: [
-    `@keyframes spin {
+	preflights: [
+		`@keyframes spin {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }`
-  ]
+	]
 })
 ```
 
@@ -326,7 +326,7 @@ Then use:
 
 ```typescript
 pika({
-  animation: 'spin 1s linear infinite'
+	animation: 'spin 1s linear infinite'
 })
 ```
 
@@ -337,11 +337,11 @@ Use shortcuts:
 ```typescript
 // pika.config.ts
 shortcuts: [
-  ['card-base', {
-    padding: '1rem',
-    borderRadius: '0.5rem',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-  }]
+	['card-base', {
+		padding: '1rem',
+		borderRadius: '0.5rem',
+		boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+	}]
 ]
 
 // Component A
@@ -358,7 +358,7 @@ pika('card-base', { backgroundColor: 'gray' })
 PikaCSS generates very small CSS bundles due to Atomic CSS deduplication:
 
 - Small app: 5-20 KB
-- Medium app: 20-50 KB  
+- Medium app: 20-50 KB
 - Large app: 50-100 KB
 
 Much smaller than traditional CSS-in-JS!

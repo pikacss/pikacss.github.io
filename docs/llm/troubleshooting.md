@@ -228,24 +228,24 @@ pika({ color }) // Error: color is undefined at build time
 ❌ **Won't work** (dynamic prop):
 ```typescript
 function Button({ variant }) {
-  // variant is only known at runtime
-  pika({ backgroundColor: variant === 'primary' ? 'blue' : 'gray' })
+	// variant is only known at runtime
+	pika({ backgroundColor: variant === 'primary' ? 'blue' : 'gray' })
 }
 ```
 
 ✅ **Use CSS variables instead**:
 ```typescript
 // Define styles with CSS variables
-const buttonClass = pika({ 
-  backgroundColor: 'var(--btn-color)' 
+const buttonClass = pika({
+  backgroundColor: 'var(--btn-color)'
 })
 
 // Set the variable at runtime
 function Button({ variant }) {
   const color = variant === 'primary' ? 'blue' : 'gray'
   return (
-    <button 
-      className={buttonClass} 
+    <button
+      className={buttonClass}
       style={{ '--btn-color': color }}
     >
       Click me
@@ -257,8 +257,8 @@ function Button({ variant }) {
 ✅ **Or use conditional shortcuts**:
 ```typescript
 function Button({ variant }) {
-  const classes = variant === 'primary' 
-    ? pika('btn-primary') 
+  const classes = variant === 'primary'
+    ? pika('btn-primary')
     : pika('btn-secondary')
   return <button className={classes}>Click me</button>
 }

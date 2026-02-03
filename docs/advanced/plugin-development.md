@@ -283,25 +283,25 @@ export function myPlugin() {
 import { defineEnginePlugin } from '@pikacss/core'
 
 interface AnimationPluginOptions {
-  animations?: Record<string, string>
+	animations?: Record<string, string>
 }
 
 export function animationPlugin(options: AnimationPluginOptions = {}) {
-  const defaultAnimations = {
-    'spin': 'spin 1s linear infinite',
-    'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-    'bounce': 'bounce 1s infinite'
-  }
+	const defaultAnimations = {
+		spin: 'spin 1s linear infinite',
+		pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+		bounce: 'bounce 1s infinite'
+	}
 
-  const animations = { ...defaultAnimations, ...options.animations }
+	const animations = { ...defaultAnimations, ...options.animations }
 
-  return defineEnginePlugin({
-    name: 'animation-plugin',
-    order: 'pre',
+	return defineEnginePlugin({
+		name: 'animation-plugin',
+		order: 'pre',
 
-    async configureEngine(engine) {
-      // Add keyframes as preflights
-      engine.addPreflight(`
+		async configureEngine(engine) {
+			// Add keyframes as preflights
+			engine.addPreflight(`
         @keyframes spin {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
@@ -316,17 +316,19 @@ export function animationPlugin(options: AnimationPluginOptions = {}) {
         }
       `)
 
-      // Add shortcuts for animations
-      Object.entries(animations).forEach(([name, value]) => {
-        engine.shortcuts.add([`animate-${name}`, { animation: value }])
-      })
+			// Add shortcuts for animations
+			Object.entries(animations)
+				.forEach(([name, value]) => {
+					engine.shortcuts.add([`animate-${name}`, { animation: value }])
+				})
 
-      // Register for autocomplete
-      engine.appendAutocompleteStyleItemStrings(
-        ...Object.keys(animations).map(name => `animate-${name}`)
-      )
-    }
-  })
+			// Register for autocomplete
+			engine.appendAutocompleteStyleItemStrings(
+				...Object.keys(animations)
+					.map(name => `animate-${name}`)
+			)
+		}
+	})
 }
 
 // Usage
@@ -340,72 +342,76 @@ pika('animate-pulse')
 import { defineEnginePlugin } from '@pikacss/core'
 
 interface Theme {
-  colors: Record<string, string>
-  spacing: Record<string, string>
-  breakpoints: Record<string, string>
+	colors: Record<string, string>
+	spacing: Record<string, string>
+	breakpoints: Record<string, string>
 }
 
 export function themePlugin(theme: Theme) {
-  return defineEnginePlugin({
-    name: 'theme-plugin',
+	return defineEnginePlugin({
+		name: 'theme-plugin',
 
-    async configureEngine(engine) {
-      // Add CSS variables as preflight
-      const cssVars = Object.entries(theme.colors)
-        .map(([name, value]) => `--color-${name}: ${value};`)
-        .join('\n  ')
+		async configureEngine(engine) {
+			// Add CSS variables as preflight
+			const cssVars = Object.entries(theme.colors)
+				.map(([name, value]) => `--color-${name}: ${value};`)
+				.join('\n  ')
 
-      engine.addPreflight(`:root {\n  ${cssVars}\n}`)
+			engine.addPreflight(`:root {\n  ${cssVars}\n}`)
 
-      // Add color shortcuts
-      Object.keys(theme.colors).forEach(colorName => {
-        engine.shortcuts.add(
-          [`text-${colorName}`, { color: `var(--color-${colorName})` }],
-          [`bg-${colorName}`, { backgroundColor: `var(--color-${colorName})` }]
-        )
-      })
+			// Add color shortcuts
+			Object.keys(theme.colors)
+				.forEach((colorName) => {
+					engine.shortcuts.add(
+						[`text-${colorName}`, { color: `var(--color-${colorName})` }],
+						[`bg-${colorName}`, { backgroundColor: `var(--color-${colorName})` }]
+					)
+				})
 
-      // Add spacing shortcuts
-      Object.entries(theme.spacing).forEach(([name, value]) => {
-        engine.shortcuts.add(
-          [`p-${name}`, { padding: value }],
-          [`m-${name}`, { margin: value }]
-        )
-      })
+			// Add spacing shortcuts
+			Object.entries(theme.spacing)
+				.forEach(([name, value]) => {
+					engine.shortcuts.add(
+						[`p-${name}`, { padding: value }],
+						[`m-${name}`, { margin: value }]
+					)
+				})
 
-      // Register for autocomplete
-      const shortcuts = [
-        ...Object.keys(theme.colors).flatMap(c => [`text-${c}`, `bg-${c}`]),
-        ...Object.keys(theme.spacing).flatMap(s => [`p-${s}`, `m-${s}`])
-      ]
-      engine.appendAutocompleteStyleItemStrings(...shortcuts)
-    }
-  })
+			// Register for autocomplete
+			const shortcuts = [
+				...Object.keys(theme.colors)
+					.flatMap(c => [`text-${c}`, `bg-${c}`]),
+				...Object.keys(theme.spacing)
+					.flatMap(s => [`p-${s}`, `m-${s}`])
+			]
+			engine.appendAutocompleteStyleItemStrings(...shortcuts)
+		}
+	})
 }
 
 // Usage
 const myTheme = {
-  colors: {
-    primary: '#3b82f6',
-    secondary: '#6b7280',
-    danger: '#ef4444'
-  },
-  spacing: {
-    xs: '0.25rem',
-    sm: '0.5rem',
-    md: '1rem',
-    lg: '1.5rem',
-    xl: '2rem'
-  },
-  breakpoints: {
-    sm: '640px',
-    md: '768px',
-    lg: '1024px'
-  }
+	colors: {
+		primary: '#3b82f6',
+		secondary: '#6b7280',
+		danger: '#ef4444'
+	},
+	spacing: {
+		xs: '0.25rem',
+		sm: '0.5rem',
+		md: '1rem',
+		lg: '1.5rem',
+		xl: '2rem'
+	},
+	breakpoints: {
+		sm: '640px',
+		md: '768px',
+		lg: '1024px'
+	}
 }
 
 export default defineEngineConfig({
-  plugins: [themePlugin(myTheme)]
+	plugins: [themePlugin(myTheme)]
 })
 ```
 
@@ -415,52 +421,53 @@ export default defineEngineConfig({
 import { defineEnginePlugin } from '@pikacss/core'
 
 interface ResponsiveOptions {
-  breakpoints?: Record<string, string>
+	breakpoints?: Record<string, string>
 }
 
 export function responsivePlugin(options: ResponsiveOptions = {}) {
-  const breakpoints = {
-    sm: '640px',
-    md: '768px',
-    lg: '1024px',
-    xl: '1280px',
-    ...options.breakpoints
-  }
+	const breakpoints = {
+		sm: '640px',
+		md: '768px',
+		lg: '1024px',
+		xl: '1280px',
+		...options.breakpoints
+	}
 
-  return defineEnginePlugin({
-    name: 'responsive-plugin',
+	return defineEnginePlugin({
+		name: 'responsive-plugin',
 
-    async transformStyleDefinitions(defs) {
-      return defs.map(def => {
-        const transformed = { ...def }
+		async transformStyleDefinitions(defs) {
+			return defs.map((def) => {
+				const transformed = { ...def }
 
-        // Transform responsive prefixes: sm:color -> @media (min-width: 640px) { color }
-        Object.keys(def).forEach(key => {
-          const match = key.match(/^(sm|md|lg|xl):(.+)/)
-          if (match) {
-            const [, breakpoint, property] = match
-            const mediaQuery = `@media (min-width: ${breakpoints[breakpoint]})`
-            
-            if (!transformed[mediaQuery]) {
-              transformed[mediaQuery] = {}
-            }
-            transformed[mediaQuery][property] = def[key]
-            delete transformed[key]
-          }
-        })
+				// Transform responsive prefixes: sm:color -> @media (min-width: 640px) { color }
+				Object.keys(def)
+					.forEach((key) => {
+						const match = key.match(/^(sm|md|lg|xl):(.+)/)
+						if (match) {
+							const [, breakpoint, property] = match
+							const mediaQuery = `@media (min-width: ${breakpoints[breakpoint]})`
 
-        return transformed
-      })
-    }
-  })
+							if (!transformed[mediaQuery]) {
+								transformed[mediaQuery] = {}
+							}
+							transformed[mediaQuery][property] = def[key]
+							delete transformed[key]
+						}
+					})
+
+				return transformed
+			})
+		}
+	})
 }
 
 // Usage
 pika({
-  color: 'black',
-  'sm:color': 'blue',    // Applies at 640px+
-  'md:color': 'green',   // Applies at 768px+
-  'lg:color': 'red'      // Applies at 1024px+
+	'color': 'black',
+	'sm:color': 'blue', // Applies at 640px+
+	'md:color': 'green', // Applies at 768px+
+	'lg:color': 'red' // Applies at 1024px+
 })
 ```
 
@@ -470,51 +477,51 @@ pika({
 import { defineEnginePlugin } from '@pikacss/core'
 
 export function containerPlugin() {
-  return defineEnginePlugin({
-    name: 'container-plugin',
+	return defineEnginePlugin({
+		name: 'container-plugin',
 
-    async configureEngine(engine) {
-      // Add container shortcuts
-      engine.shortcuts.add(
-        ['container', {
-          containerType: 'inline-size'
-        }],
-        ['container-normal', {
-          containerType: 'normal'
-        }]
-      )
+		async configureEngine(engine) {
+			// Add container shortcuts
+			engine.shortcuts.add(
+				['container', {
+					containerType: 'inline-size'
+				}],
+				['container-normal', {
+					containerType: 'normal'
+				}]
+			)
 
-      // Add container query selectors
-      const sizes = ['sm', 'md', 'lg', 'xl']
-      const sizeValues = {
-        sm: '640px',
-        md: '768px',
-        lg: '1024px',
-        xl: '1280px'
-      }
+			// Add container query selectors
+			const sizes = ['sm', 'md', 'lg', 'xl']
+			const sizeValues = {
+				sm: '640px',
+				md: '768px',
+				lg: '1024px',
+				xl: '1280px'
+			}
 
-      sizes.forEach(size => {
-        engine.shortcuts.add([
-          `@${size}`,
-          {
-            [`@container (min-width: ${sizeValues[size]})`]: {}
-          }
-        ])
-      })
+			sizes.forEach((size) => {
+				engine.shortcuts.add([
+					`@${size}`,
+					{
+						[`@container (min-width: ${sizeValues[size]})`]: {}
+					}
+				])
+			})
 
-      engine.appendAutocompleteStyleItemStrings('container', 'container-normal')
-    }
-  })
+			engine.appendAutocompleteStyleItemStrings('container', 'container-normal')
+		}
+	})
 }
 
 // Usage
 pika({
-  __shortcut: 'container',
-  '@container (min-width: 640px)': {
-    '$': {
-      padding: '2rem'
-    }
-  }
+	'__shortcut': 'container',
+	'@container (min-width: 640px)': {
+		$: {
+			padding: '2rem'
+		}
+	}
 })
 ```
 
@@ -524,50 +531,50 @@ pika({
 import { defineEnginePlugin } from '@pikacss/core'
 
 interface DebugPluginOptions {
-  enabled?: boolean
-  logLevel?: 'info' | 'warn' | 'error'
+	enabled?: boolean
+	logLevel?: 'info' | 'warn' | 'error'
 }
 
 export function debugPlugin(options: DebugPluginOptions = {}) {
-  const { enabled = process.env.NODE_ENV === 'development', logLevel = 'info' } = options
+	const { enabled = process.env.NODE_ENV === 'development', logLevel = 'info' } = options
 
-  return defineEnginePlugin({
-    name: 'debug-plugin',
+	return defineEnginePlugin({
+		name: 'debug-plugin',
 
-    async transformStyleDefinitions(defs) {
-      if (enabled) {
-        console[logLevel]('[PikaCSS Debug] Processing style definitions:', defs)
-      }
-      return defs
-    },
+		async transformStyleDefinitions(defs) {
+			if (enabled) {
+				console[logLevel]('[PikaCSS Debug] Processing style definitions:', defs)
+			}
+			return defs
+		},
 
-    atomicStyleAdded(style) {
-      if (enabled) {
-        console[logLevel]('[PikaCSS Debug] New atomic style added:', {
-          id: style.id,
-          selector: style.content.selector,
-          property: style.content.property,
-          value: style.content.value
-        })
-      }
-    },
+		atomicStyleAdded(style) {
+			if (enabled) {
+				console[logLevel]('[PikaCSS Debug] New atomic style added:', {
+					id: style.id,
+					selector: style.content.selector,
+					property: style.content.property,
+					value: style.content.value
+				})
+			}
+		},
 
-    preflightUpdated() {
-      if (enabled) {
-        console[logLevel]('[PikaCSS Debug] Preflight styles updated')
-      }
-    }
-  })
+		preflightUpdated() {
+			if (enabled) {
+				console[logLevel]('[PikaCSS Debug] Preflight styles updated')
+			}
+		}
+	})
 }
 
 // Usage
 export default defineEngineConfig({
-  plugins: [
-    debugPlugin({
-      enabled: true,
-      logLevel: 'info'
-    })
-  ]
+	plugins: [
+		debugPlugin({
+			enabled: true,
+			logLevel: 'info'
+		})
+	]
 })
 ```
 
@@ -582,38 +589,41 @@ import { describe, expect, it } from 'vitest'
 import { myPlugin } from './my-plugin'
 
 describe('myPlugin', () => {
-  it('adds expected shortcuts', async () => {
-    const engine = await createEngine(defineEngineConfig({
-      plugins: [myPlugin()]
-    }))
+	it('adds expected shortcuts', async () => {
+		const engine = await createEngine(defineEngineConfig({
+			plugins: [myPlugin()]
+		}))
 
-    // Test shortcut registration
-    const classNames = await engine.use('my-shortcut')
-    expect(classNames).toBeDefined()
-  })
+		// Test shortcut registration
+		const classNames = await engine.use('my-shortcut')
+		expect(classNames)
+			.toBeDefined()
+	})
 
-  it('transforms style definitions correctly', async () => {
-    const engine = await createEngine(defineEngineConfig({
-      plugins: [myPlugin()]
-    }))
+	it('transforms style definitions correctly', async () => {
+		const engine = await createEngine(defineEngineConfig({
+			plugins: [myPlugin()]
+		}))
 
-    const classNames = await engine.use({
-      customProperty: 'value'
-    })
+		const classNames = await engine.use({
+			customProperty: 'value'
+		})
 
-    expect(classNames).toEqual(expect.arrayContaining([expect.any(String)]))
-  })
+		expect(classNames)
+			.toEqual(expect.arrayContaining([expect.any(String)]))
+	})
 
-  it('generates expected CSS', async () => {
-    const engine = await createEngine(defineEngineConfig({
-      plugins: [myPlugin()]
-    }))
+	it('generates expected CSS', async () => {
+		const engine = await createEngine(defineEngineConfig({
+			plugins: [myPlugin()]
+		}))
 
-    await engine.use({ customProperty: 'value' })
+		await engine.use({ customProperty: 'value' })
 
-    const css = await engine.renderAtomicStyles(false)
-    expect(css).toContain('expected-property')
-  })
+		const css = await engine.renderAtomicStyles(false)
+		expect(css)
+			.toContain('expected-property')
+	})
 })
 ```
 
@@ -626,30 +636,33 @@ import { describe, expect, it } from 'vitest'
 import { animationPlugin, themePlugin } from './my-plugins'
 
 describe('Plugin Integration', () => {
-  it('works with multiple plugins', async () => {
-    const engine = await createEngine(defineEngineConfig({
-      plugins: [
-        themePlugin({
-          colors: { primary: '#3b82f6' },
-          spacing: { md: '1rem' },
-          breakpoints: {}
-        }),
-        animationPlugin()
-      ]
-    }))
+	it('works with multiple plugins', async () => {
+		const engine = await createEngine(defineEngineConfig({
+			plugins: [
+				themePlugin({
+					colors: { primary: '#3b82f6' },
+					spacing: { md: '1rem' },
+					breakpoints: {}
+				}),
+				animationPlugin()
+			]
+		}))
 
-    // Test theme plugin shortcuts
-    const themeClasses = await engine.use('bg-primary')
-    expect(themeClasses).toBeDefined()
+		// Test theme plugin shortcuts
+		const themeClasses = await engine.use('bg-primary')
+		expect(themeClasses)
+			.toBeDefined()
 
-    // Test animation plugin shortcuts
-    const animClasses = await engine.use('animate-spin')
-    expect(animClasses).toBeDefined()
+		// Test animation plugin shortcuts
+		const animClasses = await engine.use('animate-spin')
+		expect(animClasses)
+			.toBeDefined()
 
-    // Test combined usage
-    const combined = await engine.use('bg-primary', 'animate-spin')
-    expect(combined).toHaveLength(2)
-  })
+		// Test combined usage
+		const combined = await engine.use('bg-primary', 'animate-spin')
+		expect(combined)
+			.toHaveLength(2)
+	})
 })
 ```
 
@@ -662,34 +675,34 @@ Create plugins that work well together:
 ```typescript
 // base-plugin.ts
 export function createBasePlugin(namespace: string) {
-  return defineEnginePlugin({
-    name: `${namespace}-base`,
-    
-    async configureEngine(engine) {
-      // Shared logic for plugin family
-      engine.addPreflight(`/* ${namespace} base styles */`)
-    }
-  })
+	return defineEnginePlugin({
+		name: `${namespace}-base`,
+
+		async configureEngine(engine) {
+			// Shared logic for plugin family
+			engine.addPreflight(`/* ${namespace} base styles */`)
+		}
+	})
 }
 
 // feature-plugin.ts
 export function createFeaturePlugin(namespace: string, features: string[]) {
-  return defineEnginePlugin({
-    name: `${namespace}-features`,
-    order: 'post', // Run after base
-    
-    async configureEngine(engine) {
-      features.forEach(feature => {
-        engine.shortcuts.add([`${namespace}-${feature}`, { /* ... */ }])
-      })
-    }
-  })
+	return defineEnginePlugin({
+		name: `${namespace}-features`,
+		order: 'post', // Run after base
+
+		async configureEngine(engine) {
+			features.forEach((feature) => {
+				engine.shortcuts.add([`${namespace}-${feature}`, { /* ... */ }])
+			})
+		}
+	})
 }
 
 // Usage
 plugins: [
-  createBasePlugin('my'),
-  createFeaturePlugin('my', ['button', 'card', 'modal'])
+	createBasePlugin('my'),
+	createFeaturePlugin('my', ['button', 'card', 'modal'])
 ]
 ```
 
@@ -697,43 +710,45 @@ plugins: [
 
 ```typescript
 export function createUtilityPlugin<T extends string>(
-  name: string,
-  property: string,
-  values: Record<T, string>
+	name: string,
+	property: string,
+	values: Record<T, string>
 ) {
-  return defineEnginePlugin({
-    name: `${name}-plugin`,
+	return defineEnginePlugin({
+		name: `${name}-plugin`,
 
-    async configureEngine(engine) {
-      Object.entries(values).forEach(([key, value]) => {
-        engine.shortcuts.add([
-          `${name}-${key}`,
-          { [property]: value as string }
-        ])
-      })
+		async configureEngine(engine) {
+			Object.entries(values)
+				.forEach(([key, value]) => {
+					engine.shortcuts.add([
+						`${name}-${key}`,
+						{ [property]: value as string }
+					])
+				})
 
-      engine.appendAutocompleteStyleItemStrings(
-        ...Object.keys(values).map(k => `${name}-${k}`)
-      )
-    }
-  })
+			engine.appendAutocompleteStyleItemStrings(
+				...Object.keys(values)
+					.map(k => `${name}-${k}`)
+			)
+		}
+	})
 }
 
 // Create specific plugins
 const textSizePlugin = createUtilityPlugin('text', 'fontSize', {
-  xs: '0.75rem',
-  sm: '0.875rem',
-  base: '1rem',
-  lg: '1.125rem',
-  xl: '1.25rem'
+	xs: '0.75rem',
+	sm: '0.875rem',
+	base: '1rem',
+	lg: '1.125rem',
+	xl: '1.25rem'
 })
 
 const bgOpacityPlugin = createUtilityPlugin('bg-opacity', 'opacity', {
-  0: '0',
-  25: '0.25',
-  50: '0.5',
-  75: '0.75',
-  100: '1'
+	0: '0',
+	25: '0.25',
+	50: '0.5',
+	75: '0.75',
+	100: '1'
 })
 ```
 
@@ -741,27 +756,27 @@ const bgOpacityPlugin = createUtilityPlugin('bg-opacity', 'opacity', {
 
 ```typescript
 export function conditionalPlugin(condition: boolean | (() => boolean)) {
-  return defineEnginePlugin({
-    name: 'conditional-plugin',
+	return defineEnginePlugin({
+		name: 'conditional-plugin',
 
-    async configureEngine(engine) {
-      const isEnabled = typeof condition === 'function' 
-        ? condition() 
-        : condition
+		async configureEngine(engine) {
+			const isEnabled = typeof condition === 'function'
+				? condition()
+				: condition
 
-      if (!isEnabled) {
-        return
-      }
+			if (!isEnabled) {
 
-      // Plugin logic...
-    }
-  })
+			}
+
+			// Plugin logic...
+		}
+	})
 }
 
 // Usage
 plugins: [
-  conditionalPlugin(process.env.NODE_ENV === 'development'),
-  conditionalPlugin(() => Boolean(process.env.FEATURE_FLAG))
+	conditionalPlugin(process.env.NODE_ENV === 'development'),
+	conditionalPlugin(() => Boolean(process.env.FEATURE_FLAG))
 ]
 ```
 
@@ -794,40 +809,40 @@ my-plugin/
 
 ```json
 {
-  "name": "@my-org/pikacss-plugin-example",
-  "version": "1.0.0",
-  "description": "Example PikaCSS plugin",
-  "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    }
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "tsdown",
-    "test": "vitest"
-  },
-  "peerDependencies": {
-    "@pikacss/core": "^0.0.37"
-  },
-  "devDependencies": {
-    "@pikacss/core": "^0.0.37",
-    "tsdown": "latest",
-    "vitest": "latest"
-  },
-  "keywords": [
-    "pikacss",
-    "pikacss-plugin",
-    "css-in-js"
-  ]
+	"name": "@my-org/pikacss-plugin-example",
+	"version": "1.0.0",
+	"description": "Example PikaCSS plugin",
+	"type": "module",
+	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsdown",
+		"test": "vitest"
+	},
+	"peerDependencies": {
+		"@pikacss/core": "^0.0.37"
+	},
+	"devDependencies": {
+		"@pikacss/core": "^0.0.37",
+		"tsdown": "latest",
+		"vitest": "latest"
+	},
+	"keywords": [
+		"pikacss",
+		"pikacss-plugin",
+		"css-in-js"
+	]
 }
 ```
 

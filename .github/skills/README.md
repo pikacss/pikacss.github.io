@@ -104,10 +104,10 @@ New feature: Support for `:has()` pseudo-class
 
 1. Add API documentation to:
    pikacss-expert/references/API-REFERENCE.md
-   
+
 2. Add implementation guide to:
    pikacss-dev/references/IMPLEMENTATION-GUIDE.md
-   
+
 3. Update examples in:
    pikacss-expert/SKILL.md
    pikacss-dev/SKILL.md

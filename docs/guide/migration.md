@@ -39,21 +39,21 @@ pnpm add -D @pikacss/unplugin-pikacss
 import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
 
 export default defineEngineConfig({
-  // You can recreate your Tailwind theme here using shortcuts
-  shortcuts: {
-    shortcuts: [
-      // Colors (example)
-      ['text-primary', { color: '#3b82f6' }],
-      ['bg-primary', { backgroundColor: '#3b82f6' }],
-      
-      // Common utilities
-      ['flex-center', {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }]
-    ]
-  }
+	// You can recreate your Tailwind theme here using shortcuts
+	shortcuts: {
+		shortcuts: [
+			// Colors (example)
+			['text-primary', { color: '#3b82f6' }],
+			['bg-primary', { backgroundColor: '#3b82f6' }],
+
+			// Common utilities
+			['flex-center', {
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'center'
+			}]
+		]
+	}
 })
 ```
 
@@ -71,15 +71,16 @@ export default defineEngineConfig({
 **After (PikaCSS):**
 ```tsx
 <div className={pika({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '1rem',
-  backgroundColor: '#3b82f6',
-  color: 'white',
-  borderRadius: '0.25rem'
-})}>
-  Hello
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+	padding: '1rem',
+	backgroundColor: '#3b82f6',
+	color: 'white',
+	borderRadius: '0.25rem'
+})}
+>
+	Hello
 </div>
 ```
 
@@ -95,15 +96,16 @@ export default defineEngineConfig({
 **After (PikaCSS):**
 ```tsx
 <div className={pika({
-  'width': '100%',
-  '@media (min-width: 768px)': {
-    width: '50%'
-  },
-  '@media (min-width: 1024px)': {
-    width: '33.333%'
-  }
-})}>
-  Content
+	'width': '100%',
+	'@media (min-width: 768px)': {
+		width: '50%'
+	},
+	'@media (min-width: 1024px)': {
+		width: '33.333%'
+	}
+})}
+>
+	Content
 </div>
 ```
 
@@ -112,9 +114,9 @@ Or create a shortcut:
 ```typescript
 // pika.config.ts
 shortcuts: [
-  [/^w-full$/, () => ({ width: '100%' })],
-  [/^md:w-1\/2$/, () => ({ '@media (min-width: 768px)': { width: '50%' } })],
-  // etc.
+	[/^w-full$/, () => ({ width: '100%' })],
+	[/^md:w-1\/2$/, () => ({ '@media (min-width: 768px)': { width: '50%' } })],
+	// etc.
 ]
 ```
 
@@ -130,15 +132,16 @@ shortcuts: [
 **After (PikaCSS):**
 ```tsx
 <button className={pika({
-  'backgroundColor': '#3b82f6',
-  '$:hover': {
-    backgroundColor: '#2563eb'
-  },
-  '$:focus': {
-    outline: '2px solid #93c5fd'
-  }
-})}>
-  Click Me
+	'backgroundColor': '#3b82f6',
+	'$:hover': {
+		backgroundColor: '#2563eb'
+	},
+	'$:focus': {
+		outline: '2px solid #93c5fd'
+	}
+})}
+>
+	Click Me
 </button>
 ```
 
@@ -154,14 +157,15 @@ shortcuts: [
 **After (PikaCSS):**
 ```tsx
 <div className={pika({
-  'backgroundColor': '#ffffff',
-  'color': '#000000',
-  '@media (prefers-color-scheme: dark)': {
-    backgroundColor: '#111827',
-    color: '#ffffff'
-  }
-})}>
-  Content
+	'backgroundColor': '#ffffff',
+	'color': '#000000',
+	'@media (prefers-color-scheme: dark)': {
+		backgroundColor: '#111827',
+		color: '#ffffff'
+	}
+})}
+>
+	Content
 </div>
 ```
 
@@ -212,39 +216,40 @@ const Button = styled.button`
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
-  
+
   &:hover {
     background-color: #2563eb;
   }
 `
 
 export default function App() {
-  return <Button>Click Me</Button>
+	return <Button>Click Me</Button>
 }
 ```
 
 **After (PikaCSS):**
 ```tsx
 function Button({ children }) {
-  return (
-    <button className={pika({
-      'padding': '0.5rem 1rem',
-      'backgroundColor': '#3b82f6',
-      'color': 'white',
-      'border': 'none',
-      'borderRadius': '0.25rem',
-      'cursor': 'pointer',
-      '$:hover': {
-        backgroundColor: '#2563eb'
-      }
-    })}>
-      {children}
-    </button>
-  )
+	return (
+		<button className={pika({
+			'padding': '0.5rem 1rem',
+			'backgroundColor': '#3b82f6',
+			'color': 'white',
+			'border': 'none',
+			'borderRadius': '0.25rem',
+			'cursor': 'pointer',
+			'$:hover': {
+				backgroundColor: '#2563eb'
+			}
+		})}
+		>
+			{children}
+		</button>
+	)
 }
 
 export default function App() {
-  return <Button>Click Me</Button>
+	return <Button>Click Me</Button>
 }
 ```
 
@@ -253,17 +258,17 @@ Or use shortcuts for reusability:
 ```typescript
 // pika.config.ts
 shortcuts: [
-  ['btn', {
-    padding: '0.5rem 1rem',
-    backgroundColor: '#3b82f6',
-    color: 'white',
-    border: 'none',
-    borderRadius: '0.25rem',
-    cursor: 'pointer',
-    '$:hover': {
-      backgroundColor: '#2563eb'
-    }
-  }]
+	['btn', {
+		'padding': '0.5rem 1rem',
+		'backgroundColor': '#3b82f6',
+		'color': 'white',
+		'border': 'none',
+		'borderRadius': '0.25rem',
+		'cursor': 'pointer',
+		'$:hover': {
+			backgroundColor: '#2563eb'
+		}
+	}]
 ]
 ```
 
@@ -291,14 +296,15 @@ Use multiple shortcuts or conditional logic:
 
 ```tsx
 function Button({ primary, children }) {
-  return (
-    <button className={pika({
-      backgroundColor: primary ? '#3b82f6' : '#6b7280',
-      color: 'white'
-    })}>
-      {children}
-    </button>
-  )
+	return (
+		<button className={pika({
+			backgroundColor: primary ? '#3b82f6' : '#6b7280',
+			color: 'white'
+		})}
+		>
+			{children}
+		</button>
+	)
 }
 ```
 
@@ -309,19 +315,19 @@ Wait! ❌ This won't work because PikaCSS evaluates at build time. (See [Importa
 ```typescript
 // pika.config.ts
 shortcuts: [
-  ['btn-base', { color: 'white', padding: '0.5rem 1rem' }],
-  ['btn-primary', { __shortcut: 'btn-base', backgroundColor: '#3b82f6' }],
-  ['btn-secondary', { __shortcut: 'btn-base', backgroundColor: '#6b7280' }]
+	['btn-base', { color: 'white', padding: '0.5rem 1rem' }],
+	['btn-primary', { __shortcut: 'btn-base', backgroundColor: '#3b82f6' }],
+	['btn-secondary', { __shortcut: 'btn-base', backgroundColor: '#6b7280' }]
 ]
 ```
 
 ```tsx
 function Button({ primary, children }) {
-  return (
-    <button className={pika(primary ? 'btn-primary' : 'btn-secondary')}>
-      {children}
-    </button>
-  )
+	return (
+		<button className={pika(primary ? 'btn-primary' : 'btn-secondary')}>
+			{children}
+		</button>
+	)
 }
 ```
 
@@ -364,9 +370,9 @@ Or define in preflights:
 ```typescript
 // pika.config.ts
 export default defineEngineConfig({
-  preflights: [
-    ':root { --color-primary: #3b82f6; --color-secondary: #6b7280; }'
-  ]
+	preflights: [
+		':root { --color-primary: #3b82f6; --color-secondary: #6b7280; }'
+	]
 })
 ```
 
@@ -394,26 +400,28 @@ import { css } from '@emotion/react'
   display: flex;
   padding: 1rem;
   background-color: #3b82f6;
-  
+
   &:hover {
     background-color: #2563eb;
   }
-`}>
-  Content
+`}
+>
+	Content
 </div>
 ```
 
 **After (PikaCSS):**
 ```tsx
 <div className={pika({
-  'display': 'flex',
-  'padding': '1rem',
-  'backgroundColor': '#3b82f6',
-  '$:hover': {
-    backgroundColor: '#2563eb'
-  }
-})}>
-  Content
+	'display': 'flex',
+	'padding': '1rem',
+	'backgroundColor': '#3b82f6',
+	'$:hover': {
+		backgroundColor: '#2563eb'
+	}
+})}
+>
+	Content
 </div>
 ```
 
@@ -424,28 +432,30 @@ import { css } from '@emotion/react'
 import { css } from '@emotion/react'
 
 <div className={css({
-  display: 'flex',
-  padding: '1rem',
-  backgroundColor: '#3b82f6',
-  '&:hover': {
-    backgroundColor: '#2563eb'
-  }
-})}>
-  Content
+	'display': 'flex',
+	'padding': '1rem',
+	'backgroundColor': '#3b82f6',
+	'&:hover': {
+		backgroundColor: '#2563eb'
+	}
+})}
+>
+	Content
 </div>
 ```
 
 **After (PikaCSS):**
 ```tsx
 <div className={pika({
-  'display': 'flex',
-  'padding': '1rem',
-  'backgroundColor': '#3b82f6',
-  '$:hover': { // Use $ instead of &
-    backgroundColor: '#2563eb'
-  }
-})}>
-  Content
+	'display': 'flex',
+	'padding': '1rem',
+	'backgroundColor': '#3b82f6',
+	'$:hover': { // Use $ instead of &
+		backgroundColor: '#2563eb'
+	}
+})}
+>
+	Content
 </div>
 ```
 
@@ -471,15 +481,15 @@ const primaryStyles = css`
 ```typescript
 // pika.config.ts
 shortcuts: [
-  ['base-styles', {
-    padding: '0.5rem',
-    borderRadius: '0.25rem'
-  }],
-  ['primary-styles', {
-    __shortcut: 'base-styles',
-    backgroundColor: '#3b82f6',
-    color: 'white'
-  }]
+	['base-styles', {
+		padding: '0.5rem',
+		borderRadius: '0.25rem'
+	}],
+	['primary-styles', {
+		__shortcut: 'base-styles',
+		backgroundColor: '#3b82f6',
+		color: 'white'
+	}]
 ]
 ```
 
@@ -513,14 +523,15 @@ pnpm add -D @pikacss/unplugin-pikacss
 **After (PikaCSS):**
 ```tsx
 <div className={pika({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '1rem',
-  backgroundColor: '#3b82f6',
-  color: 'white'
-})}>
-  Hello
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+	padding: '1rem',
+	backgroundColor: '#3b82f6',
+	color: 'white'
+})}
+>
+	Hello
 </div>
 ```
 
@@ -538,15 +549,15 @@ shortcuts: {
 ```typescript
 // pika.config.ts
 shortcuts: [
-  ['btn', {
-    padding: '0.5rem 1rem',
-    backgroundColor: '#3b82f6',
-    color: 'white',
-    borderRadius: '0.25rem',
-    '$:hover': {
-      backgroundColor: '#2563eb'
-    }
-  }]
+	['btn', {
+		'padding': '0.5rem 1rem',
+		'backgroundColor': '#3b82f6',
+		'color': 'white',
+		'borderRadius': '0.25rem',
+		'$:hover': {
+			backgroundColor: '#2563eb'
+		}
+	}]
 ]
 ```
 
@@ -556,7 +567,7 @@ shortcuts: [
 ```typescript
 // uno.config.ts
 rules: [
-  [/^m-(\d+)$/, ([, d]) => ({ margin: `${d}px` })]
+	[/^m-(\d+)$/, ([, d]) => ({ margin: `${d}px` })]
 ]
 ```
 
@@ -564,7 +575,7 @@ rules: [
 ```typescript
 // pika.config.ts
 shortcuts: [
-  [/^m-(\d+)$/, m => ({ margin: `${m[1]}px` }), ['m-4', 'm-8', 'm-16']]
+	[/^m-(\d+)$/, m => ({ margin: `${m[1]}px` }), ['m-4', 'm-8', 'm-16']]
 ]
 ```
 
@@ -575,17 +586,17 @@ shortcuts: [
 ```tsx
 // ❌ This won't work - runtime variable
 function Component({ color }) {
-  return <div className={pika({ color })} />
+	return <div className={pika({ color })} />
 }
 
 // ✅ Use CSS variables instead
 function Component({ color }) {
-  return (
-    <div 
-      className={pika({ color: 'var(--dynamic-color)' })}
-      style={{ '--dynamic-color': color }}
-    />
-  )
+	return (
+		<div
+			className={pika({ color: 'var(--dynamic-color)' })}
+			style={{ '--dynamic-color': color }}
+		/>
+	)
 }
 ```
 

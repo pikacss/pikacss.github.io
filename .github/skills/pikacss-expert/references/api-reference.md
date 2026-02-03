@@ -17,9 +17,9 @@ Main function for defining atomic styles.
 **Example:**
 ```typescript
 const styles = pika({
-  display: 'flex',
-  gap: '1rem',
-  padding: '2rem'
+	display: 'flex',
+	gap: '1rem',
+	padding: '2rem'
 })
 
 console.log(styles.className) // Generated class name
@@ -50,14 +50,14 @@ Create a configured PikaCSS engine instance.
 **Example:**
 ```typescript
 const engine = createEngine({
-  plugins: [iconPlugin(), resetPlugin()],
-  theme: {
-    colors: { primary: '#3b82f6' }
-  }
+	plugins: [iconPlugin(), resetPlugin()],
+	theme: {
+		colors: { primary: '#3b82f6' }
+	}
 })
 
 const styles = await engine.process({
-  color: 'var(--primary)'
+	color: 'var(--primary)'
 })
 ```
 
@@ -70,24 +70,24 @@ Configuration for engine initialization.
 **Properties:**
 ```typescript
 interface EngineConfig {
-  // Plugins to use
-  plugins?: EnginePlugin[]
-  
-  // Theme values
-  theme?: {
-    colors?: Record<string, string>
-    spacing?: Record<string, string>
-    [key: string]: any
-  }
-  
-  // Default CSS values
-  defaults?: Record<string, string>
-  
-  // Namespace/prefix for generated classes
-  namespace?: string
-  
-  // Source map generation (dev mode)
-  sourceMap?: boolean
+	// Plugins to use
+	plugins?: EnginePlugin[]
+
+	// Theme values
+	theme?: {
+		colors?: Record<string, string>
+		spacing?: Record<string, string>
+		[key: string]: any
+	}
+
+	// Default CSS values
+	defaults?: Record<string, string>
+
+	// Namespace/prefix for generated classes
+	namespace?: string
+
+	// Source map generation (dev mode)
+	sourceMap?: boolean
 }
 ```
 
@@ -98,36 +98,36 @@ User-provided style definition object.
 **Properties:**
 ```typescript
 interface StyleDefinition {
-  // Standard CSS properties in camelCase
-  [cssProp: string]: string | number | boolean | StyleDefinition
-  
-  // Pseudo-elements with $ prefix
-  $before?: StyleDefinition
-  $after?: StyleDefinition
-  $firstLine?: StyleDefinition
-  $firstLetter?: StyleDefinition
-  $selection?: StyleDefinition
-  $placeholder?: StyleDefinition
-  
-  // Pseudo-classes
-  '&:hover'?: StyleDefinition
-  '&:active'?: StyleDefinition
-  '&:focus'?: StyleDefinition
-  '&:disabled'?: StyleDefinition
-  '&:visited'?: StyleDefinition
-  
-  // Media queries
-  '@media (min-width: 768px)'?: StyleDefinition
-  '@media (prefers-color-scheme: dark)'?: StyleDefinition
-  
-  // Child selectors
-  '& > *'?: StyleDefinition
-  '& > *:not(:last-child)'?: StyleDefinition
-  
-  // Shortcuts (if registered)
-  btn?: ShortcutDefinition
-  icon?: ShortcutDefinition
-  h1?: boolean
+	// Standard CSS properties in camelCase
+	[cssProp: string]: string | number | boolean | StyleDefinition
+
+	// Pseudo-elements with $ prefix
+	'$before'?: StyleDefinition
+	'$after'?: StyleDefinition
+	'$firstLine'?: StyleDefinition
+	'$firstLetter'?: StyleDefinition
+	'$selection'?: StyleDefinition
+	'$placeholder'?: StyleDefinition
+
+	// Pseudo-classes
+	'&:hover'?: StyleDefinition
+	'&:active'?: StyleDefinition
+	'&:focus'?: StyleDefinition
+	'&:disabled'?: StyleDefinition
+	'&:visited'?: StyleDefinition
+
+	// Media queries
+	'@media (min-width: 768px)'?: StyleDefinition
+	'@media (prefers-color-scheme: dark)'?: StyleDefinition
+
+	// Child selectors
+	'& > *'?: StyleDefinition
+	'& > *:not(:last-child)'?: StyleDefinition
+
+	// Shortcuts (if registered)
+	'btn'?: ShortcutDefinition
+	'icon'?: ShortcutDefinition
+	'h1'?: boolean
 }
 ```
 
@@ -140,24 +140,24 @@ Return value from `pika()` call.
 **Properties:**
 ```typescript
 interface GeneratedStyles {
-  // Generated CSS class name
-  className: string
-  
-  // Unique identifier
-  id: string
-  
-  // Raw CSS (development mode only)
-  css?: string
-  
-  // Original definition
-  definition: StyleDefinition
-  
-  // Metadata
-  meta?: {
-    size: number
-    rules: number
-    used: string[]
-  }
+	// Generated CSS class name
+	className: string
+
+	// Unique identifier
+	id: string
+
+	// Raw CSS (development mode only)
+	css?: string
+
+	// Original definition
+	definition: StyleDefinition
+
+	// Metadata
+	meta?: {
+		size: number
+		rules: number
+		used: string[]
+	}
 }
 ```
 
@@ -170,14 +170,14 @@ Plugin interface for extending engine capabilities.
 **Example:**
 ```typescript
 interface EnginePlugin {
-  name: string
-  order?: 'pre' | 'post'
-  
-  hooks?: {
-    configureEngine?: (engine: Engine) => void | Promise<void>
-    transformStyleDefinitions?: (defs: StyleDefinition) => StyleDefinition
-    generateCSS?: (styles: ProcessedStyle[]) => string
-  }
+	name: string
+	order?: 'pre' | 'post'
+
+	hooks?: {
+		configureEngine?: (engine: Engine) => void | Promise<void>
+		transformStyleDefinitions?: (defs: StyleDefinition) => StyleDefinition
+		generateCSS?: (styles: ProcessedStyle[]) => string
+	}
 }
 ```
 
@@ -204,9 +204,9 @@ Register a new shortcut.
 
 ```typescript
 engine.registerShortcut('btn-primary', {
-  backgroundColor: '#3b82f6',
-  color: 'white',
-  padding: '0.75rem 1rem'
+	backgroundColor: '#3b82f6',
+	color: 'white',
+	padding: '0.75rem 1rem'
 })
 
 // Use it
@@ -219,9 +219,9 @@ Add preflight CSS (global styles).
 
 ```typescript
 engine.addPreflight(`
-  * { 
-    margin: 0; 
-    padding: 0; 
+  * {
+    margin: 0;
+    padding: 0;
   }
 `)
 ```
@@ -232,8 +232,8 @@ Process a style definition and generate CSS.
 
 ```typescript
 const result = await engine.process({
-  display: 'flex',
-  gap: '1rem'
+	display: 'flex',
+	gap: '1rem'
 })
 
 console.log(result.css)
@@ -248,9 +248,9 @@ Plugins declare new config options:
 
 ```typescript
 declare module '@pikacss/core' {
-  interface EngineConfig {
-    myPluginOption?: string
-  }
+	interface EngineConfig {
+		myPluginOption?: string
+	}
 }
 ```
 
@@ -260,9 +260,9 @@ Plugins declare new shortcuts:
 
 ```typescript
 declare module '@pikacss/core' {
-  interface Shortcuts {
-    myShortcut: MyShortcutType
-  }
+	interface Shortcuts {
+		myShortcut: MyShortcutType
+	}
 }
 ```
 
@@ -272,43 +272,43 @@ declare module '@pikacss/core' {
 
 ```typescript
 pika({
-  color: 'blue',
-  
-  // Before pseudo-element
-  $before: {
-    content: '"→ "',
-    color: 'gray'
-  },
-  
-  // After pseudo-element
-  $after: {
-    content: '"←"',
-    color: 'gray'
-  },
-  
-  // First line
-  $firstLine: {
-    fontWeight: 'bold',
-    fontSize: '1.2em'
-  },
-  
-  // First letter
-  $firstLetter: {
-    fontSize: '2em',
-    fontWeight: 'bold'
-  },
-  
-  // Selection
-  $selection: {
-    backgroundColor: 'blue',
-    color: 'white'
-  },
-  
-  // Placeholder
-  $placeholder: {
-    color: '#ccc',
-    fontStyle: 'italic'
-  }
+	color: 'blue',
+
+	// Before pseudo-element
+	$before: {
+		content: '"→ "',
+		color: 'gray'
+	},
+
+	// After pseudo-element
+	$after: {
+		content: '"←"',
+		color: 'gray'
+	},
+
+	// First line
+	$firstLine: {
+		fontWeight: 'bold',
+		fontSize: '1.2em'
+	},
+
+	// First letter
+	$firstLetter: {
+		fontSize: '2em',
+		fontWeight: 'bold'
+	},
+
+	// Selection
+	$selection: {
+		backgroundColor: 'blue',
+		color: 'white'
+	},
+
+	// Placeholder
+	$placeholder: {
+		color: '#ccc',
+		fontStyle: 'italic'
+	}
 })
 ```
 
@@ -318,18 +318,18 @@ pika({
 
 ```typescript
 pika({
-  // Mobile first
-  fontSize: '14px',
-  
-  // Tablet
-  '@media (min-width: 640px)': {
-    fontSize: '16px'
-  },
-  
-  // Desktop
-  '@media (min-width: 1024px)': {
-    fontSize: '18px'
-  }
+	// Mobile first
+	'fontSize': '14px',
+
+	// Tablet
+	'@media (min-width: 640px)': {
+		fontSize: '16px'
+	},
+
+	// Desktop
+	'@media (min-width: 1024px)': {
+		fontSize: '18px'
+	}
 })
 ```
 
@@ -337,12 +337,12 @@ pika({
 
 ```typescript
 pika({
-  display: 'flex',
-  
-  // Fallback for older browsers
-  '@supports not (display: grid)': {
-    display: 'flex'
-  }
+	'display': 'flex',
+
+	// Fallback for older browsers
+	'@supports not (display: grid)': {
+		display: 'flex'
+	}
 })
 ```
 
@@ -350,21 +350,21 @@ pika({
 
 ```typescript
 pika({
-  // Light mode
-  backgroundColor: 'white',
-  color: 'black',
-  
-  // Dark mode
-  '@media (prefers-color-scheme: dark)': {
-    backgroundColor: '#1a1a1a',
-    color: 'white'
-  },
-  
-  // Reduced motion
-  '@media (prefers-reduced-motion: reduce)': {
-    transition: 'none',
-    animation: 'none'
-  }
+	// Light mode
+	'backgroundColor': 'white',
+	'color': 'black',
+
+	// Dark mode
+	'@media (prefers-color-scheme: dark)': {
+		backgroundColor: '#1a1a1a',
+		color: 'white'
+	},
+
+	// Reduced motion
+	'@media (prefers-reduced-motion: reduce)': {
+		transition: 'none',
+		animation: 'none'
+	}
 })
 ```
 
@@ -374,28 +374,28 @@ pika({
 
 ```typescript
 pika({
-  backgroundColor: 'white',
-  
-  // Hover state
-  '&:hover': {
-    backgroundColor: '#f5f5f5'
-  },
-  
-  // Active state
-  '&:active': {
-    transform: 'scale(0.95)'
-  },
-  
-  // Focus visible (keyboard)
-  '&:focus-visible': {
-    outline: '2px solid blue'
-  },
-  
-  // Disabled state
-  '&:disabled': {
-    opacity: '0.5',
-    cursor: 'not-allowed'
-  }
+	'backgroundColor': 'white',
+
+	// Hover state
+	'&:hover': {
+		backgroundColor: '#f5f5f5'
+	},
+
+	// Active state
+	'&:active': {
+		transform: 'scale(0.95)'
+	},
+
+	// Focus visible (keyboard)
+	'&:focus-visible': {
+		outline: '2px solid blue'
+	},
+
+	// Disabled state
+	'&:disabled': {
+		opacity: '0.5',
+		cursor: 'not-allowed'
+	}
 })
 ```
 
@@ -403,18 +403,18 @@ pika({
 
 ```typescript
 pika({
-  display: 'flex',
-  gap: '1rem',
-  
-  // All direct children
-  '& > *': {
-    flex: 1
-  },
-  
-  // All but last child
-  '& > *:not(:last-child)': {
-    borderRight: '1px solid #ddd'
-  }
+	'display': 'flex',
+	'gap': '1rem',
+
+	// All direct children
+	'& > *': {
+		flex: 1
+	},
+
+	// All but last child
+	'& > *:not(:last-child)': {
+		borderRight: '1px solid #ddd'
+	}
 })
 ```
 
@@ -424,24 +424,24 @@ pika({
 
 ```typescript
 pika({
-  // Padding/Margin (all sides, or top/bottom left/right, or top right bottom left)
-  padding: '1rem',
-  padding: '1rem 2rem',
-  padding: '1rem 2rem 1rem 2rem',
-  
-  // Border
-  border: '1px solid #ddd',
-  borderWidth: '1px 2px',
-  
-  // Background
-  background: 'url(...) no-repeat center',
-  backgroundColor: '#fff',
-  
-  // Flex
-  flex: '1 1 auto',
-  
-  // Grid
-  gridTemplate: 'auto / 1fr 1fr'
+	// Padding/Margin (all sides, or top/bottom left/right, or top right bottom left)
+	padding: '1rem',
+	padding: '1rem 2rem',
+	padding: '1rem 2rem 1rem 2rem',
+
+	// Border
+	border: '1px solid #ddd',
+	borderWidth: '1px 2px',
+
+	// Background
+	background: 'url(...) no-repeat center',
+	backgroundColor: '#fff',
+
+	// Flex
+	flex: '1 1 auto',
+
+	// Grid
+	gridTemplate: 'auto / 1fr 1fr'
 })
 ```
 
@@ -481,9 +481,9 @@ pika({ btn: true })
 import type { StyleDefinition } from '@pikacss/core'
 
 const myStyles: StyleDefinition = {
-  display: 'flex',
-  gap: '1rem'
-  // TypeScript checks valid properties
+	display: 'flex',
+	gap: '1rem'
+	// TypeScript checks valid properties
 }
 ```
 
@@ -496,9 +496,9 @@ PikaCSS generates a `pika.gen.ts` file with:
 
 ```typescript
 // Auto-generated
-export const DISPLAY_FLEX = 'display-flex'
-export const GAP_1REM = 'gap-1rem'
-
 // Use with type safety
 import { DISPLAY_FLEX, GAP_1REM } from './pika.gen'
+
+export const DISPLAY_FLEX = 'display-flex'
+export const GAP_1REM = 'gap-1rem'
 ```

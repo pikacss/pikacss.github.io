@@ -16,7 +16,7 @@ In `pika.config.ts`, always add this reference at the top:
 import { defineEngineConfig } from '@pikacss/core'
 
 export default defineEngineConfig({
-  // your config
+	// your config
 })
 ```
 
@@ -39,12 +39,12 @@ type StyleDefinition = {
   color?: string
   fontSize?: string | number
   display?: 'flex' | 'grid' | 'block' | /* ... */
-  
+
   // Nested selectors
   '$:hover'?: StyleDefinition
   '$.active'?: StyleDefinition
   '@media (min-width: 768px)'?: StyleDefinition
-  
+
   // Special properties
   __important?: boolean
   __shortcut?: string | string[]
@@ -77,10 +77,10 @@ const styles = pika({
 
 ```typescript
 const styles = pika({
-  '$:hover': { /* ... */ }, // ✅ Valid pseudo-class
-  '$.active': { /* ... */ }, // ✅ Valid class selector
-  '$:invalid': { /* ... */ }, // ✅ Valid pseudo-class
-  '$:fake': { /* ... */ },    // ❌ TypeScript error
+	'$:hover': { /* ... */ }, // ✅ Valid pseudo-class
+	'$.active': { /* ... */ }, // ✅ Valid class selector
+	'$:invalid': { /* ... */ }, // ✅ Valid pseudo-class
+	'$:fake': { /* ... */ }, // ❌ TypeScript error
 })
 ```
 
@@ -92,20 +92,20 @@ When you use plugins, types are automatically augmented:
 import { icons } from '@pikacss/plugin-icons'
 
 export default defineEngineConfig({
-  plugins: [icons()]
+	plugins: [icons()]
 })
 
 // Now TypeScript knows about icon shortcuts:
 const icon = pika('i-mdi:home') // ✅ Autocomplete for icons
-const icon = pika('i-fake')      // ❌ Type error
+const icon = pika('i-fake') // ❌ Type error
 ```
 
 ### 5. Configuration Validation
 
 ```typescript
 export default defineEngineConfig({
-  prefix: 'pika-', // ✅ Valid option
-  unknownOption: 'value' // ❌ TypeScript error
+	prefix: 'pika-', // ✅ Valid option
+	unknownOption: 'value' // ❌ TypeScript error
 })
 ```
 
@@ -117,9 +117,9 @@ Hover over `pika()` function calls to see the generated CSS:
 
 ```typescript
 const styles = pika({
-  color: 'red',
-  fontSize: '16px',
-  '$:hover': { color: 'blue' }
+	'color': 'red',
+	'fontSize': '16px',
+	'$:hover': { color: 'blue' }
 })
 // Hover shows: ".a { color: red; } .b { font-size: 16px; } .c:hover { color: blue; }"
 ```
@@ -143,9 +143,9 @@ Press Cmd/Ctrl + Click on `pika` function to see its definition and documentatio
 
 ```typescript
 pika(
-  // Parameter hints show what's accepted:
-  // (styles: StyleDefinition) => string
-  { color: 'red' }
+	// Parameter hints show what's accepted:
+	// (styles: StyleDefinition) => string
+	{ color: 'red' }
 )
 ```
 
@@ -168,14 +168,14 @@ Ensure TypeScript can find the types:
 
 ```json
 {
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "lib": ["ES2020", "DOM"],
-    "strict": true
-  },
-  "include": ["src/**/*", "pika.gen.ts"]
+	"compilerOptions": {
+		"target": "ES2020",
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"lib": ["ES2020", "DOM"],
+		"strict": true
+	},
+	"include": ["src/**/*", "pika.gen.ts"]
 }
 ```
 
@@ -187,7 +187,7 @@ Ensure TypeScript can find the types:
 import { defineEngineConfig } from '@pikacss/core'
 
 export default defineEngineConfig({
-  // your config
+	// your config
 })
 ```
 
@@ -259,9 +259,9 @@ If you have custom shortcuts or selectors, add module augmentation:
 ```typescript
 // src/types/pika.d.ts
 declare module '@pikacss/core' {
-  interface Shortcuts {
-    'my-custom': any
-  }
+	interface Shortcuts {
+		'my-custom': any
+	}
 }
 ```
 
@@ -271,11 +271,11 @@ For better type safety, enable strict TypeScript:
 
 ```json
 {
-  "compilerOptions": {
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "noImplicitThis": true
-  }
+	"compilerOptions": {
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		"noImplicitThis": true
+	}
 }
 ```
 
@@ -285,9 +285,9 @@ Add to `package.json`:
 
 ```json
 {
-  "scripts": {
-    "typecheck": "tsc --noEmit"
-  }
+	"scripts": {
+		"typecheck": "tsc --noEmit"
+	}
 }
 ```
 
@@ -308,9 +308,9 @@ Use TypeScript incremental mode:
 
 ```json
 {
-  "compilerOptions": {
-    "incremental": true
-  }
+	"compilerOptions": {
+		"incremental": true
+	}
 }
 ```
 

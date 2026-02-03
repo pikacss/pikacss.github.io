@@ -21,12 +21,12 @@ import { createEngine } from '@pikacss/core'
 import { iconPlugin } from '@pikacss/plugin-icons'
 
 const engine = createEngine({
-  plugins: [
-    iconPlugin({
-      sets: ['heroicons', 'lucide', 'feather'],
-      defaultSize: '24px'
-    })
-  ]
+	plugins: [
+		iconPlugin({
+			sets: ['heroicons', 'lucide', 'feather'],
+			defaultSize: '24px'
+		})
+	]
 })
 ```
 
@@ -63,10 +63,10 @@ pika({
 **Configuration Options:**
 ```typescript
 interface IconPluginConfig {
-  sets?: string[]           // Icon sets to include
-  defaultSize?: string      // Default icon size (default: '1em')
-  defaultColor?: string     // Default icon color (default: 'currentColor')
-  prefix?: string          // CSS class prefix (default: 'icon')
+	sets?: string[] // Icon sets to include
+	defaultSize?: string // Default icon size (default: '1em')
+	defaultColor?: string // Default icon color (default: 'currentColor')
+	prefix?: string // CSS class prefix (default: 'icon')
 }
 ```
 
@@ -84,16 +84,16 @@ pnpm add @pikacss/plugin-reset
 import { resetPlugin } from '@pikacss/plugin-reset'
 
 const engine = createEngine({
-  plugins: [
-    resetPlugin({
-      preset: 'modern', // 'modern' or 'minimal'
-      customCSS: `
+	plugins: [
+		resetPlugin({
+			preset: 'modern', // 'modern' or 'minimal'
+			customCSS: `
         body {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
       `
-    })
-  ]
+		})
+	]
 })
 ```
 
@@ -134,31 +134,31 @@ pnpm add @pikacss/plugin-typography
 import { typographyPlugin } from '@pikacss/plugin-typography'
 
 const engine = createEngine({
-  plugins: [
-    typographyPlugin({
-      defaultFontFamily: 'system-ui',
-      headingScale: 1.25,
-      baseFontSize: '16px'
-    })
-  ]
+	plugins: [
+		typographyPlugin({
+			defaultFontFamily: 'system-ui',
+			headingScale: 1.25,
+			baseFontSize: '16px'
+		})
+	]
 })
 ```
 
 **Available Shortcuts:**
 ```typescript
 // Headings
-pika({ h1: true })  // 2.5rem, bold, normal line height
-pika({ h2: true })  // 2rem, bold, normal line height
-pika({ h3: true })  // 1.5rem, bold, normal line height
-pika({ h4: true })  // 1.25rem, bold, normal line height
-pika({ h5: true })  // 1.125rem, bold, normal line height
-pika({ h6: true })  // 1rem, bold, normal line height
+pika({ h1: true }) // 2.5rem, bold, normal line height
+pika({ h2: true }) // 2rem, bold, normal line height
+pika({ h3: true }) // 1.5rem, bold, normal line height
+pika({ h4: true }) // 1.25rem, bold, normal line height
+pika({ h5: true }) // 1.125rem, bold, normal line height
+pika({ h6: true }) // 1rem, bold, normal line height
 
 // Text styles
-pika({ body: true })        // Base text styles
-pika({ caption: true })     // Small caption text
-pika({ label: true })       // Form label text
-pika({ code: true })        // Code/monospace text
+pika({ body: true }) // Base text styles
+pika({ caption: true }) // Small caption text
+pika({ label: true }) // Form label text
+pika({ code: true }) // Code/monospace text
 
 // Text utilities
 pika({ textCenter: true })
@@ -170,17 +170,17 @@ pika({ lineClamp: 3 })
 **Configuration Options:**
 ```typescript
 interface TypographyPluginConfig {
-  defaultFontFamily?: string    // System font or custom
-  headingScale?: number         // Scale factor between heading sizes (1.25)
-  baseFontSize?: string        // Body font size (16px)
-  lineHeightMultiplier?: number // Line height scale (1.6)
-  monoFontFamily?: string      // Monospace font family
-  fontWeights?: {
-    light?: number
-    normal?: number
-    semibold?: number
-    bold?: number
-  }
+	defaultFontFamily?: string // System font or custom
+	headingScale?: number // Scale factor between heading sizes (1.25)
+	baseFontSize?: string // Body font size (16px)
+	lineHeightMultiplier?: number // Line height scale (1.6)
+	monoFontFamily?: string // Monospace font family
+	fontWeights?: {
+		light?: number
+		normal?: number
+		semibold?: number
+		bold?: number
+	}
 }
 ```
 
@@ -195,59 +195,59 @@ Define a custom plugin for your project-specific needs:
 import { defineEnginePlugin } from '@pikacss/core'
 
 export function buttonPlugin() {
-  return defineEnginePlugin({
-    name: 'button-plugin',
-    order: 'post',
-    
-    async configureEngine(engine) {
-      // Register button shortcuts
-      engine.registerShortcut('btn-primary', {
-        backgroundColor: '#3b82f6',
-        color: 'white',
-        padding: '0.75rem 1.5rem',
-        borderRadius: '0.375rem',
-        fontWeight: '600',
-        border: 'none',
-        cursor: 'pointer',
-        transition: 'all 0.2s ease',
-        
-        '&:hover': {
-          backgroundColor: '#2563eb'
-        },
-        '&:active': {
-          transform: 'scale(0.98)'
-        }
-      })
-      
-      engine.registerShortcut('btn-secondary', {
-        backgroundColor: '#e5e7eb',
-        color: '#111827',
-        padding: '0.75rem 1.5rem',
-        borderRadius: '0.375rem',
-        fontWeight: '600',
-        border: 'none',
-        cursor: 'pointer',
-        
-        '&:hover': {
-          backgroundColor: '#d1d5db'
-        }
-      })
-      
-      engine.registerShortcut('btn-ghost', {
-        backgroundColor: 'transparent',
-        color: '#3b82f6',
-        padding: '0.75rem 1.5rem',
-        borderRadius: '0.375rem',
-        fontWeight: '600',
-        border: '1px solid #3b82f6',
-        cursor: 'pointer',
-        
-        '&:hover': {
-          backgroundColor: '#eff6ff'
-        }
-      })
-    }
-  })
+	return defineEnginePlugin({
+		name: 'button-plugin',
+		order: 'post',
+
+		async configureEngine(engine) {
+			// Register button shortcuts
+			engine.registerShortcut('btn-primary', {
+				'backgroundColor': '#3b82f6',
+				'color': 'white',
+				'padding': '0.75rem 1.5rem',
+				'borderRadius': '0.375rem',
+				'fontWeight': '600',
+				'border': 'none',
+				'cursor': 'pointer',
+				'transition': 'all 0.2s ease',
+
+				'&:hover': {
+					backgroundColor: '#2563eb'
+				},
+				'&:active': {
+					transform: 'scale(0.98)'
+				}
+			})
+
+			engine.registerShortcut('btn-secondary', {
+				'backgroundColor': '#e5e7eb',
+				'color': '#111827',
+				'padding': '0.75rem 1.5rem',
+				'borderRadius': '0.375rem',
+				'fontWeight': '600',
+				'border': 'none',
+				'cursor': 'pointer',
+
+				'&:hover': {
+					backgroundColor: '#d1d5db'
+				}
+			})
+
+			engine.registerShortcut('btn-ghost', {
+				'backgroundColor': 'transparent',
+				'color': '#3b82f6',
+				'padding': '0.75rem 1.5rem',
+				'borderRadius': '0.375rem',
+				'fontWeight': '600',
+				'border': '1px solid #3b82f6',
+				'cursor': 'pointer',
+
+				'&:hover': {
+					backgroundColor: '#eff6ff'
+				}
+			})
+		}
+	})
 }
 ```
 
@@ -258,9 +258,9 @@ export function buttonPlugin() {
 import { buttonPlugin } from './plugins/buttonPlugin'
 
 const engine = createEngine({
-  plugins: [
-    buttonPlugin()
-  ]
+	plugins: [
+		buttonPlugin()
+	]
 })
 ```
 
@@ -314,12 +314,12 @@ Plugins work together seamlessly:
 
 ```typescript
 const engine = createEngine({
-  plugins: [
-    resetPlugin(),           // First: apply CSS reset
-    typographyPlugin(),      // Then: add typography
-    iconPlugin(),           // Then: add icon support
-    buttonPlugin()          // Finally: add custom buttons
-  ]
+	plugins: [
+		resetPlugin(), // First: apply CSS reset
+		typographyPlugin(), // Then: add typography
+		iconPlugin(), // Then: add icon support
+		buttonPlugin() // Finally: add custom buttons
+	]
 })
 ```
 
@@ -335,18 +335,18 @@ Each plugin:
 
 ```typescript
 export function myPlugin(options?: MyOptions) {
-  const config = {
-    primaryColor: '#3b82f6',
-    secondaryColor: '#10b981',
-    ...options
-  }
-  
-  return defineEnginePlugin({
-    name: 'my-plugin',
-    async configureEngine(engine) {
-      // Use merged config
-    }
-  })
+	const config = {
+		primaryColor: '#3b82f6',
+		secondaryColor: '#10b981',
+		...options
+	}
+
+	return defineEnginePlugin({
+		name: 'my-plugin',
+		async configureEngine(engine) {
+			// Use merged config
+		}
+	})
 }
 ```
 
@@ -354,21 +354,21 @@ export function myPlugin(options?: MyOptions) {
 
 ```typescript
 interface MyPluginOptions {
-  colors?: Record<string, string>
-  spacing?: Record<string, string>
-  typography?: TypographyConfig
+	colors?: Record<string, string>
+	spacing?: Record<string, string>
+	typography?: TypographyConfig
 }
 
 export function myPlugin(options?: MyPluginOptions) {
-  // Merge with defaults
-  const merged = mergeOptions(defaults, options)
-  
-  return defineEnginePlugin({
-    name: 'my-plugin',
-    async configureEngine(engine) {
-      // Register with custom config
-    }
-  })
+	// Merge with defaults
+	const merged = mergeOptions(defaults, options)
+
+	return defineEnginePlugin({
+		name: 'my-plugin',
+		async configureEngine(engine) {
+			// Register with custom config
+		}
+	})
 }
 ```
 
@@ -376,13 +376,13 @@ export function myPlugin(options?: MyPluginOptions) {
 
 ```typescript
 declare module '@pikacss/core' {
-  interface EngineConfig {
-    myPlugin?: MyPluginOptions
-  }
-  
-  interface Shortcuts {
-    myShortcut: MyShortcutType
-  }
+	interface EngineConfig {
+		myPlugin?: MyPluginOptions
+	}
+
+	interface Shortcuts {
+		myShortcut: MyShortcutType
+	}
 }
 ```
 
@@ -432,16 +432,16 @@ If plugins slow down builds:
 
 ```typescript
 class MyPlugin {
-  private cache = new Map()
-  
-  async transformStyleDefinitions(defs) {
-    const key = JSON.stringify(defs)
-    if (this.cache.has(key)) {
-      return this.cache.get(key)
-    }
-    const result = await expensiveTransform(defs)
-    this.cache.set(key, result)
-    return result
-  }
+	private cache = new Map()
+
+	async transformStyleDefinitions(defs) {
+		const key = JSON.stringify(defs)
+		if (this.cache.has(key)) {
+			return this.cache.get(key)
+		}
+		const result = await expensiveTransform(defs)
+		this.cache.set(key, result)
+		return result
+	}
 }
 ```

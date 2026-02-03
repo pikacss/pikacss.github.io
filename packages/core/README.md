@@ -15,7 +15,7 @@ pnpm add @pikacss/core
 import { defineEngineConfig } from '@pikacss/core'
 
 export default defineEngineConfig({
-  // Your configuration
+	// Your configuration
 })
 ```
 
@@ -24,10 +24,10 @@ export default defineEngineConfig({
 import { createEngine, defineEngineConfig } from '@pikacss/core'
 
 const config = defineEngineConfig({
-  // Engine configuration
-  prefix: 'pk-',
-  defaultSelector: '.%',
-  plugins: []
+	// Engine configuration
+	prefix: 'pk-',
+	defaultSelector: '.%',
+	plugins: []
 })
 
 const engine = createEngine(config)
@@ -52,17 +52,17 @@ await engine.setup()
 import { createEngine, defineEngineConfig } from '@pikacss/core'
 
 const config = defineEngineConfig({
-  // Prefix for generated atomic CSS class names
-  prefix: 'pk-',
-  
-  // Default selector format (% will be replaced with atomic ID)
-  defaultSelector: '.%',
-  
-  // Plugins to extend functionality
-  plugins: [],
-  
-  // Global CSS preflights
-  preflights: [],
+	// Prefix for generated atomic CSS class names
+	prefix: 'pk-',
+
+	// Default selector format (% will be replaced with atomic ID)
+	defaultSelector: '.%',
+
+	// Plugins to extend functionality
+	plugins: [],
+
+	// Global CSS preflights
+	preflights: [],
 })
 
 const engine = createEngine(config)
@@ -78,11 +78,11 @@ The engine provides methods for managing CSS generation:
 engine.addPreflight('* { box-sizing: border-box; }')
 
 // Access sub-systems
-engine.variables  // CSS variables management
-engine.keyframes  // CSS keyframes management
-engine.selectors  // CSS selectors management
-engine.shortcuts  // CSS shortcuts management
-engine.important  // Important rules management
+engine.variables // CSS variables management
+engine.keyframes // CSS keyframes management
+engine.selectors // CSS selectors management
+engine.shortcuts // CSS shortcuts management
+engine.important // Important rules management
 ```
 
 ### Configuration
@@ -93,32 +93,32 @@ Use `defineEngineConfig` for type-safe configuration:
 import { defineEngineConfig } from '@pikacss/core'
 
 export default defineEngineConfig({
-  // Prefix for atomic class IDs
-  prefix: 'pk-',
-  
-  // Default selector format (% = atomic ID)
-  defaultSelector: '.%',
-  
-  // Global CSS preflights
-  preflights: [
-    ':root { --primary: #3b82f6; }',
-    // Or function:
-    ({ engine, isFormatted }) => '/* Generated CSS */'
-  ],
-  
-  // Shortcuts configuration
-  shortcuts: {
-    shortcuts: [
-      ['flex-center', {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }],
-    ]
-  },
-  
-  // Plugins to extend functionality
-  plugins: []
+	// Prefix for atomic class IDs
+	prefix: 'pk-',
+
+	// Default selector format (% = atomic ID)
+	defaultSelector: '.%',
+
+	// Global CSS preflights
+	preflights: [
+		':root { --primary: #3b82f6; }',
+		// Or function:
+		({ engine, isFormatted }) => '/* Generated CSS */'
+	],
+
+	// Shortcuts configuration
+	shortcuts: {
+		shortcuts: [
+			['flex-center', {
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'center'
+			}],
+		]
+	},
+
+	// Plugins to extend functionality
+	plugins: []
 })
 ```
 
@@ -141,7 +141,7 @@ export function defineShortcut(shortcut: Shortcut): Shortcut
 export function defineVariables(variables: VariablesDefinition): VariablesDefinition
 
 // Utilities
-export { log, createLogger } from './internal/utils'
+export { createLogger, log } from './internal/utils'
 ```
 
 ### Engine Instance
@@ -164,31 +164,31 @@ Create custom plugins to extend PikaCSS:
 import type { Plugin } from '@pikacss/core'
 
 export function myPlugin(): Plugin {
-  return {
-    name: 'my-plugin',
-    
-    setup(api) {
-      // Add preflights
-      api.addPreflight({
-        css: '/* your global CSS */'
-      })
-      
-      // Add rules
-      api.addRule({
-        /* rule configuration */
-      })
-      
-      // Add shortcuts
-      api.addShortcut({
-        /* shortcut configuration */
-      })
-      
-      // Add variants
-      api.addVariant({
-        /* variant configuration */
-      })
-    }
-  }
+	return {
+		name: 'my-plugin',
+
+		setup(api) {
+			// Add preflights
+			api.addPreflight({
+				css: '/* your global CSS */'
+			})
+
+			// Add rules
+			api.addRule({
+				/* rule configuration */
+			})
+
+			// Add shortcuts
+			api.addShortcut({
+				/* shortcut configuration */
+			})
+
+			// Add variants
+			api.addVariant({
+				/* variant configuration */
+			})
+		}
+	}
 }
 ```
 

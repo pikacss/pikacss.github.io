@@ -240,8 +240,8 @@ pika({ color }) // Error: color is undefined at build time
 
 ```typescript
 function Button({ variant }) {
-  // variant is only known at runtime
-  pika({ backgroundColor: variant === 'primary' ? 'blue' : 'gray' })
+	// variant is only known at runtime
+	pika({ backgroundColor: variant === 'primary' ? 'blue' : 'gray' })
 }
 ```
 
@@ -249,16 +249,16 @@ function Button({ variant }) {
 
 ```typescript
 // Define styles with CSS variables
-const buttonClass = pika({ 
-  backgroundColor: 'var(--btn-color)' 
+const buttonClass = pika({
+  backgroundColor: 'var(--btn-color)'
 })
 
 // Set the variable at runtime
 function Button({ variant }) {
   const color = variant === 'primary' ? 'blue' : 'gray'
   return (
-    <button 
-      className={buttonClass} 
+    <button
+      className={buttonClass}
       style={{ '--btn-color': color }}
     >
       Click me
@@ -271,8 +271,8 @@ function Button({ variant }) {
 
 ```typescript
 function Button({ variant }) {
-  const classes = variant === 'primary' 
-    ? pika('btn-primary') 
+  const classes = variant === 'primary'
+    ? pika('btn-primary')
     : pika('btn-secondary')
   return <button className={classes}>Click me</button>
 }

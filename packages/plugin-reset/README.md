@@ -18,11 +18,11 @@ import { defineEngineConfig } from '@pikacss/core'
 import { reset } from '@pikacss/plugin-reset'
 
 export default defineEngineConfig({
-  plugins: [
-    reset()
-  ],
-  // Choose which reset style to use
-  reset: 'modern-normalize' // default
+	plugins: [
+		reset()
+	],
+	// Choose which reset style to use
+	reset: 'modern-normalize' // default
 })
 ```
 
@@ -57,9 +57,9 @@ import { defineEngineConfig } from '@pikacss/core'
 import { reset } from '@pikacss/plugin-reset'
 
 export default defineEngineConfig({
-  plugins: [
-    reset()
-  ]
+	plugins: [
+		reset()
+	]
 })
 ```
 
@@ -74,11 +74,11 @@ import { defineEngineConfig } from '@pikacss/core'
 import { reset } from '@pikacss/plugin-reset'
 
 export default defineEngineConfig({
-  plugins: [
-    reset()
-  ],
-  // Options: 'modern-normalize' | 'normalize' | 'andy-bell' | 'eric-meyer' | 'the-new-css-reset'
-  reset: 'andy-bell'
+	plugins: [
+		reset()
+	],
+	// Options: 'modern-normalize' | 'normalize' | 'andy-bell' | 'eric-meyer' | 'the-new-css-reset'
+	reset: 'andy-bell'
 })
 ```
 
@@ -96,8 +96,8 @@ The reset style is configured at the engine level:
 
 ```typescript
 export default defineEngineConfig({
-  plugins: [reset()],
-  reset: 'modern-normalize' // default
+	plugins: [reset()],
+	reset: 'modern-normalize' // default
 })
 ```
 

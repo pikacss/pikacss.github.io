@@ -27,15 +27,15 @@ pnpm add -D @pikacss/vite-plugin-pikacss
 
 **vite.config.ts**:
 ```typescript
-import { defineConfig } from 'vite'
 import PikaCSSPlugin from '@pikacss/vite-plugin-pikacss'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
-  plugins: [
-    PikaCSSPlugin({
-      // options
-    })
-  ]
+	plugins: [
+		PikaCSSPlugin({
+			// options
+		})
+	]
 })
 ```
 
@@ -59,46 +59,46 @@ For new projects, we strongly recommend using `@pikacss/unplugin-pikacss/vite` d
 ### Basic Setup
 
 ```typescript
+import PikaCSSPlugin from '@pikacss/vite-plugin-pikacss'
 // vite.config.ts
 import { defineConfig } from 'vite'
-import PikaCSSPlugin from '@pikacss/vite-plugin-pikacss'
 
 export default defineConfig({
-  plugins: [
-    PikaCSSPlugin()
-  ]
+	plugins: [
+		PikaCSSPlugin()
+	]
 })
 ```
 
 ### With Configuration
 
 ```typescript
+import PikaCSSPlugin from '@pikacss/vite-plugin-pikacss'
 // vite.config.ts
 import { defineConfig } from 'vite'
-import PikaCSSPlugin from '@pikacss/vite-plugin-pikacss'
 
 export default defineConfig({
-  plugins: [
-    PikaCSSPlugin({
-      // File patterns to transform
-      target: ['**/*.vue', '**/*.tsx', '**/*.jsx'],
-      
-      // PikaCSS config file path
-      config: './pika.config.ts',
-      
-      // Custom function name
-      fnName: 'pika',
-      
-      // Transform format
-      transformedFormat: 'string',
-      
-      // TypeScript codegen
-      tsCodegen: true,
-      
-      // Dev CSS output path
-      devCss: 'pika.dev.css'
-    })
-  ]
+	plugins: [
+		PikaCSSPlugin({
+			// File patterns to transform
+			target: ['**/*.vue', '**/*.tsx', '**/*.jsx'],
+
+			// PikaCSS config file path
+			config: './pika.config.ts',
+
+			// Custom function name
+			fnName: 'pika',
+
+			// Transform format
+			transformedFormat: 'string',
+
+			// TypeScript codegen
+			tsCodegen: true,
+
+			// Dev CSS output path
+			devCss: 'pika.dev.css'
+		})
+	]
 })
 ```
 
@@ -107,10 +107,10 @@ export default defineConfig({
 ```typescript
 // In your Vue/React/etc. files
 const styles = pika({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '1rem',
-  padding: '2rem'
+	display: 'flex',
+	alignItems: 'center',
+	gap: '1rem',
+	padding: '2rem'
 })
 ```
 
@@ -120,48 +120,48 @@ See `@pikacss/unplugin-pikacss` documentation for all available options:
 
 ```typescript
 interface PluginOptions {
-  /**
-   * File scanning configuration.
-   */
-  scan?: {
-    include?: string | string[]
-    exclude?: string | string[]
-  }
+	/**
+	 * File scanning configuration.
+	 */
+	scan?: {
+		include?: string | string[]
+		exclude?: string | string[]
+	}
 
-  /**
-   * Engine configuration or config file path.
-   */
-  config?: EngineConfig | string
+	/**
+	 * Engine configuration or config file path.
+	 */
+	config?: EngineConfig | string
 
-  /**
-   * Auto-create config file if missing.
-   * @default true
-   */
-  autoCreateConfig?: boolean
+	/**
+	 * Auto-create config file if missing.
+	 * @default true
+	 */
+	autoCreateConfig?: boolean
 
-  /**
-   * PikaCSS function name.
-   * @default 'pika'
-   */
-  fnName?: string
+	/**
+	 * PikaCSS function name.
+	 * @default 'pika'
+	 */
+	fnName?: string
 
-  /**
-   * Output format for class names.
-   * @default 'string'
-   */
-  transformedFormat?: 'string' | 'array' | 'inline'
+	/**
+	 * Output format for class names.
+	 * @default 'string'
+	 */
+	transformedFormat?: 'string' | 'array' | 'inline'
 
-  /**
-   * TypeScript code generation.
-   * @default true
-   */
-  tsCodegen?: boolean | string
+	/**
+	 * TypeScript code generation.
+	 * @default true
+	 */
+	tsCodegen?: boolean | string
 
-  /**
-   * CSS code generation.
-   * @default true
-   */
-  cssCodegen?: boolean | string
+	/**
+	 * CSS code generation.
+	 * @default true
+	 */
+	cssCodegen?: boolean | string
 }
 ```
 

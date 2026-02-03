@@ -93,8 +93,8 @@ import { defineEngineConfig } from '@pikacss/core'
 import { icons } from '@pikacss/plugin-icons'
 
 export default defineEngineConfig({
-  plugins: [icons()],
-  icons: { prefix: 'i-' }
+	plugins: [icons()],
+	icons: { prefix: 'i-' }
 })
 
 const icon = pika('i-mdi:home')
@@ -107,7 +107,7 @@ Special YAML frontmatter for AI optimization:
 ```yaml
 ---
 llmstxt:
-  description: "PikaCSS LLM Knowledge Base"
+  description: PikaCSS LLM Knowledge Base
   keywords:
     - atomic-css
     - css-in-js

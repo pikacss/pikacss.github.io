@@ -213,13 +213,14 @@ import { createEngine, defineEngineConfig } from '@pikacss/core'
 import { describe, expect, it } from 'vitest'
 
 describe('myFeature', () => {
-  it('should work correctly', async () => {
-    const engine = await createEngine(defineEngineConfig({}))
-    
-    const result = await engine.use({ color: 'red' })
-    
-    expect(result).toBeDefined()
-  })
+	it('should work correctly', async () => {
+		const engine = await createEngine(defineEngineConfig({}))
+
+		const result = await engine.use({ color: 'red' })
+
+		expect(result)
+			.toBeDefined()
+	})
 })
 ```
 
@@ -269,7 +270,7 @@ This creates:
 3. **PR Title Format**
 
    Use conventional commit format:
-   
+
    ```
    feat(core): add new feature
    fix(unplugin): resolve bug

@@ -21,13 +21,13 @@ PikaCSS is a **build-time only** tool. All arguments to `pika()` must be **stati
 ```typescript
 // ❌ Invalid - runtime variable
 const color = getUserColor()
-pika({ color })  // ERROR
+pika({ color }) // ERROR
 
 // ✅ Valid - static value
-pika({ color: 'red' })  // OK
+pika({ color: 'red' }) // OK
 
 // ✅ Valid - CSS variable for runtime values
-pika({ color: 'var(--user-color)' })  // OK
+pika({ color: 'var(--user-color)' }) // OK
 // Set at runtime: <div style={{ '--user-color': userColor }}>
 ```
 :::

@@ -210,9 +210,9 @@ import 'pika.css'
 ```ts
 // Direct style object
 const classes = pika({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '1rem'
+	display: 'flex',
+	alignItems: 'center',
+	gap: '1rem'
 })
 
 // Using shortcuts

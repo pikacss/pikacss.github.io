@@ -147,9 +147,9 @@ Always use workspace protocol:
 
 ```json
 {
-  "dependencies": {
-    "@pikacss/core": "workspace:*"
-  }
+	"dependencies": {
+		"@pikacss/core": "workspace:*"
+	}
 }
 ```
 
@@ -159,9 +159,9 @@ For plugins and frameworks, always list `@pikacss/core` as peer dependency:
 
 ```json
 {
-  "peerDependencies": {
-    "@pikacss/core": "workspace:*"
-  }
+	"peerDependencies": {
+		"@pikacss/core": "workspace:*"
+	}
 }
 ```
 
@@ -207,7 +207,7 @@ const styles2 = pika({ color: COLOR })
 
 // ❌ Not allowed (runtime)
 function Component({ color }) {
-  const styles = pika({ color }) // Error: runtime variable
+	const styles = pika({ color }) // Error: runtime variable
 }
 
 // ✅ Solution: CSS variables

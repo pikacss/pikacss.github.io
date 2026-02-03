@@ -75,7 +75,7 @@ Before committing any changes:
 
 **Style processing logic?**
 ```
-Examples: new pseudo-element support, new selector type, 
+Examples: new pseudo-element support, new selector type,
 new utility generation logic, new plugin hook
 → Add to core
 ```
@@ -176,41 +176,41 @@ import type { EnginePlugin } from '@pikacss/core'
 import { defineEnginePlugin } from '@pikacss/core'
 
 export interface MyFeatureOptions {
-  // Options here
+	// Options here
 }
 
 declare module '@pikacss/core' {
-  interface EngineConfig {
-    myFeature?: MyFeatureOptions
-  }
+	interface EngineConfig {
+		myFeature?: MyFeatureOptions
+	}
 }
 
 export function myFeature(options?: MyFeatureOptions): EnginePlugin {
-  return defineEnginePlugin({
-    name: 'my-feature',
-    order: 'post', // Control execution order
-    async configureEngine(engine) {
-      // Register shortcuts, hooks, etc.
-    }
-  })
+	return defineEnginePlugin({
+		name: 'my-feature',
+		order: 'post', // Control execution order
+		async configureEngine(engine) {
+			// Register shortcuts, hooks, etc.
+		}
+	})
 }
 ```
 
 ### Plugin Testing
 
 ```typescript
-// packages/plugin-my-feature/tests/unit/myFeature.test.ts
-import { describe, it, expect } from 'vitest'
 import { createEngine } from '@pikacss/core'
+// packages/plugin-my-feature/tests/unit/myFeature.test.ts
+import { describe, expect, it } from 'vitest'
 import { myFeature } from '../src'
 
 describe('my-feature plugin', () => {
-  it('should configure engine correctly', () => {
-    const engine = createEngine({
-      plugins: [myFeature()]
-    })
-    // Test plugin integration
-  })
+	it('should configure engine correctly', () => {
+		const engine = createEngine({
+			plugins: [myFeature()]
+		})
+		// Test plugin integration
+	})
 })
 ```
 
@@ -220,16 +220,16 @@ describe('my-feature plugin', () => {
 
 ```typescript
 // Files
-packages/core/src/myFeature.ts
-packages/core/tests/unit/myFeature.test.ts
+packages / core / src / myFeature.ts
+packages / core / tests / unit / myFeature.test.ts
 
 // Functions - camelCase
 export function processStyles() {}
-export const generateCSS = () => {}
+export function generateCSS() {}
 
 // Types - PascalCase
 interface MyInterface {}
-type MyType = {}
+interface MyType {}
 
 // Constants - UPPER_SNAKE_CASE
 const MAX_SIZE = 1024
@@ -318,13 +318,13 @@ async transformStyleDefinitions(defs) {
 ```typescript
 // In your plugin or package
 declare module '@pikacss/core' {
-  interface EngineConfig {
-    customOption?: string
-  }
-  
-  interface Shortcuts {
-    customShortcut: CustomDef
-  }
+	interface EngineConfig {
+		customOption?: string
+	}
+
+	interface Shortcuts {
+		customShortcut: CustomDef
+	}
 }
 ```
 
@@ -332,11 +332,11 @@ declare module '@pikacss/core' {
 
 ```typescript
 function isStyleDefinition(value: unknown): value is StyleDefinition {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    'color' in value || 'display' in value
-  )
+	return (
+		typeof value === 'object'
+		&& value !== null
+		&& 'color' in value || 'display' in value
+	)
 }
 ```
 
@@ -346,10 +346,11 @@ function isStyleDefinition(value: unknown): value is StyleDefinition {
 
 ```typescript
 describe('specific function', () => {
-  it('should do X with input Y', () => {
-    const result = functionUnderTest(input)
-    expect(result).toBe(expected)
-  })
+	it('should do X with input Y', () => {
+		const result = functionUnderTest(input)
+		expect(result)
+			.toBe(expected)
+	})
 })
 ```
 
@@ -357,13 +358,14 @@ describe('specific function', () => {
 
 ```typescript
 describe('core with plugins', () => {
-  it('should process styles with plugin chain', async () => {
-    const engine = createEngine({
-      plugins: [pluginA(), pluginB()]
-    })
-    const result = await engine.process(input)
-    expect(result.css).toContain('expected-class')
-  })
+	it('should process styles with plugin chain', async () => {
+		const engine = createEngine({
+			plugins: [pluginA(), pluginB()]
+		})
+		const result = await engine.process(input)
+		expect(result.css)
+			.toContain('expected-class')
+	})
 })
 ```
 
@@ -371,8 +373,9 @@ describe('core with plugins', () => {
 
 ```typescript
 it('should handle async operations', async () => {
-  const result = await asyncFunction()
-  expect(result).toBeDefined()
+	const result = await asyncFunction()
+	expect(result)
+		.toBeDefined()
 })
 ```
 

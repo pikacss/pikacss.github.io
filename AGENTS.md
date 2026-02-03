@@ -198,7 +198,7 @@ const styles2 = pika({ color: COLOR })
 
 // ❌ Not allowed (runtime)
 function Component({ color }) {
-  const styles = pika({ color }) // color is runtime variable
+	const styles = pika({ color }) // color is runtime variable
 }
 
 // ✅ Solution: CSS variables
@@ -344,9 +344,9 @@ export const myFunction = () => {}  // camelCase
 3. **Peer Dependencies**: Always list `@pikacss/core` as peer dependency
    ```json
    {
-     "peerDependencies": {
-       "@pikacss/core": "workspace:*"
-     }
+   	"peerDependencies": {
+   		"@pikacss/core": "workspace:*"
+   	}
    }
    ```
 
@@ -433,13 +433,14 @@ pnpm --filter @pikacss/core test <filename>
 ### Test Pattern
 
 ```typescript
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 describe('Feature', () => {
-  it('should do something', async () => {
-    const result = await functionUnderTest()
-    expect(result).toBe(expected)
-  })
+	it('should do something', async () => {
+		const result = await functionUnderTest()
+		expect(result)
+			.toBe(expected)
+	})
 })
 ```
 
@@ -583,9 +584,9 @@ The monorepo uses workspace protocol. Internal dependencies:
 
 ```json
 {
-  "dependencies": {
-    "@pikacss/core": "workspace:*"
-  }
+	"dependencies": {
+		"@pikacss/core": "workspace:*"
+	}
 }
 ```
 

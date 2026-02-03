@@ -36,18 +36,19 @@ This guide helps you understand how PikaCSS differs from other popular CSS solut
 
 ```tsx
 <button className={pika({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '0.5rem 1rem',
-  backgroundColor: '#3b82f6',
-  color: 'white',
-  borderRadius: '0.25rem',
-  '$:hover': {
-    backgroundColor: '#2563eb'
-  }
-})}>
-  Click Me
+	'display': 'flex',
+	'alignItems': 'center',
+	'justifyContent': 'center',
+	'padding': '0.5rem 1rem',
+	'backgroundColor': '#3b82f6',
+	'color': 'white',
+	'borderRadius': '0.25rem',
+	'$:hover': {
+		backgroundColor: '#2563eb'
+	}
+})}
+>
+	Click Me
 </button>
 ```
 
@@ -91,14 +92,15 @@ This guide helps you understand how PikaCSS differs from other popular CSS solut
 
 ```tsx
 <div className={pika({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  minHeight: '100vh'
-})}>
-  <h1 className={pika({ color: '#3b82f6', fontSize: '1.5rem' })}>
-    Hello
-  </h1>
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+	minHeight: '100vh'
+})}
+>
+	<h1 className={pika({ color: '#3b82f6', fontSize: '1.5rem' })}>
+		Hello
+	</h1>
 </div>
 ```
 
@@ -140,7 +142,7 @@ const Button = styled.button`
   background-color: #3b82f6;
   color: white;
   border-radius: 0.25rem;
-  
+
   &:hover {
     background-color: #2563eb;
   }
@@ -153,21 +155,22 @@ const Button = styled.button`
 
 ```tsx
 function Button({ children }) {
-  return (
-    <button className={pika({
-      display: 'flex',
-      alignItems: 'center',
-      padding: '0.5rem 1rem',
-      backgroundColor: '#3b82f6',
-      color: 'white',
-      borderRadius: '0.25rem',
-      '$:hover': {
-        backgroundColor: '#2563eb'
-      }
-    })}>
-      {children}
-    </button>
-  )
+	return (
+		<button className={pika({
+			'display': 'flex',
+			'alignItems': 'center',
+			'padding': '0.5rem 1rem',
+			'backgroundColor': '#3b82f6',
+			'color': 'white',
+			'borderRadius': '0.25rem',
+			'$:hover': {
+				backgroundColor: '#2563eb'
+			}
+		})}
+		>
+			{children}
+		</button>
+	)
 }
 ```
 
@@ -211,12 +214,13 @@ import { css } from '@emotion/react'
   background-color: #3b82f6;
   color: white;
   border-radius: 0.25rem;
-  
+
   &:hover {
     background-color: #2563eb;
   }
-`}>
-  Click Me
+`}
+>
+	Click Me
 </button>
 ```
 
@@ -224,17 +228,18 @@ import { css } from '@emotion/react'
 
 ```tsx
 <button className={pika({
-  display: 'flex',
-  alignItems: 'center',
-  padding: '0.5rem 1rem',
-  backgroundColor: '#3b82f6',
-  color: 'white',
-  borderRadius: '0.25rem',
-  '$:hover': {
-    backgroundColor: '#2563eb'
-  }
-})}>
-  Click Me
+	'display': 'flex',
+	'alignItems': 'center',
+	'padding': '0.5rem 1rem',
+	'backgroundColor': '#3b82f6',
+	'color': 'white',
+	'borderRadius': '0.25rem',
+	'$:hover': {
+		backgroundColor: '#2563eb'
+	}
+})}
+>
+	Click Me
 </button>
 ```
 
@@ -270,14 +275,15 @@ import { css } from '@emotion/react'
 
 ```tsx
 <button style={{
-  display: 'flex',
-  alignItems: 'center',
-  padding: '0.5rem 1rem',
-  backgroundColor: '#3b82f6',
-  color: 'white',
-  borderRadius: '0.25rem'
-}}>
-  Click Me
+	display: 'flex',
+	alignItems: 'center',
+	padding: '0.5rem 1rem',
+	backgroundColor: '#3b82f6',
+	color: 'white',
+	borderRadius: '0.25rem'
+}}
+>
+	Click Me
 </button>
 ```
 
@@ -293,15 +299,16 @@ import { css } from '@emotion/react'
 
 ```tsx
 <button className={pika({
-  display: 'flex',
-  alignItems: 'center',
-  padding: '0.5rem 1rem',
-  backgroundColor: '#3b82f6',
-  color: 'white',
-  borderRadius: '0.25rem',
-  '$:hover': { backgroundColor: '#2563eb' }
-})}>
-  Click Me
+	'display': 'flex',
+	'alignItems': 'center',
+	'padding': '0.5rem 1rem',
+	'backgroundColor': '#3b82f6',
+	'color': 'white',
+	'borderRadius': '0.25rem',
+	'$:hover': { backgroundColor: '#2563eb' }
+})}
+>
+	Click Me
 </button>
 ```
 

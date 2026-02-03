@@ -49,12 +49,12 @@ Define CSS custom properties that will be included in your generated CSS. See th
 
 ```ts
 export default defineEngineConfig({
-  variables: {
-    variables: {
-      '--color-primary': '#007bff',
-      '--spacing-base': '1rem',
-    }
-  }
+	variables: {
+		variables: {
+			'--color-primary': '#007bff',
+			'--spacing-base': '1rem',
+		}
+	}
 })
 ```
 
@@ -64,12 +64,12 @@ Define `@keyframes` animations that can be referenced in your styles. See the [K
 
 ```ts
 export default defineEngineConfig({
-  keyframes: {
-    keyframes: [
-      ['fade', { from: { opacity: 0 }, to: { opacity: 1 } }],
-      ['slide', { from: { transform: 'translateX(-100%)' }, to: { transform: 'translateX(0)' } }],
-    ]
-  }
+	keyframes: {
+		keyframes: [
+			['fade', { from: { opacity: 0 }, to: { opacity: 1 } }],
+			['slide', { from: { transform: 'translateX(-100%)' }, to: { transform: 'translateX(0)' } }],
+		]
+	}
 })
 ```
 
@@ -79,12 +79,12 @@ Define custom selector aliases that can be used in your styles. See the [Selecto
 
 ```ts
 export default defineEngineConfig({
-  selectors: {
-    selectors: [
-      [':hover', '$:hover'],
-      ['@dark', 'html.dark $'],
-    ]
-  }
+	selectors: {
+		selectors: [
+			[':hover', '$:hover'],
+			['@dark', 'html.dark $'],
+		]
+	}
 })
 ```
 
@@ -94,12 +94,12 @@ Define reusable style shortcuts that can be applied to reduce boilerplate. See t
 
 ```ts
 export default defineEngineConfig({
-  shortcuts: {
-    shortcuts: [
-      ['btn', { padding: '10px 20px', borderRadius: '4px', border: 'none' }],
-      [/^flex-(.+)$/, ([, align]) => ({ display: 'flex', alignItems: align })],
-    ]
-  }
+	shortcuts: {
+		shortcuts: [
+			['btn', { padding: '10px 20px', borderRadius: '4px', border: 'none' }],
+			[/^flex-(.+)$/, ([, align]) => ({ display: 'flex', alignItems: align })],
+		]
+	}
 })
 ```
 
@@ -109,9 +109,9 @@ Configure how `!important` flags are handled in your styles.
 
 ```ts
 export default defineEngineConfig({
-  important: {
-    default: false,  // Default !important flag (optional)
-  }
+	important: {
+		default: false, // Default !important flag (optional)
+	}
 })
 ```
 
