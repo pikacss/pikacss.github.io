@@ -13,6 +13,9 @@
 	"references": [
 		{
 			"path": "./tsconfig.scripts.json"
+		},
+		{
+			"path": "./.eslint/tsconfig.json"
 		}
 	],
 	"files": []

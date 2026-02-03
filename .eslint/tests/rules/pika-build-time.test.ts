@@ -9,7 +9,7 @@ describe('pika-build-time', () => {
 			.toBeDefined()
 		expect(pikaBuildTimeRule.meta.type)
 			.toBe('problem')
-		expect(pikaBuildTimeRule.meta.docs.description)
+		expect(pikaBuildTimeRule.meta.docs?.description)
 			.toBe(
 				'Enforce build-time analyzable arguments in pika() calls',
 			)
