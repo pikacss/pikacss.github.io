@@ -1,0 +1,16 @@
+{
+	"name": "pikacss-vite-fixture",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"build": "vite build"
+	},
+	"dependencies": {
+		"@pikacss/core": "workspace:*",
+		"@pikacss/vite-plugin-pikacss": "workspace:*"
+	},
+	"devDependencies": {
+		"typescript": "catalog:",
+		"vite": "^5.4.0"
+	}
+}
