@@ -17,17 +17,14 @@ This roadmap delivers systematic correction of 73 markdown files containing AI-g
 
 **Dependencies:** None (foundation)
 
-**Plans:** 2 plans
+**Plans:** 3 plans
 
 Plans:
 - [ ] 01-01-PLAN.md — Configure ESLint for markdown validation
 - [ ] 01-02-PLAN.md — Set up link validation infrastructure with CI integration
+- [ ] 01-03-PLAN.md — Create file reference validator and placeholder detection scripts
 
-**Requirements Covered:**
-- VERIFY-01: Code examples reference actual test files via VitePress transclusion
-- VERIFY-02: All code examples execute successfully through Vitest test suite
-- VERIFY-03: Test reports identify failing examples with file:line locations
-- VERIFY-04: Verification runs in CI pipeline on every commit
+**Requirements Covered (Structural Validation Only):**
 - QUALITY-01: All internal markdown links resolve correctly
 - QUALITY-02: All external links return valid responses
 - QUALITY-03: All file:line code references point to existing code locations
@@ -35,12 +32,21 @@ Plans:
 - QUALITY-05: No placeholder content or TODO markers remain in docs
 - QUALITY-06: All broken or outdated content sections identified and tracked
 
+**Requirements Deferred to Phase 2:**
+- VERIFY-01: Code examples reference actual test files via VitePress transclusion
+- VERIFY-02: All code examples execute successfully through Vitest test suite
+- VERIFY-03: Test reports identify failing examples with file:line locations
+- VERIFY-04: Verification runs in CI pipeline on every commit
+
+**Note:** Phase 1 focuses on structural validation infrastructure (ESLint, link checking, file reference validation, placeholder detection). Code example testing infrastructure (VitePress transclusion + Vitest) is deferred to Phase 2 to maintain focus and context budget.
+
 **Success Criteria:**
-1. Markdown parser extracts links, code blocks, and file references from all 73 files
+1. Markdown parser (ESLint) validates structural integrity without false positives from code blocks
 2. Link checker reports all broken internal and external links with file:line context
 3. File reference validator identifies all invalid `file:line` patterns
-4. Markdownlint runs on all markdown files and reports style violations
-5. CI pipeline executes link checking and markdown validation on every commit
+4. Placeholder detection script flags all TODO/FIXME/TBD/placeholder markers
+5. CI pipeline executes structural validation on every commit
+6. Quality baseline documented (counts of issues by type, distribution across files)
 
 ---
 
