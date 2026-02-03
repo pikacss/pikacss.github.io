@@ -71,7 +71,7 @@ Plans:
 - PIKA-04: Examples verified against Nuxt framework integration
 - PIKA-05: Examples verified against Webpack bundler integration
 - PIKA-06: Plugin TypeScript module augmentation patterns validated
-- PIKA-07: Dependency order enforced in documentation structure
+- PIKA-07: Dependency order enforced in documentation structure (deferred to Phase 4-6 package documentation correction, naturally enforced by core→integration→unplugin→framework documentation order)
 
 **Success Criteria:**
 1. Build-time constraint checker flags all runtime-dynamic `pika()` usage
