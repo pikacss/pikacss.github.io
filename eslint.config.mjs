@@ -11,5 +11,6 @@ export default await deviltea({
 		'docs/**/*.md',
 		'.github/skills/**/*.md',
 		'**/AGENTS.md',
+		'.planning/**',
 	],
 })
