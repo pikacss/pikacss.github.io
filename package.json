@@ -34,7 +34,7 @@
 		"@deviltea/tsconfig": "catalog:",
 		"@types/node": "catalog:",
 		"@typescript-eslint/rule-tester": "^8.54.0",
-		"@typescript-eslint/utils": "^8.50.1",
+		"@typescript-eslint/utils": "^8.54.0",
 		"@vitest/coverage-v8": "catalog:",
 		"bumpp": "catalog:",
 		"eslint": "catalog:",
