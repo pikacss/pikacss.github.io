@@ -120,12 +120,56 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (To be populated during roadmap creation) | | |
+| VERIFY-01 | Phase 1 | Pending |
+| VERIFY-02 | Phase 1 | Pending |
+| VERIFY-03 | Phase 1 | Pending |
+| VERIFY-04 | Phase 1 | Pending |
+| QUALITY-01 | Phase 1 | Pending |
+| QUALITY-02 | Phase 1 | Pending |
+| QUALITY-03 | Phase 1 | Pending |
+| QUALITY-04 | Phase 1 | Pending |
+| QUALITY-05 | Phase 1 | Pending |
+| QUALITY-06 | Phase 1 | Pending |
+| PIKA-01 | Phase 2 | Pending |
+| PIKA-02 | Phase 2 | Pending |
+| PIKA-03 | Phase 2 | Pending |
+| PIKA-04 | Phase 2 | Pending |
+| PIKA-05 | Phase 2 | Pending |
+| PIKA-06 | Phase 2 | Pending |
+| PIKA-07 | Phase 2 | Pending |
+| API-01 | Phase 3 | Pending |
+| API-02 | Phase 3 | Pending |
+| API-03 | Phase 3 | Pending |
+| API-04 | Phase 3 | Pending |
+| API-05 | Phase 3 | Pending |
+| API-06 | Phase 3 | Pending |
+| API-07 | Phase 3 | Pending |
+| PKG-CORE-01 | Phase 4 | Pending |
+| PKG-CORE-02 | Phase 4 | Pending |
+| PKG-CORE-03 | Phase 4 | Pending |
+| PKG-INT-01 | Phase 5 | Pending |
+| PKG-INT-02 | Phase 5 | Pending |
+| PKG-UNP-01 | Phase 5 | Pending |
+| PKG-UNP-02 | Phase 5 | Pending |
+| PKG-VITE-01 | Phase 5 | Pending |
+| PKG-NUXT-01 | Phase 5 | Pending |
+| PKG-ICON-01 | Phase 6 | Pending |
+| PKG-RESET-01 | Phase 6 | Pending |
+| PKG-TYPO-01 | Phase 6 | Pending |
+| CONSOL-01 | Phase 7 | Pending |
+| CONSOL-02 | Phase 7 | Pending |
+| CONSOL-03 | Phase 7 | Pending |
+| CONSOL-04 | Phase 7 | Pending |
+| DEV-01 | Phase 7 | Pending |
+| DEV-02 | Phase 7 | Pending |
+| DEV-03 | Phase 7 | Pending |
+| DEV-04 | Phase 7 | Pending |
+| DEV-05 | Phase 7 | Pending |
 
 **Coverage:**
-- v1 requirements: 40 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 40 ⚠️
+- v1 requirements: 48 total
+- Mapped to phases: 48 ✓
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-02-03*
