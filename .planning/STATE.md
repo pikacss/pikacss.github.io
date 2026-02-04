@@ -21,14 +21,14 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 ## Current Position
 
 **Phase:** 4 of 7 (Core Package Correction) - **IN PROGRESS** 🔄
-**Plan:** 1 of 3 complete (04-01)
-**Status:** AGENTS.md core package section corrected
-**Last activity:** 2026-02-04 - Completed 04-01 (corrected engine.shortcuts.add() API reference)
-**Progress:** ████████████░ ~46% (Phase 4, Plan 1 complete)
+**Plan:** 2 of 3 complete (04-02)
+**Status:** packages/core/README.md corrected with zero API mismatches
+**Last activity:** 2026-02-04 - Completed 04-02 (corrected packages/core/README.md)
+**Progress:** █████████████░ ~52% (Phase 4, Plan 2 complete)
 
 **Current Milestone:** Phase 4 - Core Package Correction (@pikacss/core) 🔄
 - ✅ AGENTS.md core package architecture section (04-01)
-- ⏳ Advanced API documentation correction (04-02)
+- ✅ packages/core/README.md correction (04-02)
 - ⏳ Plugin development guide correction (04-03)
 
 **Next Milestone:** Phase 5 - Integration Layer Documentation 🎯
@@ -43,11 +43,11 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 ## Performance Metrics
 
 ### Velocity
-- **Requirements completed:** 26/48 total (54%) (+2 from Phase 4, Plan 1)
-- **Phases completed:** 3/7 (42.9%) [Phase 4 in progress: 33%]
-- **Plans completed:** 13/24 total (54%)
+- **Requirements completed:** 28/48 total (58%) (+2 from Phase 4, Plan 2)
+- **Phases completed:** 3/7 (42.9%) [Phase 4 in progress: 67%]
+- **Plans completed:** 14/24 total (58%)
 - **Average per phase:** 7-8 requirements (steady progress)
-- **Projected completion:** 3.67 phases remaining × ~10-15 minutes avg = ~36-55 minutes (estimated)
+- **Projected completion:** 3.33 phases remaining × ~10-15 minutes avg = ~33-50 minutes (estimated)
 
 ### Quality
 - **Test coverage:** 98.3% (57/58 tests passing in Phase 3)
@@ -60,9 +60,9 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 - **API verification system:** Operational in CI pipeline
 
 ### Efficiency
-- **Phases completed:** 3/7 (42.9%) [Phase 4: 33% complete]
-- **Plans completed:** 13/24 (54%)
-- **Phase 4 time so far:** 7 minutes (1 plan complete)
+- **Phases completed:** 3/7 (42.9%) [Phase 4: 67% complete]
+- **Plans completed:** 14/24 (58%)
+- **Phase 4 time so far:** ~19 minutes (2 plans complete)
 - **Phase 3 total time:** ~56 minutes (4 plans complete)
 - **Phase 2 total time:** 51.6 minutes (5 plans complete)
 - **Phase 1 total time:** ~25 minutes (3 plans complete)
@@ -109,6 +109,8 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 2026-02-04 | Establish API verification baseline | Document current state before fixes to track improvement | Baseline shows 5.49% coverage, 96 mismatches, 10 contradictions (03-04) |
 | 2026-02-04 | Use code as source of truth for API documentation | When documentation conflicts with implementation, code is always correct | Never modify code to match docs, always update docs (04-01) |
 | 2026-02-04 | Maintain original code style conventions in examples | Keep 2-space indentation in TypeScript examples to match project style | Consistency across all documentation examples (04-01) |
+| 2026-02-04 | Add ESLint disable comments for false positives in docs | Markdown code examples shouldn't trigger production rules | Allows documentation to show examples without triggering pika-module-augmentation rule (04-02) |
+| 2026-02-04 | Focus verification scope on target file only | API verifier scans all docs but we only fix target file per plan | Prevents scope creep, ensures measurable progress per plan (04-02) |
 
 ### Todos
 
@@ -165,9 +167,12 @@ TypeScript Compiler API-based extraction infrastructure discovering 9 monorepo p
 API verification infrastructure fully operational. Created @pikacss/api-verifier package with TypeScript Compiler API extraction (875 APIs from 9 packages), unified-based markdown parser (extracts API signatures from code blocks with context awareness), comparison engine (detects mismatches/contradictions), and dual-format reporter (JSON for CI, Markdown for humans). CI integration complete with baseline established: 5.49% coverage, 96 signature mismatches, 10 contradictions across documentation. 57/58 tests passing (98.3%). Duration: ~56 minutes across 4 plans. Ready for Phase 4 (@pikacss/core documentation correction).
 
 **Phase 4 Plan 01 Complete (AGENTS.md Core Package Correction):**
-Corrected hallucinated engine.registerShortcut() API to actual engine.shortcuts.add() in AGENTS.md plugin module augmentation example. Verified against implementation in packages/core/src/internal/plugins/shortcuts.ts. Fixed code style inconsistencies (mixed spaces/tabs in JSON examples). All AGENTS.md @pikacss/core references validated as accurate. API verifier confirms zero contradictions after fix. Duration: 7 minutes. Ready for 04-02 (Advanced API documentation correction).
+Corrected hallucinated engine.registerShortcut() API to actual engine.shortcuts.add() in AGENTS.md plugin module augmentation example. Verified against implementation in packages/core/src/internal/plugins/shortcuts.ts. Fixed code style inconsistencies (mixed spaces/tabs in JSON examples). All AGENTS.md @pikacss/core references validated as accurate. API verifier confirms zero contradictions after fix. Duration: 7 minutes. Ready for 04-02 (packages/core/README.md correction).
 
-Ready for Phase 4, Plan 2 (Advanced Docs Correction).
+**Phase 4 Plan 02 Complete (packages/core/README.md Correction):**
+Corrected packages/core/README.md to accurately reflect @pikacss/core implementation with zero API mismatches. Removed hallucinated APIs (engine.setup(), wrong Plugin type). Fixed createEngine signature (async with optional config). Updated Engine subsystem documentation (variables, keyframes, selectors, shortcuts). Added missing Engine methods (use, renderPreflights, renderAtomicStyles). Validated all 18 documented exports exist in actual package. Fixed ESLint false positive with disable comment. API verifier confirms zero mismatches in target file. Duration: 12 minutes. Ready for 04-03 (Plugin development guide correction).
+
+Ready for Phase 4, Plan 3 (Plugin development guide correction).
 
 **Build-Time Constraint Critical:**
 All `pika()` examples must use statically analyzable arguments. Examples with runtime variables will fail in user projects even if they type-check in monorepo. Test through actual bundler, not just TypeScript compilation.
@@ -202,10 +207,10 @@ Integration tests use monorepo workspace resolution for efficient testing. Fixtu
 - Existing infrastructure: Vitest, VitePress, TypeScript, pnpm workspace
 
 **Where we left off:**
-Phase 4, Plan 1 complete: AGENTS.md core package architecture section corrected. Fixed hallucinated engine.registerShortcut() to actual engine.shortcuts.add(['myShortcut', { ... }]) method. Verified all @pikacss/core API references in AGENTS.md against actual implementation. API verifier confirms zero contradictions. Duration: 7 minutes. Phase 4 is 33% complete (1 of 3 plans done).
+Phase 4, Plan 2 complete: packages/core/README.md corrected with zero API mismatches. Removed hallucinated engine.setup() method, fixed createEngine signature (async with optional config), corrected plugin development to use EnginePlugin interface, updated Engine subsystem documentation, and validated all 18 documented exports. API verifier confirms zero mismatches in target file. Duration: 12 minutes. Phase 4 is 67% complete (2 of 3 plans done).
 
 **Immediate next action:**
-Continue Phase 4 with Plan 2 (Advanced API Documentation Correction) to systematically fix detailed @pikacss/core API documentation across docs/advanced/, docs/llm/, and .github/skills/ using the API verifier to identify and correct all remaining mismatches, missing APIs, and contradictions.
+Continue Phase 4 with Plan 3 (Plugin development guide correction) to systematically fix plugin development documentation across docs/advanced/plugin-development.md using the API verifier to identify and correct remaining mismatches in plugin API references.
 
 ### Context Preservation
 
