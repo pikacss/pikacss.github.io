@@ -230,7 +230,7 @@ export function myPlugin(options?: MyOptions): EnginePlugin {
   return defineEnginePlugin({
     name: 'my-plugin',
     async configureEngine(engine) {
-      engine.registerShortcut('myShortcut', { ... })
+      engine.shortcuts.add(['myShortcut', { /* shortcut definition */ }])
     }
   })
 }
@@ -344,9 +344,9 @@ export const myFunction = () => {}  // camelCase
 3. **Peer Dependencies**: Always list `@pikacss/core` as peer dependency
    ```json
    {
-   	"peerDependencies": {
-   		"@pikacss/core": "workspace:*"
-   	}
+     "peerDependencies": {
+       "@pikacss/core": "workspace:*"
+     }
    }
    ```
 
