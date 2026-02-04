@@ -229,13 +229,21 @@ function extractAPIFromSymbol(
 	checker: ts.TypeChecker,
 	sourceFile: ts.SourceFile,
 ): ExtractedAPI | null {
-	const decl = symbol.declarations?.[0]
+	let decl = symbol.declarations?.[0]
 	if (!decl)
 		return null
 
+	// Resolve export specifiers to actual declarations
+	if (ts.isExportSpecifier(decl)) {
+		const aliasedSymbol = checker.getAliasedSymbol(symbol)
+		if (aliasedSymbol && aliasedSymbol.declarations) {
+			decl = aliasedSymbol.declarations[0]!
+		}
+	}
+
 	const type = checker.getTypeOfSymbolAtLocation(symbol, decl)
 	const name = symbol.getName()
-	const kind = getDeclarationKind(decl)
+	const kind = getDeclarationKind(decl, type)
 
 	// Get signature with full type information
 	const signature = checker.typeToString(
@@ -254,25 +262,23 @@ function extractAPIFromSymbol(
 	}
 
 	// Extract function-specific information
-	if (kind === 'function') {
-		const callSignatures = type.getCallSignatures()
-		if (callSignatures.length > 0) {
-			const callSig = callSignatures[0]!
+	const callSignatures = type.getCallSignatures()
+	if (callSignatures.length > 0 && kind === 'function') {
+		const callSig = callSignatures[0]!
 
-			// Extract parameters
-			api.parameters = callSig.parameters.map((param) => {
-				const paramType = checker.getTypeOfSymbolAtLocation(param, decl)
-				return {
-					name: param.getName(),
-					type: checker.typeToString(paramType),
-					optional: !!(param.flags & ts.SymbolFlags.Optional),
-				}
-			})
+		// Extract parameters
+		api.parameters = callSig.parameters.map((param) => {
+			const paramType = checker.getTypeOfSymbolAtLocation(param, decl)
+			return {
+				name: param.getName(),
+				type: checker.typeToString(paramType),
+				optional: !!(param.flags & ts.SymbolFlags.Optional),
+			}
+		})
 
-			// Extract return type
-			const returnType = callSig.getReturnType()
-			api.returnType = checker.typeToString(returnType)
-		}
+		// Extract return type
+		const returnType = callSig.getReturnType()
+		api.returnType = checker.typeToString(returnType)
 	}
 
 	// Extract generic type parameters
@@ -290,9 +296,13 @@ function extractAPIFromSymbol(
 }
 
 /**
- * Get declaration kind from TypeScript declaration
+ * Get declaration kind from TypeScript declaration and type
  */
-function getDeclarationKind(decl: ts.Declaration): ExtractedAPI['kind'] {
+function getDeclarationKind(
+	decl: ts.Declaration,
+	type: ts.Type,
+): ExtractedAPI['kind'] {
+	// Check declaration first (most reliable)
 	if (ts.isFunctionDeclaration(decl))
 		return 'function'
 	if (ts.isClassDeclaration(decl))
@@ -301,7 +311,33 @@ function getDeclarationKind(decl: ts.Declaration): ExtractedAPI['kind'] {
 		return 'interface'
 	if (ts.isTypeAliasDeclaration(decl))
 		return 'type'
-	if (ts.isVariableDeclaration(decl))
+
+	// For variable declarations, check the type characteristics
+	if (ts.isVariableDeclaration(decl)) {
+		// Check if it's a function (has call signatures)
+		const callSignatures = type.getCallSignatures()
+		if (callSignatures.length > 0) {
+			return 'function'
+		}
+
+		// Check if it's a type alias symbol
+		if (type.aliasSymbol) {
+			const aliasDecl = type.aliasSymbol.declarations?.[0]
+			if (aliasDecl && ts.isTypeAliasDeclaration(aliasDecl)) {
+				return 'type'
+			}
+			if (aliasDecl && ts.isInterfaceDeclaration(aliasDecl)) {
+				return 'interface'
+			}
+		}
+
+		// Check if it's an object type that looks like an interface
+		if (type.isClassOrInterface()) {
+			return 'interface'
+		}
+
 		return 'variable'
+	}
+
 	return 'variable' // default fallback
 }
