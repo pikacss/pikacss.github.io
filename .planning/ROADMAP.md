@@ -121,6 +121,14 @@ Plans:
 
 **Dependencies:** Phase 1, 2, 3 (requires full verification infrastructure)
 
+**Plans:** 4 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — Correct AGENTS.md core architecture section
+- [ ] 04-02-PLAN.md — Correct packages/core/README.md
+- [ ] 04-03-PLAN.md — Correct docs/advanced/api-reference.md core APIs
+- [ ] 04-04-PLAN.md — Correct docs/guide/basics.md examples
+
 **Requirements Covered:**
 - PKG-CORE-01: @pikacss/core API reference accurate
 - PKG-CORE-02: @pikacss/core examples all executable
