@@ -1,4 +1,4 @@
-import { pika } from '@pikacss/core'
+// pika is a global function injected by @pikacss/vite-plugin-pikacss
 
 // Static literal
 export const styles1 = pika({ color: 'red', fontSize: '16px' })

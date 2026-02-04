@@ -1,4 +1,4 @@
-import { pika } from '@pikacss/core'
+// pika is a global function injected by @pikacss/vite-plugin-pikacss
 
 // Runtime variable (function parameter)
 export function Component(props: { color: string }) {

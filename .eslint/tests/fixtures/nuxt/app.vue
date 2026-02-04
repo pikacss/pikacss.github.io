@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { pika } from '@pikacss/core'
+// pika is a global function injected by @pikacss/nuxt-pikacss
 
 // Invalid: reactive
 const props = defineProps<{ color: string }>()

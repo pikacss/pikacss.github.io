@@ -1,4 +1,4 @@
-import { pika } from '@pikacss/core'
+// pika is a global function injected by @pikacss/unplugin-pikacss
 
 // Valid
 export const validStyles = pika({ color: 'blue' })
