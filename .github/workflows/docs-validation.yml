@@ -83,6 +83,9 @@ jobs:
       - name: run PikaCSS validation
         run: pnpm validate:pikacss
 
+      - name: Verify API Documentation
+        run: bash scripts/verify-api-docs.sh
+
       - name: upload test results on failure
         if: failure()
         uses: actions/upload-artifact@v4
@@ -91,4 +94,14 @@ jobs:
           path: |
             .eslint/tests/integration/
             /tmp/pika-*/
+          retention-days: 7
+
+      - name: Upload API Verification Reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-verification-reports
+          path: |
+            api-verification-report.json
+            api-verification-report.md
           retention-days: 7
