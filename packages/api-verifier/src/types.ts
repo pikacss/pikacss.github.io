@@ -145,3 +145,28 @@ export interface ComparisonResult {
 	/** Coverage statistics */
 	coverage: PackageCoverage
 }
+
+/**
+ * Complete verification report with summary statistics
+ */
+export interface VerificationReport {
+	/** Report generation timestamp (ISO 8601) */
+	timestamp: string
+	/** Per-package comparison results */
+	packages: ComparisonResult[]
+	/** Overall summary statistics */
+	summary: {
+		/** Total number of APIs across all packages */
+		totalAPIs: number
+		/** Number of APIs with documentation */
+		documentedAPIs: number
+		/** Number of signature mismatches found */
+		mismatches: number
+		/** Number of contradictions found */
+		contradictions: number
+		/** Overall coverage percentage */
+		coveragePercent: number
+	}
+	/** Cross-package contradictions */
+	contradictions: Contradiction[]
+}
