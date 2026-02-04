@@ -131,12 +131,16 @@ const classList = pika.arr({ color: 'red' })
 
 #### `pika.inl(...)`
 
-Returns a space-separated string of class names, same as `pika.str()`.
+Returns `void` and performs inline string interpolation within template literals. Use this variant directly in template strings for inline class name injection.
 
 ```typescript
-const inline = `class="${pika.inl({ color: 'red' })}"`
-// Returns: "class=a" (unquoted string interpolation)
+const inline = `<div class="${pika.inl({ color: 'red' })}">Content</div>`
+// Returns: `<div class="a">Content</div>`
 ```
+
+::: info Note
+`pika.inl()` returns `void` and is intended for use directly within template string interpolations. The function applies the class names inline without requiring string concatenation.
+:::
 
 ### Special Properties
 
