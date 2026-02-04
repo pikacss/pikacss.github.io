@@ -63,7 +63,7 @@ Plans:
 - [x] 02-02-PLAN.md — Module augmentation rule and custom formatter
 - [x] 02-03-PLAN.md — Multi-bundler test infrastructure (Vite, Nuxt, Webpack)
 - [x] 02-04-PLAN.md — Integration and CI configuration
-- [ ] 02-05-PLAN.md — Fix pnpm catalog dependency for integration tests (gap closure)
+- [x] 02-05-PLAN.md — Fix pnpm catalog dependency for integration tests (gap closure)
 
 **Requirements Covered:**
 - PIKA-01: All `pika()` examples comply with build-time constraint (statically analyzable args)
@@ -201,14 +201,14 @@ Plans:
 | Phase | Requirements | Status | Completion |
 |-------|--------------|--------|------------|
 | 1 - Foundation & Verification Infrastructure | 10 | ✅ Complete | 100% |
-| 2 - PikaCSS-Specific Verification Rules | 7 | Pending | 0% |
+| 2 - PikaCSS-Specific Verification Rules | 7 | ✅ Complete | 100% |
 | 3 - API Verification System | 7 | Pending | 0% |
 | 4 - Core Package Correction | 3 | Pending | 0% |
 | 5 - Integration & Framework Layers | 6 | Pending | 0% |
 | 6 - Plugin System Correction | 3 | Pending | 0% |
 | 7 - Consolidation & Developer Documentation | 9 | Pending | 0% |
 
-**Overall:** 10/48 requirements complete (21%)
+**Overall:** 17/48 requirements complete (35%)
 
 ---
 
@@ -221,4 +221,4 @@ Plans:
 ---
 
 *Roadmap created: 2026-02-03*
-*Last updated: 2026-02-03 (Phase 1 complete)*
+*Last updated: 2026-02-04 (Phase 2 complete)*

@@ -25,13 +25,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### PikaCSS-Specific Verification
 
-- [ ] **PIKA-01**: All `pika()` examples comply with build-time constraint (statically analyzable args)
-- [ ] **PIKA-02**: Package import paths respect monorepo layer boundaries (core → integration → unplugin → framework)
-- [ ] **PIKA-03**: Examples verified against Vite bundler integration
-- [ ] **PIKA-04**: Examples verified against Nuxt framework integration
-- [ ] **PIKA-05**: Examples verified against Webpack bundler integration
-- [ ] **PIKA-06**: Plugin TypeScript module augmentation patterns validated
-- [ ] **PIKA-07**: Dependency order enforced in documentation structure
+- [x] **PIKA-01**: All `pika()` examples comply with build-time constraint (statically analyzable args)
+- [x] **PIKA-02**: Package import paths respect monorepo layer boundaries (core → integration → unplugin → framework)
+- [x] **PIKA-03**: Examples verified against Vite bundler integration
+- [x] **PIKA-04**: Examples verified against Nuxt framework integration
+- [x] **PIKA-05**: Examples verified against Webpack bundler integration
+- [x] **PIKA-06**: Plugin TypeScript module augmentation patterns validated
+- [x] **PIKA-07**: Dependency order enforced in documentation structure
 
 ### API Documentation Verification
 
@@ -130,13 +130,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | QUALITY-04 | Phase 1 | Complete |
 | QUALITY-05 | Phase 1 | Complete |
 | QUALITY-06 | Phase 1 | Complete |
-| PIKA-01 | Phase 2 | Pending |
-| PIKA-02 | Phase 2 | Pending |
-| PIKA-03 | Phase 2 | Pending |
-| PIKA-04 | Phase 2 | Pending |
-| PIKA-05 | Phase 2 | Pending |
-| PIKA-06 | Phase 2 | Pending |
-| PIKA-07 | Phase 2 | Pending |
+| PIKA-01 | Phase 2 | Complete |
+| PIKA-02 | Phase 2 | Complete |
+| PIKA-03 | Phase 2 | Complete |
+| PIKA-04 | Phase 2 | Complete |
+| PIKA-05 | Phase 2 | Complete |
+| PIKA-06 | Phase 2 | Complete |
+| PIKA-07 | Phase 2 | Complete |
 | API-01 | Phase 3 | Pending |
 | API-02 | Phase 3 | Pending |
 | API-03 | Phase 3 | Pending |
