@@ -12,8 +12,21 @@ This document provides a complete reference of PikaCSS's public APIs.
 
 ### `createEngine(config?)`
 
-Creates a new PikaCSS engine instance.
+Creates a new PikaCSS engine instance asynchronously.
 
+**Signature:**
+```typescript
+function createEngine(config?: EngineConfig): Promise<Engine>
+```
+
+**Parameters:**
+- `config` (optional): Engine configuration object of type `EngineConfig`
+  - Default: `{}`
+  - See [EngineConfig](#engineconfig) for all available options
+
+**Returns:** `Promise<Engine>` - Resolves to configured Engine instance
+
+**Example:**
 ```typescript
 import { createEngine } from '@pikacss/core'
 
@@ -25,10 +38,21 @@ const engine = await createEngine({
 
 ### `defineEngineConfig(config)`
 
-Type-safe helper for defining engine configuration.
+Type-safe helper for defining engine configuration with full TypeScript autocomplete.
 
+**Signature:**
 ```typescript
-import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
+function defineEngineConfig(config: EngineConfig): EngineConfig
+```
+
+**Parameters:**
+- `config`: Engine configuration object of type `EngineConfig`
+
+**Returns:** `EngineConfig` - The same config object (identity function for type inference)
+
+**Example:**
+```typescript
+import { defineEngineConfig } from '@pikacss/core'
 
 export default defineEngineConfig({
 	prefix: '',
@@ -43,15 +67,30 @@ export default defineEngineConfig({
 
 ### `defineEnginePlugin(plugin)`
 
-Type-safe helper for defining custom plugins.
+Type-safe helper for defining custom plugins with full TypeScript autocomplete.
 
+**Signature:**
 ```typescript
+function defineEnginePlugin(plugin: EnginePlugin): EnginePlugin
+```
+
+**Parameters:**
+- `plugin`: Plugin object implementing `EnginePlugin` interface
+
+**Returns:** `EnginePlugin` - The same plugin object (identity function for type inference)
+
+**Example:**
+```typescript
+// eslint-disable-next-line pikacss/pika-module-augmentation -- minimal example
 import { defineEnginePlugin } from '@pikacss/core'
 
 export function myPlugin() {
 	return defineEnginePlugin({
 		name: 'my-plugin',
-		// Plugin hooks
+		order: 'post',
+		configureEngine: async (engine) => {
+			// Configure engine
+		}
 	})
 }
 ```
@@ -147,10 +186,13 @@ The resolved configuration object.
 Internal storage for atomic styles.
 
 ```typescript
-engine.store: {
-  atomicStyleIds: Map<string, string>    // Content hash → ID
-  atomicStyles: Map<string, AtomicStyle> // ID → AtomicStyle
+interface Store {
+	atomicStyleIds: Map<string, string> // Content hash → ID
+	atomicStyles: Map<string, AtomicStyle> // ID → AtomicStyle
 }
+
+// Access via engine.store
+const store: Store = engine.store
 ```
 
 ### Core Methods
@@ -217,12 +259,12 @@ Manages CSS custom properties.
 
 ```typescript
 // Access variable store
-engine.variables.store: Map<string, ResolvedVariable[]>
+const variableStore: Map<string, ResolvedVariable[]> = engine.variables.store
 
 // Add variables programmatically
 engine.variables.add({
-  '--color-primary': '#007bff',
-  '--spacing': '8px'
+	'--color-primary': '#007bff',
+	'--spacing': '8px'
 })
 ```
 
@@ -233,12 +275,12 @@ Manages style shortcuts.
 ```typescript
 // Add shortcuts
 engine.shortcuts.add(
-  ['btn', { padding: '10px', borderRadius: '4px' }],
-  [/^m-(\d+)$/, match => ({ margin: `${match[1]}px` })]
+	['btn', { padding: '10px', borderRadius: '4px' }],
+	[/^m-(\d+)$/, match => ({ margin: `${match[1]}px` })]
 )
 
 // Access resolver
-engine.shortcuts.resolver: ShortcutResolver
+const shortcutResolver: ShortcutResolver = engine.shortcuts.resolver
 ```
 
 #### `engine.selectors`
@@ -248,12 +290,12 @@ Manages selector aliases.
 ```typescript
 // Add selectors
 engine.selectors.add(
-  [':hover', '$:hover'],
-  ['@dark', 'html.dark $']
+	[':hover', '$:hover'],
+	['@dark', 'html.dark $']
 )
 
 // Access resolver
-engine.selectors.resolver: SelectorResolver
+const selectorResolver: SelectorResolver = engine.selectors.resolver
 ```
 
 #### `engine.keyframes`
@@ -262,11 +304,11 @@ Manages `@keyframes` animations.
 
 ```typescript
 // Access keyframes store
-engine.keyframes.store: Map<string, ResolvedKeyframesConfig>
+const keyframesStore: Map<string, ResolvedKeyframesConfig> = engine.keyframes.store
 
 // Add keyframes
 engine.keyframes.add(
-  ['fadeIn', { from: { opacity: 0 }, to: { opacity: 1 } }]
+	['fadeIn', { from: { opacity: 0 }, to: { opacity: 1 } }]
 )
 ```
 
@@ -312,19 +354,57 @@ engine.notifyAutocompleteConfigUpdated()
 Input type for `pika()` and `engine.use()`.
 
 ```typescript
-type StyleItem = string | StyleDefinition | StyleItem[]
+type StyleItem
+	= | UnionString
+		| ResolvedAutocomplete['StyleItemString']
+		| StyleDefinition
 ```
+
+**Union members:**
+- `UnionString` - String literals (for shortcut names, class strings)
+- `ResolvedAutocomplete['StyleItemString']` - Autocomplete-augmented strings
+- `StyleDefinition` - Style definition objects
 
 ### `StyleDefinition`
 
-Recursive style object type.
+Recursive style object type that can be either base CSS properties or nested selectors.
 
 ```typescript
-interface StyleDefinition {
-	[key: string]: string | number | StyleDefinition
-	__important?: boolean
-	__shortcut?: string | string[]
+type StyleDefinition = Properties | {
+	[K in Selector]?: Properties | StyleDefinition | StyleItem[]
 }
+```
+
+**Union members:**
+- `Properties` - Base CSS properties (extends CSSProperties with custom properties)
+- Nested object with `Selector` keys - Allows selector nesting (`$:hover`, `@media`, etc.)
+
+**Special meta-properties** (when using object form):
+- `__important?: boolean` - Adds `!important` to all properties
+- `__shortcut?: string | string[]` - Applies shortcuts within style object
+
+**Example:**
+```typescript
+// Properties only
+const styles1 = pika({ color: 'red', fontSize: '16px' })
+
+// Nested selectors
+const styles2 = pika({
+	'color': 'blue',
+	'$:hover': {
+		color: 'red'
+	},
+	'@media (min-width: 768px)': {
+		fontSize: '20px'
+	}
+})
+
+// With meta-properties
+const styles3 = pika({
+	__important: true,
+	__shortcut: 'btn',
+	color: 'green'
+})
 ```
 
 ### `AtomicStyle`
@@ -373,14 +453,32 @@ interface EnginePlugin {
 	rawConfigConfigured?: (config: EngineConfig) => void
 	configureResolvedConfig?: (config: ResolvedEngineConfig) => Awaitable<ResolvedEngineConfig | void>
 	configureEngine?: (engine: Engine) => Awaitable<void>
-	transformSelectors?: (selectors: string[]) => Awaitable<string[]>
-	transformStyleItems?: (items: ResolvedStyleItem[]) => Awaitable<ResolvedStyleItem[]>
-	transformStyleDefinitions?: (defs: ResolvedStyleDefinition[]) => Awaitable<ResolvedStyleDefinition[]>
+	transformSelectors?: (selectors: string[]) => Awaitable<string[] | void>
+	transformStyleItems?: (items: ResolvedStyleItem[]) => Awaitable<ResolvedStyleItem[] | void>
+	transformStyleDefinitions?: (defs: ResolvedStyleDefinition[]) => Awaitable<ResolvedStyleDefinition[] | void>
 	preflightUpdated?: () => void
 	atomicStyleAdded?: (style: AtomicStyle) => void
 	autocompleteConfigUpdated?: () => void
 }
 ```
+
+**Plugin Hooks:**
+
+**Configuration Hooks (async):**
+- `configureRawConfig` - Modify raw config before resolution. Return modified config or void.
+- `rawConfigConfigured` - React to raw config after it's set (sync, no return).
+- `configureResolvedConfig` - Modify resolved config. Return modified config or void.
+- `configureEngine` - Configure engine after initialization.
+
+**Transform Hooks (async):**
+- `transformSelectors` - Transform selector list. Return modified list or void.
+- `transformStyleItems` - Transform style items. Return modified items or void.
+- `transformStyleDefinitions` - Transform style definitions. Return modified definitions or void.
+
+**Notification Hooks (sync):**
+- `preflightUpdated` - Called when preflights update.
+- `atomicStyleAdded` - Called when atomic style is added with the style object.
+- `autocompleteConfigUpdated` - Called when autocomplete config updates.
 
 ## Utility Functions
 
@@ -460,7 +558,7 @@ Low-level utility to render CSS style blocks to string:
 import { renderCSSStyleBlocks } from '@pikacss/core'
 
 const css = renderCSSStyleBlocks({
-	preflights: [...],
-	atomicStyles: [...]
+	preflights: [],
+	atomicStyles: []
 })
 ```
