@@ -56,13 +56,14 @@ Plans:
 
 **Dependencies:** Phase 1 (requires markdown parser and code extractor)
 
-**Plans:** 4 plans
+**Plans:** 5 plans
 
 Plans:
 - [x] 02-01-PLAN.md — ESLint custom rules (build-time, package boundaries)
-- [ ] 02-02-PLAN.md — Module augmentation rule and custom formatter
-- [ ] 02-03-PLAN.md — Multi-bundler test infrastructure (Vite, Nuxt, Webpack)
-- [ ] 02-04-PLAN.md — Integration and CI configuration
+- [x] 02-02-PLAN.md — Module augmentation rule and custom formatter
+- [x] 02-03-PLAN.md — Multi-bundler test infrastructure (Vite, Nuxt, Webpack)
+- [x] 02-04-PLAN.md — Integration and CI configuration
+- [ ] 02-05-PLAN.md — Fix pnpm catalog dependency for integration tests (gap closure)
 
 **Requirements Covered:**
 - PIKA-01: All `pika()` examples comply with build-time constraint (statically analyzable args)
