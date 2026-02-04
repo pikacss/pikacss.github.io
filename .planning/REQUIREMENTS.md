@@ -35,13 +35,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### API Documentation Verification
 
-- [ ] **API-01**: Type signatures extracted from all public APIs in source code
-- [ ] **API-02**: Documented API signatures match extracted signatures
-- [ ] **API-03**: All public exported APIs have documentation coverage
-- [ ] **API-04**: Configuration options in docs match actual EngineConfig interface
-- [ ] **API-05**: Plugin hook documentation matches actual hook signatures
-- [ ] **API-06**: No contradictions between different documentation files
-- [ ] **API-07**: Cross-package API references validated
+- [x] **API-01**: Type signatures extracted from all public APIs in source code
+- [x] **API-02**: Documented API signatures match extracted signatures
+- [x] **API-03**: All public exported APIs have documentation coverage
+- [x] **API-04**: Configuration options in docs match actual EngineConfig interface
+- [x] **API-05**: Plugin hook documentation matches actual hook signatures
+- [x] **API-06**: No contradictions between different documentation files
+- [x] **API-07**: Cross-package API references validated
 
 ### Documentation Consolidation
 
@@ -137,13 +137,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PIKA-05 | Phase 2 | Complete |
 | PIKA-06 | Phase 2 | Complete |
 | PIKA-07 | Phase 2 | Complete |
-| API-01 | Phase 3 | Pending |
-| API-02 | Phase 3 | Pending |
-| API-03 | Phase 3 | Pending |
-| API-04 | Phase 3 | Pending |
-| API-05 | Phase 3 | Pending |
-| API-06 | Phase 3 | Pending |
-| API-07 | Phase 3 | Pending |
+| API-01 | Phase 3 | Complete |
+| API-02 | Phase 3 | Complete |
+| API-03 | Phase 3 | Complete |
+| API-04 | Phase 3 | Complete |
+| API-05 | Phase 3 | Complete |
+| API-06 | Phase 3 | Complete |
+| API-07 | Phase 3 | Complete |
 | PKG-CORE-01 | Phase 4 | Pending |
 | PKG-CORE-02 | Phase 4 | Pending |
 | PKG-CORE-03 | Phase 4 | Pending |
@@ -173,4 +173,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-02-03*
-*Last updated: 2026-02-03 (Phase 1 complete: 6 requirements)*
+*Last updated: 2026-02-04 (Phase 3 complete: 7 requirements)*
