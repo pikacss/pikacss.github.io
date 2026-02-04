@@ -195,3 +195,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 docs/.vitepress/dist
+/api-verification-report.json
+/api-verification-report.md
