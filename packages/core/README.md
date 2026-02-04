@@ -10,16 +10,6 @@ pnpm add @pikacss/core
 
 ## Quick Start
 
-**pika.config.ts**:
-```typescript
-import { defineEngineConfig } from '@pikacss/core'
-
-export default defineEngineConfig({
-	// Your configuration
-})
-```
-
-**Your code**:
 ```typescript
 import { createEngine, defineEngineConfig } from '@pikacss/core'
 
@@ -30,19 +20,18 @@ const config = defineEngineConfig({
 	plugins: []
 })
 
-const engine = createEngine(config)
-await engine.setup()
+// createEngine is async and returns a fully initialized engine
+const engine = await createEngine(config)
 ```
 
 ## Features
 
 - ⚡ High-performance Atomic CSS-in-JS engine
 - 🎯 Type-safe with full TypeScript support
-- 🔌 Extensible plugin system
-- 🎨 Built-in support for shortcuts, selectors, variables, keyframes
-- 📦 Works at build-time, zero runtime overhead
-- 🔧 Fully configurable
-- 🌐 Framework-agnostic core
+- 🔌 Extensible plugin system with hooks
+- 🎨 Built-in support for shortcuts, selectors, variables, keyframes, and important rules
+- 🔧 Fully configurable with type-safe helpers
+- 🌐 Framework-agnostic core (zero dependencies except csstype)
 
 ## Usage for Integration Developers
 
@@ -65,24 +54,39 @@ const config = defineEngineConfig({
 	preflights: [],
 })
 
-const engine = createEngine(config)
-await engine.setup()
+// createEngine is async - it returns a fully initialized engine
+const engine = await createEngine(config)
 ```
 
-### Engine Methods
+### Engine Methods and Properties
 
-The engine provides methods for managing CSS generation:
+The `Engine` instance provides methods and sub-systems for managing CSS generation:
 
 ```typescript
-// Add global CSS
+// Add global CSS preflight
 engine.addPreflight('* { box-sizing: border-box; }')
 
-// Access sub-systems
-engine.variables // CSS variables management
-engine.keyframes // CSS keyframes management
-engine.selectors // CSS selectors management
-engine.shortcuts // CSS shortcuts management
-engine.important // Important rules management
+// Process style items and get atomic class IDs
+const classNames = await engine.use({ color: 'red' }, { display: 'flex' })
+
+// Render generated preflights
+const preflightCSS = await engine.renderPreflights(true)
+
+// Render generated atomic styles
+const atomicCSS = await engine.renderAtomicStyles(true)
+
+// Access sub-systems (provided by built-in plugins)
+engine.variables // { store: Map, add: (variables) => void }
+engine.keyframes // { store: Map, add: (...keyframes) => void }
+engine.selectors // { resolver: SelectorResolver, add: (...selectors) => void }
+engine.shortcuts // { resolver: ShortcutResolver, add: (...shortcuts) => void }
+
+// Access configuration
+engine.config // ResolvedEngineConfig
+
+// Autocomplete helpers
+engine.appendAutocompleteSelectors('hover', 'focus')
+engine.appendAutocompleteStyleItemStrings('flex-center')
 ```
 
 ### Configuration
@@ -99,11 +103,11 @@ export default defineEngineConfig({
 	// Default selector format (% = atomic ID)
 	defaultSelector: '.%',
 
-	// Global CSS preflights
+	// Global CSS preflights (string or function)
 	preflights: [
 		':root { --primary: #3b82f6; }',
 		// Or function:
-		({ engine, isFormatted }) => '/* Generated CSS */'
+		(engine, isFormatted) => '/* Generated CSS */'
 	],
 
 	// Shortcuts configuration
@@ -127,8 +131,8 @@ export default defineEngineConfig({
 ### Main Exports
 
 ```typescript
-// Engine creation
-export function createEngine(config: EngineConfig): Engine
+// Engine creation (async)
+export function createEngine(config?: EngineConfig): Promise<Engine>
 
 // Type-safe config helpers
 export function defineEngineConfig(config: EngineConfig): EngineConfig
@@ -141,54 +145,87 @@ export function defineShortcut(shortcut: Shortcut): Shortcut
 export function defineVariables(variables: VariablesDefinition): VariablesDefinition
 
 // Utilities
-export { createLogger, log } from './internal/utils'
+export {
+	appendAutocompleteCssPropertyValues,
+	appendAutocompleteExtraCssProperties,
+	appendAutocompleteExtraProperties,
+	appendAutocompletePropertyValues,
+	appendAutocompleteSelectors,
+	appendAutocompleteStyleItemStrings,
+	createLogger,
+	log,
+	renderCSSStyleBlocks,
+}
 ```
 
 ### Engine Instance
 
-The `Engine` instance provides methods for managing the CSS generation:
+The `Engine` instance provides:
 
-- `engine.setup()` - Initialize the engine with plugins
-- `engine.addPreflight(css)` - Add global CSS
-- `engine.variables` - Manage CSS variables
-- `engine.keyframes` - Manage CSS keyframes
-- `engine.selectors` - Manage CSS selectors
-- `engine.shortcuts` - Manage CSS shortcuts
-- `engine.important` - Manage important rules
+**Core methods:**
+- `engine.addPreflight(css)` - Add global CSS preflight
+- `engine.use(...styleItems)` - Process style items and return atomic class IDs
+- `engine.renderPreflights(isFormatted)` - Render all preflight CSS
+- `engine.renderAtomicStyles(isFormatted, options?)` - Render atomic style CSS
+
+**Sub-systems (provided by built-in plugins):**
+- `engine.variables` - CSS variables management with `store` and `add()`
+- `engine.keyframes` - CSS keyframes management with `store` and `add()`
+- `engine.selectors` - CSS selectors management with `resolver` and `add()`
+- `engine.shortcuts` - CSS shortcuts management with `resolver` and `add()`
+
+**Properties:**
+- `engine.config` - Resolved engine configuration
+- `engine.store` - Internal storage for atomic styles and IDs
+- `engine.extract` - Style extraction function
 
 ## Plugin Development
 
-Create custom plugins to extend PikaCSS:
+Create custom plugins to extend PikaCSS using the `EnginePlugin` interface:
 
 ```typescript
-import type { Plugin } from '@pikacss/core'
+/* eslint-disable pikacss/pika-module-augmentation */
+import type { EnginePlugin } from '@pikacss/core'
+import { defineEnginePlugin } from '@pikacss/core'
 
-export function myPlugin(): Plugin {
-	return {
+export function myPlugin(): EnginePlugin {
+	return defineEnginePlugin({
 		name: 'my-plugin',
 
-		setup(api) {
-			// Add preflights
-			api.addPreflight({
-				css: '/* your global CSS */'
-			})
+		// Optional: Control execution order ('pre' | 'post')
+		order: 'pre',
 
-			// Add rules
-			api.addRule({
-				/* rule configuration */
-			})
+		// Hook into engine lifecycle
+		async configureEngine(engine) {
+			// Add global CSS
+			engine.addPreflight('/* plugin styles */')
 
-			// Add shortcuts
-			api.addShortcut({
-				/* shortcut configuration */
-			})
+			// Add custom shortcuts
+			engine.shortcuts.add([
+				'my-shortcut',
+				{ display: 'flex', gap: '1rem' }
+			])
 
-			// Add variants
-			api.addVariant({
-				/* variant configuration */
-			})
-		}
-	}
+			// Add custom selectors
+			engine.selectors.add(['hover', '$:hover'])
+		},
+
+		// Transform style definitions
+		async transformStyleDefinitions(definitions) {
+			// Modify or add style definitions
+			return definitions
+		},
+
+		// Other available hooks:
+		// - configureRawConfig(config)
+		// - rawConfigConfigured(config)
+		// - configureResolvedConfig(config)
+		// - transformSelectors(selectors)
+		// - transformStyleItems(styleItems)
+		// - preflightUpdated()
+		// - atomicStyleAdded(atomicStyle)
+		// - autocompleteConfigUpdated()
+	})
 }
 ```
 
