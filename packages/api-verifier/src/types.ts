@@ -83,3 +83,65 @@ export interface DocumentedAPI {
 	/** Type of documentation context */
 	context: DocumentationType
 }
+
+/**
+ * Signature mismatch between extracted API and documented API
+ */
+export interface SignatureMismatch {
+	/** Name of the API with mismatch */
+	apiName: string
+	/** Documentation file path */
+	file: string
+	/** Line number in documentation */
+	line: number
+	/** Extracted signature from source code */
+	extracted: string
+	/** Documented signature from markdown */
+	documented: string
+	/** Detailed differences */
+	differences: string[]
+}
+
+/**
+ * API documentation contradiction across multiple files
+ */
+export interface Contradiction {
+	/** Name of the API with contradictions */
+	apiName: string
+	/** Description of the contradiction */
+	message: string
+	/** All locations where this API is documented differently */
+	locations: Array<{
+		file: string
+		line: number
+		signature: string
+	}>
+}
+
+/**
+ * Per-package API coverage statistics
+ */
+export interface PackageCoverage {
+	/** Package name */
+	packageName: string
+	/** Total number of exported APIs */
+	totalAPIs: number
+	/** Number of APIs with documentation */
+	documentedAPIs: number
+	/** List of undocumented API names */
+	undocumentedAPIs: string[]
+	/** Coverage percentage */
+	coveragePercent: number
+}
+
+/**
+ * Result of comparing package APIs against documentation
+ */
+export interface ComparisonResult {
+	/** Package information */
+	package: PackageInfo
+	/** Signature mismatches found */
+	mismatches: SignatureMismatch[]
+	/** Coverage statistics */
+	coverage: PackageCoverage
+}
