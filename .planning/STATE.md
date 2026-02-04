@@ -21,14 +21,14 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 ## Current Position
 
 **Phase:** 3 of 7 (API Verification System) - **IN PROGRESS**
-**Plan:** 1 of 4 complete (03-01)
-**Status:** Phase 3 in progress - API extraction infrastructure complete
-**Last activity:** 2026-02-04 - Completed 03-01-PLAN.md (TypeScript Compiler API extraction)
-**Progress:** ███████▱▱▱ ~30% (2 phases complete + 1 plan in Phase 3)
+**Plan:** 2 of 4 complete (03-01, 03-02)
+**Status:** Phase 3 in progress - Markdown parser complete
+**Last activity:** 2026-02-04 - Completed 03-02-PLAN.md (Markdown documentation parser)
+**Progress:** ████████▱▱ ~33% (2 phases complete + 2 plans in Phase 3)
 
 **Current Milestone:** Phase 3 - API Verification System 🚧
 - ✅ API extraction infrastructure (03-01)
-- ⏳ Markdown documentation parser (03-02)
+- ✅ Markdown documentation parser (03-02)
 - ⏳ API comparison engine (03-03)
 - ⏳ Verification report generator (03-04)
 
@@ -45,9 +45,9 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 ## Performance Metrics
 
 ### Velocity
-- **Requirements completed:** 21/48 total (43.8%) (+3 from Phase 3 Plan 01)
+- **Requirements completed:** 24/48 total (50%) (+3 from Phase 3 Plan 02)
 - **Phases completed:** 2/7 (28.6%)
-- **Plans completed:** 9/24 total (37.5%)
+- **Plans completed:** 10/24 total (41.7%)
 - **Average per phase:** 7-10 requirements (steady progress)
 - **Projected completion:** 5 phases remaining × ~10-15 minutes avg = ~50-75 minutes (estimated)
 
@@ -63,11 +63,11 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 
 ### Efficiency
 - **Phases completed:** 2/7 (28.6%)
-- **Plans completed:** 9/24 (37.5%)
-- **Time in current phase:** 11 minutes (Phase 3 Plan 01)
+- **Plans completed:** 10/24 (41.7%)
+- **Time in current phase:** 24 minutes (Phase 3 Plans 01+02)
 - **Phase 2 total time:** 51.6 minutes (complete)
 - **Rework incidents:** 0
-- **Automation effectiveness:** 100% (all tasks executed as planned, 7 auto-fixes total)
+- **Automation effectiveness:** 100% (all tasks executed as planned, 10 auto-fixes total)
 
 ---
 
@@ -102,7 +102,9 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 2026-02-04 | pika as global function, never imported | pika is build-time injected by plugins, not a package export | Test fixtures match actual user usage pattern |
 | 2026-02-04 | TypeScript Compiler API over TypeDoc | Direct control over extraction, no external docs format dependency | Maximum flexibility for API verification (03-01) |
 | 2026-02-04 | Prefer .d.mts over .d.ts | ESM-first package structure matches PikaCSS exports | NodeNext module resolution required (03-01) |
-| 2026-02-04 | ExportSpecifier resolution | Re-exports hide actual declarations causing misdetection | checker.getAliasedSymbol() for accurate kind detection (03-01) |
+| 2026-02-04 | Use unified + remark-parse for markdown parsing | Standard markdown parsing with AST traversal | Markdown parser implementation (03-02) |
+| 2026-02-04 | Skip code blocks with "// example" comment | Simple heuristic distinguishing API reference from usage examples | Prevents false positives in docs verification (03-02) |
+| 2026-02-04 | Normalize signatures before comparison | Consistent whitespace/operator formatting for reliable matching | String-based comparison sufficient for verification (03-02) |
 
 ### Todos
 
@@ -153,7 +155,10 @@ All PikaCSS-specific verification infrastructure operational. ESLint detects bui
 **Phase 3 Plan 01 Complete (API Extraction Infrastructure):**
 TypeScript Compiler API-based extraction infrastructure discovering 9 monorepo packages with 63+ APIs including full signatures, generics, and parameter types. Created @pikacss/api-verifier package with getMonorepoPackages(), getPackageEntryPoints(), and extractPackageAPIs() functions. Fixed ExportSpecifier resolution to accurately detect API kinds (25 functions, 24 types, 12 interfaces, 1 class). Duration: 11 minutes with 3 auto-fixes for blocking issues. Ready for 03-02 (Markdown parser) and 03-03 (API comparison).
 
-Ready for Phase 3 Plans 02-04 (Markdown parser, API comparison, verification reporter).
+**Phase 3 Plan 02 Complete (Markdown Documentation Parser):**
+Unified-based markdown parser extracting TypeScript API signatures from code blocks with context-aware classification (API_REFERENCE, GUIDE, EXAMPLE, OTHER). Parser skips example blocks, normalizes signatures for comparison, and captures line numbers for accurate reporting. 23 passing unit tests covering all three parser functions (getDocumentationType, normalizeSignature, parseDocumentedAPIs). Added unified@^11.0.5, remark-parse@^11.0.0, unist-util-visit@^5.0.0 dependencies. Duration: 13 minutes with 3 auto-fixes for blocking issues. Ready for 03-03 (API comparison engine).
+
+Ready for Phase 3 Plans 03-04 (API comparison engine, verification reporter).
 
 **Build-Time Constraint Critical:**
 All `pika()` examples must use statically analyzable arguments. Examples with runtime variables will fail in user projects even if they type-check in monorepo. Test through actual bundler, not just TypeScript compilation.
@@ -188,10 +193,10 @@ Integration tests use monorepo workspace resolution for efficient testing. Fixtu
 - Existing infrastructure: Vitest, VitePress, TypeScript, pnpm workspace
 
 **Where we left off:**
-Phase 3 Plan 01 complete: API extraction infrastructure operational with TypeScript Compiler API integration. Created @pikacss/api-verifier package discovering 9 monorepo packages and extracting 63+ APIs from compiled .d.mts files with full signatures, generics, and parameter types. Fixed ExportSpecifier resolution for accurate kind detection. 20 passing unit tests. Duration: 11 minutes.
+Phase 3 Plan 02 complete: Markdown documentation parser operational using unified + remark-parse to extract TypeScript API signatures from code blocks. Parser classifies documentation by context (API_REFERENCE, GUIDE, EXAMPLE), skips example blocks, normalizes signatures (whitespace, operators, punctuation), and captures line numbers. 23 passing unit tests. Created sample-api-doc.md fixture. Duration: 13 minutes.
 
 **Immediate next action:**
-Continue Phase 3 Plan 02 (Markdown Documentation Parser) to parse API reference markdown files and extract documented APIs for comparison against extracted implementation.
+Continue Phase 3 Plan 03 (API Comparison Engine) to compare extracted APIs from TypeScript implementation against documented APIs in markdown files, detecting mismatches, missing APIs, and undocumented APIs.
 
 ### Context Preservation
 
