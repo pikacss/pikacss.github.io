@@ -53,3 +53,33 @@ export interface APIExtractionResult {
 	/** Errors encountered during extraction */
 	errors: string[]
 }
+
+/**
+ * Type of documentation context
+ */
+export enum DocumentationType {
+	/** API Reference documentation (requires exact signatures) */
+	API_REFERENCE = 'api-reference',
+	/** Guide documentation (allows simplified signatures) */
+	GUIDE = 'guide',
+	/** Example documentation (illustrative code) */
+	EXAMPLE = 'example',
+	/** Other documentation types */
+	OTHER = 'other',
+}
+
+/**
+ * API signature documented in markdown files
+ */
+export interface DocumentedAPI {
+	/** Name of the API */
+	name: string
+	/** Full signature as documented */
+	signature: string
+	/** Documentation file path */
+	file: string
+	/** Line number in documentation file */
+	line: number
+	/** Type of documentation context */
+	context: DocumentationType
+}
