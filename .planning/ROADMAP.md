@@ -89,6 +89,14 @@ Plans:
 
 **Dependencies:** Phase 1 (requires code extractor), Phase 2 (requires type checking context)
 
+**Plans:** 4 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — TypeScript API extraction infrastructure
+- [ ] 03-02-PLAN.md — Markdown documentation parser
+- [ ] 03-03-PLAN.md — API comparison and report generation
+- [ ] 03-04-PLAN.md — CI integration and baseline report
+
 **Requirements Covered:**
 - API-01: Type signatures extracted from all public APIs in source code
 - API-02: Documented API signatures match extracted signatures
@@ -99,7 +107,7 @@ Plans:
 - API-07: Cross-package API references validated
 
 **Success Criteria:**
-1. TypeDoc extracts all public exports from 8 packages with full signatures
+1. TypeScript Compiler API extracts all public exports from 8 packages with full signatures
 2. API comparison tool identifies mismatches between docs and extracted APIs
 3. Coverage report shows which exported APIs lack documentation
 4. Configuration validator confirms all documented options exist in EngineConfig
