@@ -11,7 +11,7 @@
 	},
 	"devDependencies": {
 		"ts-loader": "^9.5.1",
-		"typescript": "catalog:",
+		"typescript": "^5.9.3",
 		"webpack": "^5.90.0",
 		"webpack-cli": "^5.1.4"
 	}
