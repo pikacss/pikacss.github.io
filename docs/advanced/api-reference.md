@@ -480,6 +480,114 @@ interface EnginePlugin {
 - `atomicStyleAdded` - Called when atomic style is added with the style object.
 - `autocompleteConfigUpdated` - Called when autocomplete config updates.
 
+## Configuration Types
+
+### `EngineConfig`
+
+Main engine configuration interface.
+
+```typescript
+interface EngineConfig {
+	prefix?: string
+	plugins?: EnginePlugin[]
+	preflights?: Preflight[]
+	shortcuts?: ShortcutsConfig
+	selectors?: SelectorsConfig
+	variables?: VariablesConfig
+	keyframes?: KeyframesConfig
+	important?: ImportantConfig
+}
+```
+
+**Options:**
+
+#### `prefix`
+- **Type:** `string`
+- **Default:** `''`
+- **Description:** Class name prefix for generated atomic styles
+
+#### `plugins`
+- **Type:** `EnginePlugin[]`
+- **Default:** `[]`
+- **Description:** Array of engine plugins to extend functionality
+
+#### `preflights`
+- **Type:** `Preflight[]`
+- **Default:** `[]`
+- **Description:** Global CSS rules applied before atomic styles
+
+#### `shortcuts`
+- **Type:** `ShortcutsConfig`
+- **Description:** Shortcut definitions for reusable style combinations
+
+#### `selectors`
+- **Type:** `SelectorsConfig`
+- **Description:** Custom selector definitions (pseudo-classes, media queries, etc.)
+
+#### `variables`
+- **Type:** `VariablesConfig`
+- **Description:** CSS custom property definitions
+
+#### `keyframes`
+- **Type:** `KeyframesConfig`
+- **Description:** `@keyframes` animation definitions
+
+#### `important`
+- **Type:** `ImportantConfig`
+- **Description:** Configuration for `!important` handling
+
+### Configuration Sub-Types
+
+#### `ShortcutsConfig`
+
+```typescript
+interface ShortcutsConfig {
+	shortcuts: Shortcut[]
+}
+
+type Shortcut
+	= | [name: string, definition: StyleDefinition]
+		| [pattern: RegExp, resolver: (match: RegExpMatchArray) => Awaitable<StyleDefinition>]
+```
+
+#### `SelectorsConfig`
+
+```typescript
+interface SelectorsConfig {
+	selectors: Selector[]
+}
+
+type Selector
+	= | string
+		| [selector: string, value: string | string[]]
+		| [selector: RegExp, resolver: (match: RegExpMatchArray) => Awaitable<string | string[]>]
+```
+
+#### `VariablesConfig`
+
+```typescript
+interface VariablesConfig {
+	variables: VariablesDefinition
+}
+
+interface VariablesDefinition {
+	[key: `--${string}`]: string | number
+}
+```
+
+#### `KeyframesConfig`
+
+```typescript
+interface KeyframesConfig {
+	keyframes: Keyframes[]
+}
+
+interface Keyframes {
+	name: string
+	definition: Record<string, Properties>
+}
+```
+
 ## Utility Functions
 
 ### Preflight Utilities
@@ -493,6 +601,89 @@ import { definePreflight } from '@pikacss/core'
 
 export const myPreflight = definePreflight({
 	body: { margin: 0, fontFamily: 'sans-serif' }
+})
+```
+
+### Style Definition Helpers
+
+#### `defineStyleDefinition(styleDefinition)`
+
+Type-safe helper for defining reusable style objects:
+
+```typescript
+import { defineStyleDefinition } from '@pikacss/core'
+
+const buttonBase = defineStyleDefinition({
+	padding: '10px 20px',
+	borderRadius: '4px',
+	border: 'none'
+})
+```
+
+#### `defineKeyframes(keyframes)`
+
+Type-safe helper for defining keyframe animations:
+
+```typescript
+import { defineKeyframes } from '@pikacss/core'
+
+const fadeIn = defineKeyframes({
+	name: 'fadeIn',
+	definition: {
+		from: { opacity: 0 },
+		to: { opacity: 1 }
+	}
+})
+```
+
+#### `defineSelector(selector)`
+
+Type-safe helper for defining custom selectors:
+
+```typescript
+import { defineSelector } from '@pikacss/core'
+
+// Static selector
+const hover = defineSelector(['hover', '$:hover'])
+
+// Dynamic selector
+const screen = defineSelector([
+	/^screen-(\d+)$/,
+	match => `@media (min-width: ${match[1]}px)`
+])
+```
+
+#### `defineShortcut(shortcut)`
+
+Type-safe helper for defining shortcuts:
+
+```typescript
+import { defineShortcut } from '@pikacss/core'
+
+// Static shortcut
+const btn = defineShortcut(['btn', {
+	padding: '10px 20px',
+	borderRadius: '4px'
+}])
+
+// Dynamic shortcut
+const m = defineShortcut([
+	/^m-(\d+)$/,
+	match => ({ margin: `${match[1]}px` })
+])
+```
+
+#### `defineVariables(variables)`
+
+Type-safe helper for defining CSS custom properties:
+
+```typescript
+import { defineVariables } from '@pikacss/core'
+
+const colors = defineVariables({
+	'--color-primary': '#007bff',
+	'--color-secondary': '#6c757d',
+	'--color-success': '#28a745'
 })
 ```
 
