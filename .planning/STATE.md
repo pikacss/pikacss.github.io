@@ -21,16 +21,16 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 ## Current Position
 
 **Phase:** 5 of 7 (Integration & Framework Layers) - **IN PROGRESS** 🔄
-**Plan:** 3 of 5 complete (05-03)
-**Status:** Vite, Webpack, Rspack, Esbuild integration guides corrected
-**Last activity:** 2026-02-05 - Completed 05-03 (corrected four primary bundler integration guides)
-**Progress:** ███████████████████ ~79% (19/24 plans complete)
+**Plan:** 4 of 5 complete (05-04)
+**Status:** Farm, Rolldown integration guides and index page corrected
+**Last activity:** 2026-02-05 - Completed 05-04 (corrected Farm, Rolldown guides and integration index)
+**Progress:** ████████████████████ ~83% (20/24 plans complete)
 
 **Current Milestone:** Phase 5 - Integration & Framework Layers 🎯
 - ✅ @pikacss/integration documentation (05-01)
 - ✅ @pikacss/unplugin-pikacss documentation (05-02)
 - ✅ Vite, Webpack, Rspack, Esbuild integration guides (05-03)
-- ⏳ Farm, Rolldown integration guides (05-04)
+- ✅ Farm, Rolldown integration guides (05-04)
 - ⏳ Nuxt module documentation (05-05)
 
 **Previous Milestone:** Phase 4 - Core Package Correction (@pikacss/core) ✅ COMPLETE
@@ -46,9 +46,9 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 ## Performance Metrics
 
 ### Velocity
-- **Requirements completed:** 36/48 total (75.0%) (+2 from Phase 5, Plan 3)
-- **Phases completed:** 4/7 (57.1%) [Phase 4: 100%, Phase 5: 60%]
-- **Plans completed:** 19/24 total (79.2%)
+- **Requirements completed:** 38/48 total (79.2%) (+2 from Phase 5, Plan 4)
+- **Phases completed:** 4/7 (57.1%) [Phase 4: 100%, Phase 5: 80%]
+- **Plans completed:** 20/24 total (83.3%)
 - **Average per phase:** 8 requirements (steady progress)
 - **Projected completion:** 3 phases remaining × ~15-20 minutes avg = ~45-60 minutes (estimated)
 
@@ -65,8 +65,8 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 
 ### Efficiency
 - **Phases completed:** 4/7 (57.1%)
-- **Plans completed:** 19/24 (79.2%)
-- **Phase 5 total time:** ~21 minutes (3 plans complete) 🔄
+- **Plans completed:** 20/24 (83.3%)
+- **Phase 5 total time:** ~26 minutes (4 plans complete) 🔄
 - **Phase 4 total time:** ~37 minutes (4 plans complete) ✅
 - **Phase 3 total time:** ~56 minutes (4 plans complete) ✅
 - **Phase 2 total time:** 51.6 minutes (5 plans complete) ✅
@@ -123,6 +123,8 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 2026-02-05 | Documented all 7 bundler entry points for unplugin | Vite, Webpack, Rspack, Esbuild, Rollup, Farm, Rolldown require identical configuration | Multi-bundler documentation pattern established (05-02) |
 | 2026-02-05 | cssCodegen type is 'true \| string', not 'boolean \| string' | Implementation never allows 'false' - must be enabled with default or custom path | Corrected type documentation to match actual PluginOptions (05-02) |
 | 2026-02-05 | defineEngineConfig exported from @pikacss/core, not unplugin | Core function not re-exported by unplugin package | Fixed import path in documentation (05-02) |
+| 2026-02-05 | Standardize bundler variable naming to lowercase 'pikacss' | Consistent naming convention across all bundler integration examples | Farm/Rolldown guides and integration index unified (05-04) |
+| 2026-02-05 | Unplugin exports use function call pattern, not constructors | All unplugin bundler exports are functions, not classes | Fixed Webpack/Rspack examples from 'new Plugin()' to 'plugin()' pattern (05-04) |
 
 ### Todos
 
@@ -201,6 +203,9 @@ Corrected packages/unplugin/README.md and added complete unplugin section to API
 **Phase 5 Plan 03 Complete (Bundler Integration Guides):**
 Corrected four primary bundler integration guides (Vite, Webpack, Rspack, Esbuild) to match verified unplugin API from Phase 05-02. Fixed defineEngineConfig import from @pikacss/unplugin-pikacss to @pikacss/core across all guides. Added 'dist/**' to scan.exclude default patterns. Clarified PluginOptions comments with accurate defaults and type constraints. Duration: 3 minutes. Ready for 05-04 (Farm and Rolldown integration guides).
 
+**Phase 5 Plan 04 Complete (Farm, Rolldown, and Integration Index):**
+Corrected Farm and Rolldown integration guides to match verified unplugin API from Phase 05-02. Fixed defineEngineConfig import, added 'dist/**' to scan.exclude patterns, clarified cssCodegen comments. Updated integration index page with consistent bundler patterns: standardized variable naming to lowercase 'pikacss', corrected Webpack/Rspack from constructor pattern to function call pattern. All 7 bundler integration guides now unified and accurate. Duration: 5 minutes. Ready for 05-05 (Nuxt module documentation).
+
 **Build-Time Constraint Critical:**
 All `pika()` examples must use statically analyzable arguments. Examples with runtime variables will fail in user projects even if they type-check in monorepo. Test through actual bundler, not just TypeScript compilation.
 
@@ -234,10 +239,10 @@ Integration tests use monorepo workspace resolution for efficient testing. Fixtu
 - Existing infrastructure: Vitest, VitePress, TypeScript, pnpm workspace
 
 **Where we left off:**
-Phase 5 IN PROGRESS (3/5 plans): Integration and framework layer documentation corrected. Fixed @pikacss/integration API documentation (05-01), @pikacss/unplugin-pikacss with all 7 bundler entry points (05-02), and four primary bundler integration guides (05-03). Total phase time so far: 21 minutes. Ready to continue with Farm and Rolldown integration guides (05-04).
+Phase 5 IN PROGRESS (4/5 plans): Integration and unplugin package documentation corrected (05-01, 05-02). All 7 bundler integration guides corrected and unified (05-03, 05-04). Fixed defineEngineConfig imports, scan.exclude patterns, cssCodegen comments, and bundler usage patterns across Vite, Webpack, Rspack, Esbuild, Farm, Rolldown guides plus integration index. Total phase time so far: 26 minutes. Ready to continue with Nuxt module documentation (05-05).
 
 **Immediate next action:**
-Continue Phase 5 Plan 04 (Farm and Rolldown Integration Guides) to correct Farm and Rolldown documentation and update integration index using the same verification methodology.
+Continue Phase 5 Plan 05 (Nuxt Module Documentation) to correct @pikacss/nuxt-pikacss documentation using the same verification methodology.
 
 ### Context Preservation
 
