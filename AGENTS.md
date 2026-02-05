@@ -75,11 +75,13 @@ This document guides AI agents in maintaining project internals. For specialized
 - Independent from build tools, only depends on `csstype`
 - Provides complete TypeScript types
 
-**`@pikacss/integration`** - Build-time tools
-- Scan source code for `pika()` calls
-- Evaluate arguments using `new Function()` at build time
-- Transform code and generate `pika.gen.css` and `pika.gen.ts`
-- Provides low-level API for plugin developers
+**`@pikacss/integration`** - Build-time integration layer
+- Scan source code for `pika()` calls using configurable patterns
+- Evaluate style arguments using `new Function()` at build time
+- Transform code and replace function calls with generated class names
+- Generate `pika.gen.css` (atomic styles) and `pika.gen.ts` (type definitions)
+- Provide `createCtx()` API and `IntegrationContext` for plugin developers
+- Only depends on @pikacss/core (plus build utilities like globby, jiti, magic-string)
 
 **`@pikacss/unplugin-pikacss`** - Universal bundler plugin
 - Wrap integration layer using unplugin
@@ -218,21 +220,21 @@ Plugins extend core types via declaration merging:
 
 ```typescript
 declare module '@pikacss/core' {
-  interface EngineConfig {
-    myPluginOption?: MyOptions
-  }
-  interface Shortcuts {
-    myShortcut: MyShortcutDefinition
-  }
+	interface EngineConfig {
+		myPluginOption?: MyOptions
+	}
+	interface Shortcuts {
+		myShortcut: MyShortcutDefinition
+	}
 }
 
 export function myPlugin(options?: MyOptions): EnginePlugin {
-  return defineEnginePlugin({
-    name: 'my-plugin',
-    async configureEngine(engine) {
-      engine.shortcuts.add(['myShortcut', { /* shortcut definition */ }])
-    }
-  })
+	return defineEnginePlugin({
+		name: 'my-plugin',
+		async configureEngine(engine) {
+			engine.shortcuts.add(['myShortcut', { /* shortcut definition */ }])
+		}
+	})
 }
 ```
 
@@ -344,9 +346,9 @@ export const myFunction = () => {}  // camelCase
 3. **Peer Dependencies**: Always list `@pikacss/core` as peer dependency
    ```json
    {
-     "peerDependencies": {
-       "@pikacss/core": "workspace:*"
-     }
+   	"peerDependencies": {
+   		"@pikacss/core": "workspace:*"
+   	}
    }
    ```
 
