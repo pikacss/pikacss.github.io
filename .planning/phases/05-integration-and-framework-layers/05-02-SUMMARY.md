@@ -1,24 +1,27 @@
 ---
 phase: 05-integration-and-framework-layers
 plan: 02
-subsystem: documentation
-tags: [unplugin, api-docs, bundlers, vite, webpack, rspack, esbuild, rollup, farm, rolldown]
+subsystem: integration
+tags: [unplugin, vite, webpack, rspack, esbuild, rollup, farm, rolldown, bundler]
 
 # Dependency graph
 requires:
   - phase: 05-01
-    provides: Integration layer documentation baseline
+    provides: Integration layer documentation and API reference
 provides:
-  - Corrected packages/unplugin/README.md with accurate API documentation
-  - Complete @pikacss/unplugin-pikacss section in API reference
-  - Documentation for all 7 bundler entry points
+  - Complete @pikacss/unplugin-pikacss API documentation in README.md
+  - Unified @pikacss/unplugin-pikacss section in api-reference.md
   - Accurate PluginOptions interface documentation
-affects: [06-nuxt-module, documentation-consistency]
+  - All 7 bundler-specific entry point documentation (vite, rollup, webpack, rspack, esbuild, farm, rolldown)
+affects: [05-03-bundler-integration-guides, 05-05-nuxt-module]
 
 # Tech tracking
 tech-stack:
   added: []
-  patterns: []
+  patterns:
+    - Universal bundler plugin pattern via unplugin
+    - Virtual module pattern (pika.css)
+    - Build-time transformation with HMR integration
 
 key-files:
   created: []
@@ -27,79 +30,71 @@ key-files:
     - docs/advanced/api-reference.md
 
 key-decisions:
-  - "Documented all 7 bundler-specific entry points (Vite, Webpack, Rspack, Esbuild, Rollup, Farm, Rolldown) with identical usage patterns"
-  - "Corrected cssCodegen type from 'boolean | string' to 'true | string' to match actual implementation"
+  - "Standardized PluginOptions interface documentation format across README and API reference"
+  - "Clarified cssCodegen cannot be disabled (always generates CSS)"
+  - "Documented re-exports from @pikacss/integration for advanced use cases"
   - "Fixed defineEngineConfig import from unplugin package to @pikacss/core where it's actually exported"
 
 patterns-established:
-  - "Multi-bundler documentation pattern: show identical configuration across all bundlers"
-  - "API reference completeness: include all configuration options with accurate defaults and types"
+  - "Consistent JSDoc @default tag format for all options"
+  - "Bundler-specific import patterns documented for all 7 supported bundlers"
+  - "API reference section mirrors package README structure"
 
 # Metrics
-duration: 7min
+duration: 4min
 completed: 2026-02-05
 ---
 
-# Phase 5 Plan 02: @pikacss/unplugin-pikacss Documentation Correction Summary
+# Phase 5 Plan 2: @pikacss/unplugin-pikacss Documentation Summary
 
-**Corrected unplugin package documentation with accurate PluginOptions types, fixed import paths, and documented all 7 bundler entry points**
+**Universal bundler plugin documentation with complete PluginOptions API reference and 7 bundler entry points**
 
 ## Performance
 
-- **Duration:** 7 min
-- **Started:** 2026-02-05T00:09:52Z
-- **Completed:** 2026-02-05T00:16:31Z
+- **Duration:** 4 minutes (second iteration)
+- **Started:** 2026-02-05T00:13:59Z
+- **Completed:** 2026-02-05T00:18:32Z
 - **Tasks:** 2
 - **Files modified:** 2
 
 ## Accomplishments
-
-- Verified and corrected packages/unplugin/README.md to match actual implementation
-- Fixed `cssCodegen` type from `boolean | string` to `true | string` (matching `packages/unplugin/src/types.ts` line 93)
-- Corrected `scan.exclude` default from `['node_modules/**']` to `['node_modules/**', 'dist/**']`
-- Fixed `defineEngineConfig` import path from `'@pikacss/unplugin-pikacss'` to `'@pikacss/core'`
-- Added complete @pikacss/unplugin-pikacss section to API reference with all 7 bundler usage examples
-- Standardized code formatting to 2-space indentation throughout
+- Expanded packages/unplugin/README.md from 238 to 331 lines with complete API documentation
+- Standardized PluginOptions interface documentation across README and API reference
+- Documented all 7 bundler-specific entry points (vite, rollup, webpack, rspack, esbuild, farm, rolldown)
+- Added "How It Works" section explaining transformation pipeline
+- Verified all exports against actual implementation in src/index.ts and src/types.ts
+- Fixed ESLint issues (mixed spaces/tabs, invalid code example syntax)
 
 ## Task Commits
 
 Each task was committed atomically:
 
-1. **Task 1: Verify and correct packages/unplugin/README.md** - `6a6cab4` (docs)
-   - Corrected API type signatures to match implementation
-   - Fixed import paths for defineEngineConfig
-   - Verified all 7 bundler entry points
-   - Standardized code formatting
+1. **Task 1: Verify and correct packages/unplugin/README.md** - `3b5ef4f` (docs)
+2. **Task 2: Add @pikacss/unplugin-pikacss section to API reference** - `cbe8a5b` (docs)
 
-2. **Task 2: Add @pikacss/unplugin-pikacss section to API reference** - `8715ee2` (docs)
-   - Added complete PluginOptions interface documentation
-   - Documented all 7 bundler-specific imports
-   - Explained virtual pika.css module
-   - Documented type generation feature
-   - Referenced @pikacss/integration re-exports
+**Previous iteration commits:** `6a6cab4`, `8715ee2`, `1269d4c` (metadata)
 
 ## Files Created/Modified
-
-- `packages/unplugin/README.md` - Corrected PluginOptions documentation, fixed import paths, standardized formatting
-- `docs/advanced/api-reference.md` - Added complete unplugin API section with 173 lines of documentation
+- `packages/unplugin/README.md` - Expanded with complete PluginOptions documentation, bundler-specific imports, virtual module explanation, and transformation pipeline (331 lines, meets 100+ requirement)
+- `docs/advanced/api-reference.md` - Standardized @pikacss/unplugin-pikacss section with aligned terminology
 
 ## Decisions Made
 
-**1. cssCodegen type correction**
-- Changed from `boolean | string` to `true | string`
-- Rationale: Actual type definition in `packages/unplugin/src/types.ts` line 93 shows `true | string`, not `boolean | string`
+**1. Standardized PluginOptions format**
+- Rationale: Maintain consistency between package README and central API reference
+- Impact: Users see same documentation structure regardless of entry point
 
-**2. defineEngineConfig import path correction**
-- Changed from `'@pikacss/unplugin-pikacss'` to `'@pikacss/core'`
-- Rationale: Function is exported from core package, not re-exported by unplugin
+**2. Clarified cssCodegen behavior**
+- Rationale: Unlike tsCodegen, cssCodegen cannot be false (always generates CSS) - type is `true | string`, not `boolean | string`
+- Impact: Accurate documentation prevents user confusion about plugin behavior
 
-**3. scan.exclude default correction**
-- Changed from `['node_modules/**']` to `['node_modules/**', 'dist/**']`
-- Rationale: Actual default in `packages/unplugin/src/index.ts` includes both patterns
+**3. Documented integration layer re-exports**
+- Rationale: Advanced users need to know they can access createCtx and IntegrationContext
+- Impact: Plugin developers can build custom bundler integrations using documented APIs
 
-**4. Code formatting standardization**
-- Standardized to 2-space indentation throughout
-- Rationale: Resolve ESLint errors from mixed spaces/tabs
+**4. Fixed defineEngineConfig import path**
+- Rationale: Function is exported from @pikacss/core, not re-exported by unplugin
+- Impact: Users import from correct package
 
 ## Deviations from Plan
 
@@ -107,14 +102,19 @@ None - plan executed exactly as written.
 
 ## Issues Encountered
 
-None - all corrections were straightforward after verifying against source code.
+**ESLint parsing errors:**
+- Issue: Mixed spaces/tabs in JSDoc comments, invalid syntax in code examples (`options?: PluginOptions` in variable declaration)
+- Resolution: Standardized tab indentation, fixed code example syntax (removed `?:` parameter syntax from example)
+- Impact: Clean ESLint validation for both modified files
 
 ## Next Phase Readiness
 
-- Unplugin package documentation fully corrected and verified
-- Ready for Nuxt module documentation correction (Phase 5 Plan 03)
-- API reference now includes complete unplugin documentation for cross-referencing
-- All 7 bundler entry points documented for multi-bundler support guidance
+- @pikacss/unplugin-pikacss documentation complete and verified
+- Ready for Plan 05-03 (Vite, Webpack, Rspack, Esbuild integration guides)
+- All bundler entry points documented as foundation for integration guides
+- PluginOptions interface serves as reference for all bundler-specific documentation
+
+**No blockers identified.**
 
 ---
 *Phase: 05-integration-and-framework-layers*
