@@ -11,8 +11,10 @@ describe('plugin-typography API documentation', () => {
 		const readme = fs.readFileSync(readmePath, 'utf-8')
 		const source = fs.readFileSync(sourcePath, 'utf-8')
 
-		expect(readme).toContain('typography()')
-		expect(source).toMatch(/export function typography/)
+		expect(readme)
+			.toContain('typography()')
+		expect(source)
+			.toMatch(/export function typography/)
 	})
 
 	it('should document all prose shortcuts', () => {
@@ -36,9 +38,11 @@ describe('plugin-typography API documentation', () => {
 		]
 
 		baseShortcuts.forEach((shortcut) => {
-			expect(readme).toContain(shortcut)
+			expect(readme)
+				.toContain(shortcut)
 			// Verify registered in source (shortcuts.add pattern)
-			expect(source).toMatch(new RegExp(`['"]${shortcut}['"]`))
+			expect(source)
+				.toMatch(new RegExp(`['"]${shortcut}['"]`))
 		})
 	})
 
@@ -49,10 +53,12 @@ describe('plugin-typography API documentation', () => {
 		const sizeModifiers = ['prose-sm', 'prose-lg', 'prose-xl', 'prose-2xl']
 
 		sizeModifiers.forEach((shortcut) => {
-			expect(readme).toContain(shortcut)
+			expect(readme)
+				.toContain(shortcut)
 			// Size modifiers are generated dynamically from sizes object
 			const sizeKey = shortcut.replace('prose-', '')
-			expect(source).toMatch(new RegExp(`['"]${sizeKey}['"]`))
+			expect(source)
+				.toMatch(new RegExp(`['"]${sizeKey}['"]`))
 		})
 	})
 
@@ -64,35 +70,45 @@ describe('plugin-typography API documentation', () => {
 		const variablePattern = /'(--pk-prose-[^']+)':/g
 		const sourceVariables = Array.from(styles.matchAll(variablePattern), m => m[1])
 
-		expect(sourceVariables.length).toBeGreaterThan(0)
+		expect(sourceVariables.length)
+			.toBeGreaterThan(0)
 
 		sourceVariables.forEach((varName) => {
 			// All variables in source must be documented
-			expect(readme).toContain(varName)
+			expect(readme)
+				.toContain(varName)
 		})
 	})
 
 	it('should show module augmentation example', () => {
 		const readme = fs.readFileSync(readmePath, 'utf-8')
 
-		expect(readme).toContain('declare module')
-		expect(readme).toContain('@pikacss/core')
-		expect(readme).toContain('EngineConfig')
-		expect(readme).toContain('typography')
-		expect(readme).toContain('variables')
+		expect(readme)
+			.toContain('declare module')
+		expect(readme)
+			.toContain('@pikacss/core')
+		expect(readme)
+			.toContain('EngineConfig')
+		expect(readme)
+			.toContain('typography')
+		expect(readme)
+			.toContain('variables')
 	})
 
 	it('should have correct function call syntax in examples', () => {
 		const readme = fs.readFileSync(readmePath, 'utf-8')
 		const codeBlocks = readme.match(/```typescript\n([\s\S]*?)\n```/g)
 
-		expect(codeBlocks).toBeDefined()
-		expect(codeBlocks!.length).toBeGreaterThan(0)
+		expect(codeBlocks)
+			.toBeDefined()
+		expect(codeBlocks!.length)
+			.toBeGreaterThan(0)
 
 		codeBlocks!.forEach((block) => {
 			if (block.includes('typography') && block.includes('plugins')) {
 				// Must be typography() not typography in plugin arrays
-				expect(block).toMatch(/typography\(\)/)
+				expect(block)
+					.toMatch(/typography\(\)/)
 			}
 		})
 	})
@@ -102,12 +118,16 @@ describe('plugin-typography API documentation', () => {
 		const source = fs.readFileSync(sourcePath, 'utf-8')
 
 		// Check source defines the interface
-		expect(source).toContain('export interface TypographyPluginOptions')
-		expect(source).toContain('variables?')
+		expect(source)
+			.toContain('export interface TypographyPluginOptions')
+		expect(source)
+			.toContain('variables?')
 
 		// Check README documents the variables configuration
-		expect(readme).toContain('variables')
-		expect(readme).toContain('--pk-prose-')
+		expect(readme)
+			.toContain('variables')
+		expect(readme)
+			.toContain('--pk-prose-')
 	})
 
 	it('should cross-reference shortcuts between README and implementation', () => {
@@ -121,10 +141,12 @@ describe('plugin-typography API documentation', () => {
 		// Filter out size modifiers (they're generated dynamically)
 		const explicitShortcuts = implementedShortcuts.filter(s => !s.match(/prose-(sm|lg|xl|2xl)/))
 
-		expect(explicitShortcuts.length).toBeGreaterThan(0)
+		expect(explicitShortcuts.length)
+			.toBeGreaterThan(0)
 
 		explicitShortcuts.forEach((shortcut) => {
-			expect(readme).toContain(shortcut)
+			expect(readme)
+				.toContain(shortcut)
 		})
 	})
 })
