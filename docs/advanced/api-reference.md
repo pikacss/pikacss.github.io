@@ -757,3 +757,176 @@ const css = renderCSSStyleBlocks({
 	atomicStyles: []
 })
 ```
+
+---
+
+## @pikacss/unplugin-pikacss
+
+Universal bundler plugin for PikaCSS that provides seamless integration with Vite, Webpack, Rspack, Esbuild, Rollup, Farm, and Rolldown.
+
+### Plugin Factory
+
+All bundler-specific exports return the same plugin factory function:
+
+```typescript
+function PikaCSSPlugin(options?: PluginOptions): UnpluginInstance
+```
+
+### PluginOptions
+
+Configuration options for the PikaCSS plugin.
+
+```typescript
+interface PluginOptions {
+	/**
+	 * File patterns to scan for pika() function calls.
+	 * Default: { include: ['**\/*.{js,ts,jsx,tsx,vue}'], exclude: ['node_modules/**', 'dist/**'] }
+	 */
+	scan?: {
+		include?: string | string[]
+		exclude?: string | string[]
+	}
+
+	/**
+	 * Engine configuration object or path to config file.
+	 * Can be an inline EngineConfig object or a file path string (e.g., 'pika.config.ts').
+	 */
+	config?: EngineConfig | string
+
+	/**
+	 * Whether to automatically create a configuration file when needed.
+	 * Default: true
+	 */
+	autoCreateConfig?: boolean
+
+	/**
+	 * The name of the PikaCSS function in source code.
+	 * Default: 'pika'
+	 */
+	fnName?: string
+
+	/**
+	 * The format of generated class names.
+	 * - 'string': Space-separated string (e.g., "a b c")
+	 * - 'array': Array of class names (e.g., ['a', 'b', 'c'])
+	 * - 'inline': Inline format for template string interpolation
+	 * Default: 'string'
+	 */
+	transformedFormat?: 'string' | 'array' | 'inline'
+
+	/**
+	 * TypeScript code generation configuration.
+	 * - true: Generate as 'pika.gen.ts'
+	 * - string: Custom file path
+	 * - false: Disable generation
+	 * Default: true
+	 */
+	tsCodegen?: boolean | string
+
+	/**
+	 * CSS code generation configuration.
+	 * - true: Generate as 'pika.gen.css'
+	 * - string: Custom file path
+	 * Default: true
+	 */
+	cssCodegen?: true | string
+}
+```
+
+### Bundler-Specific Imports
+
+Import the plugin for your bundler:
+
+**Vite:**
+```typescript
+import pikacss from '@pikacss/unplugin-pikacss/vite'
+
+export default {
+	plugins: [pikacss({ /* options */ })]
+}
+```
+
+**Webpack:**
+```typescript
+import pikacss from '@pikacss/unplugin-pikacss/webpack'
+
+export default {
+	plugins: [pikacss({ /* options */ })]
+}
+```
+
+**Rspack:**
+```typescript
+import pikacss from '@pikacss/unplugin-pikacss/rspack'
+
+export default {
+	plugins: [pikacss({ /* options */ })]
+}
+```
+
+**Esbuild:**
+```typescript
+import pikacss from '@pikacss/unplugin-pikacss/esbuild'
+
+esbuild.build({
+	plugins: [pikacss({ /* options */ })]
+})
+```
+
+**Rollup:**
+```typescript
+import pikacss from '@pikacss/unplugin-pikacss/rollup'
+
+export default {
+	plugins: [pikacss({ /* options */ })]
+}
+```
+
+**Farm:**
+```typescript
+import pikacss from '@pikacss/unplugin-pikacss/farm'
+
+export default {
+	plugins: [pikacss({ /* options */ })]
+}
+```
+
+**Rolldown:**
+```typescript
+import pikacss from '@pikacss/unplugin-pikacss/rolldown'
+
+export default {
+	plugins: [pikacss({ /* options */ })]
+}
+```
+
+### Virtual Module
+
+The plugin provides a virtual `pika.css` module that you can import in your application entry:
+
+```typescript
+import 'pika.css'
+```
+
+This virtual module resolves to the generated CSS containing all atomic styles.
+
+### Type Generation
+
+When `tsCodegen` is enabled (default), the plugin generates a `pika.gen.ts` file that provides:
+
+- Global `pika()` function declaration
+- TypeScript autocomplete for shortcuts and theme values
+- Type-safe style definitions
+
+This file is automatically referenced in your TypeScript configuration.
+
+### Re-exports
+
+The plugin re-exports all APIs from `@pikacss/integration` for advanced use cases:
+
+```typescript
+import type { IntegrationContext } from '@pikacss/unplugin-pikacss'
+import { createCtx } from '@pikacss/unplugin-pikacss'
+```
+
+See the [@pikacss/integration documentation](https://github.com/pikacss/pikacss/tree/main/packages/integration) for low-level integration APIs.
