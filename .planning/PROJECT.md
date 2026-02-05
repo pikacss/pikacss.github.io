@@ -28,7 +28,7 @@ All documentation must accurately reflect the actual implementation — if it's 
 - [ ] All architecture descriptions accurately reflect codebase structure
 - [ ] All internal links resolve correctly
 - [ ] All external references are valid and current
-- [ ] docs/llm/ content merged into main documentation (eliminating duplication)
+- [ ] docs/llm/ validated as intentional LLM knowledge base (not duplication)
 - [ ] Verification test suite covers all documented claims
 - [ ] Language policy enforced (English-only for all documentation)
 
@@ -46,7 +46,7 @@ All documentation must accurately reflect the actual implementation — if it's 
 - 73 markdown files across the project (docs/, skills/, READMEs, AGENTS.md)
 - Previous AI agents may have hallucinated features, APIs, or configurations
 - Mix of user-facing docs (docs/*) and developer docs (AGENTS.md, skills/*)
-- Duplicate content in docs/llm/ that needs consolidation
+- docs/llm/ contains LLM-optimized knowledge base (intentional design, not duplication)
 - Documentation was generated partially by AI without full verification
 
 **Known Issues:**
@@ -82,7 +82,7 @@ Test-driven correction — write verification tests for each documented claim, l
 |----------|-----------|---------|
 | Test-driven correction methodology | Ensures objectivity — tests prove accuracy without subjective judgment | — Pending |
 | Code as source of truth | PikaCSS implementation is working and correct; docs are suspect | — Pending |
-| Merge docs/llm/ into main docs | Eliminate duplication and maintain single source of truth | — Pending |
+| docs/llm/ is intentional design | LLM-optimized knowledge base complements main docs, not duplication | — Confirmed |
 | Process by dependency order | Ensures foundational docs are correct before higher-level docs reference them | — Pending |
 | 100% accuracy target | Partial accuracy still leaves users confused — must be complete | — Pending |
 

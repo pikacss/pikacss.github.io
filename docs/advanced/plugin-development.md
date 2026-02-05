@@ -252,13 +252,13 @@ declare module '@pikacss/core' {
 
 // 2. Implement plugin
 export function myPlugin() {
-  return defineEnginePlugin({
-    name: 'my-plugin',
-    configureRawConfig: async (config) => {
-      const value = config.myCustomOption // Now typed!
-      // ... use the configuration
-    }
-  })
+	return defineEnginePlugin({
+		name: 'my-plugin',
+		configureRawConfig: async (config) => {
+			const value = config.myCustomOption // Now typed!
+			// ... use the configuration
+		}
+	})
 }
 ```
 
@@ -269,9 +269,9 @@ import { defineEngineConfig } from '@pikacss/core'
 import { myPlugin } from './my-plugin'
 
 export default defineEngineConfig({
-  plugins: [myPlugin()],
-  myCustomOption: 'option-b' // ✅ Autocomplete works!
-  // myCustomOption: 'invalid' // ❌ TypeScript error
+	plugins: [myPlugin()],
+	myCustomOption: 'option-b' // ✅ Autocomplete works!
+	// myCustomOption: 'invalid' // ❌ TypeScript error
 })
 ```
 
@@ -912,6 +912,8 @@ const bgOpacityPlugin = createUtilityPlugin('bg-opacity', 'opacity', {
 
 ```typescript
 /* eslint-disable pikacss/pika-module-augmentation */
+import { defineEngineConfig, defineEnginePlugin } from '@pikacss/core'
+
 export function conditionalPlugin(condition: boolean | (() => boolean)) {
 	return defineEnginePlugin({
 		name: 'conditional-plugin',
@@ -931,10 +933,12 @@ export function conditionalPlugin(condition: boolean | (() => boolean)) {
 }
 
 // Usage
-plugins: [
-	conditionalPlugin(process.env.NODE_ENV === 'development'),
-	conditionalPlugin(() => Boolean(process.env.FEATURE_FLAG))
-]
+export default defineEngineConfig({
+	plugins: [
+		conditionalPlugin(process.env.NODE_ENV === 'development'),
+		conditionalPlugin(() => Boolean(process.env.FEATURE_FLAG))
+	]
+})
 ```
 
 ## Publishing Plugins
