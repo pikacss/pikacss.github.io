@@ -1,181 +1,114 @@
 # @pikacss/vite-plugin-pikacss
 
-⚠️ **Deprecated**: This package is deprecated. Please use `@pikacss/unplugin-pikacss/vite` instead.
+⚠️ **DEPRECATED - Use @pikacss/unplugin-pikacss/vite instead**
 
-## Migration
+This package is now a compatibility wrapper. The package has been consolidated into `@pikacss/unplugin-pikacss` to support multiple bundlers from a unified codebase.
 
-This package now re-exports from `@pikacss/unplugin-pikacss/vite`. Please update your dependencies:
+## Migration Guide
+
+### Why This Change?
+
+PikaCSS now uses [unplugin](https://github.com/unjs/unplugin) to provide universal bundler support. This means you get the same plugin for Vite, Webpack, Rspack, Esbuild, Rollup, Farm, and Rolldown from a single package.
+
+### Step 1: Update Dependencies
 
 ```bash
+# Remove the old package
+pnpm remove @pikacss/vite-plugin-pikacss
+
+# Install the new package
 pnpm add -D @pikacss/unplugin-pikacss
 ```
 
-Update your imports:
+### Step 2: Update Import Path
 
 ```diff
-- import PikaCSSPlugin from '@pikacss/vite-plugin-pikacss'
-+ import PikaCSSPlugin from '@pikacss/unplugin-pikacss/vite'
+- import pikacss from '@pikacss/vite-plugin-pikacss'
++ import pikacss from '@pikacss/unplugin-pikacss/vite'
 ```
 
-## Installation (Legacy)
+That's it! All options remain identical - no breaking changes to the API.
+
+### Complete Before/After Example
+
+**Before (deprecated):**
+```typescript
+// vite.config.ts
+import pikacss from '@pikacss/vite-plugin-pikacss'
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+	plugins: [
+		pikacss({
+			scan: {
+				include: ['src/**/*.{ts,tsx,vue}']
+			}
+		})
+	]
+})
+```
+
+**After (current):**
+```typescript
+// vite.config.ts
+import pikacss from '@pikacss/unplugin-pikacss/vite'
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+	plugins: [
+		pikacss({
+			scan: {
+				include: ['src/**/*.{ts,tsx,vue}']
+			}
+		})
+	]
+})
+```
+
+## Deprecation Timeline
+
+- **Current version (0.0.39)**: Package maintained as compatibility wrapper
+- **Future versions**: Package will continue to work but will not receive new features
+- **Recommendation**: Migrate to `@pikacss/unplugin-pikacss/vite` for all new and existing projects
+
+## Documentation
+
+For complete documentation, visit:
+- [Vite Integration Guide](https://pikacss.github.io/pikacss/integrations/vite.html)
+- [PikaCSS Documentation](https://pikacss.github.io/pikacss/)
+
+## Legacy Usage (Not Recommended)
+
+This package still works as a wrapper. If you cannot migrate immediately:
 
 ```bash
 pnpm add -D @pikacss/vite-plugin-pikacss
 ```
 
-## Quick Start
-
-**vite.config.ts**:
 ```typescript
-import PikaCSSPlugin from '@pikacss/vite-plugin-pikacss'
-import { defineConfig } from 'vite'
-
-export default defineConfig({
-	plugins: [
-		PikaCSSPlugin({
-			// options
-		})
-	]
-})
-```
-
-## Features
-
-This package re-exports all features from `@pikacss/unplugin-pikacss/vite`:
-
-- ⚡ Fast Hot Module Replacement (HMR)
-- 🎯 Automatic TypeScript type generation
-- 🔄 Watch mode with instant updates
-- 📦 Optimized production builds
-- 🔧 Full PikaCSS configuration support
-- 🎨 Virtual CSS module (`pika.css`)
-
-## Recommendation
-
-For new projects, we strongly recommend using `@pikacss/unplugin-pikacss/vite` directly. This package is maintained for backward compatibility only.
-
-## Usage
-
-### Basic Setup
-
-```typescript
-import PikaCSSPlugin from '@pikacss/vite-plugin-pikacss'
 // vite.config.ts
+import pikacss from '@pikacss/vite-plugin-pikacss'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
 	plugins: [
-		PikaCSSPlugin()
-	]
-})
-```
-
-### With Configuration
-
-```typescript
-import PikaCSSPlugin from '@pikacss/vite-plugin-pikacss'
-// vite.config.ts
-import { defineConfig } from 'vite'
-
-export default defineConfig({
-	plugins: [
-		PikaCSSPlugin({
-			// File patterns to transform
-			target: ['**/*.vue', '**/*.tsx', '**/*.jsx'],
-
-			// PikaCSS config file path
+		pikacss({
+			scan: {
+				include: ['**/*.{js,ts,jsx,tsx,vue}'],
+				exclude: ['node_modules/**', 'dist/**']
+			},
 			config: './pika.config.ts',
-
-			// Custom function name
+			autoCreateConfig: true,
 			fnName: 'pika',
-
-			// Transform format
 			transformedFormat: 'string',
-
-			// TypeScript codegen
 			tsCodegen: true,
-
-			// Dev CSS output path
-			devCss: 'pika.dev.css'
+			cssCodegen: true
 		})
 	]
 })
 ```
 
-### Using in Your Code
-
-```typescript
-// In your Vue/React/etc. files
-const styles = pika({
-	display: 'flex',
-	alignItems: 'center',
-	gap: '1rem',
-	padding: '2rem'
-})
-```
-
-## Options
-
-See `@pikacss/unplugin-pikacss` documentation for all available options:
-
-```typescript
-interface PluginOptions {
-	/**
-	 * File scanning configuration.
-	 */
-	scan?: {
-		include?: string | string[]
-		exclude?: string | string[]
-	}
-
-	/**
-	 * Engine configuration or config file path.
-	 */
-	config?: EngineConfig | string
-
-	/**
-	 * Auto-create config file if missing.
-	 * @default true
-	 */
-	autoCreateConfig?: boolean
-
-	/**
-	 * PikaCSS function name.
-	 * @default 'pika'
-	 */
-	fnName?: string
-
-	/**
-	 * Output format for class names.
-	 * @default 'string'
-	 */
-	transformedFormat?: 'string' | 'array' | 'inline'
-
-	/**
-	 * TypeScript code generation.
-	 * @default true
-	 */
-	tsCodegen?: boolean | string
-
-	/**
-	 * CSS code generation.
-	 * @default true
-	 */
-	cssCodegen?: boolean | string
-}
-```
-
-## HMR Support
-
-Full HMR support is provided:
-
-- **Style changes**: Updates immediately without page reload
-- **Config changes**: Automatically reloads when `pika.config.ts` changes
-- **Type generation**: Updates TypeScript types in real-time
-
-## Documentation
-
-For complete documentation, visit: [PikaCSS Documentation](https://pikacss.github.io/pikacss/)
+All options are re-exported from `@pikacss/unplugin-pikacss/vite`. See the [unplugin documentation](https://github.com/pikacss/pikacss/tree/main/packages/unplugin) for complete API reference.
 
 ## License
 
