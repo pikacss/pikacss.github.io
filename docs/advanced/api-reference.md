@@ -780,7 +780,7 @@ Configuration options for the PikaCSS plugin.
 interface PluginOptions {
 	/**
 	 * File patterns to scan for pika() function calls.
-	 * Default: { include: ['**\/*.{js,ts,jsx,tsx,vue}'], exclude: ['node_modules/**', 'dist/**'] }
+	 * @default { include: ['**\/*.{js,ts,jsx,tsx,vue}'], exclude: ['node_modules/**', 'dist/**'] }
 	 */
 	scan?: {
 		include?: string | string[]
@@ -788,46 +788,48 @@ interface PluginOptions {
 	}
 
 	/**
-	 * Engine configuration object or path to config file.
-	 * Can be an inline EngineConfig object or a file path string (e.g., 'pika.config.ts').
+	 * PikaCSS engine configuration object or path to config file.
+	 * Pass an EngineConfig object for inline configuration or a string path.
+	 * @default undefined
 	 */
 	config?: EngineConfig | string
 
 	/**
-	 * Whether to automatically create a configuration file when needed.
-	 * Default: true
+	 * Automatically create config file when needed.
+	 * @default true
 	 */
 	autoCreateConfig?: boolean
 
 	/**
-	 * The name of the PikaCSS function in source code.
-	 * Default: 'pika'
+	 * Name of the style function to detect in source code.
+	 * @default 'pika'
 	 */
 	fnName?: string
 
 	/**
-	 * The format of generated class names.
-	 * - 'string': Space-separated string (e.g., "a b c")
-	 * - 'array': Array of class names (e.g., ['a', 'b', 'c'])
-	 * - 'inline': Inline format for template string interpolation
-	 * Default: 'string'
+	 * Format of generated class names after transformation.
+	 * - 'string': Space-separated class names
+	 * - 'array': Array of class names
+	 * - 'inline': Object format for direct style binding
+	 * @default 'string'
 	 */
 	transformedFormat?: 'string' | 'array' | 'inline'
 
 	/**
-	 * TypeScript code generation configuration.
+	 * TypeScript type definitions generation.
 	 * - true: Generate as 'pika.gen.ts'
-	 * - string: Custom file path
+	 * - string: Generate at specified path
 	 * - false: Disable generation
-	 * Default: true
+	 * @default true
 	 */
 	tsCodegen?: boolean | string
 
 	/**
-	 * CSS code generation configuration.
+	 * CSS output file generation.
 	 * - true: Generate as 'pika.gen.css'
-	 * - string: Custom file path
-	 * Default: true
+	 * - string: Generate at specified path
+	 * Note: Cannot be disabled (always generates CSS)
+	 * @default true
 	 */
 	cssCodegen?: true | string
 }
