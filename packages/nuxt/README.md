@@ -58,34 +58,37 @@ export default defineNuxtConfig({
 	pikacss: {
 		// File scanning configuration
 		scan: {
-			include: ['**/*.vue', '**/*.tsx', '**/*.jsx'],
-			exclude: ['node_modules/**']
+			include: ['**/*.vue', '**/*.tsx', '**/*.jsx'], // Default patterns for Nuxt
+			exclude: ['node_modules/**', 'dist/**'] // Default: node_modules and dist
 		},
 
 		// Engine configuration or config file path
-		config: './pika.config.ts',
+		config: './pika.config.ts', // or inline EngineConfig object
 
 		// Auto-create config file if missing
-		autoCreateConfig: true,
+		autoCreateConfig: true, // Default: true
 
 		// PikaCSS function name (globally available in Nuxt)
-		fnName: 'pika',
+		fnName: 'pika', // Default: 'pika'
 
 		// Output format for class names
-		transformedFormat: 'string', // 'string' | 'array' | 'inline'
+		transformedFormat: 'string', // 'string' | 'array' | 'inline' (default: 'string')
 
 		// TypeScript code generation
-		tsCodegen: true, // or specify a path: 'src/pika.gen.ts'
+		tsCodegen: true, // true (auto path) | false | custom path string
 
-		// CSS code generation
-		cssCodegen: true // or specify a path: 'src/pika.gen.css'
+		// CSS code generation (always enabled, cannot be false)
+		cssCodegen: true // true (auto path) | custom path string
 	}
 })
 ```
 
-::: tip
-The `pika()` function is globally available in Nuxt components - no import needed!
-:::
+### Automatic Features
+
+The Nuxt module provides zero-config setup with automatic:
+- **CSS Injection**: Virtual `pika.css` module is auto-imported - no manual import needed
+- **Vue Scanning**: Automatically scans `.vue`, `.tsx`, `.jsx` files
+- **Global Function**: `pika()` is globally available in all components
 
 ### Using in Components
 
@@ -123,7 +126,39 @@ const button = pika('btn', {
 
 ## Options
 
-All options from `@pikacss/unplugin-pikacss` are supported. See the [unplugin documentation](../unplugin/README.md) for details.
+The module accepts all options from `@pikacss/unplugin-pikacss` (except `currentPackageName` which is set automatically).
+
+### PluginOptions Interface
+
+```typescript
+interface ModuleOptions {
+	scan?: {
+		include?: string | string[] // Default: ['**/*.vue', '**/*.tsx', '**/*.jsx']
+		exclude?: string | string[] // Default: ['node_modules/**', 'dist/**']
+	}
+	config?: EngineConfig | string // Config object or path (default: auto-detect)
+	autoCreateConfig?: boolean // Default: true
+	fnName?: string // Default: 'pika'
+	transformedFormat?: 'string' | 'array' | 'inline' // Default: 'string'
+	tsCodegen?: boolean | string // Default: true (auto-generate pika.gen.ts)
+	cssCodegen?: true | string // Default: true (auto-generate pika.gen.css)
+}
+```
+
+### Option Details
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `scan.include` | `string \| string[]` | `['**/*.vue', '**/*.tsx', '**/*.jsx']` | File patterns to scan for `pika()` calls |
+| `scan.exclude` | `string \| string[]` | `['node_modules/**', 'dist/**']` | File patterns to exclude from scanning |
+| `config` | `EngineConfig \| string` | Auto-detect | Engine config object or path to config file |
+| `autoCreateConfig` | `boolean` | `true` | Auto-create config file if missing |
+| `fnName` | `string` | `'pika'` | Function name to detect in code |
+| `transformedFormat` | `'string' \| 'array' \| 'inline'` | `'string'` | Output format for generated class names |
+| `tsCodegen` | `boolean \| string` | `true` | Generate TypeScript types (true = auto path, false = disabled, string = custom path) |
+| `cssCodegen` | `true \| string` | `true` | Generate CSS output (true = auto path, string = custom path) |
+
+See the [@pikacss/unplugin-pikacss documentation](https://github.com/pikacss/pikacss/tree/main/packages/unplugin) for complete details.
 
 ## PikaCSS Configuration
 

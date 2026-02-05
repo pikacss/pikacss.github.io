@@ -42,22 +42,19 @@ export default defineNuxtConfig({
 })
 ```
 
-### 2. Create Config File
+### 2. Create Config File (Optional)
 
-Create `pika.config.js` (or `pika.config.ts`) in your project root:
+PikaCSS works with zero configuration. To customize the engine, create `pika.config.ts`:
 
-```javascript
-// pika.config.js
-import { defineEngineConfig } from '@pikacss/nuxt-pikacss'
+```typescript
+// pika.config.ts
+import { defineEngineConfig } from '@pikacss/core'
 
 export default defineEngineConfig({
-	// Your configuration
+	// Your PikaCSS engine configuration
+	// See https://pikacss.github.io/pikacss/advanced/api-reference.html#engineconfig
 })
 ```
-
-::: tip
-For Nuxt projects, `pika.config.js` is recommended over `.ts` for better compatibility.
-:::
 
 ## Module Options
 
@@ -68,37 +65,46 @@ export default defineNuxtConfig({
 	pikacss: {
 		// File scanning configuration
 		scan: {
-			include: ['**/*.{js,ts,vue}'],
-			exclude: ['node_modules/**']
+			include: ['**/*.vue', '**/*.tsx', '**/*.jsx'], // Default for Nuxt
+			exclude: ['node_modules/**', 'dist/**'] // Default exclusions
 		},
 
-		// Config file path
-		config: './pika.config.js',
+		// Config file path or inline config object
+		config: './pika.config.ts', // Default: auto-detect
 
 		// Auto-create config if missing
-		autoCreateConfig: true,
+		autoCreateConfig: true, // Default: true
 
 		// Function name to detect
-		fnName: 'pika',
+		fnName: 'pika', // Default: 'pika'
 
 		// Default output format
-		transformedFormat: 'string',
+		transformedFormat: 'string', // 'string' | 'array' | 'inline'
 
-		// Generate pika.gen.ts
-		tsCodegen: true,
+		// Generate pika.gen.ts (false to disable, string for custom path)
+		tsCodegen: true, // Default: true
 
-		// Generate pika.gen.css
-		cssCodegen: true
+		// Generate pika.gen.css (string for custom path)
+		cssCodegen: true // Default: true (cannot be false)
 	}
 })
 ```
 
+::: tip Zero-Config Defaults
+The Nuxt module is pre-configured for Vue files. Simply adding the module to `nuxt.config.ts` is enough to get started.
+:::
+
 ## Usage
 
-PikaCSS works in Vue components within Nuxt:
+The Nuxt module provides zero-config setup. The `pika()` function is globally available (no import needed) and `pika.css` is automatically injected.
 
 ```vue
 <!-- app.vue -->
+<script setup lang="ts">
+// ✅ No imports needed - pika() is globally available
+// ✅ No need to import 'pika.css' - auto-injected by Nuxt module
+</script>
+
 <template>
 	<div
 		:class="pika({
@@ -175,7 +181,9 @@ const styles = useStyles()
 
 ## TypeScript Support
 
-The generated types are automatically included in Nuxt. If needed, add to your `tsconfig.json`:
+TypeScript types are automatically generated and included by the Nuxt module. The generated `pika.gen.ts` file provides IDE autocomplete.
+
+If you need to manually reference the types, add to `tsconfig.json`:
 
 ```json
 {
@@ -183,6 +191,10 @@ The generated types are automatically included in Nuxt. If needed, add to your `
 	"include": ["pika.gen.ts"]
 }
 ```
+
+::: tip
+In most cases, the Nuxt module handles TypeScript integration automatically - no manual configuration needed.
+:::
 
 ## Auto-Generated Files
 
