@@ -139,7 +139,7 @@ describe('plugin-typography API documentation', () => {
 		const implementedShortcuts = Array.from(shortcutMatches, m => m[1])
 
 		// Filter out size modifiers (they're generated dynamically)
-		const explicitShortcuts = implementedShortcuts.filter(s => !s.match(/prose-(sm|lg|xl|2xl)/))
+		const explicitShortcuts = implementedShortcuts.filter(s => s && !s.match(/prose-(sm|lg|xl|2xl)/))
 
 		expect(explicitShortcuts.length)
 			.toBeGreaterThan(0)

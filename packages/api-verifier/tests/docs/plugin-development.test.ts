@@ -41,8 +41,10 @@ describe('plugin-development.md API documentation', () => {
 		const hooksMatch = source.match(/type EngineHooksDefinition = DefineHooks<\{([^}]+)\}>/)
 		expect(hooksMatch)
 			.toBeDefined()
+		if (!hooksMatch?.[1])
+			return
 
-		const hookLines = hooksMatch![1].split('\n')
+		const hookLines = hooksMatch[1].split('\n')
 			.filter(line => line.includes(':'))
 		const hooks = hookLines.map((line) => {
 			const match = line.match(/(\w+):/)
