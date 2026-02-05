@@ -55,12 +55,12 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **PKG-CORE-01**: @pikacss/core API reference accurate
 - [ ] **PKG-CORE-02**: @pikacss/core examples all executable
 - [ ] **PKG-CORE-03**: @pikacss/core README reflects actual exports
-- [ ] **PKG-INT-01**: @pikacss/integration API reference accurate
-- [ ] **PKG-INT-02**: @pikacss/integration examples all executable
-- [ ] **PKG-UNP-01**: @pikacss/unplugin-pikacss API reference accurate
-- [ ] **PKG-UNP-02**: All bundler-specific docs (Vite, Webpack, etc.) verified
-- [ ] **PKG-VITE-01**: @pikacss/vite-plugin-pikacss docs accurate
-- [ ] **PKG-NUXT-01**: @pikacss/nuxt-pikacss docs accurate with Nuxt 3
+- [x] **PKG-INT-01**: @pikacss/integration API reference accurate
+- [x] **PKG-INT-02**: @pikacss/integration examples all executable
+- [x] **PKG-UNP-01**: @pikacss/unplugin-pikacss API reference accurate
+- [x] **PKG-UNP-02**: All bundler-specific docs (Vite, Webpack, etc.) verified
+- [x] **PKG-VITE-01**: @pikacss/vite-plugin-pikacss docs accurate
+- [x] **PKG-NUXT-01**: @pikacss/nuxt-pikacss docs accurate with Nuxt 3
 - [ ] **PKG-ICON-01**: @pikacss/plugin-icons docs accurate
 - [ ] **PKG-RESET-01**: @pikacss/plugin-reset docs accurate
 - [ ] **PKG-TYPO-01**: @pikacss/plugin-typography docs accurate
@@ -147,12 +147,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PKG-CORE-01 | Phase 4 | Pending |
 | PKG-CORE-02 | Phase 4 | Pending |
 | PKG-CORE-03 | Phase 4 | Pending |
-| PKG-INT-01 | Phase 5 | Pending |
-| PKG-INT-02 | Phase 5 | Pending |
-| PKG-UNP-01 | Phase 5 | Pending |
-| PKG-UNP-02 | Phase 5 | Pending |
-| PKG-VITE-01 | Phase 5 | Pending |
-| PKG-NUXT-01 | Phase 5 | Pending |
+| PKG-INT-01 | Phase 5 | Complete |
+| PKG-INT-02 | Phase 5 | Complete |
+| PKG-UNP-01 | Phase 5 | Complete |
+| PKG-UNP-02 | Phase 5 | Complete |
+| PKG-VITE-01 | Phase 5 | Complete |
+| PKG-NUXT-01 | Phase 5 | Complete |
 | PKG-ICON-01 | Phase 6 | Pending |
 | PKG-RESET-01 | Phase 6 | Pending |
 | PKG-TYPO-01 | Phase 6 | Pending |

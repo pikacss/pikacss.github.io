@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 # API Verification Baseline
 
 **Generated:** 2026-02-04
@@ -943,7 +944,7 @@ typeof Engine
 
 **Documented:**
 ```typescript
-interface Engine { myCustomMethod(): void }
+interface Engine { myCustomMethod: () => void }
 ```
 
 **Differences:**
@@ -1066,7 +1067,7 @@ typeof Engine
 
 **Documented:**
 ```typescript
-interface Engine { myCustomMethod(): void }
+interface Engine { myCustomMethod: () => void }
 ```
 
 **Differences:**
@@ -1189,7 +1190,7 @@ typeof Engine
 
 **Documented:**
 ```typescript
-interface Engine { myCustomMethod(): void }
+interface Engine { myCustomMethod: () => void }
 ```
 
 **Differences:**
@@ -1312,7 +1313,7 @@ typeof Engine
 
 **Documented:**
 ```typescript
-interface Engine { myCustomMethod(): void }
+interface Engine { myCustomMethod: () => void }
 ```
 
 **Differences:**
@@ -1433,7 +1434,7 @@ typeof Engine
 
 **Documented:**
 ```typescript
-interface Engine { myCustomMethod(): void }
+interface Engine { myCustomMethod: () => void }
 ```
 
 **Differences:**
@@ -1554,7 +1555,7 @@ typeof Engine
 
 **Documented:**
 ```typescript
-interface Engine { myCustomMethod(): void }
+interface Engine { myCustomMethod: () => void }
 ```
 
 **Differences:**
@@ -1675,7 +1676,7 @@ typeof Engine
 
 **Documented:**
 ```typescript
-interface Engine { myCustomMethod(): void }
+interface Engine { myCustomMethod: () => void }
 ```
 
 **Differences:**
@@ -1796,7 +1797,7 @@ typeof Engine
 
 **Documented:**
 ```typescript
-interface Engine { myCustomMethod(): void }
+interface Engine { myCustomMethod: () => void }
 ```
 
 **Differences:**
@@ -1917,7 +1918,7 @@ typeof Engine
 
 **Documented:**
 ```typescript
-interface Engine { myCustomMethod(): void }
+interface Engine { myCustomMethod: () => void }
 ```
 
 **Differences:**
@@ -2038,7 +2039,7 @@ typeof Engine
 
 **Documented:**
 ```typescript
-interface Engine { myCustomMethod(): void }
+interface Engine { myCustomMethod: () => void }
 ```
 
 **Differences:**
@@ -2159,7 +2160,7 @@ typeof Engine
 
 **Documented:**
 ```typescript
-interface Engine { myCustomMethod(): void }
+interface Engine { myCustomMethod: () => void }
 ```
 
 **Differences:**
@@ -2282,7 +2283,7 @@ typeof Engine
 
 **Documented:**
 ```typescript
-interface Engine { myCustomMethod(): void }
+interface Engine { myCustomMethod: () => void }
 ```
 
 **Differences:**
@@ -2563,11 +2564,11 @@ type StyleItem = string | StyleDefinition | StyleItem[]
   ```
 - **docs/advanced/plugin-development.md:245**
   ```typescript
-  interface Engine { myCustomMethod(): void }
+  interface Engine { myCustomMethod: () => void }
   ```
 - **docs/llm/plugins.md:192**
   ```typescript
-  interface Engine { myCustomMethod(): void }
+  interface Engine { myCustomMethod: () => void }
   ```
 
 ### `themePlugin`
