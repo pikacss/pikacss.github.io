@@ -67,11 +67,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Developer Documentation
 
-- [ ] **DEV-01**: AGENTS.md accurately reflects project architecture
-- [ ] **DEV-02**: .github/skills/pikacss-dev/SKILL.md reflects actual workflows
-- [ ] **DEV-03**: .github/skills/pikacss-expert/SKILL.md reflects actual API usage
-- [ ] **DEV-04**: All development commands in docs actually work
-- [ ] **DEV-05**: Monorepo structure documentation matches reality
+- [x] **DEV-01**: AGENTS.md accurately reflects project architecture (Verified via packages/api-verifier/tests/developer-docs/agents.test.ts - package list matches filesystem)
+- [x] **DEV-02**: .github/skills/pikacss-dev/SKILL.md reflects actual workflows (Verified via packages/api-verifier/tests/developer-docs/pikacss-dev-skill.test.ts - commands and paths accurate)
+- [x] **DEV-03**: .github/skills/pikacss-expert/SKILL.md reflects actual API usage (Verified via packages/api-verifier/tests/developer-docs/pikacss-expert-skill.test.ts - API examples correct)
+- [x] **DEV-04**: All development commands in docs actually work (Verified via scripts/verify-dev-commands.sh - all critical commands execute successfully)
+- [x] **DEV-05**: Monorepo structure documentation matches reality (Verified via 07-03 - added missing @pikacss/api-verifier to AGENTS.md, count now 9/9)
 
 ## v2 Requirements
 
@@ -156,21 +156,22 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PKG-ICON-01 | Phase 6 | Complete |
 | PKG-RESET-01 | Phase 6 | Complete |
 | PKG-TYPO-01 | Phase 6 | Complete |
-| CONSOL-01 | Phase 7 | Pending |
-| CONSOL-02 | Phase 7 | Pending |
-| CONSOL-03 | Phase 7 | Pending |
-| CONSOL-04 | Phase 7 | Pending |
-| DEV-01 | Phase 7 | Pending |
-| DEV-02 | Phase 7 | Pending |
-| DEV-03 | Phase 7 | Pending |
-| DEV-04 | Phase 7 | Pending |
-| DEV-05 | Phase 7 | Pending |
+| CONSOL-01 | Phase 7 | Complete |
+| CONSOL-02 | Phase 7 | Complete |
+| CONSOL-03 | Phase 7 | Complete |
+| CONSOL-04 | Phase 7 | Complete |
+| DEV-01 | Phase 7 | Complete |
+| DEV-02 | Phase 7 | Complete |
+| DEV-03 | Phase 7 | Complete |
+| DEV-04 | Phase 7 | Complete |
+| DEV-05 | Phase 7 | Complete |
 
 **Coverage:**
 - v1 requirements: 48 total
 - Mapped to phases: 48 ✓
 - Unmapped: 0 ✓
+- Complete: 45 (Phases 1-3, 5-7 complete; Phase 4 pending)
 
 ---
 *Requirements defined: 2026-02-03*
-*Last updated: 2026-02-04 (Phase 3 complete: 7 requirements)*
+*Last updated: 2026-02-06 (Phase 7 Plan 03: DEV requirements complete)*
