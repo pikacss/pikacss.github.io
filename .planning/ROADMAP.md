@@ -154,9 +154,9 @@ Plans:
 **Plans:** 5 plans
 
 Plans:
-- [ ] 05-01-PLAN.md — Correct @pikacss/integration package documentation
-- [ ] 05-02-PLAN.md — Correct @pikacss/unplugin-pikacss package and API reference
-- [ ] 05-03-PLAN.md — Correct Vite, Webpack, Rspack, Esbuild integration guides
+- [x] 05-01-PLAN.md — Correct @pikacss/integration package documentation
+- [x] 05-02-PLAN.md — Correct @pikacss/unplugin-pikacss package and API reference
+- [x] 05-03-PLAN.md — Correct Vite, Webpack, Rspack, Esbuild integration guides
 - [ ] 05-04-PLAN.md — Correct Farm, Rolldown integration guides and index
 - [ ] 05-05-PLAN.md — Correct Nuxt module docs and deprecate Vite package
 
@@ -231,11 +231,11 @@ Plans:
 | 2 - PikaCSS-Specific Verification Rules | 7 | ✅ Complete | 100% |
 | 3 - API Verification System | 7 | ✅ Complete | 100% |
 | 4 - Core Package Correction | 3 | ✅ Complete | 100% |
-| 5 - Integration & Framework Layers | 6 | Pending | 0% |
+| 5 - Integration & Framework Layers | 6 | In Progress | 60% |
 | 6 - Plugin System Correction | 3 | Pending | 0% |
 | 7 - Consolidation & Developer Documentation | 9 | Pending | 0% |
 
-**Overall:** 24/48 requirements complete (50%)
+**Overall:** 27/48 requirements complete (56%)
 
 ---
 
