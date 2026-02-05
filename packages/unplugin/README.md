@@ -125,7 +125,7 @@ interface PluginOptions {
 	/**
 	 * Specify file patterns to scan for detecting pika() function calls.
 	 *
-	 * @default { include: ['**/*.{js,ts,jsx,tsx,vue}'], exclude: ['node_modules/**'] }
+	 * Default: include: ['**\/*.{js,ts,jsx,tsx,vue}'], exclude: ['node_modules/**', 'dist/**']
 	 */
 	scan?: {
 		include?: string | string[]
@@ -174,7 +174,7 @@ interface PluginOptions {
 	 * - string: Use the specified file path
 	 * @default true
 	 */
-	cssCodegen?: boolean | string
+	cssCodegen?: true | string
 }
 ```
 
@@ -189,7 +189,7 @@ Add the plugin to your build tool configuration (see examples above).
 Create `pika.config.ts` in your project root:
 
 ```ts
-import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
+import { defineEngineConfig } from '@pikacss/core'
 
 export default defineEngineConfig({
 	// Your PikaCSS configuration
