@@ -118,14 +118,15 @@ export default {
 }
 ```
 
-## Options
+## Plugin Options
+
+The plugin accepts a `PluginOptions` object with the following properties:
 
 ```ts
 interface PluginOptions {
 	/**
-	 * Specify file patterns to scan for detecting pika() function calls.
-	 *
-	 * Default: include: ['**\/*.{js,ts,jsx,tsx,vue}'], exclude: ['node_modules/**', 'dist/**']
+	 * File patterns to scan for pika() function calls.
+	 * @default { include: ['**\/*.{js,ts,jsx,tsx,vue}'], exclude: ['node_modules/**', 'dist/**'] }
 	 */
 	scan?: {
 		include?: string | string[]
@@ -133,50 +134,54 @@ interface PluginOptions {
 	}
 
 	/**
-	 * Configuration object or path to a configuration file for the PikaCSS engine.
-	 * Can pass a config object directly or a config file path (e.g., 'pika.config.ts').
+	 * PikaCSS engine configuration object or path to config file.
+	 * Pass an EngineConfig object for inline configuration or a string path.
+	 * @default undefined
 	 */
 	config?: EngineConfig | string
 
 	/**
-	 * Whether to automatically create a configuration file when needed.
+	 * Automatically create config file when needed.
 	 * @default true
 	 */
 	autoCreateConfig?: boolean
 
 	/**
-	 * The name of the PikaCSS function in source code.
+	 * Name of the style function to detect in source code.
 	 * @default 'pika'
 	 */
 	fnName?: string
 
 	/**
-	 * The format of the generated atomic style class names.
-	 * - `'string'`: Returns a space-separated string (e.g., "a b c")
-	 * - `'array'`: Returns an array of class names (e.g., ['a', 'b', 'c'])
-	 * - `'inline'`: Returns inline format
+	 * Format of generated class names after transformation.
+	 * - 'string': Space-separated class names
+	 * - 'array': Array of class names
+	 * - 'inline': Object format for direct style binding
 	 * @default 'string'
 	 */
 	transformedFormat?: 'string' | 'array' | 'inline'
 
 	/**
-	 * Configuration for TypeScript code generation.
-	 * - `true`: Auto-generate as 'pika.gen.ts'
-	 * - string: Use the specified file path
-	 * - `false`: Disable TypeScript code generation
+	 * TypeScript type definitions generation.
+	 * - true: Generate as 'pika.gen.ts'
+	 * - string: Generate at specified path
+	 * - false: Disable generation
 	 * @default true
 	 */
 	tsCodegen?: boolean | string
 
 	/**
-	 * Configuration for CSS code generation.
-	 * - `true`: Auto-generate as 'pika.gen.css'
-	 * - string: Use the specified file path
+	 * CSS output file generation.
+	 * - true: Generate as 'pika.gen.css'
+	 * - string: Generate at specified path
+	 * Note: Cannot be disabled (always generates CSS)
 	 * @default true
 	 */
 	cssCodegen?: true | string
 }
 ```
+
+> **Note:** This plugin re-exports all APIs from `@pikacss/integration` package. For advanced customization (e.g., creating custom bundler plugins), refer to the [@pikacss/integration documentation](../integration/README.md).
 
 ## Setup Steps
 
@@ -235,3 +240,65 @@ If you were using `@pikacss/vite-plugin-pikacss`, you can migrate to `@pikacss/u
 ```
 
 The API is fully compatible.
+
+## API Reference
+
+### Plugin Factory
+
+Each bundler-specific export provides a default plugin factory function:
+
+```ts
+// All bundler exports follow this pattern
+import PikaCSSPlugin from '@pikacss/unplugin-pikacss/{bundler}'
+
+// Returns bundler-specific plugin instance
+const plugin = PikaCSSPlugin(options)
+```
+
+**Supported bundler exports:**
+- `@pikacss/unplugin-pikacss/vite` - Vite plugin
+- `@pikacss/unplugin-pikacss/rollup` - Rollup plugin
+- `@pikacss/unplugin-pikacss/webpack` - Webpack plugin
+- `@pikacss/unplugin-pikacss/rspack` - Rspack plugin
+- `@pikacss/unplugin-pikacss/esbuild` - esbuild plugin
+- `@pikacss/unplugin-pikacss/farm` - Farm plugin
+- `@pikacss/unplugin-pikacss/rolldown` - Rolldown plugin
+
+### Type Exports
+
+All bundler exports re-export types from `@pikacss/integration`:
+
+```ts
+import type { PluginOptions, ResolvedPluginOptions } from '@pikacss/unplugin-pikacss/vite'
+```
+
+### Integration Layer Re-exports
+
+This package re-exports the entire `@pikacss/integration` API for advanced use cases:
+
+```ts
+import { createCtx, IntegrationContext } from '@pikacss/unplugin-pikacss'
+```
+
+For details on these APIs, see the [@pikacss/integration documentation](../integration/README.md).
+
+### Virtual Module
+
+The plugin provides a virtual CSS module that can be imported in your application:
+
+```ts
+import 'pika.css'
+```
+
+This virtual module resolves to the generated CSS file (`pika.gen.css` by default).
+
+## How It Works
+
+1. **Scan Phase**: Plugin scans source files matching `scan.include` patterns
+2. **Detection**: Identifies `pika()` function calls (or custom `fnName`)
+3. **Build-time Evaluation**: Evaluates style arguments at build time using `new Function()`
+4. **Transformation**: Replaces function calls with generated class names
+5. **CSS Generation**: Outputs atomic styles to `pika.gen.css`
+6. **Type Generation**: Outputs TypeScript definitions to `pika.gen.ts`
+
+The plugin integrates with bundler's hot module reload (HMR) to update styles during development.
