@@ -53,7 +53,7 @@ Create `pika.config.ts` in your project root:
 // pika.config.ts
 /// <reference path="./src/pika.gen.ts" />
 
-import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
+import { defineEngineConfig } from '@pikacss/core'
 
 export default defineEngineConfig({
 	// Your configuration
@@ -75,7 +75,7 @@ pikacss({
 	// File scanning configuration
 	scan: {
 		include: ['**/*.{js,ts,jsx,tsx}'],
-		exclude: ['node_modules/**']
+		exclude: ['node_modules/**', 'dist/**']
 	},
 
 	// Config file path
@@ -93,7 +93,7 @@ pikacss({
 	// Generate pika.gen.ts (default: true)
 	tsCodegen: true,
 
-	// Generate pika.gen.css (default: true)
+	// Generate pika.gen.css (always enabled, specify path or use default)
 	cssCodegen: true
 })
 ```
