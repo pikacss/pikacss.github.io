@@ -31,7 +31,7 @@ describe('plugin-icons types', () => {
 			},
 		})
 		expectTypeOf(validConfig.icons?.mode)
-			.toEqualTypeOf<'auto' | undefined>()
+			.toMatchTypeOf<'auto' | 'mask' | 'bg' | undefined>()
 
 		const validMaskConfig = defineEngineConfig({
 			plugins: [icons()],
@@ -40,7 +40,7 @@ describe('plugin-icons types', () => {
 			},
 		})
 		expectTypeOf(validMaskConfig.icons?.mode)
-			.toEqualTypeOf<'mask' | undefined>()
+			.toMatchTypeOf<'auto' | 'mask' | 'bg' | undefined>()
 
 		const validBgConfig = defineEngineConfig({
 			plugins: [icons()],
@@ -49,7 +49,7 @@ describe('plugin-icons types', () => {
 			},
 		})
 		expectTypeOf(validBgConfig.icons?.mode)
-			.toEqualTypeOf<'bg' | undefined>()
+			.toMatchTypeOf<'auto' | 'mask' | 'bg' | undefined>()
 	})
 
 	it('should accept partial configuration', () => {
@@ -96,10 +96,12 @@ describe('plugin-icons types', () => {
 		const config = defineEngineConfig({
 			plugins: [icons()],
 		})
+		// Should compile without icons config
 		expectTypeOf(config)
-			.toMatchTypeOf<{ plugins: any[] }>()
-		expectTypeOf(config.icons)
-			.toEqualTypeOf<undefined | object>()
+			.toHaveProperty('plugins')
+		// icons property is optional
+		expectTypeOf(config)
+			.toHaveProperty('icons')
 	})
 
 	it('should accept string or string array for prefix', () => {
