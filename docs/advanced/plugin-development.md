@@ -13,6 +13,7 @@ This guide covers the complete process of creating custom PikaCSS plugins.
 A PikaCSS plugin is created using the `defineEnginePlugin` helper:
 
 ```typescript
+/* eslint-disable pikacss/pika-module-augmentation */
 import type { EnginePlugin } from '@pikacss/core'
 import { defineEnginePlugin } from '@pikacss/core'
 
@@ -39,6 +40,7 @@ Plugins can specify an `order` property to control execution order:
 | `'post'` | Runs after default-order plugins |
 
 ```typescript
+/* eslint-disable pikacss/pika-module-augmentation */
 defineEnginePlugin({
 	name: 'my-pre-plugin',
 	order: 'pre', // Runs first
@@ -50,6 +52,7 @@ defineEnginePlugin({
 Here's a simple plugin that adds a custom CSS property:
 
 ```typescript
+/* eslint-disable pikacss/pika-module-augmentation */
 import { defineEnginePlugin } from '@pikacss/core'
 
 export function sizePlugin() {
@@ -80,6 +83,7 @@ pika({
 ## Advanced Example: Adding Shortcuts
 
 ```typescript
+/* eslint-disable pikacss/pika-module-augmentation */
 import { defineEnginePlugin } from '@pikacss/core'
 
 export function utilityPlugin() {
@@ -124,6 +128,7 @@ export function utilityPlugin() {
 Plugins can accept configuration options:
 
 ```typescript
+/* eslint-disable pikacss/pika-module-augmentation */
 import { defineEnginePlugin } from '@pikacss/core'
 
 interface MyPluginOptions {
@@ -154,26 +159,34 @@ export function myPlugin(options: MyPluginOptions = {}) {
 The `configureEngine` hook provides access to the full engine instance:
 
 ```typescript
-async configureEngine(engine) {
-  // Access configuration
-  const config = engine.config
+/* eslint-disable pikacss/pika-module-augmentation */
+import { defineEnginePlugin } from '@pikacss/core'
 
-  // Access stored atomic styles
-  const atomicStyles = engine.store.atomicStyles
+export function myPlugin() {
+	return defineEnginePlugin({
+		name: 'my-plugin',
+		async configureEngine(engine) {
+			// Access configuration
+			const config = engine.config
 
-  // Add preflights
-  engine.addPreflight({
-    ':root': {
-      '--plugin-color': '#007bff'
-    }
-  })
+			// Access stored atomic styles
+			const atomicStyles = engine.store.atomicStyles
 
-  // Notify when preflight changes
-  engine.notifyPreflightUpdated()
+			// Add preflights
+			engine.addPreflight({
+				':root': {
+					'--plugin-color': '#007bff'
+				}
+			})
 
-  // Add to autocomplete
-  engine.appendAutocompleteSelectors('@custom')
-  engine.appendAutocompleteExtraProperties('--my-var')
+			// Notify when preflight changes
+			engine.notifyPreflightUpdated()
+
+			// Add to autocomplete
+			engine.appendAutocompleteSelectors('@custom')
+			engine.appendAutocompleteExtraProperties('--my-var')
+		}
+	})
 }
 ```
 
@@ -182,6 +195,7 @@ async configureEngine(engine) {
 Some hooks allow you to react to engine events:
 
 ```typescript
+/* eslint-disable pikacss/pika-module-augmentation */
 defineEnginePlugin({
 	name: 'logger-plugin',
 
@@ -204,60 +218,241 @@ defineEnginePlugin({
 
 ## TypeScript Module Augmentation
 
-When creating plugins that add new configuration options or extend the engine's capabilities, you should use TypeScript module augmentation to provide a better developer experience.
+When creating plugins that add new configuration options, you should use TypeScript module augmentation via declaration merging. This provides excellent autocomplete and type safety for plugin users.
+
+### Why Module Augmentation?
+
+Module augmentation allows your plugin to:
+- ✅ **Extend** the `EngineConfig` interface with type-safe options
+- ✅ **Enable IDE autocomplete** for your plugin's configuration
+- ✅ **Catch configuration errors** at compile time
+- ✅ **Integrate seamlessly** with PikaCSS engine configuration
 
 ### Extending EngineConfig
 
 If your plugin adds new top-level configuration options, extend the `EngineConfig` interface:
 
 ```typescript
+// my-plugin.ts
+import type { EnginePlugin } from '@pikacss/core'
 import { defineEnginePlugin } from '@pikacss/core'
 
 export type MyPluginOptions = 'option-a' | 'option-b'
 
+// 1. Declare module augmentation
 declare module '@pikacss/core' {
 	interface EngineConfig {
 		/**
-		 * Description of your custom option.
+		 * My custom plugin option.
 		 * @default 'option-a'
 		 */
 		myCustomOption?: MyPluginOptions
 	}
 }
 
+// 2. Implement plugin
 export function myPlugin() {
-	return defineEnginePlugin({
-		name: 'my-plugin',
-		configureRawConfig: (config) => {
-			const value = config.myCustomOption // Now typed!
-			// ...
-		}
-	})
+  return defineEnginePlugin({
+    name: 'my-plugin',
+    configureRawConfig: async (config) => {
+      const value = config.myCustomOption // Now typed!
+      // ... use the configuration
+    }
+  })
 }
 ```
 
-### Extending Engine
-
-You can also extend the `Engine` interface if your plugin adds methods or properties to the engine instance:
+**Usage with autocomplete:**
 
 ```typescript
-declare module '@pikacss/core' {
-	interface Engine {
-		myCustomMethod(): void
-	}
-}
+import { defineEngineConfig } from '@pikacss/core'
+import { myPlugin } from './my-plugin'
 
-export function myPlugin() {
-	return defineEnginePlugin({
-		name: 'my-plugin',
-		configureEngine: async (engine) => {
-			engine.myCustomMethod = () => {
-				console.log('Custom method called')
-			}
-		}
-	})
-}
+export default defineEngineConfig({
+  plugins: [myPlugin()],
+  myCustomOption: 'option-b' // ✅ Autocomplete works!
+  // myCustomOption: 'invalid' // ❌ TypeScript error
+})
 ```
+
+### Real-World Examples
+
+Official PikaCSS plugins demonstrate module augmentation patterns:
+
+**Simple Plugin** — [@pikacss/plugin-reset](https://github.com/deviltea/pikacss/tree/main/packages/plugin-reset)
+- Adds `reset` option with enum values
+- Uses `configureRawConfig` to read configuration
+- Example: `reset: 'tailwind'`
+
+**Medium Complexity** — [@pikacss/plugin-typography](https://github.com/deviltea/pikacss/tree/main/packages/plugin-typography)
+- Adds `typography` option with interface configuration
+- Customizable CSS variables for theming
+- Example: `typography: { variables: { ... } }`
+
+**Complex Plugin** — [@pikacss/plugin-icons](https://github.com/deviltea/pikacss/tree/main/packages/plugin-icons)
+- Multiple configuration options (collections, scale, customizations)
+- Advanced icon rendering with IconifyJSON integration
+- Example: `icons: { collections: [...], scale: 1.2 }`
+
+## Available Plugin Hooks
+
+The `EnginePlugin` interface provides the following hooks:
+
+### Configuration Hooks
+
+| Hook | Type | Description |
+|------|------|-------------|
+| `configureRawConfig` | async | Modify user configuration before resolution |
+| `rawConfigConfigured` | sync | React to raw configuration being set |
+| `configureResolvedConfig` | async | Modify resolved configuration |
+| `configureEngine` | async | Configure engine after initialization |
+
+### Transform Hooks
+
+| Hook | Type | Description |
+|------|------|-------------|
+| `transformSelectors` | async | Transform CSS selectors |
+| `transformStyleItems` | async | Transform resolved style items |
+| `transformStyleDefinitions` | async | Transform resolved style definitions |
+
+### Event Hooks
+
+| Hook | Type | Description |
+|------|------|-------------|
+| `preflightUpdated` | sync | Called when preflight styles update |
+| `atomicStyleAdded` | sync | Called when atomic style is added |
+| `autocompleteConfigUpdated` | sync | Called when autocomplete config changes |
+
+**Most commonly used hooks:**
+- `configureRawConfig` — Read plugin configuration options
+- `configureEngine` — Add shortcuts, preflights, autocomplete
+- `transformStyleDefinitions` — Add custom CSS properties
+
+See [Official Plugins](https://github.com/deviltea/pikacss/tree/main/packages) for real-world examples of each hook.
+
+## Testing Plugins
+
+### Functional Testing
+
+Test plugin behavior using Vitest and the engine API:
+
+```typescript
+// my-plugin.test.ts
+import { createEngine, defineEngineConfig } from '@pikacss/core'
+import { describe, expect, it } from 'vitest'
+import { myPlugin } from './my-plugin'
+
+describe('myPlugin', () => {
+  it('adds expected shortcuts', async () => {
+    const engine = await createEngine(defineEngineConfig({
+      plugins: [myPlugin()]
+    }))
+
+    // Test shortcut registration
+    const classNames = await engine.use('my-shortcut')
+    expect(classNames).toBeDefined()
+  })
+
+  it('transforms style definitions correctly', async () => {
+    const engine = await createEngine(defineEngineConfig({
+      plugins: [myPlugin()]
+    }))
+
+    const classNames = await engine.use({
+      customProperty: 'value'
+    })
+
+    expect(classNames).toEqual(expect.arrayContaining([expect.any(String)]))
+  })
+
+  it('generates expected CSS', async () => {
+    const engine = await createEngine(defineEngineConfig({
+      plugins: [myPlugin()]
+    }))
+
+    await engine.use({ customProperty: 'value' })
+
+    const css = await engine.renderAtomicStyles(false)
+    expect(css).toContain('expected-property')
+  })
+})
+```
+
+### Type Testing
+
+If your plugin uses module augmentation, verify type safety with `expectTypeOf`:
+
+```typescript
+// my-plugin.types.test.ts
+import type { EngineConfig } from '@pikacss/core'
+import { defineEngineConfig } from '@pikacss/core'
+import { expectTypeOf, it } from 'vitest'
+import type { MyPluginOptions } from './my-plugin'
+
+it('augments EngineConfig correctly', () => {
+  expectTypeOf<EngineConfig>()
+    .toHaveProperty('myCustomOption')
+    .toMatchTypeOf<MyPluginOptions | undefined>()
+})
+
+it('provides type-safe configuration', () => {
+  const config = defineEngineConfig({
+    myCustomOption: 'option-a'
+  })
+  
+  expectTypeOf(config.myCustomOption)
+    .toMatchTypeOf<MyPluginOptions | undefined>()
+})
+
+it('validates all option values', () => {
+  const validOptions: MyPluginOptions[] = ['option-a', 'option-b']
+  
+  validOptions.forEach(option => {
+    const config = defineEngineConfig({
+      myCustomOption: option
+    })
+    expect(config.myCustomOption).toBe(option)
+  })
+})
+```
+
+### API Verification Testing
+
+Create tests to ensure documentation stays synchronized with implementation:
+
+```typescript
+// docs-verification.test.ts
+import * as fs from 'node:fs'
+import * as path from 'node:path'
+import { describe, expect, it } from 'vitest'
+
+describe('plugin documentation', () => {
+  const readmePath = path.join(__dirname, '../README.md')
+  const pluginPath = path.join(__dirname, './my-plugin.ts')
+
+  it('documents all configuration options', () => {
+    const readme = fs.readFileSync(readmePath, 'utf-8')
+    const source = fs.readFileSync(pluginPath, 'utf-8')
+
+    // Verify README documents augmented interface
+    expect(readme).toContain('myCustomOption')
+    expect(source).toMatch(/interface EngineConfig/)
+  })
+
+  it('shows module augmentation example', () => {
+    const readme = fs.readFileSync(readmePath, 'utf-8')
+
+    expect(readme).toContain('declare module')
+    expect(readme).toContain('@pikacss/core')
+    expect(readme).toContain('EngineConfig')
+  })
+})
+```
+
+**Reference:** Official plugins include comprehensive test suites:
+- [@pikacss/plugin-reset tests](https://github.com/deviltea/pikacss/tree/main/packages/plugin-reset/tests)
+- [@pikacss/plugin-typography tests](https://github.com/deviltea/pikacss/tree/main/packages/plugin-typography/tests)
+- [@pikacss/plugin-icons tests](https://github.com/deviltea/pikacss/tree/main/packages/plugin-icons/tests)
 
 ## Best Practices
 
@@ -267,7 +462,7 @@ export function myPlugin() {
 
 3. **Handle errors gracefully**: Wrap potentially failing code in try-catch.
 
-4. **Use TypeScript**: Leverage type safety for better developer experience.
+4. **Use TypeScript**: Leverage type safety and module augmentation for better DX.
 
 5. **Follow async/sync patterns**: Respect the hook types (async vs sync).
 
@@ -275,11 +470,16 @@ export function myPlugin() {
 
 7. **Use Peer Dependencies**: Always list `@pikacss/core` as a peer dependency to avoid duplicate instances.
 
+8. **Test comprehensively**: Include functional tests, type tests, and API verification tests.
+
+9. **Reference official plugins**: Learn from [@pikacss/plugin-reset](https://github.com/deviltea/pikacss/tree/main/packages/plugin-reset), [@pikacss/plugin-typography](https://github.com/deviltea/pikacss/tree/main/packages/plugin-typography), and [@pikacss/plugin-icons](https://github.com/deviltea/pikacss/tree/main/packages/plugin-icons).
+
 ## Real-World Plugin Examples
 
 ### Animation Plugin
 
 ```typescript
+/* eslint-disable pikacss/pika-module-augmentation */
 import { defineEnginePlugin } from '@pikacss/core'
 
 interface AnimationPluginOptions {
@@ -339,6 +539,7 @@ pika('animate-pulse')
 ### Theme Plugin
 
 ```typescript
+/* eslint-disable pikacss/pika-module-augmentation */
 import { defineEnginePlugin } from '@pikacss/core'
 
 interface Theme {
@@ -418,6 +619,7 @@ export default defineEngineConfig({
 ### Responsive Plugin
 
 ```typescript
+/* eslint-disable pikacss/pika-module-augmentation */
 import { defineEnginePlugin } from '@pikacss/core'
 
 interface ResponsiveOptions {
@@ -474,6 +676,7 @@ pika({
 ### Container Query Plugin
 
 ```typescript
+/* eslint-disable pikacss/pika-module-augmentation */
 import { defineEnginePlugin } from '@pikacss/core'
 
 export function containerPlugin() {
@@ -528,6 +731,7 @@ pika({
 ### Debug Plugin
 
 ```typescript
+/* eslint-disable pikacss/pika-module-augmentation */
 import { defineEnginePlugin } from '@pikacss/core'
 
 interface DebugPluginOptions {
@@ -578,56 +782,9 @@ export default defineEngineConfig({
 })
 ```
 
-## Testing Plugins
+## Multi-Plugin Integration
 
-### Unit Testing
-
-```typescript
-// my-plugin.test.ts
-import { createEngine, defineEngineConfig } from '@pikacss/core'
-import { describe, expect, it } from 'vitest'
-import { myPlugin } from './my-plugin'
-
-describe('myPlugin', () => {
-	it('adds expected shortcuts', async () => {
-		const engine = await createEngine(defineEngineConfig({
-			plugins: [myPlugin()]
-		}))
-
-		// Test shortcut registration
-		const classNames = await engine.use('my-shortcut')
-		expect(classNames)
-			.toBeDefined()
-	})
-
-	it('transforms style definitions correctly', async () => {
-		const engine = await createEngine(defineEngineConfig({
-			plugins: [myPlugin()]
-		}))
-
-		const classNames = await engine.use({
-			customProperty: 'value'
-		})
-
-		expect(classNames)
-			.toEqual(expect.arrayContaining([expect.any(String)]))
-	})
-
-	it('generates expected CSS', async () => {
-		const engine = await createEngine(defineEngineConfig({
-			plugins: [myPlugin()]
-		}))
-
-		await engine.use({ customProperty: 'value' })
-
-		const css = await engine.renderAtomicStyles(false)
-		expect(css)
-			.toContain('expected-property')
-	})
-})
-```
-
-### Integration Testing
+Test how plugins work together:
 
 ```typescript
 // integration.test.ts
@@ -636,33 +793,30 @@ import { describe, expect, it } from 'vitest'
 import { animationPlugin, themePlugin } from './my-plugins'
 
 describe('Plugin Integration', () => {
-	it('works with multiple plugins', async () => {
-		const engine = await createEngine(defineEngineConfig({
-			plugins: [
-				themePlugin({
-					colors: { primary: '#3b82f6' },
-					spacing: { md: '1rem' },
-					breakpoints: {}
-				}),
-				animationPlugin()
-			]
-		}))
+  it('works with multiple plugins', async () => {
+    const engine = await createEngine(defineEngineConfig({
+      plugins: [
+        themePlugin({
+          colors: { primary: '#3b82f6' },
+          spacing: { md: '1rem' },
+          breakpoints: {}
+        }),
+        animationPlugin()
+      ]
+    }))
 
-		// Test theme plugin shortcuts
-		const themeClasses = await engine.use('bg-primary')
-		expect(themeClasses)
-			.toBeDefined()
+    // Test theme plugin shortcuts
+    const themeClasses = await engine.use('bg-primary')
+    expect(themeClasses).toBeDefined()
 
-		// Test animation plugin shortcuts
-		const animClasses = await engine.use('animate-spin')
-		expect(animClasses)
-			.toBeDefined()
+    // Test animation plugin shortcuts
+    const animClasses = await engine.use('animate-spin')
+    expect(animClasses).toBeDefined()
 
-		// Test combined usage
-		const combined = await engine.use('bg-primary', 'animate-spin')
-		expect(combined)
-			.toHaveLength(2)
-	})
+    // Test combined usage
+    const combined = await engine.use('bg-primary', 'animate-spin')
+    expect(combined).toHaveLength(2)
+  })
 })
 ```
 
@@ -673,6 +827,7 @@ describe('Plugin Integration', () => {
 Create plugins that work well together:
 
 ```typescript
+/* eslint-disable pikacss/pika-module-augmentation */
 // base-plugin.ts
 export function createBasePlugin(namespace: string) {
 	return defineEnginePlugin({
@@ -709,6 +864,7 @@ plugins: [
 ### Plugin Factories
 
 ```typescript
+/* eslint-disable pikacss/pika-module-augmentation */
 export function createUtilityPlugin<T extends string>(
 	name: string,
 	property: string,
@@ -755,6 +911,7 @@ const bgOpacityPlugin = createUtilityPlugin('bg-opacity', 'opacity', {
 ### Conditional Plugin Loading
 
 ```typescript
+/* eslint-disable pikacss/pika-module-augmentation */
 export function conditionalPlugin(condition: boolean | (() => boolean)) {
 	return defineEnginePlugin({
 		name: 'conditional-plugin',
@@ -765,7 +922,7 @@ export function conditionalPlugin(condition: boolean | (() => boolean)) {
 				: condition
 
 			if (!isEnabled) {
-
+				return
 			}
 
 			// Plugin logic...
@@ -898,18 +1055,21 @@ MIT
 - [ ] All hooks are properly typed
 - [ ] Error handling is implemented
 - [ ] Configuration options are documented
-- [ ] TypeScript module augmentation (if needed)
+- [ ] TypeScript module augmentation (if config options added)
 - [ ] Shortcuts are registered for autocomplete
-- [ ] Unit tests are written
-- [ ] Integration tests are written
+- [ ] Functional tests are written (engine behavior)
+- [ ] Type tests verify module augmentation (if applicable)
+- [ ] API verification tests prevent documentation drift
 - [ ] README is complete with examples
-- [ ] Peer dependencies are correct
+- [ ] Official plugins referenced as patterns
+- [ ] Peer dependencies are correct (`@pikacss/core`)
 - [ ] Package exports are configured
 - [ ] Version follows semver
 
 ## Next Steps
 
-- Review [Plugin Hooks Reference](/advanced/plugin-hooks) for all available hooks
-- Check [API Reference](/advanced/api-reference) for engine methods
-- Explore [Official Plugins](/guide/plugin-system) for more examples
-- See [Module Augmentation](/advanced/module-augmentation) for TypeScript patterns
+- Review [API Reference](/advanced/api-reference) for engine methods
+- Explore [Official Plugins](https://github.com/deviltea/pikacss/tree/main/packages) source code
+- Check [@pikacss/plugin-reset](https://github.com/deviltea/pikacss/tree/main/packages/plugin-reset) for simple plugin pattern
+- Check [@pikacss/plugin-typography](https://github.com/deviltea/pikacss/tree/main/packages/plugin-typography) for medium complexity
+- Check [@pikacss/plugin-icons](https://github.com/deviltea/pikacss/tree/main/packages/plugin-icons) for advanced patterns

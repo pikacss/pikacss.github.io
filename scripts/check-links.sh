@@ -56,8 +56,20 @@ resolve_path() {
   
   # Resolve relative path
   if [[ "$link_path" == /* ]]; then
-    # Absolute path from repo root
-    echo "${link_path#/}"
+    # Absolute path from VitePress root (docs/)
+    local vitepress_path="${link_path#/}"
+    
+    # Check if it's a static asset in public/ directory
+    if [[ "$vitepress_path" == images/* ]] || [[ "$vitepress_path" == assets/* ]] || [[ "$vitepress_path" == *.png ]] || [[ "$vitepress_path" == *.jpg ]] || [[ "$vitepress_path" == *.svg ]]; then
+      echo "docs/public/$vitepress_path"
+    else
+      # It's a documentation link - add docs/ prefix and .md suffix if not already present
+      if [[ "$vitepress_path" != *.md ]]; then
+        echo "docs/$vitepress_path.md"
+      else
+        echo "docs/$vitepress_path"
+      fi
+    fi
   else
     # Relative path
     echo "$source_dir/$link_path"
@@ -115,9 +127,6 @@ while IFS= read -r file; do
       
       # Resolve relative path
       resolved_path=$(resolve_path "$file" "$link_path")
-      
-      # Normalize path (remove ./, ../, etc.)
-      resolved_path=$(cd "$(dirname "$resolved_path")" 2>/dev/null && echo "$(pwd)/$(basename "$resolved_path")" || echo "$resolved_path")
       
       # Check if target file exists
       if [[ ! -f "$resolved_path" ]]; then
