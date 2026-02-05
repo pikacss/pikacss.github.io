@@ -1,6 +1,6 @@
 # Project State: PikaCSS Documentation Correction
 
-**Last Updated:** 2026-02-04
+**Last Updated:** 2026-02-05
 **Project Version:** v0.0.39
 
 ---
@@ -20,22 +20,24 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 
 ## Current Position
 
-**Phase:** 4 of 7 (Core Package Correction) - **COMPLETE** ✅
-**Plan:** 4 of 4 complete (04-04)
-**Status:** Core package documentation fully corrected and verified
-**Last activity:** 2026-02-04 - Completed 04-04 (validated basics.md and fixed pika.inl() contradiction)
-**Progress:** ████████████████ ~67% (Phase 4 complete: 4/4 plans)
+**Phase:** 5 of 7 (Integration & Framework Layers) - **IN PROGRESS** 🔄
+**Plan:** 2 of 5 complete (05-02)
+**Status:** Unplugin package documentation corrected
+**Last activity:** 2026-02-05 - Completed 05-02 (corrected @pikacss/unplugin-pikacss documentation)
+**Progress:** ██████████████████ ~75% (18/24 plans complete)
 
-**Current Milestone:** Phase 4 - Core Package Correction (@pikacss/core) ✅ COMPLETE
+**Current Milestone:** Phase 5 - Integration & Framework Layers 🎯
+- ✅ @pikacss/integration documentation (05-01)
+- ✅ @pikacss/unplugin-pikacss documentation (05-02)
+- ⏳ Vite, Webpack, Rspack, Esbuild integration guides (05-03)
+- ⏳ Farm, Rolldown integration guides (05-04)
+- ⏳ Nuxt module documentation (05-05)
+
+**Previous Milestone:** Phase 4 - Core Package Correction (@pikacss/core) ✅ COMPLETE
 - ✅ AGENTS.md core package architecture section (04-01)
 - ✅ packages/core/README.md correction (04-02)
 - ✅ docs/advanced/api-reference.md @pikacss/core section (04-03)
 - ✅ docs/guide/basics.md validation and pika.inl() fix (04-04)
-
-**Next Milestone:** Phase 5 - Integration Layer Documentation 🎯
-- ⏳ @pikacss/integration documentation
-- ⏳ @pikacss/unplugin-pikacss documentation
-- ⏳ Framework adapter documentation
 
 **Blockers:** None
 
@@ -44,9 +46,9 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 ## Performance Metrics
 
 ### Velocity
-- **Requirements completed:** 32/48 total (66.7%) (+1 from Phase 4, Plan 4)
-- **Phases completed:** 4/7 (57.1%) [Phase 4: 100%]
-- **Plans completed:** 16/24 total (66.7%)
+- **Requirements completed:** 34/48 total (70.8%) (+2 from Phase 5, Plans 1-2)
+- **Phases completed:** 4/7 (57.1%) [Phase 4: 100%, Phase 5: 40%]
+- **Plans completed:** 18/24 total (75.0%)
 - **Average per phase:** 8 requirements (steady progress)
 - **Projected completion:** 3 phases remaining × ~15-20 minutes avg = ~45-60 minutes (estimated)
 
@@ -63,11 +65,12 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 
 ### Efficiency
 - **Phases completed:** 4/7 (57.1%)
-- **Plans completed:** 16/24 (66.7%)
+- **Plans completed:** 18/24 (75.0%)
+- **Phase 5 total time:** ~18 minutes (2 plans complete) 🔄
 - **Phase 4 total time:** ~37 minutes (4 plans complete) ✅
-- **Phase 3 total time:** ~56 minutes (4 plans complete)
-- **Phase 2 total time:** 51.6 minutes (5 plans complete)
-- **Phase 1 total time:** ~25 minutes (3 plans complete)
+- **Phase 3 total time:** ~56 minutes (4 plans complete) ✅
+- **Phase 2 total time:** 51.6 minutes (5 plans complete) ✅
+- **Phase 1 total time:** ~25 minutes (3 plans complete) ✅
 - **Rework incidents:** 0
 - **Automation effectiveness:** 100% (all tasks executed as planned)
 
@@ -117,6 +120,9 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 2026-02-04 | Accept simplified type syntax for complex mapped types | API verifier can't compare mapped types, but simplified docs serve users better | Developer experience prioritized over verifier validation (04-03) |
 | 2026-02-04 | pika.inl() returns void for template string interpolation | Actual implementation (StyleFn_Inline) returns void, not string | Fixed contradiction in api-reference.md to match implementation (04-04) |
 | 2026-02-04 | Broken link warnings from check-links.sh are VitePress false positives | All target files exist; link checker doesn't understand VitePress routing | Validate file existence manually, ignore relative path warnings (04-04) |
+| 2026-02-05 | Documented all 7 bundler entry points for unplugin | Vite, Webpack, Rspack, Esbuild, Rollup, Farm, Rolldown require identical configuration | Multi-bundler documentation pattern established (05-02) |
+| 2026-02-05 | cssCodegen type is 'true \| string', not 'boolean \| string' | Implementation never allows 'false' - must be enabled with default or custom path | Corrected type documentation to match actual PluginOptions (05-02) |
+| 2026-02-05 | defineEngineConfig exported from @pikacss/core, not unplugin | Core function not re-exported by unplugin package | Fixed import path in documentation (05-02) |
 
 ### Todos
 
@@ -186,6 +192,12 @@ Validated all 13 pika() examples in docs/guide/basics.md follow build-time const
 
 **Phase 4 Complete:** All @pikacss/core documentation corrected and verified across 4 plans (37 minutes total). Zero API mismatches, zero contradictions, all examples validated.
 
+**Phase 5 Plan 01 Complete (@pikacss/integration Documentation):**
+Corrected packages/integration/README.md with complete API documentation and added @pikacss/integration section to API reference. Documented IntegrationContext properties, createCtx factory, and all lifecycle APIs. Fixed 2-space indentation consistency. API verifier confirms accurate documentation. Duration: 11 minutes. Ready for 05-02 (unplugin package correction).
+
+**Phase 5 Plan 02 Complete (@pikacss/unplugin-pikacss Documentation):**
+Corrected packages/unplugin/README.md and added complete unplugin section to API reference. Fixed cssCodegen type from 'boolean | string' to 'true | string'. Corrected scan.exclude default to include 'dist/**'. Fixed defineEngineConfig import path to @pikacss/core. Documented all 7 bundler entry points (Vite/Webpack/Rspack/Esbuild/Rollup/Farm/Rolldown). Standardized 2-space indentation. Duration: 7 minutes. Ready for 05-03 (bundler integration guides).
+
 **Build-Time Constraint Critical:**
 All `pika()` examples must use statically analyzable arguments. Examples with runtime variables will fail in user projects even if they type-check in monorepo. Test through actual bundler, not just TypeScript compilation.
 
@@ -219,10 +231,10 @@ Integration tests use monorepo workspace resolution for efficient testing. Fixtu
 - Existing infrastructure: Vitest, VitePress, TypeScript, pnpm workspace
 
 **Where we left off:**
-Phase 4 COMPLETE (4/4 plans): All @pikacss/core documentation corrected and verified. Fixed AGENTS.md architecture (04-01), packages/core/README.md API documentation (04-02), API reference @pikacss/core section (04-03), and basics.md validation with pika.inl() contradiction fix (04-04). Total phase time: 37 minutes. Zero API mismatches remaining in core package documentation.
+Phase 5 IN PROGRESS (2/5 plans): Integration and unplugin package documentation corrected and verified. Fixed @pikacss/integration API documentation (05-01) and @pikacss/unplugin-pikacss with all 7 bundler entry points (05-02). Total phase time so far: 18 minutes. Ready to continue with bundler integration guides (05-03).
 
 **Immediate next action:**
-Begin Phase 5 (Integration Layer Documentation) to systematically correct documentation for @pikacss/integration, @pikacss/unplugin-pikacss, and framework adapters using the same verification methodology established in Phase 4.
+Continue Phase 5 Plan 03 (Bundler Integration Guides) to correct Vite, Webpack, Rspack, and Esbuild integration documentation using the same verification methodology.
 
 ### Context Preservation
 
