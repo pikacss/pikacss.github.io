@@ -22,7 +22,7 @@ export default defineConfig({
 		pikacss({
 			scan: {
 				include: ['**/*.{tsx,ts,vue}'],
-				exclude: ['node_modules/**']
+				exclude: ['node_modules/**', 'dist/**']
 			}
 		})
 	]
@@ -75,11 +75,11 @@ npm install -D @pikacss/unplugin-pikacss
 
 **webpack.config.js:**
 ```javascript
-const PikaCSS = require('@pikacss/unplugin-pikacss/webpack')
+const pikacss = require('@pikacss/unplugin-pikacss/webpack')
 
 module.exports = {
 	plugins: [
-		new PikaCSS({
+		pikacss({
 			scan: {
 				include: ['**/*.{tsx,ts,jsx,js}']
 			}
@@ -102,11 +102,11 @@ npm install -D @pikacss/unplugin-pikacss
 
 **rspack.config.js:**
 ```javascript
-const PikaCSS = require('@pikacss/unplugin-pikacss/rspack')
+const pikacss = require('@pikacss/unplugin-pikacss/rspack')
 
 module.exports = {
 	plugins: [
-		new PikaCSS({
+		pikacss({
 			scan: {
 				include: ['**/*.{tsx,ts,jsx,js}']
 			}
@@ -152,10 +152,10 @@ npm install -D @pikacss/unplugin-pikacss
 **farm.config.ts:**
 ```typescript
 import { defineConfig } from '@farmfe/core'
-import PikaCSS from '@pikacss/unplugin-pikacss/farm'
+import pikacss from '@pikacss/unplugin-pikacss/farm'
 
 export default defineConfig({
-	plugins: [PikaCSS()]
+	plugins: [pikacss()]
 })
 ```
 
@@ -173,11 +173,11 @@ npm install -D @pikacss/unplugin-pikacss
 
 **rolldown.config.ts:**
 ```typescript
-import PikaCSS from '@pikacss/unplugin-pikacss/rolldown'
+import pikacss from '@pikacss/unplugin-pikacss/rolldown'
 import { defineConfig } from 'rolldown'
 
 export default defineConfig({
-	plugins: [PikaCSS()]
+	plugins: [pikacss()]
 })
 ```
 
