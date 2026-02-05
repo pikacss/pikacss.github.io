@@ -101,6 +101,40 @@ export default defineEngineConfig({
 })
 ```
 
+## TypeScript Module Augmentation
+
+This plugin extends the `EngineConfig` interface from `@pikacss/core` to add the `reset` configuration option. This is done through TypeScript declaration merging:
+
+```typescript
+// Declared in @pikacss/plugin-reset source
+declare module '@pikacss/core' {
+	interface EngineConfig {
+		/**
+		 * Reset style to use.
+		 *
+		 * @default 'modern-normalize'
+		 */
+		reset?: ResetStyle
+	}
+}
+```
+
+When you import and register the plugin, TypeScript automatically recognizes the `reset` property on your config object, providing autocomplete and type checking:
+
+```typescript
+import { defineEngineConfig } from '@pikacss/core'
+import { reset } from '@pikacss/plugin-reset'
+
+export default defineEngineConfig({
+	plugins: [reset()],
+	// TypeScript provides autocomplete for valid reset values
+	reset: 'normalize' // ✅ Type-safe: only valid ResetStyle values accepted
+	// reset: 'invalid' // ❌ TypeScript error: not assignable to type ResetStyle
+})
+```
+
+This module augmentation pattern is used by all official PikaCSS plugins to extend the core configuration interface.
+
 ## Documentation
 
 For complete documentation, visit: [PikaCSS Documentation](https://pikacss.github.io/pikacss/)
