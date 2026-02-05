@@ -558,6 +558,7 @@ Closes #123
 | @pikacss/plugin-icons | Icon system | 1 (core) |
 | @pikacss/plugin-reset | CSS reset | 1 (core) |
 | @pikacss/plugin-typography | Typography | 1 (core) |
+| @pikacss/api-verifier | Verification | 1 (core) |
 
 ---
 
