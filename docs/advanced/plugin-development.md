@@ -343,38 +343,41 @@ import { describe, expect, it } from 'vitest'
 import { myPlugin } from './my-plugin'
 
 describe('myPlugin', () => {
-  it('adds expected shortcuts', async () => {
-    const engine = await createEngine(defineEngineConfig({
-      plugins: [myPlugin()]
-    }))
+	it('adds expected shortcuts', async () => {
+		const engine = await createEngine(defineEngineConfig({
+			plugins: [myPlugin()]
+		}))
 
-    // Test shortcut registration
-    const classNames = await engine.use('my-shortcut')
-    expect(classNames).toBeDefined()
-  })
+		// Test shortcut registration
+		const classNames = await engine.use('my-shortcut')
+		expect(classNames)
+			.toBeDefined()
+	})
 
-  it('transforms style definitions correctly', async () => {
-    const engine = await createEngine(defineEngineConfig({
-      plugins: [myPlugin()]
-    }))
+	it('transforms style definitions correctly', async () => {
+		const engine = await createEngine(defineEngineConfig({
+			plugins: [myPlugin()]
+		}))
 
-    const classNames = await engine.use({
-      customProperty: 'value'
-    })
+		const classNames = await engine.use({
+			customProperty: 'value'
+		})
 
-    expect(classNames).toEqual(expect.arrayContaining([expect.any(String)]))
-  })
+		expect(classNames)
+			.toEqual(expect.arrayContaining([expect.any(String)]))
+	})
 
-  it('generates expected CSS', async () => {
-    const engine = await createEngine(defineEngineConfig({
-      plugins: [myPlugin()]
-    }))
+	it('generates expected CSS', async () => {
+		const engine = await createEngine(defineEngineConfig({
+			plugins: [myPlugin()]
+		}))
 
-    await engine.use({ customProperty: 'value' })
+		await engine.use({ customProperty: 'value' })
 
-    const css = await engine.renderAtomicStyles(false)
-    expect(css).toContain('expected-property')
-  })
+		const css = await engine.renderAtomicStyles(false)
+		expect(css)
+			.toContain('expected-property')
+	})
 })
 ```
 
@@ -385,34 +388,35 @@ If your plugin uses module augmentation, verify type safety with `expectTypeOf`:
 ```typescript
 // my-plugin.types.test.ts
 import type { EngineConfig } from '@pikacss/core'
+import type { MyPluginOptions } from './my-plugin'
 import { defineEngineConfig } from '@pikacss/core'
 import { expectTypeOf, it } from 'vitest'
-import type { MyPluginOptions } from './my-plugin'
 
 it('augments EngineConfig correctly', () => {
-  expectTypeOf<EngineConfig>()
-    .toHaveProperty('myCustomOption')
-    .toMatchTypeOf<MyPluginOptions | undefined>()
+	expectTypeOf<EngineConfig>()
+		.toHaveProperty('myCustomOption')
+		.toMatchTypeOf<MyPluginOptions | undefined>()
 })
 
 it('provides type-safe configuration', () => {
-  const config = defineEngineConfig({
-    myCustomOption: 'option-a'
-  })
-  
-  expectTypeOf(config.myCustomOption)
-    .toMatchTypeOf<MyPluginOptions | undefined>()
+	const config = defineEngineConfig({
+		myCustomOption: 'option-a'
+	})
+
+	expectTypeOf(config.myCustomOption)
+		.toMatchTypeOf<MyPluginOptions | undefined>()
 })
 
 it('validates all option values', () => {
-  const validOptions: MyPluginOptions[] = ['option-a', 'option-b']
-  
-  validOptions.forEach(option => {
-    const config = defineEngineConfig({
-      myCustomOption: option
-    })
-    expect(config.myCustomOption).toBe(option)
-  })
+	const validOptions: MyPluginOptions[] = ['option-a', 'option-b']
+
+	validOptions.forEach((option) => {
+		const config = defineEngineConfig({
+			myCustomOption: option
+		})
+		expect(config.myCustomOption)
+			.toBe(option)
+	})
 })
 ```
 
@@ -427,25 +431,30 @@ import * as path from 'node:path'
 import { describe, expect, it } from 'vitest'
 
 describe('plugin documentation', () => {
-  const readmePath = path.join(__dirname, '../README.md')
-  const pluginPath = path.join(__dirname, './my-plugin.ts')
+	const readmePath = path.join(__dirname, '../README.md')
+	const pluginPath = path.join(__dirname, './my-plugin.ts')
 
-  it('documents all configuration options', () => {
-    const readme = fs.readFileSync(readmePath, 'utf-8')
-    const source = fs.readFileSync(pluginPath, 'utf-8')
+	it('documents all configuration options', () => {
+		const readme = fs.readFileSync(readmePath, 'utf-8')
+		const source = fs.readFileSync(pluginPath, 'utf-8')
 
-    // Verify README documents augmented interface
-    expect(readme).toContain('myCustomOption')
-    expect(source).toMatch(/interface EngineConfig/)
-  })
+		// Verify README documents augmented interface
+		expect(readme)
+			.toContain('myCustomOption')
+		expect(source)
+			.toMatch(/interface EngineConfig/)
+	})
 
-  it('shows module augmentation example', () => {
-    const readme = fs.readFileSync(readmePath, 'utf-8')
+	it('shows module augmentation example', () => {
+		const readme = fs.readFileSync(readmePath, 'utf-8')
 
-    expect(readme).toContain('declare module')
-    expect(readme).toContain('@pikacss/core')
-    expect(readme).toContain('EngineConfig')
-  })
+		expect(readme)
+			.toContain('declare module')
+		expect(readme)
+			.toContain('@pikacss/core')
+		expect(readme)
+			.toContain('EngineConfig')
+	})
 })
 ```
 
@@ -793,30 +802,33 @@ import { describe, expect, it } from 'vitest'
 import { animationPlugin, themePlugin } from './my-plugins'
 
 describe('Plugin Integration', () => {
-  it('works with multiple plugins', async () => {
-    const engine = await createEngine(defineEngineConfig({
-      plugins: [
-        themePlugin({
-          colors: { primary: '#3b82f6' },
-          spacing: { md: '1rem' },
-          breakpoints: {}
-        }),
-        animationPlugin()
-      ]
-    }))
+	it('works with multiple plugins', async () => {
+		const engine = await createEngine(defineEngineConfig({
+			plugins: [
+				themePlugin({
+					colors: { primary: '#3b82f6' },
+					spacing: { md: '1rem' },
+					breakpoints: {}
+				}),
+				animationPlugin()
+			]
+		}))
 
-    // Test theme plugin shortcuts
-    const themeClasses = await engine.use('bg-primary')
-    expect(themeClasses).toBeDefined()
+		// Test theme plugin shortcuts
+		const themeClasses = await engine.use('bg-primary')
+		expect(themeClasses)
+			.toBeDefined()
 
-    // Test animation plugin shortcuts
-    const animClasses = await engine.use('animate-spin')
-    expect(animClasses).toBeDefined()
+		// Test animation plugin shortcuts
+		const animClasses = await engine.use('animate-spin')
+		expect(animClasses)
+			.toBeDefined()
 
-    // Test combined usage
-    const combined = await engine.use('bg-primary', 'animate-spin')
-    expect(combined).toHaveLength(2)
-  })
+		// Test combined usage
+		const combined = await engine.use('bg-primary', 'animate-spin')
+		expect(combined)
+			.toHaveLength(2)
+	})
 })
 ```
 
@@ -924,7 +936,7 @@ export function conditionalPlugin(condition: boolean | (() => boolean)) {
 				: condition
 
 			if (!isEnabled) {
-				return
+
 			}
 
 			// Plugin logic...

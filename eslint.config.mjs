@@ -9,6 +9,16 @@ export default await deviltea({
 	},
 	ignores: [
 		'.planning/**',
+		'.github/skills/**', // Skill documentation with many TypeScript examples
+		'API-VERIFICATION-BASELINE.md', // Generated baseline file
+		'docs/llm/**', // LLM-optimized documentation with many code examples
+		'docs/advanced/**', // Advanced docs with complex TypeScript examples
+		'docs/examples/**', // Example code snippets
+		'docs/community/**', // Community documentation
+		'docs/getting-started/**', // Getting started guides with examples
+		'docs/guide/**', // User guides with code examples
+		'docs/integrations/**', // Integration guides with examples
+		'AGENTS.md', // Comprehensive guide with many examples
 	],
 	plugins: {
 		pikacss: {

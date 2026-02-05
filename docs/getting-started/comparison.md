@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 ---
 title: Comparison with Other Solutions
 description: How PikaCSS compares to other CSS solutions like Tailwind CSS, UnoCSS, Styled-components, and Emotion

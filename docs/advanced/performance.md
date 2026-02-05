@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 ---
 title: Performance Optimization
 description: Optimize PikaCSS for maximum performance and minimal bundle size

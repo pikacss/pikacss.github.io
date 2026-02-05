@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 # Important Concepts
 
 ## Build-Time Evaluation Constraint

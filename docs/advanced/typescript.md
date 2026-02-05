@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 # TypeScript Support
 
 PikaCSS provides first-class TypeScript support with auto-generated type definitions and full IDE integration.

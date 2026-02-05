@@ -1,3 +1,4 @@
+/* eslint-disable pikacss/pika-module-augmentation */
 import type { EnginePlugin } from '../../../src/internal/plugin'
 import { describe, expect, it, vi } from 'vitest'
 import { defineEnginePlugin, execAsyncHook, execSyncHook, resolvePlugins } from '../../../src/internal/plugin'

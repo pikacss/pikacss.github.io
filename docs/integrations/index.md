@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 # Framework Integration
 
 PikaCSS works with any JavaScript framework and build tool. Use one of these integrations to get started.

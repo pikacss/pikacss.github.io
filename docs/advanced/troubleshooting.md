@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 ---
 title: Troubleshooting
 description: Common issues and solutions when working with PikaCSS

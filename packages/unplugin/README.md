@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 # @pikacss/unplugin-pikacss
 
 Universal plugin for PikaCSS that works with multiple bundlers.

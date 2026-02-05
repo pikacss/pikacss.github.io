@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 ---
 title: Module Augmentation
 description: Extend PikaCSS types with TypeScript module augmentation

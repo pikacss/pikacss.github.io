@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 ---
 title: Testing and Debugging
 description: Comprehensive guide for testing components and debugging issues with PikaCSS

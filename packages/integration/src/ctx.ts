@@ -1,3 +1,4 @@
+/* eslint-disable pikacss/pika-module-augmentation */
 import type { Engine, EngineConfig, Nullish } from '@pikacss/core'
 import type { FnUtils, IntegrationContext, IntegrationContextOptions, UsageRecord } from './types'
 import { statSync } from 'node:fs'

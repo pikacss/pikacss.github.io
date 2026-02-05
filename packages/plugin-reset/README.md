@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 # @pikacss/plugin-reset
 
 CSS reset/normalize plugin for PikaCSS.

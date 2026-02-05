@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 ---
 title: Migration Guide
 description: Step-by-step guides for migrating to PikaCSS from other CSS solutions

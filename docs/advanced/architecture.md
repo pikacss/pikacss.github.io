@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 ---
 title: Architecture
 description: Deep dive into PikaCSS's internal architecture

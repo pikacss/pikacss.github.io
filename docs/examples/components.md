@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 ---
 title: Real-World Examples
 description: Practical component examples using PikaCSS

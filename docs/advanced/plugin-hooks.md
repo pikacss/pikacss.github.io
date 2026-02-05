@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 ---
 title: Plugin Hooks
 description: Complete reference for all PikaCSS plugin hooks

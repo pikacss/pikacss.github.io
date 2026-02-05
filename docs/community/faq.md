@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 ---
 title: FAQ
 description: Frequently Asked Questions about PikaCSS

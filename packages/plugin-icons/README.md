@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 # @pikacss/plugin-icons
 
 Use thousands of icons from popular icon sets in PikaCSS with full TypeScript autocomplete.

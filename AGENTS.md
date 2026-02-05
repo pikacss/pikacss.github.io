@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 # AGENTS.md - PikaCSS AI Agent Maintenance Guide
 
 > 📋 **Document Purpose**: Provide AI agents with comprehensive guidance for maintaining the PikaCSS monorepo project at the architecture, implementation, and release level.
