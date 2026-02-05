@@ -20,18 +20,18 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 
 ## Current Position
 
-**Phase:** 5 of 7 (Integration & Framework Layers) - **IN PROGRESS** 🔄
-**Plan:** 4 of 5 complete (05-04)
-**Status:** Farm, Rolldown integration guides and index page corrected
-**Last activity:** 2026-02-05 - Completed 05-04 (corrected Farm, Rolldown guides and integration index)
-**Progress:** ████████████████████ ~83% (20/24 plans complete)
+**Phase:** 5 of 7 (Integration & Framework Layers) - **COMPLETE** ✅
+**Plan:** 5 of 5 complete (05-05)
+**Status:** All integration and framework layer documentation corrected and verified
+**Last activity:** 2026-02-05 - Completed 05-05 (Nuxt module and Vite plugin deprecation)
+**Progress:** █████████████████████ ~88% (21/24 plans complete)
 
-**Current Milestone:** Phase 5 - Integration & Framework Layers 🎯
+**Current Milestone:** Phase 5 - Integration & Framework Layers ✅ COMPLETE
 - ✅ @pikacss/integration documentation (05-01)
 - ✅ @pikacss/unplugin-pikacss documentation (05-02)
 - ✅ Vite, Webpack, Rspack, Esbuild integration guides (05-03)
 - ✅ Farm, Rolldown integration guides (05-04)
-- ⏳ Nuxt module documentation (05-05)
+- ✅ Nuxt module and Vite plugin documentation (05-05)
 
 **Previous Milestone:** Phase 4 - Core Package Correction (@pikacss/core) ✅ COMPLETE
 - ✅ AGENTS.md core package architecture section (04-01)
@@ -46,11 +46,11 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 ## Performance Metrics
 
 ### Velocity
-- **Requirements completed:** 38/48 total (79.2%) (+2 from Phase 5, Plan 4)
-- **Phases completed:** 4/7 (57.1%) [Phase 4: 100%, Phase 5: 80%]
-- **Plans completed:** 20/24 total (83.3%)
+- **Requirements completed:** 39/48 total (81.3%) (+1 from Phase 5, Plan 5)
+- **Phases completed:** 5/7 (71.4%) [Phase 5: 100% ✅]
+- **Plans completed:** 21/24 total (87.5%)
 - **Average per phase:** 8 requirements (steady progress)
-- **Projected completion:** 3 phases remaining × ~15-20 minutes avg = ~45-60 minutes (estimated)
+- **Projected completion:** 2 phases remaining × ~15-20 minutes avg = ~30-40 minutes (estimated)
 
 ### Quality
 - **Test coverage:** 98.3% (57/58 tests passing in Phase 3)
@@ -64,9 +64,9 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 - **API verification system:** Operational in CI pipeline
 
 ### Efficiency
-- **Phases completed:** 4/7 (57.1%)
-- **Plans completed:** 20/24 (83.3%)
-- **Phase 5 total time:** ~26 minutes (4 plans complete) 🔄
+- **Phases completed:** 5/7 (71.4%)
+- **Plans completed:** 21/24 (87.5%)
+- **Phase 5 total time:** ~30 minutes (5 plans complete) ✅
 - **Phase 4 total time:** ~37 minutes (4 plans complete) ✅
 - **Phase 3 total time:** ~56 minutes (4 plans complete) ✅
 - **Phase 2 total time:** 51.6 minutes (5 plans complete) ✅
@@ -125,6 +125,10 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 2026-02-05 | defineEngineConfig exported from @pikacss/core, not unplugin | Core function not re-exported by unplugin package | Fixed import path in documentation (05-02) |
 | 2026-02-05 | Standardize bundler variable naming to lowercase 'pikacss' | Consistent naming convention across all bundler integration examples | Farm/Rolldown guides and integration index unified (05-04) |
 | 2026-02-05 | Unplugin exports use function call pattern, not constructors | All unplugin bundler exports are functions, not classes | Fixed Webpack/Rspack examples from 'new Plugin()' to 'plugin()' pattern (05-04) |
+| 2026-02-05 | Documented Nuxt zero-config features explicitly | Users need to know CSS auto-injection and global pika() - no manual setup required | Prevents setup confusion (05-05) |
+| 2026-02-05 | Fixed defineEngineConfig import to @pikacss/core in Nuxt docs | Function exported from core, not re-exported by nuxt-pikacss | Consistent across all integrations (05-05) |
+| 2026-02-05 | Created comprehensive vite-plugin deprecation guide | Package consolidated into unplugin for multi-bundler support | Clear migration path for users (05-05) |
+| 2026-02-05 | Clarified cssCodegen type as 'true \| string' in Nuxt docs | Cannot be false unlike tsCodegen - always generates CSS | Accurate type constraints (05-05) |
 
 ### Todos
 
@@ -239,10 +243,10 @@ Integration tests use monorepo workspace resolution for efficient testing. Fixtu
 - Existing infrastructure: Vitest, VitePress, TypeScript, pnpm workspace
 
 **Where we left off:**
-Phase 5 IN PROGRESS (4/5 plans): Integration and unplugin package documentation corrected (05-01, 05-02). All 7 bundler integration guides corrected and unified (05-03, 05-04). Fixed defineEngineConfig imports, scan.exclude patterns, cssCodegen comments, and bundler usage patterns across Vite, Webpack, Rspack, Esbuild, Farm, Rolldown guides plus integration index. Total phase time so far: 26 minutes. Ready to continue with Nuxt module documentation (05-05).
+Phase 5 COMPLETE (5/5 plans): All integration and framework layer documentation corrected and verified (05-01 through 05-05). Total phase time: 30 minutes. Corrected @pikacss/integration, @pikacss/unplugin-pikacss, all 7 bundler guides (Vite, Webpack, Rspack, Esbuild, Rollup, Farm, Rolldown), Nuxt module, and deprecated Vite plugin package. Ready to proceed to Phase 6 (Plugin System Correction).
 
 **Immediate next action:**
-Continue Phase 5 Plan 05 (Nuxt Module Documentation) to correct @pikacss/nuxt-pikacss documentation using the same verification methodology.
+Commit Phase 5 completion metadata, then proceed to Phase 6 (Plugin System Correction) to verify all plugin documentation with module augmentation working.
 
 ### Context Preservation
 
