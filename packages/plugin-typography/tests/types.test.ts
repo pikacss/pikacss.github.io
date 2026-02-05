@@ -50,15 +50,28 @@ describe('plugin-typography types', () => {
 			.toEqualTypeOf<TypographyPluginOptions | undefined>()
 	})
 
-	it('should enforce correct variable value types', () => {
-		// @ts-expect-error - numbers not allowed, only strings
-		defineEngineConfig({
-			plugins: [typography()],
-			typography: {
-				variables: {
-					'--pk-prose-color-body': 123,
+	it('should allow all valid variable value types', () => {
+		const validValues: string[] = [
+			'currentColor',
+			'#333',
+			'rgb(51, 51, 51)',
+			'rgba(51, 51, 51, 0.8)',
+			'hsl(0, 0%, 20%)',
+			'var(--custom-color)',
+		]
+
+		validValues.forEach((value) => {
+			const config = defineEngineConfig({
+				plugins: [typography()],
+				typography: {
+					variables: {
+						'--pk-prose-color-body': value,
+					},
 				},
-			},
+			})
+
+			expectTypeOf(config.typography)
+				.toMatchTypeOf<TypographyPluginOptions | undefined>()
 		})
 	})
 
