@@ -61,9 +61,9 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **PKG-UNP-02**: All bundler-specific docs (Vite, Webpack, etc.) verified
 - [x] **PKG-VITE-01**: @pikacss/vite-plugin-pikacss docs accurate
 - [x] **PKG-NUXT-01**: @pikacss/nuxt-pikacss docs accurate with Nuxt 3
-- [ ] **PKG-ICON-01**: @pikacss/plugin-icons docs accurate
-- [ ] **PKG-RESET-01**: @pikacss/plugin-reset docs accurate
-- [ ] **PKG-TYPO-01**: @pikacss/plugin-typography docs accurate
+- [x] **PKG-ICON-01**: @pikacss/plugin-icons docs accurate
+- [x] **PKG-RESET-01**: @pikacss/plugin-reset docs accurate
+- [x] **PKG-TYPO-01**: @pikacss/plugin-typography docs accurate
 
 ### Developer Documentation
 
@@ -153,9 +153,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PKG-UNP-02 | Phase 5 | Complete |
 | PKG-VITE-01 | Phase 5 | Complete |
 | PKG-NUXT-01 | Phase 5 | Complete |
-| PKG-ICON-01 | Phase 6 | Pending |
-| PKG-RESET-01 | Phase 6 | Pending |
-| PKG-TYPO-01 | Phase 6 | Pending |
+| PKG-ICON-01 | Phase 6 | Complete |
+| PKG-RESET-01 | Phase 6 | Complete |
+| PKG-TYPO-01 | Phase 6 | Complete |
 | CONSOL-01 | Phase 7 | Pending |
 | CONSOL-02 | Phase 7 | Pending |
 | CONSOL-03 | Phase 7 | Pending |
