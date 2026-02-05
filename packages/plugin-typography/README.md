@@ -187,18 +187,19 @@ Size modifiers apply the complete `prose` styles with different font sizes:
 
 ### Customization
 
-Override color variables in the engine configuration:
+The plugin provides module augmentation for type-safe configuration. After importing the plugin, the `typography` property becomes available in `EngineConfig` with full TypeScript autocomplete.
 
 **pika.config.ts**:
 ```typescript
 import { defineEngineConfig } from '@pikacss/core'
 import { typography } from '@pikacss/plugin-typography'
 
+// Module augmentation is automatic - just import the plugin
 export default defineEngineConfig({
 	plugins: [
 		typography() // Note: must call function
 	],
-	typography: {
+	typography: { // ✅ TypeScript autocomplete works here
 		variables: {
 			'--pk-prose-color-body': '#374151',
 			'--pk-prose-color-headings': '#111827',
@@ -207,6 +208,25 @@ export default defineEngineConfig({
 	}
 })
 ```
+
+**How Module Augmentation Works**:
+
+The plugin declares module augmentation internally:
+
+```typescript
+declare module '@pikacss/core' {
+	interface EngineConfig {
+		typography?: {
+			variables?: Partial<Record<string, string>>
+		}
+	}
+}
+```
+
+This enables:
+- **IntelliSense**: TypeScript shows the `typography` property when you type in `defineEngineConfig`
+- **Type Safety**: Invalid configuration shapes are caught at compile time
+- **Documentation**: Hover over the property to see available options
 
 #### Available CSS Variables
 
