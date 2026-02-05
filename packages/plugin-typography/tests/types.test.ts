@@ -1,6 +1,8 @@
+import type { EngineConfig } from '@pikacss/core'
+import type { TypographyPluginOptions } from '../src'
 import { defineEngineConfig } from '@pikacss/core'
-import { describe, expectTypeOf, it } from 'vitest'
 
+import { describe, expectTypeOf, it } from 'vitest'
 import { typography } from '../src'
 
 describe('plugin-typography types', () => {
@@ -18,26 +20,23 @@ describe('plugin-typography types', () => {
 		expectTypeOf(config)
 			.toHaveProperty('typography')
 		expectTypeOf(config.typography)
-			.toMatchTypeOf<{
-				variables?: Partial<Record<string, string>>
-			} | undefined>()
+			.toMatchTypeOf<TypographyPluginOptions | undefined>()
 	})
 
-	it('should accept valid CSS variable names', () => {
+	it('should accept valid CSS variable names from typography variables', () => {
 		const config = defineEngineConfig({
 			plugins: [typography()],
 			typography: {
 				variables: {
 					'--pk-prose-color-body': '#333',
-					'--custom-var': 'value', // Any CSS variable allowed
+					'--pk-prose-color-headings': '#111',
+					'--pk-prose-color-links': '#2563eb',
 				},
 			},
 		})
 
 		expectTypeOf(config.typography)
-			.toMatchTypeOf<{
-				variables?: Partial<Record<string, string>>
-			} | undefined>()
+			.toMatchTypeOf<TypographyPluginOptions | undefined>()
 	})
 
 	it('should work without typography config', () => {
@@ -46,21 +45,21 @@ describe('plugin-typography types', () => {
 		})
 
 		expectTypeOf(config)
-			.toMatchTypeOf<{ plugins: any[] }>()
+			.toMatchTypeOf<EngineConfig>()
 		expectTypeOf(config.typography)
-			.toEqualTypeOf<undefined | { variables?: Partial<Record<string, string>> }>()
+			.toEqualTypeOf<TypographyPluginOptions | undefined>()
 	})
 
 	it('should enforce correct variable value types', () => {
-		expectTypeOf({
+		// @ts-expect-error - numbers not allowed, only strings
+		defineEngineConfig({
 			plugins: [typography()],
 			typography: {
 				variables: {
-					// @ts-expect-error - numbers not allowed, only strings
 					'--pk-prose-color-body': 123,
 				},
 			},
-		}).not.toMatchTypeOf<Parameters<typeof defineEngineConfig>[0]>()
+		})
 	})
 
 	it('should accept all documented prose variables', () => {
