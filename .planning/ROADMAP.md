@@ -216,6 +216,13 @@ Plans:
 
 **Dependencies:** Phase 4, 5, 6 (all package-specific docs corrected)
 
+**Plans:** 3 plans
+
+Plans:
+- [x] 07-01-PLAN.md — Final validation and structural cleanup
+- [ ] 07-02-PLAN.md — Developer documentation verification tests (gap closure)
+- [ ] 07-03-PLAN.md — Development commands & AGENTS.md completeness (gap closure)
+
 **Requirements Covered:**
 - CONSOL-01 to CONSOL-04: docs/llm/ validated as intentional design (not duplication)
 - DEV-01: AGENTS.md accurately reflects project architecture
