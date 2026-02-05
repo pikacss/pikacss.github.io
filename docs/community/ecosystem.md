@@ -67,7 +67,7 @@ Explore the growing ecosystem of plugins, tools, integrations, and resources for
 
 ### Official Templates
 
-Coming soon! Official starter templates for popular frameworks.
+Official starter templates for popular frameworks are currently in planning. Stay tuned for updates in future releases.
 
 ### Community Templates
 
@@ -125,7 +125,7 @@ Coming soon! Official starter templates for popular frameworks.
 
 ### Official Components
 
-Coming soon! Official component library with common UI patterns.
+An official component library with common UI patterns is currently in planning. Stay tuned for updates in future releases.
 
 ### Community Libraries
 
