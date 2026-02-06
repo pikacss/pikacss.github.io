@@ -221,7 +221,7 @@ describe('pikacss-expert SKILL.md Validation', () => {
 
 	it('static evaluation examples clearly distinguish allowed vs not allowed', () => {
 		// Find static evaluation section
-		const staticEvalMatch = skillContent.match(/### Static Evaluation Requirement[\s\S]*?```typescript([\s\S]*?)```/)
+		const staticEvalMatch = skillContent.match(/### Static Evaluation Requirement[\s\S]*?```tsx([\s\S]*?)```/)
 		expect(staticEvalMatch, 'Static Evaluation Requirement section should exist')
 			.toBeTruthy()
 

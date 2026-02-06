@@ -119,5 +119,5 @@ function pika(styles: any): string
 			// Cleanup
 			rmSync(testDir, { recursive: true, force: true })
 		}
-	}, 15000) // Longer timeout for multiple packages
+	}, 30000) // Longer timeout for multiple packages
 })

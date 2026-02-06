@@ -13,11 +13,11 @@ FAILED=0
 
 # Step 1: ESLint with PikaCSS rules and custom formatter
 echo -e "${YELLOW}[1/2] Running ESLint with PikaCSS custom rules...${NC}"
-if pnpm eslint --format ./.eslint/formatters/pikacss-detailed.ts \
+if NODE_OPTIONS='--import tsx' pnpm eslint --format ./.eslint/formatters/pikacss-detailed.ts \
     "docs/**/*.md" \
     "packages/*/README.md" \
     "AGENTS.md" \
-    ".github/skills/**/*.md"; then
+    "skills/**/*.md"; then
   echo -e "${GREEN}✓ ESLint validation passed${NC}\n"
 else
   echo -e "${RED}✗ ESLint validation failed${NC}\n"
