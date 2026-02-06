@@ -1,4 +1,3 @@
-import process from 'node:process'
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -7,9 +6,12 @@ export default defineConfig({
 		include: ['.eslint/tests/**/*.test.ts'],
 		globals: true,
 		environment: 'node',
-		// Sequential for local dev (clear logs), parallel for CI
+		// Force sequential execution to prevent race conditions during pnpm install
+		// Tests create temp dirs in monorepo space for workspace:* resolution
+		// Parallel execution causes ENOENT/EEXIST errors when multiple tests
+		// simultaneously run pnpm install with shared node_modules hoisting
 		sequence: {
-			concurrent: process.env.CI === 'true',
+			concurrent: false,
 		},
 		isolate: true, // Complete isolation per test file
 		testTimeout: 300000, // 300s = 5 min (5x buffer for slowest CI runners)
