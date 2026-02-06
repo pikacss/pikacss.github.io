@@ -2,7 +2,7 @@
 
 **Project:** PikaCSS Documentation Correction
 **Created:** 2026-02-03
-**Depth:** Standard (7 phases)
+**Depth:** Extended (10 phases)
 **Coverage:** 48/48 v1 requirements mapped ✓
 
 ## Overview
@@ -267,26 +267,53 @@ Atomic fixes outside main phase workflow:
 
 ---
 
-## Project Complete! 🎉
+## Phase 8: Core Verification Fixes
 
-**All phases complete:** 7/7 phases (100%)
-**All requirements satisfied:** 48/48 requirements (100%)
+**Goal:** Resolve API mismatches and verify @pikacss/core documentation
 
-**Final Deliverables:**
-- ✅ Complete API verification system (130 tests, 97.7% passing)
-- ✅ All documentation accurate and validated
-- ✅ Developer documentation automated (31 tests)
-- ✅ All builds passing (ESLint: 0 errors, TypeScript: 100%)
-- ✅ Production-ready codebase
+**Dependencies:** Phase 3 (API Verifier)
 
-**Key Achievements:**
-1. Automated validation infrastructure for ongoing accuracy
-2. Zero documentation contradictions
-3. Developer workflows fully validated
-4. All development commands verified working
-5. Clean, maintainable codebase (0 ESLint errors)
+**Requirements Covered:**
+- PKG-CORE-01: @pikacss/core API reference accurate (Fix 19 mismatches)
+- PKG-CORE-02: @pikacss/core examples all executable
+- PKG-CORE-03: @pikacss/core README reflects actual exports
 
-**Project Status:** Ready for production deployment ✅
+**Gap Closure:**
+- Closes "Failed API Verification" gap from v1 audit
+- Generates missing 04-VERIFICATION.md
+
+---
+
+## Phase 9: Integration Test Fixes
+
+**Goal:** Replace placeholder tests with authentic integration verification
+
+**Dependencies:** Phase 5 (Integration)
+
+**Requirements Covered:**
+- Integration Layer Verification (Critical Gap)
+
+**Gap Closure:**
+- Closes "Fake Integration Tests" gap from v1 audit
+- Verifies build pipeline (Source -> Unplugin -> Integration -> Core -> CSS)
+
+---
+
+## Phase 10: Developer Docs Verification
+
+**Goal:** Verify AGENTS.md and developer workflows
+
+**Dependencies:** Phase 7
+
+**Requirements Covered:**
+- DEV-01: AGENTS.md accurately reflects project architecture
+- DEV-02: skills/pikacss-dev/SKILL.md reflects actual workflows
+- DEV-03: skills/pikacss-expert/SKILL.md reflects actual API usage
+- DEV-04: All development commands in docs actually work
+- DEV-05: Monorepo structure documentation matches reality
+
+**Gap Closure:**
+- Closes "Unverified Developer Documentation" gap from v1 audit
 
 ---
 
