@@ -27,7 +27,7 @@ describe('vite Integration', () => {
 		await rm(testDir, { recursive: true, force: true })
 	})
 
-	it('should compile valid pika() examples', { timeout: 120000 }, async () => {
+	it('should compile valid pika() examples', { timeout: 300000 }, async () => {
 		// Ensure only valid.ts is built
 		await writeFile(
 			join(testDir, 'vite.config.ts'),
@@ -49,7 +49,7 @@ export default defineConfig({
 			.toBe(true)
 	})
 
-	it('should fail on runtime-dynamic pika() calls', { timeout: 120000 }, async () => {
+	it('should fail on runtime-dynamic pika() calls', { timeout: 300000 }, async () => {
 		// Configure to build invalid.ts
 		await writeFile(
 			join(testDir, 'vite.config.ts'),
@@ -86,13 +86,13 @@ describe('nuxt Integration', () => {
 			{ recursive: true },
 		)
 		await execa('pnpm', ['install', '--no-frozen-lockfile'], { cwd: testDir })
-	}, 120000) // 120s timeout for Nuxt dependencies (large dependency tree)
+	}, 300000) // 300s timeout for Nuxt dependencies (large dependency tree)
 
 	afterEach(async () => {
 		await rm(testDir, { recursive: true, force: true })
 	})
 
-	it('should build Nuxt app with valid pika()', { timeout: 180000 }, async () => {
+	it('should build Nuxt app with valid pika()', { timeout: 360000 }, async () => {
 		// Comment out invalid example in app.vue
 		const appVue = await readFile(join(testDir, 'app.vue'), 'utf-8')
 		const cleanedAppVue = appVue.replace(/const invalidStyles.*$/m, '// removed invalid')
@@ -122,7 +122,7 @@ describe('webpack Integration', () => {
 		await rm(testDir, { recursive: true, force: true })
 	})
 
-	it('should compile valid pika() with Webpack', { timeout: 120000 }, async () => {
+	it('should compile valid pika() with Webpack', { timeout: 300000 }, async () => {
 		const result = await execa('pnpm', ['build'], { cwd: testDir, reject: false })
 
 		// Per CONTEXT.md: Webpack failures are Warning, not blocking

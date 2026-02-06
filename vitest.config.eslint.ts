@@ -12,6 +12,6 @@ export default defineConfig({
 			concurrent: process.env.CI === 'true',
 		},
 		isolate: true, // Complete isolation per test file
-		testTimeout: 120000, // Bundler builds can take time, especially in CI (2-3x slower)
+		testTimeout: 300000, // 300s = 5 min (5x buffer for slowest CI runners)
 	},
 })
