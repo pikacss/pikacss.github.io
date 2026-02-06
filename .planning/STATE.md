@@ -23,7 +23,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 **Phase:** 7 of 7 (Final Polish & Developer Documentation) - **IN PROGRESS** (75%)
 **Plan:** 3 of 4 (07-03 - 100% complete)
 **Status:** Developer documentation gaps closed, 1 plan remaining
-**Last activity:** 2026-02-06 - Completed quick task 001: Move .github/skills to ./skills
+**Last activity:** 2026-02-06 - Completed quick task 002: Fix run-all-checks.sh ESLint/link errors
 **Progress:** ████████████████████████ 100% (28/28 plans complete)
 
 **Current Milestone:** Phase 7 - Final Polish & Developer Documentation (75% complete)
@@ -158,6 +158,8 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 2026-02-06 | Skip destructive/interactive commands in verification | Commands like install, newpkg, release unsuitable for automated testing | Test critical commands only: build, test, typecheck, lint (07-03) |
 | 2026-02-06 | Color-coded verification output | Clear visual feedback for pass/fail/non-blocking | Green ✓, red ✗, yellow ⊘ in verify-dev-commands.sh (07-03) |
 | 2026-02-06 | Move skills from .github/skills to ./skills | Skills are not GitHub-specific infrastructure; root placement improves discoverability | Better alignment with project conventions (quick-001) |
+| 2026-02-06 | Use text blocks for invalid YAML examples in docs | YAML code blocks are parsed by ESLint, which rejects invalid syntax even in negative examples | Allows showing incorrect patterns without triggering validation (quick-002) |
+| 2026-02-06 | Exclude intentional negative examples from link checker | Educational examples showing incorrect link patterns shouldn't trigger validation warnings | Updated check-links.sh to skip skills/README.md (quick-002) |
 
 ### Todos
 
@@ -183,6 +185,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 001 | Move .github/skills to ./skills | 2026-02-06 | 7aa8f97 | [001-move-github-skills-to-skills](./quick/001-move-github-skills-to-skills/) |
+| 002 | Fix run-all-checks.sh ESLint/link errors | 2026-02-06 | 48e1a7b | [002-fix-run-all-checks-sh-errors](./quick/002-fix-run-all-checks-sh-errors/) |
 
 ### Important Notes
 
@@ -274,6 +277,9 @@ Created comprehensive development command verification script (scripts/verify-de
 **Quick Task 001 Complete (Move Skills to Root):**
 Moved skills directory from .github/skills to ./skills for improved discoverability. Relocated 10 files using git mv. Updated test imports in api-verifier (2 files). Updated AGENTS.md references (2 locations). Updated 82 documentation references in .planning/ directory. Fixed path resolution in agents.test.ts using __dirname. All tests passing (31/31 developer docs). Duration: 3.4 minutes. Three atomic commits: eec1681 (refactor), 02b2e96 (docs), 58e896f (fix).
 
+**Quick Task 002 Complete (Fix run-all-checks.sh Errors):**
+Fixed 3 categories of validation errors exposed after quick-001 moved skills to validated location. Changed YAML examples to text blocks (ESLint can't parse invalid YAML). Replaced object spread syntax `{ ... }` with `{ /* comment */ }`. Added type annotations to plugin example. Updated check-links.sh to skip skills/README.md (contains intentional broken link examples in "Common Validation Errors" section). All targeted files now pass ESLint parsing. Link validation passing. Duration: 8 minutes. One atomic commit: 48e1a7b (fix).
+
 **Build-Time Constraint Critical:**
 All `pika()` examples must use statically analyzable arguments. Examples with runtime variables will fail in user projects even if they type-check in monorepo. Test through actual bundler, not just TypeScript compilation.
 
@@ -307,7 +313,7 @@ Integration tests use monorepo workspace resolution for efficient testing. Fixtu
 - Existing infrastructure: Vitest, VitePress, TypeScript, pnpm workspace
 
 **Where we left off:**
-Quick Task 001 COMPLETE (3/3 tasks): Moved skills directory from .github/skills to ./skills for better discoverability. Updated all documentation references (AGENTS.md + 82 planning docs). Fixed test path resolution. All tests passing (31/31 developer docs). Total time: ~3.4 minutes.
+Quick Task 002 COMPLETE (1/1 task): Fixed 3 categories of run-all-checks.sh errors after skills directory move. Updated YAML examples to use text blocks, fixed object spread syntax, added type annotations, and excluded intentional negative examples from link checker. All targeted validation errors resolved. Total time: ~8 minutes.
 
 **Immediate next action:**
 Resume Phase 7 Plan 04 (07-04-PLAN.md) if remaining, or conclude documentation correction project.
