@@ -157,6 +157,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 2026-02-06 | Accept pre-existing test/typecheck failures as non-blocking | Verification script focuses on command execution, not fixing pre-existing issues | Exit code 0 if critical commands work (07-03) |
 | 2026-02-06 | Skip destructive/interactive commands in verification | Commands like install, newpkg, release unsuitable for automated testing | Test critical commands only: build, test, typecheck, lint (07-03) |
 | 2026-02-06 | Color-coded verification output | Clear visual feedback for pass/fail/non-blocking | Green ✓, red ✗, yellow ⊘ in verify-dev-commands.sh (07-03) |
+| 2026-02-06 | Move skills from .github/skills to ./skills | Skills are not GitHub-specific infrastructure; root placement improves discoverability | Better alignment with project conventions (quick-001) |
 
 ### Todos
 
@@ -264,6 +265,9 @@ Created automated test suite validating AGENTS.md and skills/ against actual cod
 **Phase 7 Plan 03 Complete (Development Commands & AGENTS.md Completeness):**
 Created comprehensive development command verification script (scripts/verify-dev-commands.sh, 162 lines) testing all AGENTS.md commands with color-coded output. Added missing @pikacss/api-verifier package to AGENTS.md Package Dependencies table (updated count from 8 to 9). Updated REQUIREMENTS.md with verification evidence for all DEV requirements (DEV-01 to DEV-05 marked complete). All Phase 7 documentation gaps closed. 31/31 developer docs tests now passing. Duration: 45 minutes. Ready for 07-04 (skills documentation correction if needed).
 
+**Quick Task 001 Complete (Move Skills to Root):**
+Moved skills directory from .github/skills to ./skills for improved discoverability. Relocated 10 files using git mv. Updated test imports in api-verifier (2 files). Updated AGENTS.md references (2 locations). Updated 82 documentation references in .planning/ directory. Fixed path resolution in agents.test.ts using __dirname. All tests passing (31/31 developer docs). Duration: 3.4 minutes. Three atomic commits: eec1681 (refactor), 02b2e96 (docs), 58e896f (fix).
+
 **Build-Time Constraint Critical:**
 All `pika()` examples must use statically analyzable arguments. Examples with runtime variables will fail in user projects even if they type-check in monorepo. Test through actual bundler, not just TypeScript compilation.
 
@@ -297,10 +301,10 @@ Integration tests use monorepo workspace resolution for efficient testing. Fixtu
 - Existing infrastructure: Vitest, VitePress, TypeScript, pnpm workspace
 
 **Where we left off:**
-Phase 7 Plan 03 COMPLETE (3/3 tasks): Closed all developer documentation gaps. Created verify-dev-commands.sh script (07-03 Task 1), added @pikacss/api-verifier to AGENTS.md (07-03 Task 2), updated REQUIREMENTS.md tracking (07-03 Task 3). All developer docs tests passing (31/31). Total plan time: ~45 minutes. Phase 7 at 75% completion (3/4 plans).
+Quick Task 001 COMPLETE (3/3 tasks): Moved skills directory from .github/skills to ./skills for better discoverability. Updated all documentation references (AGENTS.md + 82 planning docs). Fixed test path resolution. All tests passing (31/31 developer docs). Total time: ~3.4 minutes.
 
 **Immediate next action:**
-Execute Phase 7 Plan 04 (07-04-PLAN.md): Final skills documentation correction and polish if any issues remain.
+Resume Phase 7 Plan 04 (07-04-PLAN.md) if remaining, or conclude documentation correction project.
 
 ### Context Preservation
 
