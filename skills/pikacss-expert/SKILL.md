@@ -54,16 +54,16 @@ const styles = pika({
 ```
 
 **React:**
-```typescript
+```tsx
 import { pika } from '@pikacss/core'
 
 const styles = pika({
-  padding: '1rem',
-  borderRadius: '0.25rem'
+	padding: '1rem',
+	borderRadius: '0.25rem'
 })
 
 export function MyComponent() {
-  return <div className={styles.className}>Hello</div>
+	return <div className={styles.className}>Hello</div>
 }
 ```
 
@@ -73,7 +73,7 @@ export function MyComponent() {
 
 All `pika()` arguments must be statically determinable at build time:
 
-```typescript
+```tsx
 // ✅ Allowed (static values)
 const styles = pika({ color: 'red' })
 const COLOR = 'blue'
@@ -81,13 +81,13 @@ const styles2 = pika({ color: COLOR })
 
 // ❌ Not allowed (runtime variables)
 function Component({ color }) {
-  const styles = pika({ color }) // Error!
+	const styles = pika({ color }) // Error!
 }
 
 // ✅ Solution: Use CSS variables for dynamic values
 const styles = pika({ color: 'var(--user-color)' })
 function Component({ color }) {
-  return <div style={{ '--user-color': color }} className={styles.className} />
+	return <div style={{ '--user-color': color }} className={styles.className} />
 }
 ```
 
@@ -395,11 +395,13 @@ const button = pika({
 ```typescript
 // Static definition
 const styles = pika({
-  color: 'var(--button-color)',
-  backgroundColor: 'var(--button-bg)'
+	color: 'var(--button-color)',
+	backgroundColor: 'var(--button-bg)'
 })
+```
 
-// Dynamic values via props
+```vue
+<!-- Dynamic values via props -->
 <button
   :class="styles.className"
   :style="{
@@ -465,35 +467,37 @@ const btn = pika({
 
 ### 6. Avoid These Patterns
 
-```typescript
+```tsx
 // ❌ DON'T: Try to use runtime values
-const Component = ({ size }) => {
-  const styles = pika({
-    width: size // ERROR - size is runtime
-  })
+function Component({ size }) {
+	const styles = pika({
+		width: size // ERROR - size is runtime
+	})
 }
 
 // ❌ DON'T: Nest pika() calls unnecessarily
 pika({
-  nested: pika({ color: 'red' })
+	nested: pika({ color: 'red' })
 })
 
 // ❌ DON'T: Mix concerns in one pika call
 pika({
-  // Component state (should use CSS variables)
-  opacity: isDisabled ? 0.5 : 1,
+	// Component state (should use CSS variables)
+	opacity: isDisabled ? 0.5 : 1,
 
-  // Layout (separate concern)
-  display: 'flex'
+	// Layout (separate concern)
+	display: 'flex'
 })
 
 // ✅ DO: Use CSS variables for runtime values
 const styles = pika({
-  width: 'var(--size)',
-  opacity: 'var(--opacity)'
+	width: 'var(--size)',
+	opacity: 'var(--opacity)'
 })
+```
 
-// ✅ DO: Apply runtime values separately
+```vue
+<!-- ✅ DO: Apply runtime values separately -->
 <div :style="{ '--size': size, '--opacity': isDisabled ? 0.5 : 1 }" />
 ```
 
