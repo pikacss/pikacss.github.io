@@ -163,6 +163,23 @@ while IFS= read -r file; do
         continue
       fi
       
+      # Strict case-sensitive check for case-insensitive file systems (macOS)
+      # This ensures links work on Linux (GitHub Actions) even when developed on macOS
+      resolved_dir=$(dirname "$resolved_path")
+      resolved_file=$(basename "$resolved_path")
+      if [[ -d "$resolved_dir" ]]; then
+        actual_file=$(ls -1 "$resolved_dir" 2>/dev/null | grep -x "$resolved_file" || echo "")
+        if [[ -z "$actual_file" ]]; then
+          # File exists but with different case
+          actual_case=$(ls -1 "$resolved_dir" 2>/dev/null | grep -ix "$resolved_file" || echo "")
+          if [[ -n "$actual_case" ]]; then
+            echo -e "${RED}${file}:${line_num}: Case mismatch in link to '${target}' (expected: ${resolved_file}, actual: ${actual_case})${NC}"
+            echo $(($(cat "$FAILURES_FILE") + 1)) > "$FAILURES_FILE"
+            continue
+          fi
+        fi
+      fi
+      
       # If anchor specified, check if it exists in target file
       if [[ -n "$anchor" ]]; then
         if ! check_anchor "$resolved_path" "$anchor"; then
