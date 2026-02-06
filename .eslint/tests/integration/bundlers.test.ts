@@ -20,7 +20,7 @@ describe('vite Integration', () => {
 
 		// Install dependencies
 		await execa('pnpm', ['install', '--no-frozen-lockfile'], { cwd: testDir })
-	})
+	}, 300000) // 300s timeout for dependency installation in CI
 
 	afterEach(async () => {
 		// Cleanup (force flag for safety)
@@ -116,7 +116,7 @@ describe('webpack Integration', () => {
 			{ recursive: true },
 		)
 		await execa('pnpm', ['install', '--no-frozen-lockfile'], { cwd: testDir })
-	})
+	}, 300000) // 300s timeout for dependency installation in CI
 
 	afterEach(async () => {
 		await rm(testDir, { recursive: true, force: true })
