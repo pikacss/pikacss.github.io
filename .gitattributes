@@ -1,0 +1,22 @@
+# Normalize line endings to LF for all text files
+* text=auto eol=lf
+
+# Explicitly declare markdown files as text with LF
+*.md text eol=lf
+
+# Explicitly declare source files as text with LF
+*.ts text eol=lf
+*.js text eol=lf
+*.vue text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# Declare binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
