@@ -23,7 +23,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 **Phase:** 7 of 7 (Final Polish & Developer Documentation) - **IN PROGRESS** (75%)
 **Plan:** 3 of 4 (07-03 - 100% complete)
 **Status:** Developer documentation gaps closed, 1 plan remaining
-**Last activity:** 2026-02-06 - Completed quick task 013: Fix API verifier test timeouts in GitHub Runner
+**Last activity:** 2026-02-06 - Completed quick task 014: Fix Windows GitHub Runner test failures (CRLF line endings)
 **Progress:** ████████████████████████ 100% (28/28 plans complete)
 
 **Current Milestone:** Phase 7 - Final Polish & Developer Documentation (75% complete)
@@ -174,6 +174,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 2026-02-06 | Use --no-frozen-lockfile in CI test job | --frozen-lockfile causes ENOTEMPTY race conditions when parallel matrix jobs write to node_modules | Test job uses --no-frozen-lockfile for safety, check job retains standard install for lock validation (quick-011) |
 | 2026-02-06 | Disable concurrent execution for bundler tests | Parallel pnpm install operations in shared monorepo node_modules cause race conditions | Sequential execution prevents ENOENT/EEXIST errors; trade-off: slower CI (~3-5 min per OS) but reliable (quick-012) |
 | 2026-02-06 | Use CI-aware timeout configuration for api-verifier tests | TypeScript Compiler API operations are CPU-intensive and run 3-5x slower in CI | Global 120s CI timeout (30s local), individual 15s-120s based on complexity (quick-013) |
+| 2026-02-06 | Use \\r?\\n for cross-platform regex patterns | Windows uses CRLF (\\r\\n) while macOS/Linux use LF (\\n); hardcoded \\n fails on Windows | Regex patterns with \\r?\\n match both line ending styles; .gitattributes enforces LF in repository (quick-014) |
 
 ### Todos
 
@@ -211,6 +212,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 011 | Fix GitHub Runner bundler test failures | 2026-02-06 | 4455c31 | [011-fix-github-runner-bundler-test-failures-](./quick/011-fix-github-runner-bundler-test-failures-/) |
 | 012 | Fix GitHub Runner bundler test race conditions | 2026-02-06 | 1ab3c37 | [012-fix-github-runner-bundler-test-failures](./quick/012-fix-github-runner-bundler-test-failures/) |
 | 013 | Fix API verifier test timeouts in GitHub Runner | 2026-02-06 | 9a6eb0e | [013-fix-api-verifier-test-timeouts-in-github](./quick/013-fix-api-verifier-test-timeouts-in-github/) |
+| 014 | Fix Windows GitHub Runner test failures | 2026-02-06 | c8c6433 | [014-fix-windows-github-runner-test-failures-](./quick/014-fix-windows-github-runner-test-failures-/) |
 
 ### Important Notes
 
@@ -350,7 +352,7 @@ Integration tests use monorepo workspace resolution for efficient testing. Fixtu
 - Existing infrastructure: Vitest, VitePress, TypeScript, pnpm workspace
 
 **Where we left off:**
-Quick Task 013 COMPLETE (3/3 tasks): Fixed api-verifier test timeouts in GitHub Runner CI by adding CI-aware timeout configuration. Added global testTimeout with CI detection (120s CI, 30s local) to vitest.config.ts. Increased end-to-end test timeouts (30s single package, 120s all packages). Added explicit 15s timeout to extractor test for TypeScript compilation. All 130 tests passing locally (9.54s) and with CI=true (7.88s). Fixed ESLint node/prefer-global/process issue by importing process from node:process. Total time: ~2.3 minutes. Three atomic commits: 39c1cd0, e5035a1, 9a6eb0e.
+Quick Task 014 COMPLETE (3/3 tasks): Fixed Windows GitHub Runner test failures by adding cross-platform regex patterns and .gitattributes. Created .gitattributes file enforcing LF line endings for text files. Updated 7 regex patterns across 6 test files (agents.test.ts, pikacss-expert-skill.test.ts, plugin-development.test.ts, plugin-icons.test.ts, plugin-reset.test.ts, plugin-typography.test.ts) changing \\n to \\r?\\n and \\n\\n to (\\r?\\n){2}. All 247 tests passing (130 api-verifier, 117 core/integration/plugins). TypeScript and ESLint clean. Total time: ~2.95 minutes. Two atomic commits: 5554545, c8c6433.
 
 **Immediate next action:**
 Resume Phase 7 Plan 04 (07-04-PLAN.md) if remaining, or conclude documentation correction project.
