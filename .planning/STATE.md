@@ -23,7 +23,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 **Phase:** 7 of 7 (Final Polish & Developer Documentation) - **IN PROGRESS** (75%)
 **Plan:** 3 of 4 (07-03 - 100% complete)
 **Status:** Developer documentation gaps closed, 1 plan remaining
-**Last activity:** 2026-02-06 - Completed quick task 007: Fix CI and docs-validation workflows for local execution
+**Last activity:** 2026-02-06 - Completed quick task 008: Fix CI bundler integration tests with --no-frozen-lockfile flag
 **Progress:** ████████████████████████ 100% (28/28 plans complete)
 
 **Current Milestone:** Phase 7 - Final Polish & Developer Documentation (75% complete)
@@ -199,6 +199,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 005 | Fix all ESLint errors in PLUGIN-GUIDE.md | 2026-02-06 | 983e374 | [005-fix-all-remaining-eslint-errors-in-plugi](./quick/005-fix-all-remaining-eslint-errors-in-plugi/) |
 | 006 | Fix final ESLint errors in api-reference.md + troubleshooting.md | 2026-02-06 | b859a47 | [006-fix-final-eslint-errors-in-api-reference](./quick/006-fix-final-eslint-errors-in-api-reference/) |
 | 007 | Fix CI and docs-validation workflows for local execution | 2026-02-06 | e14f31f | [007-github-workflows-ci-yml-github-workflows](./quick/007-github-workflows-ci-yml-github-workflows/) |
+| 008 | Fix CI bundler integration tests to use --no-frozen-lockfile | 2026-02-06 | afe46ee | [008-fix-ci-bundler-integration-tests-to-use-](./quick/008-fix-ci-bundler-integration-tests-to-use-/) |
 
 ### Important Notes
 
@@ -338,7 +339,7 @@ Integration tests use monorepo workspace resolution for efficient testing. Fixtu
 - Existing infrastructure: Vitest, VitePress, TypeScript, pnpm workspace
 
 **Where we left off:**
-Quick Task 006 COMPLETE (3/3 tasks): Fixed ABSOLUTE FINAL 8 ESLint errors in api-reference.md and troubleshooting.md, achieving 100% ESLint compliance across all 73 markdown files. Fixed JSX parsing, corrected hallucinated APIs, completed incomplete syntax, added targeted eslint-disable comments. Comprehensive verification passed: 0 errors codebase-wide, all 4 validation checks passing (ESLint, links, placeholders, file refs). Total time: ~3.95 minutes. MILESTONE ACHIEVED: Documentation correction project complete with zero parsing errors.
+Quick Task 008 COMPLETE (1/1 tasks): Fixed CI bundler integration tests by adding `--no-frozen-lockfile` flag to all pnpm install commands in .eslint/tests/integration/bundlers.test.ts. CI environments default to frozen-lockfile which blocks test fixtures with different dependencies than monorepo lockfile. All 22 integration tests passing. Total time: ~1.5 minutes. One atomic commit: afe46ee (fix).
 
 **Immediate next action:**
 Resume Phase 7 Plan 04 (07-04-PLAN.md) if remaining, or conclude documentation correction project.
