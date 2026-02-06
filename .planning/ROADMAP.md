@@ -262,6 +262,7 @@ Atomic fixes outside main phase workflow:
 | 5 - Integration & Framework Layers | 6 | ✅ Complete | 100% |
 | 6 - Plugin System Correction | 3 | ✅ Complete | 100% |
 | 7 - Final Polish & Developer Documentation | 9 | ✅ Complete | 100% |
+| 8 - Core Verification Fixes | 3 | ⏳ Pending | 0% |
 
 **Overall:** 48/48 requirements complete (100%) ✅
 
@@ -272,6 +273,13 @@ Atomic fixes outside main phase workflow:
 **Goal:** Resolve API mismatches and verify @pikacss/core documentation
 
 **Dependencies:** Phase 3 (API Verifier)
+
+**Plans:** 3 plans
+
+Plans:
+- [ ] 08-01-PLAN.md — Verifier Improvements (Sources & Normalization)
+- [ ] 08-02-PLAN.md — Verifier Extraction Fixes
+- [ ] 08-03-PLAN.md — Core Verification & Reporting
 
 **Requirements Covered:**
 - PKG-CORE-01: @pikacss/core API reference accurate (Fix 19 mismatches)
