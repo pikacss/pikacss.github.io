@@ -22,6 +22,7 @@ interface EnginePlugin {
 
 Use `defineEnginePlugin` helper:
 
+<!-- eslint-disable pikacss/pika-module-augmentation -->
 ```typescript
 import { defineEnginePlugin } from '@pikacss/core'
 
@@ -59,27 +60,41 @@ order: 'post'
 ### When to Use Each Order
 
 **`pre` - Transform input before core processing**
+<!-- eslint-disable pikacss/pika-module-augmentation -->
 ```typescript
 // Example: normalize user input
-transformStyleDefinitions(defs) {
-  return normalizeDefinitions(defs)
-}
+defineEnginePlugin({
+	name: 'example',
+	order: 'pre',
+	transformStyleDefinitions(defs) {
+		return normalizeDefinitions(defs)
+	}
+})
 ```
 
 **Default - Hook into normal flow**
+<!-- eslint-disable pikacss/pika-module-augmentation -->
 ```typescript
 // Example: add default utilities
-configureEngine(engine) {
-  engine.registerShortcut('btn', {...})
-}
+defineEnginePlugin({
+	name: 'example',
+	configureEngine(engine) {
+		engine.registerShortcut('btn', { px: '1rem', py: '0.5rem' })
+	}
+})
 ```
 
 **`post` - Process output after core**
+<!-- eslint-disable pikacss/pika-module-augmentation -->
 ```typescript
 // Example: add custom CSS reset
-configureEngine(engine) {
-  engine.addPreflight(resetStyles)
-}
+defineEnginePlugin({
+	name: 'example',
+	order: 'post',
+	configureEngine(engine) {
+		engine.addPreflight(resetStyles)
+	}
+})
 ```
 
 ## Module Augmentation
@@ -133,37 +148,46 @@ declare module '@pikacss/core' {
 
 Always wrap operations that may fail:
 
+<!-- eslint-disable pikacss/pika-module-augmentation -->
 ```typescript
-async transformStyleDefinitions(defs) {
-  try {
-    const result = await riskyOperation(defs)
-    return result
-  } catch (error) {
-    console.error(`[plugin-name] Error during transformation:`, error)
-    // Return original defs to prevent breaking the pipeline
-    return defs
-  }
-}
+defineEnginePlugin({
+	name: 'example',
+	async transformStyleDefinitions(defs) {
+		try {
+			const result = await riskyOperation(defs)
+			return result
+		}
+		catch (error) {
+			console.error(`[plugin-name] Error during transformation:`, error)
+			// Return original defs to prevent breaking the pipeline
+			return defs
+		}
+	}
+})
 ```
 
 ### Validation
 
 Validate input before processing:
 
+<!-- eslint-disable pikacss/pika-module-augmentation -->
 ```typescript
 function validateStyleDef(def: unknown): boolean {
-  return (
-    typeof def === 'object' &&
-    def !== null &&
-    ('color' in def || 'display' in def || 'fontSize' in def)
-  )
+	return (
+		typeof def === 'object'
+		&& def !== null
+		&& ('color' in def || 'display' in def || 'fontSize' in def)
+	)
 }
 
-async configureEngine(engine) {
-  if (!validateConfig(this.options)) {
-    throw new Error('[plugin-name] Invalid configuration')
-  }
-}
+defineEnginePlugin({
+	name: 'example',
+	configureEngine(engine) {
+		if (!validateConfig(this.options)) {
+			throw new Error('[plugin-name] Invalid configuration')
+		}
+	}
+})
 ```
 
 ### Logging
@@ -207,15 +231,20 @@ For external integrations, use optional dependencies:
 
 Check before using:
 
+<!-- eslint-disable pikacss/pika-module-augmentation -->
 ```typescript
-async configureEngine(engine) {
-  try {
-    const lib = await import('some-external-lib')
-    // Use lib
-  } catch {
-    console.warn('[plugin-name] some-external-lib not available')
-  }
-}
+defineEnginePlugin({
+	name: 'example',
+	async configureEngine(engine) {
+		try {
+			const lib = await import('some-external-lib')
+			// Use lib
+		}
+		catch {
+			console.warn('[plugin-name] some-external-lib not available')
+		}
+	}
+})
 ```
 
 ## Plugin Lifecycle
@@ -224,36 +253,43 @@ async configureEngine(engine) {
 
 Runs during engine initialization:
 
+<!-- eslint-disable pikacss/pika-module-augmentation -->
 ```typescript
-configureEngine(engine) {
-  // Register shortcuts
-  engine.registerShortcut('btn', {...})
+defineEnginePlugin({
+	name: 'example',
+	configureEngine(engine) {
+		// Register shortcuts
+		engine.registerShortcut('btn', { px: '1rem', py: '0.5rem' })
 
-  // Add preflights
-  engine.addPreflight('* { margin: 0; }')
+		// Add preflights
+		engine.addPreflight('* { margin: 0; }')
 
-  // Configure defaults
-  engine.setDefault('fontSize', '16px')
-}
+		// Configure defaults
+		engine.setDefault('fontSize', '16px')
+	}
+})
 ```
 
 ### Processing Phase
 
 Runs when styles are processed:
 
+<!-- eslint-disable pikacss/pika-module-augmentation -->
 ```typescript
-async transformStyleDefinitions(defs) {
-  // Transform style definitions
-  return {
-    ...defs,
-    myCustomProp: transformedValue
-  }
-}
-
-async generateCSS(definitions) {
-  // Generate additional CSS
-  return `.custom-class { ... }`
-}
+defineEnginePlugin({
+	name: 'example',
+	transformStyleDefinitions(defs) {
+		// Transform style definitions
+		return {
+			...defs,
+			myCustomProp: transformedValue
+		}
+	},
+	generateCSS(definitions) {
+		// Generate additional CSS
+		return `.custom-class { color: red; }`
+	}
+})
 ```
 
 ## Testing Plugins
@@ -337,22 +373,29 @@ describe('plugins together', () => {
 
 Keep hooks lightweight:
 
+<!-- eslint-disable pikacss/pika-module-augmentation -->
 ```typescript
 // ❌ Bad: Complex processing in configureEngine
-async configureEngine(engine) {
-  for (let i = 0; i < 10000; i++) {
-    engine.registerShortcut(`btn-${i}`, {...})
-  }
-}
+defineEnginePlugin({
+	name: 'bad-example',
+	configureEngine(engine) {
+		for (let i = 0; i < 10000; i++) {
+			engine.registerShortcut(`btn-${i}`, { px: `${i}px` })
+		}
+	}
+})
 
 // ✅ Good: Lazy register shortcuts on demand
-async configureEngine(engine) {
-  engine.registerShortcutResolver((name) => {
-    if (name.startsWith('btn-')) {
-      return generateButtonShortcut(name)
-    }
-  })
-}
+defineEnginePlugin({
+	name: 'good-example',
+	configureEngine(engine) {
+		engine.registerShortcutResolver((name) => {
+			if (name.startsWith('btn-')) {
+				return generateButtonShortcut(name)
+			}
+		})
+	}
+})
 ```
 
 ### Cache Expensive Operations
@@ -396,10 +439,14 @@ declare module '@pikacss/core' {
 
 Adds CSS reset styles:
 
+<!-- eslint-disable pikacss/pika-module-augmentation -->
 ```typescript
-configureEngine(engine) {
-  engine.addPreflight(resetCSS)
-}
+defineEnginePlugin({
+	name: 'reset',
+	configureEngine(engine) {
+		engine.addPreflight(resetCSS)
+	}
+})
 ```
 
 ### @pikacss/plugin-typography
@@ -420,23 +467,25 @@ declare module '@pikacss/core' {
 
 ### Conditional Plugin Behavior
 
+<!-- eslint-disable pikacss/pika-module-augmentation -->
 ```typescript
 export function myPlugin(options?: Options): EnginePlugin {
-  return defineEnginePlugin({
-    name: 'my-plugin',
-    async configureEngine(engine) {
-      if (options?.enabled === false) {
-        return // Don't register anything
-      }
+	return defineEnginePlugin({
+		name: 'my-plugin',
+		async configureEngine(engine) {
+			if (options?.enabled === false) {
+				return // Don't register anything
+			}
 
-      engine.registerShortcut('feature', {...})
-    }
-  })
+			engine.registerShortcut('feature', { /* feature shortcut config */ })
+		}
+	})
 }
 ```
 
 ### Plugin Composition
 
+<!-- eslint-disable pikacss/pika-module-augmentation -->
 ```typescript
 // Create base plugin
 function basePlugin(): EnginePlugin {
@@ -462,6 +511,7 @@ export function extendedPlugin(): EnginePlugin {
 
 ### User Configuration Passthrough
 
+<!-- eslint-disable pikacss/pika-module-augmentation -->
 ```typescript
 export function myPlugin(userConfig?: UserConfig): EnginePlugin {
 	return defineEnginePlugin({
