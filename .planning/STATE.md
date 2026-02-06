@@ -20,27 +20,24 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 
 ## Current Position
 
-**Phase:** 7 of 7 (Final Polish & Developer Documentation) - **IN PROGRESS** (75%)
-**Plan:** 3 of 4 (07-03 - 100% complete)
-**Status:** Developer documentation gaps closed, 1 plan remaining
-**Last activity:** 2026-02-06 - Completed quick task 014: Fix Windows GitHub Runner test failures (CRLF line endings)
-**Progress:** ████████████████████████ 100% (28/28 plans complete)
+**Phase:** 8 of 8 (Verification Fixes) - **IN PROGRESS**
+**Plan:** 1 of 3 (08-01 - complete)
+**Status:** Verifier improved, ready for fix execution
+**Last activity:** 2026-02-06 - Completed 08-01-PLAN.md (Verifier Improvements)
+**Progress:** █████████████████████████ 100% (29/?? plans complete)
 
-**Current Milestone:** Phase 7 - Final Polish & Developer Documentation (75% complete)
-- ✅ API extraction and documentation (07-01 - 5 tasks complete)
-- ✅ Developer documentation validation (07-02 - 3 tasks complete)
-  - ✅ AGENTS.md validation test (07-02 Task 1)
-  - ✅ pikacss-dev skill validation test (07-02 Task 2)
-  - ✅ pikacss-expert skill validation test (07-02 Task 3)
-- ✅ Development commands & AGENTS.md completeness (07-03 - 3 tasks complete)
-  - ✅ Create verify-dev-commands.sh (07-03 Task 1)
-  - ✅ Add api-verifier to AGENTS.md (07-03 Task 2)
-  - ✅ Update REQUIREMENTS.md tracking (07-03 Task 3)
-- ⏳ Skills documentation correction (07-04 - pending)
+**Current Milestone:** Phase 8 - Verification Fixes (33% complete)
+- ✅ Verifier improvements (08-01)
+- ⏳ API reference fixes (08-02)
+- ⏳ Guide/Examples verification (08-03)
 
-**PROJECT STATUS:** 🎯 **FINAL STRETCH** - 7/7 phases started, 28/28 plans complete (100%), Phase 7 at 75%
+**PROJECT STATUS:** 🎯 **FINAL STRETCH** - Phase 8 started. Verifier now scans package READMEs and handles arrow signatures correctly.
 
-**Previous Milestone:** Phase 6 - Plugin System Correction ✅ COMPLETE (with gap closure)
+**Previous Milestone:** Phase 7 - Final Polish & Developer Documentation (75% complete)
+- ✅ API extraction and documentation (07-01)
+- ✅ Developer documentation validation (07-02)
+- ✅ Development commands & AGENTS.md completeness (07-03)
+- ⏭️ Skills documentation correction (07-04 - skipped/deferred)
 - ✅ plugin-reset documentation (06-01)
 - ✅ plugin-typography documentation (06-02)
 - ✅ plugin-icons documentation (06-03)
@@ -300,6 +297,9 @@ Created automated test suite validating AGENTS.md and skills/ against actual cod
 
 **Phase 7 Plan 03 Complete (Development Commands & AGENTS.md Completeness):**
 Created comprehensive development command verification script (scripts/verify-dev-commands.sh, 162 lines) testing all AGENTS.md commands with color-coded output. Added missing @pikacss/api-verifier package to AGENTS.md Package Dependencies table (updated count from 8 to 9). Updated REQUIREMENTS.md with verification evidence for all DEV requirements (DEV-01 to DEV-05 marked complete). All Phase 7 documentation gaps closed. 31/31 developer docs tests now passing. Duration: 45 minutes. Ready for 07-04 (skills documentation correction if needed).
+
+**Phase 8 Plan 01 Complete (Verifier Improvements):**
+Enhanced api-verifier to scan `packages/*/README.md` in addition to `docs/` (increasing documented API count from ~50 to 297). Implemented signature normalization converting `function foo(): void` to `() => void` to match TypeScript extraction output. Added comprehensive tests for normalization logic. This eliminates false positive mismatches due to syntax differences and ensures co-located package documentation is verified. Duration: 25 minutes. Ready for 08-02 (API reference fixes).
 
 **Quick Task 001 Complete (Move Skills to Root):**
 Moved skills directory from .github/skills to ./skills for improved discoverability. Relocated 10 files using git mv. Updated test imports in api-verifier (2 files). Updated AGENTS.md references (2 locations). Updated 82 documentation references in .planning/ directory. Fixed path resolution in agents.test.ts using __dirname. All tests passing (31/31 developer docs). Duration: 3.4 minutes. Three atomic commits: eec1681 (refactor), 02b2e96 (docs), 58e896f (fix).
