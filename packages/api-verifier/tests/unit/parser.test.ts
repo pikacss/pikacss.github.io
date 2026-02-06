@@ -57,14 +57,14 @@ describe('normalizeSignature', () => {
 		const signature = 'function   foo(  a:  string  ):  void'
 		const result = normalizeSignature(signature)
 		expect(result)
-			.toBe('function foo(a: string): void')
+			.toBe('(a: string) => void')
 	})
 
 	it('should normalize colons', () => {
 		const signature = 'function foo(a:string):void'
 		const result = normalizeSignature(signature)
 		expect(result)
-			.toBe('function foo(a: string): void')
+			.toBe('(a: string) => void')
 	})
 
 	it('should normalize arrows', () => {
@@ -92,7 +92,7 @@ describe('normalizeSignature', () => {
 		const signature = '  function foo(): void  '
 		const result = normalizeSignature(signature)
 		expect(result)
-			.toBe('function foo(): void')
+			.toBe('() => void')
 	})
 
 	it('should handle complex signatures', () => {
@@ -100,6 +100,34 @@ describe('normalizeSignature', () => {
 		const result = normalizeSignature(signature)
 		expect(result)
 			.toBe('function foo<T>(a: string | number, b: (x: T) => void): Promise<T> & Thenable<T>')
+	})
+
+	it('should normalize function declaration to arrow signature', () => {
+		const signature = 'function foo(a: string): void'
+		const result = normalizeSignature(signature)
+		expect(result)
+			.toBe('(a: string) => void')
+	})
+
+	it('should normalize exported function declaration', () => {
+		const signature = 'export function foo(a: string): void'
+		const result = normalizeSignature(signature)
+		expect(result)
+			.toBe('(a: string) => void')
+	})
+
+	it('should normalize async function declaration', () => {
+		const signature = 'async function foo(a: string): Promise<void>'
+		const result = normalizeSignature(signature)
+		expect(result)
+			.toBe('(a: string) => Promise<void>')
+	})
+
+	it('should strip internal suffix from types', () => {
+		const signature = 'config: EngineConfig$1'
+		const result = normalizeSignature(signature)
+		expect(result)
+			.toBe('config: EngineConfig')
 	})
 })
 
@@ -111,11 +139,7 @@ describe('parseDocumentedAPIs', () => {
 		expect(functionAPI)
 			.toBeDefined()
 		expect(functionAPI?.signature)
-			.toContain('function createEngine')
-		expect(functionAPI?.signature)
-			.toContain('config?: EngineConfig')
-		expect(functionAPI?.signature)
-			.toContain('Promise<Engine>')
+			.toBe('(config?: EngineConfig) => Promise<Engine>')
 	})
 
 	it('should extract interface declarations', async () => {

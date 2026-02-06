@@ -33,7 +33,7 @@ export function getDocumentationType(filePath: string): DocumentationType {
  * - Normalize spacing around operators
  */
 export function normalizeSignature(signature: string): string {
-	return signature
+	let normalized = signature
 		.replace(/\s+/g, ' ') // Replace multiple spaces with single space
 		.replace(/\(\s+/g, '(') // Remove space after opening paren
 		.replace(/\s+\)/g, ')') // Remove space before closing paren
@@ -43,6 +43,18 @@ export function normalizeSignature(signature: string): string {
 		.replace(/\s*\|\s*/g, ' | ') // Normalize union types
 		.replace(/\s*&\s*/g, ' & ') // Normalize intersection types
 		.trim()
+
+	// Strip internal suffixes (e.g. EngineConfig$1 -> EngineConfig)
+	normalized = normalized.replace(/(\w+)\$\d+/g, '$1')
+
+	// Normalize function declarations to arrow signature
+	// function name(args): type -> (args) => type
+	const functionMatch = normalized.match(/^(?:export\s+)?(?:async\s+)?function\s+\w+(\(.*\))\s*:\s*(\S.*)$/)
+	if (functionMatch) {
+		return `${functionMatch[1]} => ${functionMatch[2]}`
+	}
+
+	return normalized
 }
 
 /**
