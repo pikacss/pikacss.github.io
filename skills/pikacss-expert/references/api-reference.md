@@ -187,23 +187,24 @@ Helper to create a plugin with proper typing.
 
 **Example:**
 ```typescript
+/* eslint-disable pikacss/pika-module-augmentation */
 const myPlugin = defineEnginePlugin({
-  name: 'my-plugin',
-  order: 'post',
-  async configureEngine(engine) {
-    engine.registerShortcut('btn', { ... })
-  }
+	name: 'my-plugin',
+	order: 'post',
+	async configureEngine(engine) {
+		engine.shortcuts.add('btn', { backgroundColor: '#3b82f6', color: 'white' })
+	}
 })
 ```
 
 ### Engine Methods
 
-#### `engine.registerShortcut(name: string, definition: StyleDefinition)`
+#### `engine.shortcuts.add(name: string, definition: StyleDefinition)`
 
 Register a new shortcut.
 
 ```typescript
-engine.registerShortcut('btn-primary', {
+engine.shortcuts.add('btn-primary', {
 	backgroundColor: '#3b82f6',
 	color: 'white',
 	padding: '0.75rem 1rem'
