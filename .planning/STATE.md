@@ -160,6 +160,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 2026-02-06 | Move skills from .github/skills to ./skills | Skills are not GitHub-specific infrastructure; root placement improves discoverability | Better alignment with project conventions (quick-001) |
 | 2026-02-06 | Use text blocks for invalid YAML examples in docs | YAML code blocks are parsed by ESLint, which rejects invalid syntax even in negative examples | Allows showing incorrect patterns without triggering validation (quick-002) |
 | 2026-02-06 | Exclude intentional negative examples from link checker | Educational examples showing incorrect link patterns shouldn't trigger validation warnings | Updated check-links.sh to skip skills/README.md (quick-002) |
+| 2026-02-06 | Split mixed TypeScript/Vue template blocks for ESLint compatibility | Vue template syntax (:class, :style) is not valid in TSX parser | Separate code fences allow each syntax to use appropriate language identifier (quick-004) |
 
 ### Todos
 
@@ -187,6 +188,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 001 | Move .github/skills to ./skills | 2026-02-06 | 7aa8f97 | [001-move-github-skills-to-skills](./quick/001-move-github-skills-to-skills/) |
 | 002 | Fix run-all-checks.sh ESLint/link errors | 2026-02-06 | 48e1a7b | [002-fix-run-all-checks-sh-errors](./quick/002-fix-run-all-checks-sh-errors/) |
 | 003 | Fix remaining ESLint errors in PLUGIN-PATTERNS.md | 2026-02-06 | 4f3232c | [003-fix-remaining-eslint-errors-in-plugin-pa](./quick/003-fix-remaining-eslint-errors-in-plugin-pa/) |
+| 004 | Fix ESLint errors in pikacss-expert SKILL.md | 2026-02-06 | 6607560 | [004-fix-eslint-errors-change-typescript-to-t](./quick/004-fix-eslint-errors-change-typescript-to-t/) |
 
 ### Important Notes
 
@@ -284,6 +286,9 @@ Fixed 3 categories of validation errors exposed after quick-001 moved skills to 
 **Quick Task 003 Complete (Fix PLUGIN-PATTERNS.md Errors):**
 Fixed all 14 ESLint errors in PLUGIN-PATTERNS.md using complete code examples and eslint-disable comments. Converted method shorthand syntax to complete defineEnginePlugin() calls (7 instances). Replaced object spread {...} with realistic object literals (5 instances). Added eslint-disable comments for pika-module-augmentation false positives (10 code blocks). All code examples now syntactically valid TypeScript while maintaining educational value. Duration: 7 minutes. One atomic commit: 4f3232c (fix).
 
+**Quick Task 004 Complete (Fix pikacss-expert SKILL.md Errors):**
+Fixed all ESLint parsing errors in skills/pikacss-expert/SKILL.md by changing 2 React JSX blocks from `typescript` to `tsx` (lines 57, 76) and splitting 2 mixed TypeScript/Vue blocks into separate code fences (lines 395, 468). Established pattern: React JSX uses `tsx`, Vue templates use `vue`, mixed content uses separate blocks. ESLint now parses file with zero errors. Duration: 2.5 minutes. One atomic commit: 6607560 (fix).
+
 **Build-Time Constraint Critical:**
 All `pika()` examples must use statically analyzable arguments. Examples with runtime variables will fail in user projects even if they type-check in monorepo. Test through actual bundler, not just TypeScript compilation.
 
@@ -317,7 +322,7 @@ Integration tests use monorepo workspace resolution for efficient testing. Fixtu
 - Existing infrastructure: Vitest, VitePress, TypeScript, pnpm workspace
 
 **Where we left off:**
-Quick Task 003 COMPLETE (1/1 task): Fixed all 14 ESLint errors in PLUGIN-PATTERNS.md by converting method shorthand to complete defineEnginePlugin examples, replacing object spread syntax with realistic literals, and adding eslint-disable comments for false positives. All code examples now syntactically valid TypeScript. Total time: ~7 minutes.
+Quick Task 004 COMPLETE (1/1 task): Fixed all ESLint parsing errors in skills/pikacss-expert/SKILL.md by changing 2 React JSX blocks from typescript to tsx and splitting 2 mixed TypeScript/Vue blocks into separate code fences. ESLint now parses the file with zero errors. Total time: ~2.5 minutes.
 
 **Immediate next action:**
 Resume Phase 7 Plan 04 (07-04-PLAN.md) if remaining, or conclude documentation correction project.
