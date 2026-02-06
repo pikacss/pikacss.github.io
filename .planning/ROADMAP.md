@@ -241,6 +241,16 @@ Plans:
 
 ---
 
+## Quick Tasks
+
+Atomic fixes outside main phase workflow:
+
+- [x] quick-001 — Move .github/skills to ./skills (2026-02-06)
+- [x] quick-002 — Fix run-all-checks.sh ESLint/link errors (2026-02-06)
+- [ ] quick-003 — Fix remaining ESLint errors in PLUGIN-PATTERNS.md (in progress)
+
+---
+
 ## Progress Tracking
 
 | Phase | Requirements | Status | Completion |
