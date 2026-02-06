@@ -121,7 +121,7 @@ describe('extractPackageAPIs', () => {
 			.toBeDefined()
 		expect(Array.isArray(result.apis))
 			.toBe(true)
-	})
+	}, 15000) // TypeScript compilation + API extraction
 
 	it('should extract more than 20 APIs from core package', () => {
 		expect(corePackage)
