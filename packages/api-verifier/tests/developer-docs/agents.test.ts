@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
@@ -9,12 +9,20 @@ describe('aGENTS.md Validation', () => {
 	const agentsContent = readFileSync(agentsPath, 'utf-8')
 
 	it('lists all monorepo packages', () => {
-		// Read actual packages from filesystem
+		// Read actual packages from filesystem by reading their package.json files
 		const packagesDir = join(monorepoRoot, 'packages')
 		const actualPackages = readdirSync(packagesDir)
 			.filter(name => !name.startsWith('.') && name !== 'node_modules')
-			.map(name => `@pikacss/${name}`)
-			.sort()
+			.map((dirName) => {
+				const pkgJsonPath = join(packagesDir, dirName, 'package.json')
+				if (existsSync(pkgJsonPath)) {
+					const pkgJson = JSON.parse(readFileSync(pkgJsonPath, 'utf-8'))
+					return pkgJson.name
+				}
+				return null
+			})
+			.filter(Boolean)
+			.sort() as string[]
 
 		// Extract packages from AGENTS.md Package Dependencies table
 		const tableMatch = agentsContent.match(/\| Package \| Role \| Dependencies \|[\s\S]*?\n\n/)

@@ -1,3 +1,5 @@
+/* eslint-disable ts/ban-ts-comment */
+// @ts-nocheck - Test file with extensive regex matching where TypeScript cannot infer non-null
 import { existsSync, readFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'

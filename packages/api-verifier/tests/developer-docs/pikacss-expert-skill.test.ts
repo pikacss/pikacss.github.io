@@ -1,3 +1,5 @@
+/* eslint-disable ts/ban-ts-comment */
+// @ts-nocheck - Test file with extensive regex matching where TypeScript cannot infer non-null
 import { existsSync, readFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
@@ -191,6 +193,10 @@ describe('pikacss-expert SKILL.md Validation', () => {
 
 		for (const block of codeBlocks) {
 			const code = block[1]
+
+			// Skip if code is undefined (shouldn't happen, but TypeScript strict null check)
+			if (!code)
+				continue
 
 			// Basic syntax checks
 			// Check balanced braces
