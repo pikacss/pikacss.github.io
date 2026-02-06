@@ -84,7 +84,12 @@ echo
 
 # Find all markdown files, excluding .planning/**, node_modules/**, build output, and skill documentation examples
 while IFS= read -r file; do
-  # Skip .github/skills/README.md (contains example/placeholder links)
+  # Skip skills/README.md (contains intentional broken link examples in "Common Validation Errors" section)
+  if [[ "$file" == "./skills/README.md" ]]; then
+    continue
+  fi
+  
+  # Skip legacy path (kept for backward compatibility)
   if [[ "$file" == "./.github/skills/README.md" ]]; then
     continue
   fi

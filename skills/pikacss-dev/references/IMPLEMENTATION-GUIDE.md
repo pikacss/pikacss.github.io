@@ -301,17 +301,24 @@ git commit --no-verify
 
 ### Error Handling in Plugins
 
+<!-- eslint-disable pikacss/pika-module-augmentation -->
 ```typescript
-async transformStyleDefinitions(defs) {
-  try {
-    // Logic here
-    return processedDefs
-  } catch (error) {
-    console.error(`[plugin-name] Error:`, error)
-    return defs // Return original to avoid breaking
-  }
-}
+// Plugin hook example
+const plugin = defineEnginePlugin({
+	name: 'my-plugin',
+	async transformStyleDefinitions(defs: StyleDefinition[]): Promise<StyleDefinition[]> {
+		try {
+			// Logic here
+			return processedDefs
+		}
+		catch (error) {
+			console.error(`[plugin-name] Error:`, error)
+			return defs // Return original to avoid breaking
+		}
+	}
+})
 ```
+<!-- eslint-enable pikacss/pika-module-augmentation -->
 
 ### Module Augmentation for Extensions
 
@@ -335,7 +342,7 @@ function isStyleDefinition(value: unknown): value is StyleDefinition {
 	return (
 		typeof value === 'object'
 		&& value !== null
-		&& 'color' in value || 'display' in value
+		&& ('color' in value || 'display' in value)
 	)
 }
 ```

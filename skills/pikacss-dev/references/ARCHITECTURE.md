@@ -220,22 +220,22 @@ Plugins extend core types via declaration merging:
 
 ```typescript
 declare module '@pikacss/core' {
-  interface EngineConfig {
-    myPluginOption?: MyOptions
-  }
-  interface Shortcuts {
-    myShortcut: MyShortcutDefinition
-  }
+	interface EngineConfig {
+		myPluginOption?: MyOptions
+	}
+	interface Shortcuts {
+		myShortcut: MyShortcutDefinition
+	}
 }
 
 export function myPlugin(options?: MyOptions): EnginePlugin {
-  return defineEnginePlugin({
-    name: 'my-plugin',
-    order: 'post', // 'pre' | undefined (default) | 'post'
-    async configureEngine(engine) {
-      engine.registerShortcut('myShortcut', { ... })
-    }
-  })
+	return defineEnginePlugin({
+		name: 'my-plugin',
+		order: 'post', // 'pre' | undefined (default) | 'post'
+		async configureEngine(engine) {
+			engine.registerShortcut('myShortcut', { /* shortcut config */ })
+		}
+	})
 }
 ```
 

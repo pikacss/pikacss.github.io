@@ -299,16 +299,21 @@ grep -r "pikacss-dev" .github/skills/pikacss-expert || true
 ### Common Validation Errors
 
 **Invalid YAML frontmatter**:
-```yaml
-# ❌ Wrong
+```text
+❌ Wrong - missing space after colon:
+---
 name:pikacss-dev
 description:Comprehensive guide
+---
 
-# ✅ Correct
+✅ Correct - space after colon required:
+---
 name: pikacss-dev
 description: Comprehensive guide...
+---
 ```
 
+<!-- eslint-disable-next-line markdown/no-broken-links -->
 **Circular references**:
 ```markdown
 <!-- ❌ Wrong -->
@@ -318,6 +323,7 @@ See [pikacss-dev guide](.../pikacss-dev/SKILL.md)
 See [the main skill](../SKILL.md)
 ```
 
+<!-- eslint-disable-next-line markdown/no-broken-links -->
 **Deep nesting**:
 ```
 <!-- ❌ Wrong -->
