@@ -65,6 +65,9 @@ This document guides AI agents in maintaining project internals. For specialized
 │  @pikacss/plugin-icons                            │
 │  @pikacss/plugin-reset                            │
 │  @pikacss/plugin-typography                       │
+│                                                     │
+│  Verification Tools (Development)                  │
+│  @pikacss/api-verifier                            │
 └─────────────────────────────────────────────────────┘
 ```
 
