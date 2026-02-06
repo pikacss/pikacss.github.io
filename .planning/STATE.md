@@ -23,7 +23,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 **Phase:** 7 of 7 (Final Polish & Developer Documentation) - **IN PROGRESS** (75%)
 **Plan:** 3 of 4 (07-03 - 100% complete)
 **Status:** Developer documentation gaps closed, 1 plan remaining
-**Last activity:** 2026-02-06 - Completed quick task 012: Fix GitHub Runner bundler test race conditions
+**Last activity:** 2026-02-06 - Completed quick task 013: Fix API verifier test timeouts in GitHub Runner
 **Progress:** ████████████████████████ 100% (28/28 plans complete)
 
 **Current Milestone:** Phase 7 - Final Polish & Developer Documentation (75% complete)
@@ -173,6 +173,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 2026-02-06 | Add explicit 300s timeouts to beforeEach hooks | Vitest global testTimeout only applies to test functions, not hooks; beforeEach defaults to 10s | Vite and Webpack beforeEach now match Nuxt pattern with explicit 300s timeout (quick-011) |
 | 2026-02-06 | Use --no-frozen-lockfile in CI test job | --frozen-lockfile causes ENOTEMPTY race conditions when parallel matrix jobs write to node_modules | Test job uses --no-frozen-lockfile for safety, check job retains standard install for lock validation (quick-011) |
 | 2026-02-06 | Disable concurrent execution for bundler tests | Parallel pnpm install operations in shared monorepo node_modules cause race conditions | Sequential execution prevents ENOENT/EEXIST errors; trade-off: slower CI (~3-5 min per OS) but reliable (quick-012) |
+| 2026-02-06 | Use CI-aware timeout configuration for api-verifier tests | TypeScript Compiler API operations are CPU-intensive and run 3-5x slower in CI | Global 120s CI timeout (30s local), individual 15s-120s based on complexity (quick-013) |
 
 ### Todos
 
@@ -209,6 +210,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 010 | Increase bundler test timeouts to 5x baseline for CI | 2026-02-06 | 3afb63d | [010-fix-ci-bundler-integration-test-timeouts](./quick/010-fix-ci-bundler-integration-test-timeouts/) |
 | 011 | Fix GitHub Runner bundler test failures | 2026-02-06 | 4455c31 | [011-fix-github-runner-bundler-test-failures-](./quick/011-fix-github-runner-bundler-test-failures-/) |
 | 012 | Fix GitHub Runner bundler test race conditions | 2026-02-06 | 1ab3c37 | [012-fix-github-runner-bundler-test-failures](./quick/012-fix-github-runner-bundler-test-failures/) |
+| 013 | Fix API verifier test timeouts in GitHub Runner | 2026-02-06 | 9a6eb0e | [013-fix-api-verifier-test-timeouts-in-github](./quick/013-fix-api-verifier-test-timeouts-in-github/) |
 
 ### Important Notes
 
@@ -348,7 +350,7 @@ Integration tests use monorepo workspace resolution for efficient testing. Fixtu
 - Existing infrastructure: Vitest, VitePress, TypeScript, pnpm workspace
 
 **Where we left off:**
-Quick Task 012 COMPLETE (3/3 tasks): Disabled concurrent test execution in vitest.config.eslint.ts to eliminate GitHub Runner CI race conditions. Changed `concurrent: process.env.CI === 'true'` to `concurrent: false` with comprehensive explanatory comment documenting the race condition prevention rationale. All 22 tests passing sequentially (35.96s), zero ENOENT/EEXIST errors, TypeScript compilation passes. Trade-off accepted: slower CI execution (~3-5 min per OS) prioritized over reliability. Total time: ~1.6 minutes. One atomic commit: 1ab3c37 (sequential execution).
+Quick Task 013 COMPLETE (3/3 tasks): Fixed api-verifier test timeouts in GitHub Runner CI by adding CI-aware timeout configuration. Added global testTimeout with CI detection (120s CI, 30s local) to vitest.config.ts. Increased end-to-end test timeouts (30s single package, 120s all packages). Added explicit 15s timeout to extractor test for TypeScript compilation. All 130 tests passing locally (9.54s) and with CI=true (7.88s). Fixed ESLint node/prefer-global/process issue by importing process from node:process. Total time: ~2.3 minutes. Three atomic commits: 39c1cd0, e5035a1, 9a6eb0e.
 
 **Immediate next action:**
 Resume Phase 7 Plan 04 (07-04-PLAN.md) if remaining, or conclude documentation correction project.
