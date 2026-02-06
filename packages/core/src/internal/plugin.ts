@@ -100,9 +100,16 @@ export const hooks: EngineHooks = {
 }
 
 type EnginePluginHooksOptions = {
-	[K in keyof EngineHooksDefinition]?: EngineHooksDefinition[K][0] extends 'async'
-		? (...params: EngineHooksDefinition[K][1] extends void ? [] : [payload: EngineHooksDefinition[K][1]]) => Awaitable<EngineHooksDefinition[K][1] | void>
-		: (...params: EngineHooksDefinition[K][1] extends void ? [] : [payload: EngineHooksDefinition[K][1]]) => EngineHooksDefinition[K][1] | void
+	configureRawConfig?: (config: EngineConfig) => Awaitable<EngineConfig | void>
+	rawConfigConfigured?: (config: EngineConfig) => void
+	configureResolvedConfig?: (resolvedConfig: ResolvedEngineConfig) => Awaitable<ResolvedEngineConfig | void>
+	configureEngine?: (engine: Engine) => Awaitable<void>
+	transformSelectors?: (selectors: string[]) => Awaitable<string[] | void>
+	transformStyleItems?: (styleItems: ResolvedStyleItem[]) => Awaitable<ResolvedStyleItem[] | void>
+	transformStyleDefinitions?: (styleDefinitions: ResolvedStyleDefinition[]) => Awaitable<ResolvedStyleDefinition[] | void>
+	preflightUpdated?: () => void
+	atomicStyleAdded?: (atomicStyle: AtomicStyle) => void
+	autocompleteConfigUpdated?: () => void
 }
 
 export interface EnginePlugin extends EnginePluginHooksOptions {

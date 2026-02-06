@@ -358,10 +358,10 @@ engine.notifyAutocompleteConfigUpdated()
 Input type for `pika()` and `engine.use()`.
 
 ```typescript
-type StyleItem
-	= | UnionString
-		| ResolvedAutocomplete['StyleItemString']
-		| StyleDefinition
+type StyleItem =
+	| UnionString
+	| ResolvedAutocomplete['StyleItemString']
+	| StyleDefinition
 ```
 
 **Union members:**
@@ -455,13 +455,13 @@ interface EnginePlugin {
 	order?: 'pre' | 'post'
 	configureRawConfig?: (config: EngineConfig) => Awaitable<EngineConfig | void>
 	rawConfigConfigured?: (config: EngineConfig) => void
-	configureResolvedConfig?: (config: ResolvedEngineConfig) => Awaitable<ResolvedEngineConfig | void>
+	configureResolvedConfig?: (resolvedConfig: ResolvedEngineConfig) => Awaitable<ResolvedEngineConfig | void>
 	configureEngine?: (engine: Engine) => Awaitable<void>
 	transformSelectors?: (selectors: string[]) => Awaitable<string[] | void>
-	transformStyleItems?: (items: ResolvedStyleItem[]) => Awaitable<ResolvedStyleItem[] | void>
-	transformStyleDefinitions?: (defs: ResolvedStyleDefinition[]) => Awaitable<ResolvedStyleDefinition[] | void>
+	transformStyleItems?: (styleItems: ResolvedStyleItem[]) => Awaitable<ResolvedStyleItem[] | void>
+	transformStyleDefinitions?: (styleDefinitions: ResolvedStyleDefinition[]) => Awaitable<ResolvedStyleDefinition[] | void>
 	preflightUpdated?: () => void
-	atomicStyleAdded?: (style: AtomicStyle) => void
+	atomicStyleAdded?: (atomicStyle: AtomicStyle) => void
 	autocompleteConfigUpdated?: () => void
 }
 ```
@@ -549,9 +549,19 @@ interface ShortcutsConfig {
 	shortcuts: Shortcut[]
 }
 
-type Shortcut
-	= | [name: string, definition: StyleDefinition]
-		| [pattern: RegExp, resolver: (match: RegExpMatchArray) => Awaitable<StyleDefinition>]
+type Shortcut =
+	| string
+	| [shortcut: RegExp, value: (matched: RegExpMatchArray) => Awaitable<Arrayable<ResolvedStyleItem>>, autocomplete?: Arrayable<string>]
+	| {
+		shortcut: RegExp
+		value: (matched: RegExpMatchArray) => Awaitable<Arrayable<ResolvedStyleItem>>
+		autocomplete?: Arrayable<string>
+	}
+	| [shortcut: string, value: Arrayable<ResolvedStyleItem>]
+	| {
+		shortcut: string
+		value: Arrayable<ResolvedStyleItem>
+	}
 ```
 
 #### `SelectorsConfig`
@@ -561,21 +571,32 @@ interface SelectorsConfig {
 	selectors: Selector[]
 }
 
-type Selector
-	= | string
-		| [selector: string, value: string | string[]]
-		| [selector: RegExp, resolver: (match: RegExpMatchArray) => Awaitable<string | string[]>]
+type Selector =
+	| string
+	| [selector: RegExp, value: (matched: RegExpMatchArray) => Awaitable<Arrayable<UnionString | ResolvedSelector>>, autocomplete?: Arrayable<string>]
+	| [selector: string, value: Arrayable<UnionString | ResolvedSelector>]
+	| {
+		selector: RegExp
+		value: (matched: RegExpMatchArray) => Awaitable<Arrayable<UnionString | ResolvedSelector>>
+		autocomplete?: Arrayable<string>
+	}
+	| {
+		selector: string
+		value: Arrayable<UnionString | ResolvedSelector>
+	}
 ```
 
 #### `VariablesConfig`
 
 ```typescript
 interface VariablesConfig {
-	variables: VariablesDefinition
+	variables: Arrayable<VariablesDefinition>
+	pruneUnused?: boolean
+	safeList?: (`--${string}` & {})[]
 }
 
-interface VariablesDefinition {
-	[key: `--${string}`]: string | number
+type VariablesDefinition = {
+	[key in UnionString | ResolvedSelector | (`--${string}` & {}) | ResolvedCSSVarProperty]?: Variable | VariablesDefinition
 }
 ```
 
@@ -584,12 +605,18 @@ interface VariablesDefinition {
 ```typescript
 interface KeyframesConfig {
 	keyframes: Keyframes[]
+	pruneUnused?: boolean
 }
 
-interface Keyframes {
-	name: string
-	definition: Record<string, Properties>
-}
+type Keyframes =
+	| string
+	| [name: string, frames?: KeyframesProgress, autocomplete?: string[], pruneUnused?: boolean]
+	| {
+		name: string
+		frames?: KeyframesProgress
+		autocomplete?: string[]
+		pruneUnused?: boolean
+	}
 ```
 
 ## Utility Functions
