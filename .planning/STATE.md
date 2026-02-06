@@ -23,7 +23,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 **Phase:** 7 of 7 (Final Polish & Developer Documentation) - **IN PROGRESS** (75%)
 **Plan:** 3 of 4 (07-03 - 100% complete)
 **Status:** Developer documentation gaps closed, 1 plan remaining
-**Last activity:** 2026-02-06 - Completed quick task 010: Increase bundler test timeouts to 5x baseline for CI
+**Last activity:** 2026-02-06 - Completed quick task 011: Fix GitHub Runner bundler test failures
 **Progress:** ████████████████████████ 100% (28/28 plans complete)
 
 **Current Milestone:** Phase 7 - Final Polish & Developer Documentation (75% complete)
@@ -170,6 +170,8 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 2026-02-06 | Accept mixed tabs/spaces warnings in markdown list contexts | List indentation (spaces) + code content (tabs) is standard markdown | 109 warnings acceptable - not blocking, ESLint false positives (quick-006) |
 | 2026-02-06 | Increase bundler test timeouts 2-3x for CI | CI environments (especially Windows/macOS) run 2-3x slower than local | Global 120s timeout, individual tests 120-180s based on complexity (quick-009) |
 | 2026-02-06 | Increase bundler test timeouts to 5x baseline | User reports timeouts still occurring; CI can be 3-5x slower than local | Global 300s timeout, individual 300-360s (5x local baseline) provides worst-case buffer (quick-010) |
+| 2026-02-06 | Add explicit 300s timeouts to beforeEach hooks | Vitest global testTimeout only applies to test functions, not hooks; beforeEach defaults to 10s | Vite and Webpack beforeEach now match Nuxt pattern with explicit 300s timeout (quick-011) |
+| 2026-02-06 | Use --no-frozen-lockfile in CI test job | --frozen-lockfile causes ENOTEMPTY race conditions when parallel matrix jobs write to node_modules | Test job uses --no-frozen-lockfile for safety, check job retains standard install for lock validation (quick-011) |
 
 ### Todos
 
@@ -204,6 +206,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 008 | Fix CI bundler integration tests to use --no-frozen-lockfile | 2026-02-06 | afe46ee | [008-fix-ci-bundler-integration-tests-to-use-](./quick/008-fix-ci-bundler-integration-tests-to-use-/) |
 | 009 | Fix CI bundler integration test timeouts | 2026-02-06 | 1156e58 | [009-fix-ci-bundler-integration-test-timeouts](./quick/009-fix-ci-bundler-integration-test-timeouts/) |
 | 010 | Increase bundler test timeouts to 5x baseline for CI | 2026-02-06 | 3afb63d | [010-fix-ci-bundler-integration-test-timeouts](./quick/010-fix-ci-bundler-integration-test-timeouts/) |
+| 011 | Fix GitHub Runner bundler test failures | 2026-02-06 | 4455c31 | [011-fix-github-runner-bundler-test-failures-](./quick/011-fix-github-runner-bundler-test-failures-/) |
 
 ### Important Notes
 
@@ -343,7 +346,7 @@ Integration tests use monorepo workspace resolution for efficient testing. Fixtu
 - Existing infrastructure: Vitest, VitePress, TypeScript, pnpm workspace
 
 **Where we left off:**
-Quick Task 010 COMPLETE (1/1 tasks): Applied aggressive timeout increases (5x local baseline) to eliminate CI flakiness. Global timeout: 120s → 300s, most tests: 120s → 300s, Nuxt: 180s → 360s. Provides sufficient buffer for slowest CI runners (Windows/macOS with 3-5x slowdown). All 22 integration tests passing locally in ~30s. Total time: ~1.4 minutes. One atomic commit: 3afb63d (fix).
+Quick Task 011 COMPLETE (3/3 tasks): Fixed three root causes of GitHub Runner CI failures: added explicit 300s timeouts to Vite and Webpack beforeEach hooks (matching Nuxt pattern), changed CI test job to use `--no-frozen-lockfile` for safe parallel execution, validated all fixes with automated checks. All 3 beforeEach hooks now have explicit timeouts, CI configuration optimized for parallel testing, TypeScript compilation passes, core unit tests pass (81/81 in 360ms). Total time: ~3 minutes. Two atomic commits: 4455c31 (timeouts), 208a437 (CI config).
 
 **Immediate next action:**
 Resume Phase 7 Plan 04 (07-04-PLAN.md) if remaining, or conclude documentation correction project.
