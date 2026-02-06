@@ -99,7 +99,7 @@ export const hooks: EngineHooks = {
 		execSyncHook(plugins, 'autocompleteConfigUpdated', void 0),
 }
 
-type EnginePluginHooksOptions = {
+interface EnginePluginHooksOptions {
 	configureRawConfig?: (config: EngineConfig) => Awaitable<EngineConfig | void>
 	rawConfigConfigured?: (config: EngineConfig) => void
 	configureResolvedConfig?: (resolvedConfig: ResolvedEngineConfig) => Awaitable<ResolvedEngineConfig | void>
