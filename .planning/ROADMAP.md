@@ -226,8 +226,8 @@ Plans:
 **Requirements Covered:**
 - CONSOL-01 to CONSOL-04: docs/llm/ validated as intentional design (not duplication)
 - DEV-01: AGENTS.md accurately reflects project architecture
-- DEV-02: .github/skills/pikacss-dev/SKILL.md reflects actual workflows
-- DEV-03: .github/skills/pikacss-expert/SKILL.md reflects actual API usage
+- DEV-02: skills/pikacss-dev/SKILL.md reflects actual workflows
+- DEV-03: skills/pikacss-expert/SKILL.md reflects actual API usage
 - DEV-04: All development commands in docs actually work
 - DEV-05: Monorepo structure documentation matches reality
 

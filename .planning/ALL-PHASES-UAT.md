@@ -171,7 +171,7 @@ All 6 initial issues have been resolved:
   - Fixed check-placeholders.sh to filter false positives (technical terms, HTML attributes, CSS pseudo-classes)
   - Fixed check-links.sh to properly validate links (directory resolution, code block filtering, correct exit codes)
   - Fixed 2 broken links:
-    - .github/skills/pikacss-expert/references/troubleshooting.md: API-REFERENCE.md → api-reference.md
+    - skills/pikacss-expert/references/troubleshooting.md: API-REFERENCE.md → api-reference.md
     - AGENTS.md: Removed reference to non-existent pikacss-docs skill
   - Result: All 4 validation checks now pass (./scripts/run-all-checks.sh)
 

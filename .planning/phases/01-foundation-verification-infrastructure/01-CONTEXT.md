@@ -55,7 +55,7 @@ Build verification system that validates documentation accuracy through automate
 All 73 target markdown files are currently ignored in `eslint.config.mjs`:
 - `**/README.md`
 - `docs/**/*.md`
-- `.github/skills/**/*.md`
+- `skills/**/*.md`
 - `**/AGENTS.md`
 
 Phase 1 must resolve this by configuring ESLint to check markdown without code block false positives.

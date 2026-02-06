@@ -112,7 +112,7 @@ bash scripts/run-all-checks.sh
 **Trigger Conditions:**
 - Push to `main` branch
 - Pull requests to `main` branch
-- Path filters: `docs/**/*.md`, `**/*.md`, `.github/skills/**/*.md`, `scripts/check-*.sh`
+- Path filters: `docs/**/*.md`, `**/*.md`, `skills/**/*.md`, `scripts/check-*.sh`
 
 **Workflow Steps:**
 1. Checkout repository (`actions/checkout@v6`)
@@ -162,7 +162,7 @@ bash scripts/run-all-checks.sh
    - Resolution: Phase 7 - Fulfill or remove ecosystem promises
 
 4. **Directory Analysis**
-   - `.github/skills/`: Highest issue density (9.90 per file) - code block false positives
+   - `skills/`: Highest issue density (9.90 per file) - code block false positives
    - `docs/`: 31 issues across 52 files (0.60 per file) - broken links and placeholders
    - `packages/*/README.md`: 0 issues (8 files)
    - Root files: 0 issues (AGENTS.md, README.md)
@@ -221,7 +221,7 @@ run_check() {
 **Path Filters:** Optimized to trigger only on relevant changes:
 - `docs/**/*.md` - Documentation site content
 - `**/*.md` - All markdown files (READMEs, AGENTS.md, etc.)
-- `.github/skills/**/*.md` - AI agent skill documentation
+- `skills/**/*.md` - AI agent skill documentation
 - `scripts/check-*.sh` - Validation script changes
 - `scripts/run-all-checks.sh` - Unified runner changes
 

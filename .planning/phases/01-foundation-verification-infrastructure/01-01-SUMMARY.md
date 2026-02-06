@@ -106,7 +106,7 @@ Phase 2 will address code block handling through VitePress transclusion (extract
 Established initial quality baseline for tracking improvements:
 
 **Distribution by file type:**
-- `.github/skills/**`: 9 files with issues
+- `skills/**`: 9 files with issues
 - `docs/advanced/**`: 10 files with issues
 - `docs/**`: 8 files with issues
 - `packages/**/README.md`: 8 files with issues

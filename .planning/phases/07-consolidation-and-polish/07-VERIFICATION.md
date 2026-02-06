@@ -147,19 +147,19 @@ grep -A 20 "## 🏗️ Project Architecture" AGENTS.md | grep "@pikacss"
 
 #### Truth 4: All skill documentation synchronized with main docs
 
-**Expected:** .github/skills/ content matches docs/ accuracy
+**Expected:** skills/ content matches docs/ accuracy
 
 **Reality Check:**
 ```bash
 # Check if skills were reviewed
-ls -la .github/skills/*/SKILL.md
+ls -la skills/*/SKILL.md
 ```
 
 **Result:**
 ```
-.github/skills/pikacss-dev/SKILL.md
-.github/skills/pikacss-docs/SKILL.md
-.github/skills/pikacss-expert/SKILL.md
+skills/pikacss-dev/SKILL.md
+skills/pikacss-docs/SKILL.md
+skills/pikacss-expert/SKILL.md
 ```
 
 **Status:** ❌ NOT VERIFIED
@@ -171,8 +171,8 @@ ls -la .github/skills/*/SKILL.md
 
 **Evidence:**
 - `.planning/REQUIREMENTS.md` line 71-72: 
-  - `- [ ] **DEV-02**: .github/skills/pikacss-dev/SKILL.md reflects actual workflows`
-  - `- [ ] **DEV-03**: .github/skills/pikacss-expert/SKILL.md reflects actual API usage`
+  - `- [ ] **DEV-02**: skills/pikacss-dev/SKILL.md reflects actual workflows`
+  - `- [ ] **DEV-03**: skills/pikacss-expert/SKILL.md reflects actual API usage`
 - No verification tests for skills
 - 07-01-SUMMARY.md doesn't mention skills validation
 
@@ -413,7 +413,7 @@ Actual packages: 9 directories (includes api-verifier)
 
 ### Link 2: Skills → Main Docs API Accuracy
 
-**From:** .github/skills/pikacss-expert/SKILL.md API examples
+**From:** skills/pikacss-expert/SKILL.md API examples
 **To:** docs/advanced/api-reference.md verified APIs
 **Via:** Test that validates skill examples against API verifier results
 
@@ -422,7 +422,7 @@ Actual packages: 9 directories (includes api-verifier)
 **Reality Check:**
 ```bash
 # Check if skills reference verified APIs
-grep "createEngine" .github/skills/pikacss-expert/SKILL.md >/dev/null && echo "References core APIs"
+grep "createEngine" skills/pikacss-expert/SKILL.md >/dev/null && echo "References core APIs"
 ```
 
 **Result:**

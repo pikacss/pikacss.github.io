@@ -206,7 +206,7 @@ pnpm --filter @pikacss/api-verifier test developer-docs/agents 2>&1 | grep "pack
 
 ### Truth 4: All skill documentation synchronized with main docs ✅
 
-**Expected:** .github/skills/ content matches docs/ accuracy
+**Expected:** skills/ content matches docs/ accuracy
 
 **Reality Check:**
 ```bash
@@ -474,7 +474,7 @@ pnpm --filter @pikacss/api-verifier test developer-docs/agents 2>&1 | grep "pack
 
 ### Link 2: Skills → Main Docs API Accuracy ✅
 
-**From:** .github/skills/pikacss-expert/SKILL.md API examples  
+**From:** skills/pikacss-expert/SKILL.md API examples  
 **To:** docs/advanced/api-reference.md verified APIs  
 **Via:** pikacss-expert-skill.test.ts validation
 

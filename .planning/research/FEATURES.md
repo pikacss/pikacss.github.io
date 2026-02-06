@@ -32,7 +32,7 @@ Features that set the product apart. Not required, but valuable.
 | **Auto-Generated File Awareness** | Don't validate docs for `pika.gen.css` or `dist/*` | LOW | Respect project's "never edit these" rules from AGENTS.md |
 | **Multi-Layer Verification** | Validate docs follow package dependency order (core → integration → unplugin → frameworks) | MEDIUM | Ensures lower-layer docs are correct before validating higher layers that depend on them |
 | **Plugin System Documentation** | Verify plugin hooks, module augmentation patterns | HIGH | Complex TypeScript patterns require specialized validation |
-| **Skill Documentation Sync** | Keep `.github/skills/*/SKILL.md` in sync with main docs | LOW | Three skill files must not contradict docs/ content |
+| **Skill Documentation Sync** | Keep `skills/*/SKILL.md` in sync with main docs | LOW | Three skill files must not contradict docs/ content |
 | **VitePress Integration** | Validation works with VitePress's markdown extensions | MEDIUM | Handle VitePress-specific syntax like `::: code-group` and custom containers |
 
 ### Anti-Features (Commonly Requested, Often Problematic)

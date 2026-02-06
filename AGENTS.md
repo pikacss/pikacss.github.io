@@ -26,8 +26,8 @@ This requirement applies to:
 
 This document guides AI agents in maintaining project internals. For specialized topics:
 
-- **[pikacss-dev Skill](.github/skills/pikacss-dev/SKILL.md)** - Comprehensive developer workflow guide
-- **[pikacss-expert Skill](.github/skills/pikacss-expert/SKILL.md)** - User guidance for PikaCSS API and configuration
+- **[pikacss-dev Skill](skills/pikacss-dev/SKILL.md)** - Comprehensive developer workflow guide
+- **[pikacss-expert Skill](skills/pikacss-expert/SKILL.md)** - User guidance for PikaCSS API and configuration
 
 ---
 
@@ -643,9 +643,9 @@ pnpm --filter '!@pikacss/docs' build
 - `docs/advanced/api-reference.md` - Complete API documentation
 
 **Skills**:
-- `.github/skills/pikacss-dev/SKILL.md` - Developer workflows
-- `.github/skills/pikacss-expert/SKILL.md` - User guidance
-- `.github/skills/pikacss-docs/SKILL.md` - Documentation maintenance
+- `skills/pikacss-dev/SKILL.md` - Developer workflows
+- `skills/pikacss-expert/SKILL.md` - User guidance
+- `skills/pikacss-docs/SKILL.md` - Documentation maintenance
 
 **External**:
 - UnoCSS - Design philosophy reference

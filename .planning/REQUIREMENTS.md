@@ -68,8 +68,8 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Developer Documentation
 
 - [x] **DEV-01**: AGENTS.md accurately reflects project architecture (Verified via packages/api-verifier/tests/developer-docs/agents.test.ts - package list matches filesystem)
-- [x] **DEV-02**: .github/skills/pikacss-dev/SKILL.md reflects actual workflows (Verified via packages/api-verifier/tests/developer-docs/pikacss-dev-skill.test.ts - commands and paths accurate)
-- [x] **DEV-03**: .github/skills/pikacss-expert/SKILL.md reflects actual API usage (Verified via packages/api-verifier/tests/developer-docs/pikacss-expert-skill.test.ts - API examples correct)
+- [x] **DEV-02**: skills/pikacss-dev/SKILL.md reflects actual workflows (Verified via packages/api-verifier/tests/developer-docs/pikacss-dev-skill.test.ts - commands and paths accurate)
+- [x] **DEV-03**: skills/pikacss-expert/SKILL.md reflects actual API usage (Verified via packages/api-verifier/tests/developer-docs/pikacss-expert-skill.test.ts - API examples correct)
 - [x] **DEV-04**: All development commands in docs actually work (Verified via scripts/verify-dev-commands.sh - all critical commands execute successfully)
 - [x] **DEV-05**: Monorepo structure documentation matches reality (Verified via 07-03 - added missing @pikacss/api-verifier to AGENTS.md, count now 9/9)
 

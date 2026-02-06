@@ -231,7 +231,7 @@ Source Code (packages/*/src/)
 [Extract Signatures] → API inventory
     ↓
     ├─→ Compare with docs/advanced/api-reference.md
-    ├─→ Compare with .github/skills/*/references/
+    ├─→ Compare with skills/*/references/
     └─→ Compare with docs/guide/*.md examples
     ↓
 [Generate Diff Report] → What's missing/incorrect
@@ -532,7 +532,7 @@ Use per-package checklists in `.planning/docs-verification/`:
 - **PikaCSS AGENTS.md**: Project architecture, monorepo structure, testing patterns
 - **PikaCSS package.json**: Build system (Vitest, pnpm), existing test infrastructure
 - **PikaCSS docs/ directory**: 51 markdown files covering guides, API reference, integrations
-- **PikaCSS .github/skills/**: pikacss-dev and pikacss-expert skills with reference documentation
+- **PikaCSS skills/**: pikacss-dev and pikacss-expert skills with reference documentation
 - **Existing test structure**: packages/*/tests/ shows Vitest patterns with unit/integration organization
 - **Documentation verification systems**: Common patterns from OSS projects (TypeScript docs, MDN, Rust docs)
 - **Markdown testing tools**: remark, markdown-it (parsing), @typescript/twoslash (type checking examples)

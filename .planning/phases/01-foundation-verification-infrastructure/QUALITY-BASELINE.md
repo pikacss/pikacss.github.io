@@ -2,7 +2,7 @@
 
 **Captured:** 2026-02-03  
 **Project Version:** v0.0.39  
-**Scope:** 73 markdown files across docs/, .github/skills/, packages/*/README.md, AGENTS.md, README.md
+**Scope:** 73 markdown files across docs/, skills/, packages/*/README.md, AGENTS.md, README.md
 
 ---
 
@@ -34,7 +34,7 @@ This baseline establishes the initial quality state of PikaCSS documentation bef
    - **Resolution**: Phase 2 - Configure ESLint to ignore code blocks or use VitePress transclusion
 
 2. **YAML frontmatter parsing**: ~10 errors
-   - `.github/skills/README.md:308` - Unexpected scalar token
+   - `skills/README.md:308` - Unexpected scalar token
    - **Resolution**: Phase 7 - Fix YAML syntax in skill documentation
 
 3. **Mixed operators without parentheses**: ~6 errors
@@ -42,9 +42,9 @@ This baseline establishes the initial quality state of PikaCSS documentation bef
    - **Resolution**: Phase 2 - Add ESLint rule exception for documentation examples
 
 **Files with most issues:**
-1. `.github/skills/pikacss-dev/references/PLUGIN-PATTERNS.md` (15 errors)
-2. `.github/skills/pikacss-expert/references/TROUBLESHOOTING.md` (14 errors)
-3. `.github/skills/pikacss-dev/references/IMPLEMENTATION-GUIDE.md` (5 errors)
+1. `skills/pikacss-dev/references/PLUGIN-PATTERNS.md` (15 errors)
+2. `skills/pikacss-expert/references/TROUBLESHOOTING.md` (14 errors)
+3. `skills/pikacss-dev/references/IMPLEMENTATION-GUIDE.md` (5 errors)
 
 **Technical Note:** These are false positives from ESLint treating documentation code blocks as actual code files. The code examples themselves may be correct in their intended context.
 
@@ -142,11 +142,11 @@ This baseline establishes the initial quality state of PikaCSS documentation bef
 | Directory | Files | ESLint Errors | Broken Links | Placeholders | Total Issues | Density |
 |-----------|-------|---------------|--------------|--------------|--------------|---------|
 | docs/ | 52 | 15 | 8 | 8 | 31 | 0.60 |
-| .github/skills/ | 10 | 96 | 0 | 3 | 99 | 9.90 |
+| skills/ | 10 | 96 | 0 | 3 | 99 | 9.90 |
 | packages/*/README.md | 8 | 0 | 0 | 0 | 0 | 0.00 |
 | Root (AGENTS.md, README.md) | 3 | 0 | 0 | 0 | 0 | 0.00 |
 
-**High-Priority Directory:** `.github/skills/` has extreme issue density (9.90 issues/file) due to code block false positives. Phase 2 must address ESLint configuration to reduce noise.
+**High-Priority Directory:** `skills/` has extreme issue density (9.90 issues/file) due to code block false positives. Phase 2 must address ESLint configuration to reduce noise.
 
 ---
 
@@ -292,18 +292,18 @@ bash scripts/check-placeholders.sh  # Placeholder detection
 ### ESLint Top Errors (First 20 Lines)
 
 ```
-/Users/deviltea/Documents/Programming/pikacss/.github/skills/README.md
+/Users/deviltea/Documents/Programming/pikacss/skills/README.md
   308:0  error  Parsing error: Unexpected scalar token in YAML stream: "name"
 
-/Users/deviltea/Documents/Programming/pikacss/.github/skills/pikacss-dev/references/ARCHITECTURE.md
+/Users/deviltea/Documents/Programming/pikacss/skills/pikacss-dev/references/ARCHITECTURE.md
   236:50  error  Parsing error: Expression expected
 
-/Users/deviltea/Documents/Programming/pikacss/.github/skills/pikacss-dev/references/IMPLEMENTATION-GUIDE.md
+/Users/deviltea/Documents/Programming/pikacss/skills/pikacss-dev/references/IMPLEMENTATION-GUIDE.md
   305:0   error  Parsing error: Unexpected keyword or identifier
   338:3   error  Unexpected mix of '&&' and '||'. Use parentheses to clarify the intended order of operations
   338:23  error  Unexpected mix of '&&' and '||'. Use parentheses to clarify the intended order of operations
 
-/Users/deviltea/Documents/Programming/pikacss/.github/skills/pikacss-dev/references/PLUGIN-PATTERNS.md
+/Users/deviltea/Documents/Programming/pikacss/skills/pikacss-dev/references/PLUGIN-PATTERNS.md
    64:32  error  Parsing error: ';' expected
    72:24  error  Parsing error: ';' expected
    80:24  error  Parsing error: ';' expected
@@ -341,9 +341,9 @@ bash scripts/check-placeholders.sh  # Placeholder detection
 ./docs/examples/components.md:435: placeholder="••••••••"
 ./docs/community/ecosystem.md:70: Coming soon! Official starter templates for popular frameworks.
 ./docs/community/ecosystem.md:128: Coming soon! Official component library with common UI patterns.
-./.github/skills/pikacss-expert/references/API-REFERENCE.md:110: '$placeholder'?: StyleDefinition
-./.github/skills/pikacss-expert/references/API-REFERENCE.md:307: // Placeholder
-./.github/skills/pikacss-expert/references/API-REFERENCE.md:308: $placeholder: {
+./skills/pikacss-expert/references/API-REFERENCE.md:110: '$placeholder'?: StyleDefinition
+./skills/pikacss-expert/references/API-REFERENCE.md:307: // Placeholder
+./skills/pikacss-expert/references/API-REFERENCE.md:308: $placeholder: {
 ```
 
 ---

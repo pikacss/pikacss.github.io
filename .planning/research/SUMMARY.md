@@ -54,7 +54,7 @@ This pattern stores all code examples as actual testable files, imports them int
 
 **Defer (v2+):**
 - **Coverage Metrics** — Track which exports/APIs lack documentation (nice to have but not blocking)
-- **Skill Documentation Sync** — Keep `.github/skills/*/SKILL.md` in sync with main docs (only 3 files, can manually verify)
+- **Skill Documentation Sync** — Keep `skills/*/SKILL.md` in sync with main docs (only 3 files, can manually verify)
 - **Plugin System Documentation** — Complex TypeScript patterns; validate manually first before automating
 
 **Anti-features (commonly requested but problematic):**
@@ -205,7 +205,7 @@ Based on research, suggested phase structure follows progressive enhancement wit
 - docs/guide/basics.md accuracy verified
 - docs/advanced/api-reference.md (core sections) verified
 - AGENTS.md (core package section) verified
-- .github/skills/pikacss-expert/references/ (core API) verified
+- skills/pikacss-expert/references/ (core API) verified
 - Verification test suite for core package
 
 **Addresses Features:**
@@ -275,7 +275,7 @@ Based on research, suggested phase structure follows progressive enhancement wit
 - API inventory extractor scanning source for all exports
 - Documentation coverage analyzer (which APIs documented)
 - Consistency checker (same API described consistently across files)
-- Skills documentation sync (.github/skills/* consistent with main docs)
+- Skills documentation sync (skills/* consistent with main docs)
 - docs/llm/ merged into main documentation (eliminate duplication)
 
 **Addresses Features:**
@@ -343,7 +343,7 @@ All research based on verifiable sources: official tool documentation, actual Pi
 - **PikaCSS PROJECT.md** — Problem definition (73 markdown files with AI hallucinations), known issues (API mismatches, broken examples), technical environment (pnpm, tsdown, Vitest, VitePress), constraints (code as source of truth)
 - **PikaCSS package.json** — Build system verification (Vitest, pnpm workspace), dependency structure, version 0.0.39
 - **PikaCSS docs/ directory** — 51 markdown files across guides, API reference, integrations (actual documentation to be corrected)
-- **PikaCSS .github/skills/** — pikacss-dev, pikacss-expert, pikacss-docs skills with reference documentation
+- **PikaCSS skills/** — pikacss-dev, pikacss-expert, pikacss-docs skills with reference documentation
 - **VitePress Official Documentation** — https://vitepress.dev/guide/markdown — Code snippet transclusion pattern (<<< @/file syntax), markdown extensions, verified Feb 2026
 - **markdown-link-check GitHub** — https://github.com/tcort/markdown-link-check — Latest release v3.14.2 (Nov 2025), 681 stars, actively maintained
 - **markdownlint GitHub** — https://github.com/DavidAnson/markdownlint — 5.8k stars, 60+ configurable rules, VSCode integration
