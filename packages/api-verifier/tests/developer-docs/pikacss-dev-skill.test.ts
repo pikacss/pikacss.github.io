@@ -6,7 +6,7 @@ import { describe, expect, it } from 'vitest'
 
 describe('pikacss-dev SKILL.md Validation', () => {
 	const monorepoRoot = resolve(__dirname, '../../../..')
-	const skillPath = join(monorepoRoot, '.github/skills/pikacss-dev/SKILL.md')
+	const skillPath = join(monorepoRoot, 'skills/pikacss-dev/SKILL.md')
 	const skillContent = readFileSync(skillPath, 'utf-8')
 
 	it('documents all essential commands that exist in root package.json', () => {
@@ -141,7 +141,7 @@ describe('pikacss-dev SKILL.md Validation', () => {
 
 		for (const ref of mdReferences) {
 			// Resolve path relative to skill file
-			const refPath = join(monorepoRoot, '.github/skills/pikacss-dev', ref)
+			const refPath = join(monorepoRoot, 'skills/pikacss-dev', ref)
 
 			expect(existsSync(refPath), `Referenced file ${ref} does not exist at ${refPath}`)
 				.toBe(true)

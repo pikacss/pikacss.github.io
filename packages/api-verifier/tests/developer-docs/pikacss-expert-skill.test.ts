@@ -6,7 +6,7 @@ import { describe, expect, it } from 'vitest'
 
 describe('pikacss-expert SKILL.md Validation', () => {
 	const monorepoRoot = resolve(__dirname, '../../../..')
-	const skillPath = join(monorepoRoot, '.github/skills/pikacss-expert/SKILL.md')
+	const skillPath = join(monorepoRoot, 'skills/pikacss-expert/SKILL.md')
 	const skillContent = readFileSync(skillPath, 'utf-8')
 
 	it('imports reference correct package names', () => {
