@@ -1,6 +1,6 @@
 # Project State: PikaCSS Documentation Correction
 
-**Last Updated:** 2026-02-06 14:05
+**Last Updated:** 2026-02-06 14:37
 **Project Version:** v0.0.39
 
 ---
@@ -172,6 +172,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 2026-02-06 | Increase bundler test timeouts to 5x baseline | User reports timeouts still occurring; CI can be 3-5x slower than local | Global 300s timeout, individual 300-360s (5x local baseline) provides worst-case buffer (quick-010) |
 | 2026-02-06 | Add explicit 300s timeouts to beforeEach hooks | Vitest global testTimeout only applies to test functions, not hooks; beforeEach defaults to 10s | Vite and Webpack beforeEach now match Nuxt pattern with explicit 300s timeout (quick-011) |
 | 2026-02-06 | Use --no-frozen-lockfile in CI test job | --frozen-lockfile causes ENOTEMPTY race conditions when parallel matrix jobs write to node_modules | Test job uses --no-frozen-lockfile for safety, check job retains standard install for lock validation (quick-011) |
+| 2026-02-06 | Disable concurrent execution for bundler tests | Parallel pnpm install operations in shared monorepo node_modules cause race conditions | Sequential execution prevents ENOENT/EEXIST errors; trade-off: slower CI (~3-5 min per OS) but reliable (quick-012) |
 
 ### Todos
 
@@ -207,6 +208,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 009 | Fix CI bundler integration test timeouts | 2026-02-06 | 1156e58 | [009-fix-ci-bundler-integration-test-timeouts](./quick/009-fix-ci-bundler-integration-test-timeouts/) |
 | 010 | Increase bundler test timeouts to 5x baseline for CI | 2026-02-06 | 3afb63d | [010-fix-ci-bundler-integration-test-timeouts](./quick/010-fix-ci-bundler-integration-test-timeouts/) |
 | 011 | Fix GitHub Runner bundler test failures | 2026-02-06 | 4455c31 | [011-fix-github-runner-bundler-test-failures-](./quick/011-fix-github-runner-bundler-test-failures-/) |
+| 012 | Fix GitHub Runner bundler test race conditions | 2026-02-06 | 1ab3c37 | [012-fix-github-runner-bundler-test-failures](./quick/012-fix-github-runner-bundler-test-failures/) |
 
 ### Important Notes
 
@@ -346,7 +348,7 @@ Integration tests use monorepo workspace resolution for efficient testing. Fixtu
 - Existing infrastructure: Vitest, VitePress, TypeScript, pnpm workspace
 
 **Where we left off:**
-Quick Task 011 COMPLETE (3/3 tasks): Fixed three root causes of GitHub Runner CI failures: added explicit 300s timeouts to Vite and Webpack beforeEach hooks (matching Nuxt pattern), changed CI test job to use `--no-frozen-lockfile` for safe parallel execution, validated all fixes with automated checks. All 3 beforeEach hooks now have explicit timeouts, CI configuration optimized for parallel testing, TypeScript compilation passes, core unit tests pass (81/81 in 360ms). Total time: ~3 minutes. Two atomic commits: 4455c31 (timeouts), 208a437 (CI config).
+Quick Task 012 COMPLETE (3/3 tasks): Disabled concurrent test execution in vitest.config.eslint.ts to eliminate GitHub Runner CI race conditions. Changed `concurrent: process.env.CI === 'true'` to `concurrent: false` with comprehensive explanatory comment documenting the race condition prevention rationale. All 22 tests passing sequentially (35.96s), zero ENOENT/EEXIST errors, TypeScript compilation passes. Trade-off accepted: slower CI execution (~3-5 min per OS) prioritized over reliability. Total time: ~1.6 minutes. One atomic commit: 1ab3c37 (sequential execution).
 
 **Immediate next action:**
 Resume Phase 7 Plan 04 (07-04-PLAN.md) if remaining, or conclude documentation correction project.
