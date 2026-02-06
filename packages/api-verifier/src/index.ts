@@ -87,7 +87,27 @@ export async function verifyAllPackages(
 
 	// Parse documentation glob pattern - simple implementation
 	// Assumes pattern like "docs/**/*.md" means scan docs directory for .md files
-	const docDir = docGlob.split('/')[0] || 'docs'
+	// For absolute paths like "/tmp/test/**/*.md", extract the base directory
+	const isAbsolute = path.isAbsolute(docGlob)
+	let docDir: string
+	if (isAbsolute) {
+		// Extract directory up to the first glob pattern character (*, ?, [)
+		const globPatternIndex = docGlob.search(/[*?[]/)
+		if (globPatternIndex === -1) {
+			// No glob pattern, use the entire path
+			docDir = docGlob
+		}
+		else {
+			// Find the last directory separator before the glob pattern
+			const pathBeforeGlob = docGlob.slice(0, globPatternIndex)
+			const lastSeparator = pathBeforeGlob.lastIndexOf(path.sep)
+			docDir = lastSeparator === -1 ? pathBeforeGlob : pathBeforeGlob.slice(0, lastSeparator)
+		}
+	}
+	else {
+		// Relative path - use first segment
+		docDir = docGlob.split('/')[0] || 'docs'
+	}
 	const docFiles = findMarkdownFiles(docDir)
 
 	// Parse all documentation files
