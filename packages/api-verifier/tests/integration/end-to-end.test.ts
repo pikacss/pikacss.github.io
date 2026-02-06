@@ -69,7 +69,7 @@ Creates a new PikaCSS engine instance.
 			// Cleanup
 			rmSync(testDir, { recursive: true, force: true })
 		}
-	}, 10000) // Longer timeout for TS compilation
+	}, 30000) // TypeScript compilation overhead
 
 	it('should generate reports for all packages', async () => {
 		// Create temp directory for test
@@ -119,5 +119,5 @@ function pika(styles: any): string
 			// Cleanup
 			rmSync(testDir, { recursive: true, force: true })
 		}
-	}, 30000) // Longer timeout for multiple packages
+	}, 120000) // Multiple packages: TypeScript compilation overhead
 })
