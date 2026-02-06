@@ -25,7 +25,7 @@ describe('aGENTS.md Validation', () => {
 			.sort() as string[]
 
 		// Extract packages from AGENTS.md Package Dependencies table
-		const tableMatch = agentsContent.match(/\| Package \| Role \| Dependencies \|[\s\S]*?\n\n/)
+		const tableMatch = agentsContent.match(/\| Package \| Role \| Dependencies \|[\s\S]*?(\r?\n){2}/)
 		expect(tableMatch)
 			.toBeTruthy()
 
@@ -143,7 +143,7 @@ describe('aGENTS.md Validation', () => {
 
 	it('package count matches between sections', () => {
 		// Extract package count from Package Dependencies table
-		const tableMatch = agentsContent.match(/\| Package \| Role \| Dependencies \|[\s\S]*?\n\n/)
+		const tableMatch = agentsContent.match(/\| Package \| Role \| Dependencies \|[\s\S]*?(\r?\n){2}/)
 		const tablePackages = [...tableMatch![0].matchAll(/@pikacss\/[\w-]+/g)]
 			.map(m => m[0])
 			.filter((pkg, idx, arr) => arr.indexOf(pkg) === idx)

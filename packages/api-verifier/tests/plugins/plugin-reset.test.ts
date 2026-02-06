@@ -46,7 +46,7 @@ describe('plugin-reset API documentation', () => {
 		const readme = fs.readFileSync(readmePath, 'utf-8')
 
 		// Extract TypeScript code blocks
-		const codeBlocks = readme.match(/```typescript\n([\s\S]*?)\n```/g)
+		const codeBlocks = readme.match(/```typescript\r?\n([\s\S]*?)\r?\n```/g)
 		expect(codeBlocks)
 			.toBeDefined()
 		expect(codeBlocks!.length)

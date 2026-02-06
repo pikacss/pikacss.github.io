@@ -186,7 +186,7 @@ describe('pikacss-expert SKILL.md Validation', () => {
 
 	it('code examples are syntactically valid TypeScript', () => {
 		// Extract all TypeScript code blocks
-		const codeBlocks = Array.from(skillContent.matchAll(/```(?:typescript|ts)\n([\s\S]*?)```/g))
+		const codeBlocks = Array.from(skillContent.matchAll(/```(?:typescript|ts)\r?\n([\s\S]*?)```/g))
 
 		expect(codeBlocks.length, 'Should have multiple TypeScript examples')
 			.toBeGreaterThan(5)

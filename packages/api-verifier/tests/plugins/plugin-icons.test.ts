@@ -113,7 +113,7 @@ describe('plugin-icons API documentation', () => {
 
 	it('should have correct function call syntax', () => {
 		const readme = fs.readFileSync(readmePath, 'utf-8')
-		const codeBlocks = readme.match(/```typescript\n([\s\S]*?)\n```/g)
+		const codeBlocks = readme.match(/```typescript\r?\n([\s\S]*?)\r?\n```/g)
 
 		expect(codeBlocks)
 			.toBeDefined()

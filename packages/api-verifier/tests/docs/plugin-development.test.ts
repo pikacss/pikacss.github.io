@@ -104,7 +104,7 @@ describe('plugin-development.md API documentation', () => {
 
 	it('should have correct code syntax in all examples', () => {
 		const doc = fs.readFileSync(docPath, 'utf-8')
-		const codeBlocks = doc.match(/```typescript\n([\s\S]*?)\n```/g)
+		const codeBlocks = doc.match(/```typescript\r?\n([\s\S]*?)\r?\n```/g)
 
 		expect(codeBlocks)
 			.toBeDefined()
