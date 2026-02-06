@@ -593,6 +593,6 @@ const gridContainer = pika({
 ## See Also
 
 For more details, see the reference guides:
-- [references/API-REFERENCE.md](references/API-REFERENCE.md) - Complete API documentation
+- [references/api-reference.md](references/api-reference.md) - Complete API documentation
 - [references/PLUGIN-GUIDE.md](references/PLUGIN-GUIDE.md) - Using plugins
-- [references/TROUBLESHOOTING.md](references/TROUBLESHOOTING.md) - Common issues and solutions
+- [references/troubleshooting.md](references/troubleshooting.md) - Common issues and solutions
