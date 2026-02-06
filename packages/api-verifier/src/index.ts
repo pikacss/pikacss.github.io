@@ -79,36 +79,71 @@ export async function verifyPackage(
  * Verify API documentation for all packages in the monorepo
  */
 export async function verifyAllPackages(
-	docGlob: string = 'docs/**/*.md',
+	docPatterns: string | string[] = 'docs/**/*.md',
 	outputDir: string = 'reports',
 ): Promise<VerificationReport> {
 	// Get all packages
 	const packages = getMonorepoPackages()
 
-	// Parse documentation glob pattern - simple implementation
-	// Assumes pattern like "docs/**/*.md" means scan docs directory for .md files
-	// For absolute paths like "/tmp/test/**/*.md", extract the base directory
-	const isAbsolute = path.isAbsolute(docGlob)
-	let docDir: string
-	if (isAbsolute) {
-		// Extract directory up to the first glob pattern character (*, ?, [)
-		const globPatternIndex = docGlob.search(/[*?[]/)
-		if (globPatternIndex === -1) {
-			// No glob pattern, use the entire path
-			docDir = docGlob
+	const patterns = Array.isArray(docPatterns) ? docPatterns : [docPatterns]
+	const docFilesSet = new Set<string>()
+
+	for (const pattern of patterns) {
+		// Special handling for packages READMEs glob
+		if (pattern.includes('packages/*/README.md')) {
+			const packagesDir = 'packages'
+			if (fs.existsSync(packagesDir)) {
+				const entries = fs.readdirSync(packagesDir, { withFileTypes: true })
+				for (const entry of entries) {
+					if (entry.isDirectory()) {
+						const readmePath = path.join(packagesDir, entry.name, 'README.md')
+						if (fs.existsSync(readmePath)) {
+							docFilesSet.add(readmePath)
+						}
+					}
+				}
+			}
+			continue
+		}
+
+		// Parse documentation glob pattern - simple implementation
+		// Assumes pattern like "docs/**/*.md" means scan docs directory for .md files
+		// For absolute paths like "/tmp/test/**/*.md", extract the base directory
+		const docGlob = pattern
+		const isAbsolute = path.isAbsolute(docGlob)
+		let docDir: string
+		if (isAbsolute) {
+			// Extract directory up to the first glob pattern character (*, ?, [)
+			const globPatternIndex = docGlob.search(/[*?[]/)
+			if (globPatternIndex === -1) {
+				// No glob pattern, use the entire path
+				docDir = docGlob
+			}
+			else {
+				// Find the last directory separator before the glob pattern
+				const pathBeforeGlob = docGlob.slice(0, globPatternIndex)
+				const lastSeparator = pathBeforeGlob.lastIndexOf(path.sep)
+				docDir = lastSeparator === -1 ? pathBeforeGlob : pathBeforeGlob.slice(0, lastSeparator)
+			}
 		}
 		else {
-			// Find the last directory separator before the glob pattern
-			const pathBeforeGlob = docGlob.slice(0, globPatternIndex)
-			const lastSeparator = pathBeforeGlob.lastIndexOf(path.sep)
-			docDir = lastSeparator === -1 ? pathBeforeGlob : pathBeforeGlob.slice(0, lastSeparator)
+			// Relative path - use first segment
+			docDir = docGlob.split('/')[0] || 'docs'
+		}
+
+		if (fs.existsSync(docDir)) {
+			const foundFiles = findMarkdownFiles(docDir)
+			foundFiles.forEach(f => docFilesSet.add(f))
 		}
 	}
-	else {
-		// Relative path - use first segment
-		docDir = docGlob.split('/')[0] || 'docs'
-	}
-	const docFiles = findMarkdownFiles(docDir)
+
+	const docFiles = Array.from(docFilesSet)
+	// eslint-disable-next-line no-console
+	console.log(`Found ${docFiles.length} documentation files to scan:`)
+	// eslint-disable-next-line no-console
+	docFiles.forEach(f => console.log(`- ${f}`))
+	// eslint-disable-next-line no-console
+	console.log()
 
 	// Parse all documentation files
 	const allDocumentedAPIs: DocumentedAPI[] = []

@@ -13,7 +13,8 @@ async function main() {
 
 	try {
 		// Run verification, generate reports to current directory (repo root)
-		const report = await verifyAllPackages('docs/**/*.md', '.')
+		// Scan both docs directory and package READMEs
+		const report = await verifyAllPackages(['docs/**/*.md', 'packages/*/README.md'], '.')
 
 		console.log()
 		console.log('=== Verification Summary ===')
