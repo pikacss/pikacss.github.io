@@ -19,7 +19,7 @@ describe('vite Integration', () => {
 		)
 
 		// Install dependencies
-		await execa('pnpm', ['install'], { cwd: testDir })
+		await execa('pnpm', ['install', '--no-frozen-lockfile'], { cwd: testDir })
 	})
 
 	afterEach(async () => {
@@ -85,7 +85,7 @@ describe('nuxt Integration', () => {
 			testDir,
 			{ recursive: true },
 		)
-		await execa('pnpm', ['install'], { cwd: testDir })
+		await execa('pnpm', ['install', '--no-frozen-lockfile'], { cwd: testDir })
 	}, 60000) // 60s timeout for Nuxt dependencies
 
 	afterEach(async () => {
@@ -115,7 +115,7 @@ describe('webpack Integration', () => {
 			testDir,
 			{ recursive: true },
 		)
-		await execa('pnpm', ['install'], { cwd: testDir })
+		await execa('pnpm', ['install', '--no-frozen-lockfile'], { cwd: testDir })
 	})
 
 	afterEach(async () => {
