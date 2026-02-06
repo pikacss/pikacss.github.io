@@ -28,7 +28,6 @@ This document guides AI agents in maintaining project internals. For specialized
 
 - **[pikacss-dev Skill](.github/skills/pikacss-dev/SKILL.md)** - Comprehensive developer workflow guide
 - **[pikacss-expert Skill](.github/skills/pikacss-expert/SKILL.md)** - User guidance for PikaCSS API and configuration
-- **[pikacss-docs Skill](.github/skills/pikacss-docs/SKILL.md)** - Documentation maintenance procedures
 
 ---
 

@@ -39,6 +39,10 @@ trap "rm -f $TEMP_RESULTS" EXIT
 # Find all markdown files and search for placeholders
 find . -name "*.md" -not -path "./.planning/*" -not -path "./node_modules/*" -type f -exec grep -niHE "$GREP_PATTERN" {} \; 2>/dev/null > "$TEMP_RESULTS" || true
 
+# Filter out false positives (technical terms, HTML attributes, CSS selectors, code comments)
+grep -v -E "(Selector [Pp]laceholder|placeholder=\"|'\\\$placeholder'|\\\$placeholder:|// Placeholder)" "$TEMP_RESULTS" > "$TEMP_RESULTS.filtered" 2>/dev/null || true
+mv "$TEMP_RESULTS.filtered" "$TEMP_RESULTS"
+
 # Process results
 while IFS=: read -r file line_num line_content; do
   # Skip empty lines

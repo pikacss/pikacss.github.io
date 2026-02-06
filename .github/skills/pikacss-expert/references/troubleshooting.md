@@ -447,7 +447,7 @@ pika({
 
 If the issue persists:
 
-1. **Check the API Reference** - [references/API-REFERENCE.md](references/API-REFERENCE.md)
+1. **Check the API Reference** - [api-reference.md](api-reference.md)
 2. **Review examples** - Look for similar patterns in docs
 3. **Enable debug mode** - Set `DEBUG=pikacss:*` environment variable
 4. **Check generated files** - Inspect `pika.gen.css` and `pika.gen.ts`

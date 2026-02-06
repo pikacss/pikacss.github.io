@@ -12,6 +12,9 @@ NC='\033[0m' # No Color
 
 # Track failures
 FAILURES=0
+FAILURES_FILE=$(mktemp)
+echo "0" > "$FAILURES_FILE"
+trap "rm -f $FAILURES_FILE" EXIT
 
 # Convert markdown heading to anchor format (lowercase, spaces to dashes, remove special chars)
 heading_to_anchor() {
@@ -79,11 +82,26 @@ resolve_path() {
 echo "Checking internal markdown links..."
 echo
 
-# Find all markdown files, excluding .planning/**
+# Find all markdown files, excluding .planning/**, node_modules/**, build output, and skill documentation examples
 while IFS= read -r file; do
+  # Skip .github/skills/README.md (contains example/placeholder links)
+  if [[ "$file" == "./.github/skills/README.md" ]]; then
+    continue
+  fi
+  
   # Extract markdown links: [text](path) or [text](path#anchor)
   # Match pattern: [anything](not-starting-with-http...)
   grep -n '\[.*\]([^)]*)' "$file" 2>/dev/null | while IFS=: read -r line_num line_content; do
+    # Skip code blocks (lines starting with tabs or 4+ spaces, or containing backticks around the match)
+    if [[ "$line_content" =~ ^[[:space:]]{4,} ]] || [[ "$line_content" =~ ^\t ]]; then
+      continue
+    fi
+    
+    # Skip documentation example lines (lines showing how to write links)
+    if [[ "$line_content" =~ (Use relative paths|Example:|For example:|e\.g\.|should be|must be) ]]; then
+      continue
+    fi
+    
     # Extract link targets (excluding http:// and https://)
     echo "$line_content" | grep -o '\[[^]]*\]([^)]*)' | while read -r link; do
       # Extract path from [text](path)
@@ -99,8 +117,8 @@ while IFS= read -r file; do
         continue
       fi
       
-      # Skip empty links
-      if [[ -z "$target" ]]; then
+      # Skip empty links or root-only links
+      if [[ -z "$target" ]] || [[ "$target" == "/" ]]; then
         continue
       fi
       
@@ -119,7 +137,7 @@ while IFS= read -r file; do
         if [[ -n "$anchor" ]]; then
           if ! check_anchor "$file" "$anchor"; then
             echo -e "${RED}${file}:${line_num}: Broken anchor link to '#${anchor}'${NC}"
-            ((FAILURES++))
+            echo $(($(cat "$FAILURES_FILE") + 1)) > "$FAILURES_FILE"
           fi
         fi
         continue
@@ -128,10 +146,15 @@ while IFS= read -r file; do
       # Resolve relative path
       resolved_path=$(resolve_path "$file" "$link_path")
       
+      # If path is a directory, try README.md
+      if [[ -d "$resolved_path" ]]; then
+        resolved_path="$resolved_path/README.md"
+      fi
+      
       # Check if target file exists
       if [[ ! -f "$resolved_path" ]]; then
         echo -e "${RED}${file}:${line_num}: Broken link to '${target}' (resolved: ${resolved_path})${NC}"
-        ((FAILURES++))
+        echo $(($(cat "$FAILURES_FILE") + 1)) > "$FAILURES_FILE"
         continue
       fi
       
@@ -139,13 +162,14 @@ while IFS= read -r file; do
       if [[ -n "$anchor" ]]; then
         if ! check_anchor "$resolved_path" "$anchor"; then
           echo -e "${RED}${file}:${line_num}: Broken anchor link to '${target}' (anchor '#${anchor}' not found)${NC}"
-          ((FAILURES++))
+          echo $(($(cat "$FAILURES_FILE") + 1)) > "$FAILURES_FILE"
         fi
       fi
     done
   done
-done < <(find . -name "*.md" -not -path "./.planning/*" -not -path "./node_modules/*" -type f)
+done < <(find . -name "*.md" -not -path "./.planning/*" -not -path "./node_modules/*" -not -path "./docs/.vitepress/dist/*" -type f) || true
 
+FAILURES=$(cat "$FAILURES_FILE")
 echo
 if [[ $FAILURES -eq 0 ]]; then
   echo -e "${GREEN}✓ All internal links are valid${NC}"
