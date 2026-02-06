@@ -23,7 +23,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 **Phase:** 7 of 7 (Final Polish & Developer Documentation) - **IN PROGRESS** (75%)
 **Plan:** 3 of 4 (07-03 - 100% complete)
 **Status:** Developer documentation gaps closed, 1 plan remaining
-**Last activity:** 2026-02-06 - Completed quick task 008: Fix CI bundler integration tests with --no-frozen-lockfile flag
+**Last activity:** 2026-02-06 - Completed quick task 009: Fix CI bundler integration test timeouts
 **Progress:** ████████████████████████ 100% (28/28 plans complete)
 
 **Current Milestone:** Phase 7 - Final Polish & Developer Documentation (75% complete)
@@ -168,6 +168,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 2026-02-06 | Move inline comments in interfaces to separate lines | ESLint markdown parser struggles with property?: type // comment pattern | Multi-line format with comments above properties (quick-005) |
 | 2026-02-06 | Use tsx for all React JSX examples in documentation | TypeScript parser cannot handle JSX syntax like `<button>` | Prevents parsing errors, enables proper syntax highlighting (quick-006) |
 | 2026-02-06 | Accept mixed tabs/spaces warnings in markdown list contexts | List indentation (spaces) + code content (tabs) is standard markdown | 109 warnings acceptable - not blocking, ESLint false positives (quick-006) |
+| 2026-02-06 | Increase bundler test timeouts 2-3x for CI | CI environments (especially Windows/macOS) run 2-3x slower than local | Global 120s timeout, individual tests 120-180s based on complexity (quick-009) |
 
 ### Todos
 
@@ -200,6 +201,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 | 006 | Fix final ESLint errors in api-reference.md + troubleshooting.md | 2026-02-06 | b859a47 | [006-fix-final-eslint-errors-in-api-reference](./quick/006-fix-final-eslint-errors-in-api-reference/) |
 | 007 | Fix CI and docs-validation workflows for local execution | 2026-02-06 | e14f31f | [007-github-workflows-ci-yml-github-workflows](./quick/007-github-workflows-ci-yml-github-workflows/) |
 | 008 | Fix CI bundler integration tests to use --no-frozen-lockfile | 2026-02-06 | afe46ee | [008-fix-ci-bundler-integration-tests-to-use-](./quick/008-fix-ci-bundler-integration-tests-to-use-/) |
+| 009 | Fix CI bundler integration test timeouts | 2026-02-06 | 1156e58 | [009-fix-ci-bundler-integration-test-timeouts](./quick/009-fix-ci-bundler-integration-test-timeouts/) |
 
 ### Important Notes
 
@@ -339,7 +341,7 @@ Integration tests use monorepo workspace resolution for efficient testing. Fixtu
 - Existing infrastructure: Vitest, VitePress, TypeScript, pnpm workspace
 
 **Where we left off:**
-Quick Task 008 COMPLETE (1/1 tasks): Fixed CI bundler integration tests by adding `--no-frozen-lockfile` flag to all pnpm install commands in .eslint/tests/integration/bundlers.test.ts. CI environments default to frozen-lockfile which blocks test fixtures with different dependencies than monorepo lockfile. All 22 integration tests passing. Total time: ~1.5 minutes. One atomic commit: afe46ee (fix).
+Quick Task 009 COMPLETE (1/1 tasks): Increased bundler integration test timeouts to prevent flaky CI failures. Updated global testTimeout from 60s to 120s and added individual test timeouts (120s for Vite/Webpack, 180s for Nuxt) providing 2-3x buffer for slower CI environments. All 22 integration tests passing. Total time: ~2 minutes. One atomic commit: 1156e58 (fix).
 
 **Immediate next action:**
 Resume Phase 7 Plan 04 (07-04-PLAN.md) if remaining, or conclude documentation correction project.
