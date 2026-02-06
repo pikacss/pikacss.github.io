@@ -277,8 +277,8 @@ Atomic fixes outside main phase workflow:
 **Plans:** 3 plans
 
 Plans:
-- [ ] 08-01-PLAN.md — Verifier Improvements (Sources & Normalization)
-- [ ] 08-02-PLAN.md — Verifier Extraction Fixes
+- [x] 08-01-PLAN.md — Verifier Improvements (Sources & Normalization)
+- [x] 08-02-PLAN.md — Verifier Extraction Fixes
 - [ ] 08-03-PLAN.md — Core Verification & Reporting
 
 **Requirements Covered:**
