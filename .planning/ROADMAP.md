@@ -262,9 +262,10 @@ Atomic fixes outside main phase workflow:
 | 5 - Integration & Framework Layers | 6 | ✅ Complete | 100% |
 | 6 - Plugin System Correction | 3 | ✅ Complete | 100% |
 | 7 - Final Polish & Developer Documentation | 9 | ✅ Complete | 100% |
-| 8 - Core Verification Fixes | 3 | ⏳ Pending | 0% |
+| 8 - Core Verification Fixes | 3 | ✅ Complete | 100% |
+| 9 - Integration Test Fixes | 1 | ✅ Complete | 100% |
 
-**Overall:** 48/48 requirements complete (100%) ✅
+**Overall:** 49/49 requirements complete (100%) ✅
 
 ---
 
@@ -292,33 +293,35 @@ Plans:
 
 ---
 
-## Phase 9: Integration Test Fixes
+## Phase 9: Integration Test Fixes ✅ COMPLETE
 
 **Goal:** Replace placeholder tests with authentic integration verification
 
+**Status:** Complete (2026-02-07)
+**Duration:** 15 minutes
 **Dependencies:** Phase 5 (Integration)
 
 **Plans:** 3 plans
 
 Plans:
-- [ ] 09-01-PLAN.md — Unit tests (ctx, transform, codegen)
-- [ ] 09-02-PLAN.md — Integration tests (pipeline, multi-file)
-- [ ] 09-03-PLAN.md — Edge cases and placeholder removal
+- [x] 09-01-PLAN.md — Unit tests (ctx, transform, codegen)
+- [x] 09-02-PLAN.md — Integration tests (pipeline, multi-file)
+- [x] 09-03-PLAN.md — Edge cases and placeholder removal
 
 **Requirements Covered:**
-- Integration Layer Verification (Critical Gap)
+- Integration Layer Verification (Critical Gap) ✅
 
 **Gap Closure:**
-- Closes "Fake Integration Tests" gap from v1 audit
-- Verifies build pipeline (Source -> Unplugin -> Integration -> Core -> CSS)
+- Closes "Fake Integration Tests" gap from v1 audit ✅
+- Verifies build pipeline (Source -> Unplugin -> Integration -> Core -> CSS) ✅
 
 **Success Criteria:**
-1. Unit tests cover createCtx, transform, codegen with >70% coverage
-2. Integration tests verify complete pipeline with real Core engine
-3. Edge case tests cover error handling and malformed code
-4. Placeholder test file (some.test.ts) removed
-5. All tests use real @pikacss/core engine (no mocking)
-6. Multi-file usage collection and deduplication verified
+1. ✅ Unit tests cover createCtx, transform, codegen with >70% coverage
+2. ✅ Integration tests verify complete pipeline with real Core engine
+3. ✅ Edge case tests cover error handling and malformed code
+4. ✅ Placeholder test file (some.test.ts) removed
+5. ✅ All tests use real @pikacss/core engine (no mocking)
+6. ✅ Multi-file usage collection and deduplication verified
 
 ---
 
