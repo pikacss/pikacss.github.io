@@ -1,0 +1,216 @@
+---
+status: complete
+phase: all-phases
+source:
+  - 01-01-SUMMARY.md to 07-03-SUMMARY.md (27 files)
+started: 2026-02-06T09:30:00Z
+updated: 2026-02-06T09:45:00Z
+---
+
+## Current Test
+
+[testing complete]
+
+## Tests
+
+### 1. ESLint validates markdown files
+expected: Running `pnpm lint` validates all 73 markdown files and reports structural issues (0 errors, <100 warnings expected).
+result: issue
+reported: "skills/use-pikacss/references/usage-examples.md line 31:6 has parsing error: '>' expected. Also 88 warnings for mixed spaces/tabs."
+severity: major
+
+### 2. Link checker finds broken links
+expected: Running `./scripts/check-links.sh` scans all markdown files and reports any broken internal or external links with file:line locations.
+result: pass
+
+### 3. Placeholder checker detects TODOs
+expected: Running `./scripts/check-placeholders.sh` finds TODO/FIXME/TBD markers and reports them with severity levels.
+result: pass
+
+### 4. CI workflow runs on markdown changes
+expected: The `.github/workflows/docs-validation.yml` file exists and is configured to run validation checks on PR changes to markdown files.
+result: pass
+
+### 5. Custom ESLint rule detects runtime pika() usage
+expected: ESLint catches `pika()` calls with runtime variables (e.g., `pika({ color: userColor })`) and reports build-time constraint violations.
+result: pass
+
+### 6. Package boundary rule enforces layer architecture
+expected: ESLint prevents invalid imports like `@pikacss/core` importing from `@pikacss/integration` and reports package boundary violations.
+result: pass
+
+### 7. Module augmentation rule validates plugin patterns
+expected: ESLint detects plugin files missing `declare module '@pikacss/core'` augmentation and reports the violation.
+result: pass
+
+### 8. Multi-bundler integration tests execute
+expected: Running `pnpm --filter @pikacss/unplugin-pikacss test` executes Vite, Nuxt, and Webpack integration tests successfully.
+result: issue
+reported: "Integration tests failed with exit code 1"
+severity: major
+
+### 9. API extractor discovers all packages
+expected: The api-verifier tool scans the monorepo and discovers all 9 @pikacss packages with their exports (875 APIs total).
+result: pass
+
+### 10. API verifier detects documentation mismatches
+expected: Running api-verifier comparison identifies where documented API signatures don't match actual TypeScript definitions.
+result: pass
+
+### 11. AGENTS.md accurately documents core architecture
+expected: Reading `AGENTS.md` shows correct package list (9 packages), accurate layer architecture diagram, and working development commands.
+result: pass
+
+### 12. packages/core/README.md has accurate API examples
+expected: All code examples in `packages/core/README.md` use actual exported APIs (createEngine, defineEnginePlugin, etc.) and compile without errors.
+result: pass
+
+### 13. API reference documents core package correctly
+expected: The `docs/advanced/api-reference.md` @pikacss/core section lists all user-facing APIs with correct signatures matching source code.
+result: pass
+
+### 14. Basics guide examples follow build-time constraints
+expected: All 13 pika() examples in `docs/guide/basics.md` use static values only (no runtime variables) and work in actual projects.
+result: pass
+
+### 15. Integration package documentation is accurate
+expected: The `packages/integration/README.md` documents IntegrationContext, createCtx, and lifecycle APIs matching actual implementation.
+result: pass
+
+### 16. Unplugin package documents all 7 bundlers
+expected: The `packages/unplugin/README.md` shows setup instructions for Vite, Webpack, Rspack, Esbuild, Rollup, Farm, and Rolldown with correct import patterns.
+result: pass
+
+### 17. Vite integration guide has correct configuration
+expected: The `docs/integrations/vite.md` guide shows working plugin setup with accurate PluginOptions and imports from `@pikacss/unplugin-pikacss/vite`.
+result: pass
+
+### 18. Nuxt module documentation shows zero-config setup
+expected: The `docs/integrations/nuxt.md` guide explains that CSS auto-injection and global pika() work without manual setup in Nuxt projects.
+result: pass
+
+### 19. Plugin-reset README has module augmentation example
+expected: The `packages/plugin-reset/README.md` shows complete TypeScript module augmentation pattern with declare module block.
+result: pass
+
+### 20. Plugin-typography documents all 18 CSS variables
+expected: The `packages/plugin-typography/README.md` lists all typography theming CSS variables (--pika-prose-*) that actually exist in the source.
+result: pass
+
+### 21. Plugin-icons README shows icon collection setup
+expected: The `packages/plugin-icons/README.md` documents how to integrate icon collections with all 3 rendering modes (auto/mask/bg).
+result: pass
+
+### 22. Plugin development guide has verified hook examples
+expected: The `docs/advanced/plugin-development.md` documents all 13 EnginePlugin hooks with signatures matching actual implementation.
+result: pass
+
+### 23. Developer docs tests validate AGENTS.md
+expected: Running `pnpm --filter @pikacss/api-verifier test developer-docs/agents` validates AGENTS.md package list and commands match reality.
+result: pass
+
+### 24. Skills documentation tests validate workflow accuracy
+expected: Running `pnpm --filter @pikacss/api-verifier test developer-docs/` validates both pikacss-dev and pikacss-expert skill files against actual codebase.
+result: pass
+
+### 25. Development command verification script works
+expected: Running `./scripts/verify-dev-commands.sh` tests all documented commands (build, test, typecheck, lint) and reports pass/fail with color coding.
+result: pass
+
+### 26. Full build completes successfully
+expected: Running `pnpm build` builds all 9 packages without errors and generates dist/ directories for each package.
+result: pass
+
+### 27. Full test suite passes
+expected: Running `pnpm test` executes all 130+ tests across packages with 99%+ pass rate (1 environment-specific failure acceptable).
+result: issue
+reported: "15 tests failed (14 in extractor.test.ts, 1 in end-to-end.test.ts), 190 passed"
+severity: major
+
+### 28. TypeScript type checking passes
+expected: Running `pnpm typecheck` validates TypeScript compilation for all packages and reports zero errors.
+result: issue
+reported: "Typecheck failed in docs package with exit code 2"
+severity: major
+
+### 29. Documentation builds successfully
+expected: Running `pnpm docs:build` builds the VitePress documentation site without errors.
+result: issue
+reported: "Documentation build has build error"
+severity: major
+
+### 30. API verification tests pass
+expected: Running `pnpm --filter @pikacss/api-verifier test` executes API comparison tests with 98%+ pass rate.
+result: issue
+reported: "15 tests failed (115 passed) - below 98% threshold"
+severity: major
+
+## Summary
+
+total: 30
+passed: 24
+issues: 6
+pending: 0
+skipped: 0
+
+## Gaps
+
+- truth: "ESLint validates all 73 markdown files with 0 errors, <100 warnings"
+  status: failed
+  reason: "User reported: skills/use-pikacss/references/usage-examples.md line 31:6 has parsing error: '>' expected. Also 88 warnings for mixed spaces/tabs."
+  severity: major
+  test: 1
+  root_cause: ""
+  artifacts: []
+  missing: []
+  debug_session: ""
+
+- truth: "Multi-bundler integration tests execute successfully"
+  status: failed
+  reason: "User reported: Integration tests failed with exit code 1"
+  severity: major
+  test: 8
+  root_cause: ""
+  artifacts: []
+  missing: []
+  debug_session: ""
+
+- truth: "Full test suite passes with 99%+ pass rate"
+  status: failed
+  reason: "User reported: 15 tests failed (14 in extractor.test.ts, 1 in end-to-end.test.ts), 190 passed"
+  severity: major
+  test: 27
+  root_cause: ""
+  artifacts: []
+  missing: []
+  debug_session: ""
+
+- truth: "TypeScript type checking passes with zero errors"
+  status: failed
+  reason: "User reported: Typecheck failed in docs package with exit code 2"
+  severity: major
+  test: 28
+  root_cause: ""
+  artifacts: []
+  missing: []
+  debug_session: ""
+
+- truth: "Documentation builds successfully without errors"
+  status: failed
+  reason: "User reported: Documentation build has build error"
+  severity: major
+  test: 29
+  root_cause: ""
+  artifacts: []
+  missing: []
+  debug_session: ""
+
+- truth: "API verification tests pass with 98%+ pass rate"
+  status: failed
+  reason: "User reported: 15 tests failed (115 passed) - below 98% threshold"
+  severity: major
+  test: 30
+  root_cause: ""
+  artifacts: []
+  missing: []
+  debug_session: ""
