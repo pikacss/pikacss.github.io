@@ -306,4 +306,25 @@ describe('extractPackageAPIs', () => {
 				.toBe('boolean')
 		}
 	})
+
+	it('should extract EnginePlugin with structured signature (not any)', () => {
+		expect(corePackage)
+			.toBeDefined()
+		const entryPoints = corePackage!.entryPoints
+		const result = extractPackageAPIs(entryPoints[0]!)
+
+		const enginePlugin = result.apis.find(api => api.name === 'EnginePlugin')
+
+		expect(enginePlugin)
+			.toBeDefined()
+		expect(enginePlugin?.kind)
+			.toBe('interface')
+		expect(enginePlugin?.signature)
+			.not.toBe('any')
+		expect(enginePlugin?.signature)
+			.toContain('name')
+		// configureEngine is inherited and should be expanded by our resolution fix
+		expect(enginePlugin?.signature)
+			.toContain('configureEngine')
+	})
 })

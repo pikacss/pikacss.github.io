@@ -180,6 +180,8 @@ export function extractPackageAPIs(entryPoint: string): APIExtractionResult {
 			moduleResolution: ts.ModuleResolutionKind.NodeNext,
 			target: ts.ScriptTarget.ESNext,
 			noEmit: true,
+			skipLibCheck: true,
+			allowJs: true,
 		})
 
 		const checker = program.getTypeChecker()
@@ -233,26 +235,45 @@ function extractAPIFromSymbol(
 	if (!decl)
 		return null
 
+	let targetSymbol = symbol
+
 	// Resolve export specifiers to actual declarations
 	if (ts.isExportSpecifier(decl)) {
 		const aliasedSymbol = checker.getAliasedSymbol(symbol)
-		if (aliasedSymbol && aliasedSymbol.declarations) {
-			decl = aliasedSymbol.declarations[0]!
+		if (aliasedSymbol) {
+			targetSymbol = aliasedSymbol
+			if (aliasedSymbol.declarations) {
+				decl = aliasedSymbol.declarations[0]!
+			}
 		}
 	}
 
-	const type = checker.getTypeOfSymbolAtLocation(symbol, decl)
+	let type = checker.getTypeOfSymbolAtLocation(targetSymbol, decl)
+
+	// If type is 'any', try getting declared type (uninstantiated) which might be more robust
+	if ((type.flags & ts.TypeFlags.Any) && (ts.isInterfaceDeclaration(decl) || ts.isClassDeclaration(decl))) {
+		type = checker.getDeclaredTypeOfSymbol(targetSymbol)
+	}
 	const name = symbol.getName()
 	const kind = getDeclarationKind(decl, type)
 
 	// Get signature with full type information
-	const signature = checker.typeToString(
+	let signature = checker.typeToString(
 		type,
 		undefined,
 		ts.TypeFormatFlags.NoTruncation
 		| ts.TypeFormatFlags.WriteTypeArgumentsOfSignature
 		| ts.TypeFormatFlags.UseStructuralFallback,
 	)
+
+	// Fallback for complex types that resolve to 'any' or just the name (for interfaces we want structure)
+	// We want structure for verification comparison
+	if (signature === 'any' || (kind === 'interface' && signature === name)) {
+		const reconstructed = reconstructTypeSignature(type, checker, name, decl)
+		if (reconstructed) {
+			signature = reconstructed
+		}
+	}
 
 	const api: ExtractedAPI = {
 		name,
@@ -340,4 +361,63 @@ function getDeclarationKind(
 	}
 
 	return 'variable' // default fallback
+}
+
+/**
+ * Try to reconstruct a type signature when TypeScript returns 'any'
+ */
+function reconstructTypeSignature(
+	type: ts.Type,
+	checker: ts.TypeChecker,
+	name: string,
+	decl?: ts.Declaration,
+): string | null {
+	// If type is Any (flags === 1) and we have declaration, use AST
+	if ((type.flags & ts.TypeFlags.Any) && decl) {
+		const sourceFile = decl.getSourceFile()
+		if (ts.isInterfaceDeclaration(decl)) {
+			const heritage = decl.heritageClauses?.map(h => h.getText(sourceFile))
+				.join(' ') ?? ''
+			const members = decl.members.map(m => m.getText(sourceFile))
+				.join('\n\t')
+			return `interface ${name} ${heritage} {\n\t${members}\n}`
+		}
+		if (ts.isTypeAliasDeclaration(decl)) {
+			return `type ${name} = ${decl.type.getText(sourceFile)}`
+		}
+	}
+
+	if (type.isClassOrInterface()) {
+		const properties = type.getProperties()
+		if (properties.length === 0)
+			return `interface ${name} {}`
+
+		const props = properties.map((prop) => {
+			const propName = prop.getName()
+			const decl = prop.valueDeclaration || prop.declarations?.[0]
+			if (!decl)
+				return `${propName}: any`
+
+			const propType = checker.getTypeOfSymbolAtLocation(prop, decl)
+			const isOptional = !!(prop.flags & ts.SymbolFlags.Optional)
+
+			const propSignature = checker.typeToString(
+				propType,
+				undefined,
+				ts.TypeFormatFlags.NoTruncation | ts.TypeFormatFlags.WriteTypeArgumentsOfSignature,
+			)
+
+			return `${propName}${isOptional ? '?' : ''}: ${propSignature}`
+		})
+
+		return `interface ${name} {\n  ${props.join(';\n  ')}\n}`
+	}
+
+	// Handle intersection types (often used for type aliases)
+	if (type.isIntersection()) {
+		const parts = type.types.map(t => checker.typeToString(t))
+		return `type ${name} = ${parts.join(' & ')}`
+	}
+
+	return null
 }
