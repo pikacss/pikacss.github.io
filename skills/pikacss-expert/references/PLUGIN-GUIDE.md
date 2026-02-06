@@ -34,21 +34,23 @@ const engine = createEngine({
 ```typescript
 // Basic icon
 pika({
-  icon: {
-    name: 'chevron-right',
-    size: '24px'
-  }
+	icon: {
+		name: 'chevron-right',
+		size: '24px'
+	}
 })
 
 // Icon with color
 pika({
-  icon: {
-    name: 'star',
-    color: 'gold',
-    size: '32px'
-  }
+	icon: {
+		name: 'star',
+		color: 'gold',
+		size: '32px'
+	}
 })
+```
 
+```tsx
 // Inline icon in component
 <span class={pika({ icon: { name: 'check' } }).className}></span>
 ```
@@ -63,10 +65,14 @@ pika({
 **Configuration Options:**
 ```typescript
 interface IconPluginConfig {
-	sets?: string[] // Icon sets to include
-	defaultSize?: string // Default icon size (default: '1em')
-	defaultColor?: string // Default icon color (default: 'currentColor')
-	prefix?: string // CSS class prefix (default: 'icon')
+	// Icon sets to include
+	sets?: string[]
+	// Default icon size (default: '1em')
+	defaultSize?: string
+	// Default icon color (default: 'currentColor')
+	defaultColor?: string
+	// CSS class prefix (default: 'icon')
+	prefix?: string
 }
 ```
 
@@ -86,7 +92,7 @@ import { resetPlugin } from '@pikacss/plugin-reset'
 const engine = createEngine({
 	plugins: [
 		resetPlugin({
-			preset: 'modern', // 'modern' or 'minimal'
+			preset: 'modern',
 			customCSS: `
         body {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -147,18 +153,18 @@ const engine = createEngine({
 **Available Shortcuts:**
 ```typescript
 // Headings
-pika({ h1: true }) // 2.5rem, bold, normal line height
-pika({ h2: true }) // 2rem, bold, normal line height
-pika({ h3: true }) // 1.5rem, bold, normal line height
-pika({ h4: true }) // 1.25rem, bold, normal line height
-pika({ h5: true }) // 1.125rem, bold, normal line height
-pika({ h6: true }) // 1rem, bold, normal line height
+pika({ h1: true })
+pika({ h2: true })
+pika({ h3: true })
+pika({ h4: true })
+pika({ h5: true })
+pika({ h6: true })
 
 // Text styles
-pika({ body: true }) // Base text styles
-pika({ caption: true }) // Small caption text
-pika({ label: true }) // Form label text
-pika({ code: true }) // Code/monospace text
+pika({ body: true })
+pika({ caption: true })
+pika({ label: true })
+pika({ code: true })
 
 // Text utilities
 pika({ textCenter: true })
@@ -170,11 +176,16 @@ pika({ lineClamp: 3 })
 **Configuration Options:**
 ```typescript
 interface TypographyPluginConfig {
-	defaultFontFamily?: string // System font or custom
-	headingScale?: number // Scale factor between heading sizes (1.25)
-	baseFontSize?: string // Body font size (16px)
-	lineHeightMultiplier?: number // Line height scale (1.6)
-	monoFontFamily?: string // Monospace font family
+	// System font or custom
+	defaultFontFamily?: string
+	// Scale factor between heading sizes
+	headingScale?: number
+	// Body font size
+	baseFontSize?: string
+	// Line height scale
+	lineHeightMultiplier?: number
+	// Monospace font family
+	monoFontFamily?: string
 	fontWeights?: {
 		light?: number
 		normal?: number
@@ -191,6 +202,7 @@ interface TypographyPluginConfig {
 Define a custom plugin for your project-specific needs:
 
 ```typescript
+/* eslint-disable pikacss/pika-module-augmentation */
 // plugins/buttonPlugin.ts
 import { defineEnginePlugin } from '@pikacss/core'
 
@@ -201,7 +213,7 @@ export function buttonPlugin() {
 
 		async configureEngine(engine) {
 			// Register button shortcuts
-			engine.registerShortcut('btn-primary', {
+			engine.shortcuts.add(['btn-primary', {
 				'backgroundColor': '#3b82f6',
 				'color': 'white',
 				'padding': '0.75rem 1.5rem',
@@ -217,9 +229,9 @@ export function buttonPlugin() {
 				'&:active': {
 					transform: 'scale(0.98)'
 				}
-			})
+			}])
 
-			engine.registerShortcut('btn-secondary', {
+			engine.shortcuts.add(['btn-secondary', {
 				'backgroundColor': '#e5e7eb',
 				'color': '#111827',
 				'padding': '0.75rem 1.5rem',
@@ -231,9 +243,9 @@ export function buttonPlugin() {
 				'&:hover': {
 					backgroundColor: '#d1d5db'
 				}
-			})
+			}])
 
-			engine.registerShortcut('btn-ghost', {
+			engine.shortcuts.add(['btn-ghost', {
 				'backgroundColor': 'transparent',
 				'color': '#3b82f6',
 				'padding': '0.75rem 1.5rem',
@@ -245,7 +257,7 @@ export function buttonPlugin() {
 				'&:hover': {
 					backgroundColor: '#eff6ff'
 				}
-			})
+			}])
 		}
 	})
 }
@@ -285,27 +297,39 @@ Plugins execute in this sequence:
 
 **'pre' - Input transformation:**
 ```typescript
-order: 'pre',
-transformStyleDefinitions(defs) {
-  // Normalize or validate user input
-  return normalizeDefinitions(defs)
-}
+/* eslint-disable pikacss/pika-module-augmentation */
+defineEnginePlugin({
+	name: 'my-plugin',
+	order: 'pre',
+	transformStyleDefinitions(defs) {
+		// Normalize or validate user input
+		return normalizeDefinitions(defs)
+	}
+})
 ```
 
 **Default - Hook into normal flow:**
 ```typescript
-// No order specified - standard processing
-async configureEngine(engine) {
-  // Register shortcuts and defaults
-}
+/* eslint-disable pikacss/pika-module-augmentation */
+defineEnginePlugin({
+	name: 'my-plugin',
+	// No order specified - standard processing
+	async configureEngine(engine) {
+		// Register shortcuts and defaults
+	}
+})
 ```
 
 **'post' - Output extension:**
 ```typescript
-order: 'post',
-async configureEngine(engine) {
-  // Add final touches like CSS reset
-}
+/* eslint-disable pikacss/pika-module-augmentation */
+defineEnginePlugin({
+	name: 'my-plugin',
+	order: 'post',
+	async configureEngine(engine) {
+		// Add final touches like CSS reset
+	}
+})
 ```
 
 ## Combining Multiple Plugins
@@ -334,11 +358,11 @@ Each plugin:
 ### 1. Provide Sensible Defaults
 
 ```typescript
+/* eslint-disable pikacss/pika-module-augmentation */
 export function myPlugin(options?: MyOptions) {
 	const config = {
-		primaryColor: '#3b82f6',
-		secondaryColor: '#10b981',
-		...options
+		primaryColor: options?.primaryColor ?? '#3b82f6',
+		secondaryColor: options?.secondaryColor ?? '#10b981'
 	}
 
 	return defineEnginePlugin({
@@ -353,10 +377,11 @@ export function myPlugin(options?: MyOptions) {
 ### 2. Allow Customization
 
 ```typescript
+/* eslint-disable pikacss/pika-module-augmentation */
 interface MyPluginOptions {
 	colors?: Record<string, string>
 	spacing?: Record<string, string>
-	typography?: TypographyConfig
+	typography?: Record<string, any>
 }
 
 export function myPlugin(options?: MyPluginOptions) {
@@ -375,6 +400,15 @@ export function myPlugin(options?: MyPluginOptions) {
 ### 3. Use Module Augmentation
 
 ```typescript
+interface MyPluginOptions {
+	primaryColor?: string
+	secondaryColor?: string
+}
+
+interface MyShortcutType {
+	myCustomProp?: string
+}
+
 declare module '@pikacss/core' {
 	interface EngineConfig {
 		myPlugin?: MyPluginOptions
@@ -431,10 +465,15 @@ If plugins slow down builds:
 3. Cache computed results
 
 ```typescript
-class MyPlugin {
-	private cache = new Map()
+interface CachedPlugin {
+	cache: Map<string, any>
+	transformStyleDefinitions: (defs: any) => Promise<any>
+}
 
-	async transformStyleDefinitions(defs) {
+class MyPlugin implements CachedPlugin {
+	cache = new Map()
+
+	async transformStyleDefinitions(defs: any) {
 		const key = JSON.stringify(defs)
 		if (this.cache.has(key)) {
 			return this.cache.get(key)
