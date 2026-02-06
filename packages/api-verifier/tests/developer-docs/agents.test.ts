@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 
 describe('aGENTS.md Validation', () => {
 	// Find monorepo root (where AGENTS.md is located)
-	const monorepoRoot = join(process.cwd(), '../..')
+	const monorepoRoot = join(__dirname, '../../../..')
 	const agentsPath = join(monorepoRoot, 'AGENTS.md')
 	const agentsContent = readFileSync(agentsPath, 'utf-8')
 
