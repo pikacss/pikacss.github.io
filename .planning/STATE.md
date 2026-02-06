@@ -186,6 +186,7 @@ Building verification infrastructure to systematically eliminate AI-generated ha
 |---|-------------|------|--------|-----------|
 | 001 | Move .github/skills to ./skills | 2026-02-06 | 7aa8f97 | [001-move-github-skills-to-skills](./quick/001-move-github-skills-to-skills/) |
 | 002 | Fix run-all-checks.sh ESLint/link errors | 2026-02-06 | 48e1a7b | [002-fix-run-all-checks-sh-errors](./quick/002-fix-run-all-checks-sh-errors/) |
+| 003 | Fix remaining ESLint errors in PLUGIN-PATTERNS.md | 2026-02-06 | 4f3232c | [003-fix-remaining-eslint-errors-in-plugin-pa](./quick/003-fix-remaining-eslint-errors-in-plugin-pa/) |
 
 ### Important Notes
 
@@ -280,6 +281,9 @@ Moved skills directory from .github/skills to ./skills for improved discoverabil
 **Quick Task 002 Complete (Fix run-all-checks.sh Errors):**
 Fixed 3 categories of validation errors exposed after quick-001 moved skills to validated location. Changed YAML examples to text blocks (ESLint can't parse invalid YAML). Replaced object spread syntax `{ ... }` with `{ /* comment */ }`. Added type annotations to plugin example. Updated check-links.sh to skip skills/README.md (contains intentional broken link examples in "Common Validation Errors" section). All targeted files now pass ESLint parsing. Link validation passing. Duration: 8 minutes. One atomic commit: 48e1a7b (fix).
 
+**Quick Task 003 Complete (Fix PLUGIN-PATTERNS.md Errors):**
+Fixed all 14 ESLint errors in PLUGIN-PATTERNS.md using complete code examples and eslint-disable comments. Converted method shorthand syntax to complete defineEnginePlugin() calls (7 instances). Replaced object spread {...} with realistic object literals (5 instances). Added eslint-disable comments for pika-module-augmentation false positives (10 code blocks). All code examples now syntactically valid TypeScript while maintaining educational value. Duration: 7 minutes. One atomic commit: 4f3232c (fix).
+
 **Build-Time Constraint Critical:**
 All `pika()` examples must use statically analyzable arguments. Examples with runtime variables will fail in user projects even if they type-check in monorepo. Test through actual bundler, not just TypeScript compilation.
 
@@ -313,7 +317,7 @@ Integration tests use monorepo workspace resolution for efficient testing. Fixtu
 - Existing infrastructure: Vitest, VitePress, TypeScript, pnpm workspace
 
 **Where we left off:**
-Quick Task 002 COMPLETE (1/1 task): Fixed 3 categories of run-all-checks.sh errors after skills directory move. Updated YAML examples to use text blocks, fixed object spread syntax, added type annotations, and excluded intentional negative examples from link checker. All targeted validation errors resolved. Total time: ~8 minutes.
+Quick Task 003 COMPLETE (1/1 task): Fixed all 14 ESLint errors in PLUGIN-PATTERNS.md by converting method shorthand to complete defineEnginePlugin examples, replacing object spread syntax with realistic literals, and adding eslint-disable comments for false positives. All code examples now syntactically valid TypeScript. Total time: ~7 minutes.
 
 **Immediate next action:**
 Resume Phase 7 Plan 04 (07-04-PLAN.md) if remaining, or conclude documentation correction project.
