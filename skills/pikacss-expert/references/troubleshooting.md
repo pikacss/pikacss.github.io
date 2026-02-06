@@ -59,29 +59,29 @@ function Button({ color }) {
 **Solutions:**
 
 **1. Use CSS Variables (Recommended)**
-```typescript
+```tsx
 const styles = pika({
-  color: 'var(--button-color)',
-  backgroundColor: 'var(--button-bg)'
+	color: 'var(--button-color)',
+	backgroundColor: 'var(--button-bg)'
 })
 
 function Button({ color, bg }) {
-  return (
-    <button
-      className={styles.className}
-      style={{
-        '--button-color': color,
-        '--button-bg': bg
-      }}
-    >
-      Click
-    </button>
-  )
+	return (
+		<button
+			className={styles.className}
+			style={{
+				'--button-color': color,
+				'--button-bg': bg
+			}}
+		>
+			Click
+		</button>
+	)
 }
 ```
 
 **2. Move to Constants**
-```typescript
+```tsx
 const COLOR_RED = '#ef4444'
 const COLOR_BLUE = '#3b82f6'
 
@@ -89,28 +89,28 @@ const redButton = pika({ color: COLOR_RED })
 const blueButton = pika({ color: COLOR_BLUE })
 
 function Button({ variant }) {
-  const styles = variant === 'red' ? redButton : blueButton
-  return <button className={styles.className}>Click</button>
+	const styles = variant === 'red' ? redButton : blueButton
+	return <button className={styles.className}>Click</button>
 }
 ```
 
 **3. Use Shortcuts for Variants**
-```typescript
+```tsx
 // In plugin
-engine.registerShortcut('btn-primary', {
-  backgroundColor: '#3b82f6',
-  color: 'white'
+engine.shortcuts.add('btn-primary', {
+	backgroundColor: '#3b82f6',
+	color: 'white'
 })
-engine.registerShortcut('btn-danger', {
-  backgroundColor: '#ef4444',
-  color: 'white'
+engine.shortcuts.add('btn-danger', {
+	backgroundColor: '#ef4444',
+	color: 'white'
 })
 
 // In component
 function Button({ variant = 'primary' }) {
-  const key = `btn-${variant}`
-  const styles = pika({ [key]: true })
-  return <button className={styles.className}>Click</button>
+	const key = `btn-${variant}`
+	const styles = pika({ [key]: true })
+	return <button className={styles.className}>Click</button>
 }
 ```
 
@@ -150,38 +150,46 @@ const styles = pika({ color: 'blue', padding: '1rem' })
 **Causes:**
 
 1. **Too many pika() calls**
-   ```typescript
-   // ❌ Inefficient: creates separate classes
+   ```tsx
+// ❌ Inefficient: creates separate classes
    return (
-     <>
-       {items.map(item => pika({ color: item.color }))}
-     </>
+   	<>
+   		{items.map(item => pika({ color: item.color }))}
+   	</>
    )
 
    // ✅ Efficient: use CSS variables
    const styles = pika({ color: 'var(--item-color)' })
    return (
-     <>
-       {items.map(item => (
-         <div style={{ '--item-color': item.color }}
-              className={styles.className} />
-       ))}
-     </>
+   	<>
+   		{items.map(item => (
+   			<div
+   				style={{ '--item-color': item.color }}
+   				className={styles.className}
+   			/>
+   		))}
+   	</>
    )
    ```
 
 2. **Unoptimized plugin**
    ```typescript
+   /* eslint-disable pikacss/pika-module-augmentation */
    // ❌ Slow: runs for every style
-   async transformStyleDefinitions(defs) {
-     return await expensiveProcessing(defs)
-   }
+   defineEnginePlugin({
+   	name: 'slow-plugin',
+   	async transformStyleDefinitions(defs) {
+   		return await expensiveProcessing(defs)
+   	}
+   })
 
    // ✅ Fast: runs once during setup
-   async configureEngine(engine) {
-     engine.registerShortcut('btn',
-       expensiveComputedShortcut())
-   }
+   defineEnginePlugin({
+   	name: 'fast-plugin',
+   	async configureEngine(engine) {
+   		engine.shortcuts.add('btn', expensiveComputedShortcut())
+   	}
+   })
    ```
 
 3. **Large CSS bundle**
@@ -373,7 +381,7 @@ pika({
 
 1. **Plugin not activated**
    ```typescript
-   // ❌ Plugin not in array
+// ❌ Plugin not in array
    const engine = createEngine({
    	plugins: [] // Missing iconPlugin!
    })
@@ -459,21 +467,24 @@ If the issue persists:
 
 All `pika()` arguments must be statically analyzable at build time:
 
-```typescript
+```tsx
 // ❌ Not supported
-const Component = ({ theme }) => (
-  <div className={pika({ color: theme.primary }).className} />
-)
+function Component({ theme }) {
+	return <div className={pika({ color: theme.primary }).className} />
+}
 ```
 
 ### CSS Variables Required for Dynamic Values
 
 For runtime-determined styles, use CSS variables:
 
-```typescript
+```tsx
+/* eslint-disable antfu/top-level-function */
 // ✅ Supported
 const styles = pika({ color: 'var(--primary)' })
-<div style={{ '--primary': color }} className={styles.className} />
+const Component = ({ color }) => (
+	<div style={{ '--primary': color }} className={styles.className} />
+)
 ```
 
 ### Circular Dependencies
