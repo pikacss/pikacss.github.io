@@ -120,7 +120,7 @@ describe('transform', () => {
 			.toBeDefined()
 		expect(usages!.length)
 			.toBe(1)
-		expect(usages![0].atomicStyleIds)
+		expect(usages![0]!.atomicStyleIds)
 			.toContain('a')
 	})
 

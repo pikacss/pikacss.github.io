@@ -297,7 +297,7 @@ describe('integration Edge Cases and Error Handling', () => {
 			const usages = ctx.usages.get('large-object.ts')
 			expect(usages)
 				.toBeDefined()
-			if (usages && usages.length > 0) {
+			if (usages && usages.length > 0 && usages[0]) {
 				expect(usages[0].atomicStyleIds.length)
 					.toBeGreaterThan(10)
 			}

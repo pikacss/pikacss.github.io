@@ -157,7 +157,7 @@ describe('integration Pipeline', () => {
 		expect(usages)
 			.toHaveLength(1)
 
-		if (usages) {
+		if (usages && usages[0]) {
 			expect(usages[0].atomicStyleIds)
 				.toEqual(['a', 'b'])
 			expect(usages[0].params)
