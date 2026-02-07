@@ -303,7 +303,7 @@ Elements have class names but no visual styles.
 
 1. **Check if CSS is imported:**
 ```tsx
-// ✅ Must be imported in entry file
+// [Valid] Must be imported in entry file
 import 'pika.css'
 ```
 

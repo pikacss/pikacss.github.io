@@ -270,8 +270,8 @@ import { myPlugin } from './my-plugin'
 
 export default defineEngineConfig({
 	plugins: [myPlugin()],
-	myCustomOption: 'option-b' // ✅ Autocomplete works!
-	// myCustomOption: 'invalid' // ❌ TypeScript error
+	myCustomOption: 'option-b' // [Valid] Autocomplete works!
+	// myCustomOption: 'invalid' // [Invalid] TypeScript error
 })
 ```
 

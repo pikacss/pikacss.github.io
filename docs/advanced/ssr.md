@@ -533,10 +533,10 @@ const HeavyComponent = dynamic(() => import('./HeavyComponent'), {
 **Solution**: Ensure `pika.css` is imported in root/layout component:
 
 ```tsx
-// ✅ Correct - in layout/root
+// [Valid] Correct - in layout/root
 import 'pika.css'
 
-// ❌ Wrong - in individual pages
+// [Invalid] Wrong - in individual pages
 ```
 
 ### Issue: Build fails with "pika is not defined"

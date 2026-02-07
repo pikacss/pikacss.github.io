@@ -123,16 +123,16 @@ pika({
   color: 'red'
 })
 
-// ⚠️ Zero Runtime Constraint
-// ❌ INVALID - Runtime values
+// [Warning] Zero Runtime Constraint
+// [Invalid] INVALID - Runtime values
 const dynamicColor = props.color
 pika({ color: dynamicColor })  // ERROR: Not statically analyzable
 
-// ✅ VALID - Static values only
+// [Valid] VALID - Static values only
 pika({ color: 'red' })  // OK
 pika({ color: '#3b82f6' })  // OK
 
-// ✅ SOLUTION - Use CSS variables for dynamic values
+// [Valid] SOLUTION - Use CSS variables for dynamic values
 pika({ color: 'var(--dynamic-color)' })  // OK
 // Then set at runtime: <div style={{ '--dynamic-color': props.color }}>
 ```

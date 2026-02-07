@@ -19,16 +19,16 @@ This is only possible if the style definitions are **static** and deterministic.
 ### Valid Examples
 
 ```typescript
-// ✅ Static values
-// ✅ Static module imports
+// [Valid] Static values
+// [Valid] Static module imports
 import { COLORS } from './constants'
 
 const styles = pika({ color: 'red' })
 
-// ✅ Static string literals
+// [Valid] Static string literals
 const primary = pika({ color: '#3b82f6' })
 
-// ✅ Static variables
+// [Valid] Static variables
 const COLOR = 'blue'
 const styles2 = pika({ color: COLOR })
 const text = pika({ color: COLORS.primary })
@@ -37,20 +37,20 @@ const text = pika({ color: COLORS.primary })
 ### Invalid Examples
 
 ```typescript
-// ❌ Runtime variables
+// [Invalid] Runtime variables
 function Component({ color }) {
-	const styles = pika({ color }) // ❌ color comes from props
+	const styles = pika({ color }) // [Invalid] color comes from props
 }
 
-// ❌ Function calls
+// [Invalid] Function calls
 const userColor = getUserColor() // Runtime
 const styles = pika({ color: userColor })
 
-// ❌ Dynamic expressions
+// [Invalid] Dynamic expressions
 const size = props.size // Runtime
 const styles = pika({ fontSize: size })
 
-// ❌ Array/object spreading from runtime
+// [Invalid] Array/object spreading from runtime
 const userStyles = getUserStyles() // Runtime
 const styles = pika({ ...userStyles })
 ```
@@ -60,7 +60,7 @@ const styles = pika({ ...userStyles })
 For dynamic values that change at runtime, use CSS variables:
 
 ```typescript
-// ✅ Static style definition with CSS variable
+// [Valid] Static style definition with CSS variable
 const styles = pika({ color: 'var(--user-color)' })
 
 // Set variable at runtime

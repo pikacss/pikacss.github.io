@@ -325,7 +325,7 @@ shortcuts: [
 ```tsx
 function Button({ primary, children }) {
 	return (
-		<button className={pika(primary ? 'btn-primary' : 'btn-secondary')}>
+		<button className={primary ? pika('btn-primary') : pika('btn-secondary')}>
 			{children}
 		</button>
 	)
@@ -585,12 +585,12 @@ shortcuts: [
 ### ❌ Runtime Variables
 
 ```tsx
-// ❌ This won't work - runtime variable
+// [Invalid] This won't work - runtime variable
 function Component({ color }) {
 	return <div className={pika({ color })} />
 }
 
-// ✅ Use CSS variables instead
+// [Valid] Use CSS variables instead
 function Component({ color }) {
 	return (
 		<div
@@ -604,11 +604,11 @@ function Component({ color }) {
 ### ❌ Function Calls
 
 ```tsx
-// ❌ This won't work - function call
+// [Invalid] This won't work - function call
 const getColor = () => '#3b82f6'
 <div className={pika({ color: getColor() })} />
 
-// ✅ Use static value
+// [Valid] Use static value
 const COLOR = '#3b82f6'
 <div className={pika({ color: COLOR })} />
 ```
@@ -616,10 +616,10 @@ const COLOR = '#3b82f6'
 ### ❌ Props Interpolation
 
 ```tsx
-// ❌ This won't work - props are runtime
+// [Invalid] This won't work - props are runtime
 <div className={pika({ padding: props.spacing })} />
 
-// ✅ Use predefined shortcuts
+// [Valid] Use predefined shortcuts
 const classes = {
   small: pika({ padding: '0.5rem' }),
   medium: pika({ padding: '1rem' }),

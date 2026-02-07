@@ -191,8 +191,8 @@ Internal storage for atomic styles.
 
 ```typescript
 interface Store {
-	atomicStyleIds: Map<string, string> // Content hash → ID
-	atomicStyles: Map<string, AtomicStyle> // ID → AtomicStyle
+	atomicStyleIds: Map<string, string> // Content hash -> ID
+	atomicStyles: Map<string, AtomicStyle> // ID -> AtomicStyle
 }
 
 // Access via engine.store

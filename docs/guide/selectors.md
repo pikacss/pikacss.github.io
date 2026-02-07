@@ -172,10 +172,10 @@ When you define selectors in your configuration, PikaCSS automatically generates
 ```ts
 // TypeScript will show autocomplete for your defined selectors
 pika({
-	'@dark': { // ✓ Valid - autocomplete works
+	'@dark': { // [Valid] Valid - autocomplete works
 		color: 'white',
 	},
-	'@unknown-selector': { // ✗ Unknown selector - no autocomplete
+	'@unknown-selector': { // [Invalid] Unknown selector - no autocomplete
 		color: 'blue',
 	},
 })

@@ -117,8 +117,8 @@ When you define variables in your configuration, PikaCSS automatically generates
 ```ts
 // TypeScript will show autocomplete for your defined variables
 pika({
-	color: 'var(--color-primary)', // ✓ Valid - autocomplete works
-	backgroundColor: 'var(--unknown-variable)' // ✗ Error - unknown variable
+	color: 'var(--color-primary)', // [Valid] Valid - autocomplete works
+	backgroundColor: 'var(--unknown-variable)' // [Invalid] Error - unknown variable
 })
 ```
 

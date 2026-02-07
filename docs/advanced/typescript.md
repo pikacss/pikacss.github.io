@@ -69,8 +69,8 @@ const styles = pika({
 ```typescript
 // Type-safe CSS values
 const styles = pika({
-  display: 'flex' // ✅ Valid
-  display: 'xyz'  // ❌ TypeScript error
+  display: 'flex' // [Valid] Valid
+  display: 'xyz'  // [Invalid] TypeScript error
 })
 ```
 
@@ -78,10 +78,10 @@ const styles = pika({
 
 ```typescript
 const styles = pika({
-	'$:hover': { /* ... */ }, // ✅ Valid pseudo-class
-	'$.active': { /* ... */ }, // ✅ Valid class selector
-	'$:invalid': { /* ... */ }, // ✅ Valid pseudo-class
-	'$:fake': { /* ... */ }, // ❌ TypeScript error
+	'$:hover': { /* ... */ }, // [Valid] Valid pseudo-class
+	'$.active': { /* ... */ }, // [Valid] Valid class selector
+	'$:invalid': { /* ... */ }, // [Valid] Valid pseudo-class
+	'$:fake': { /* ... */ }, // [Invalid] TypeScript error
 })
 ```
 
@@ -97,16 +97,16 @@ export default defineEngineConfig({
 })
 
 // Now TypeScript knows about icon shortcuts:
-const icon = pika('i-mdi:home') // ✅ Autocomplete for icons
-const icon = pika('i-fake') // ❌ Type error
+const icon = pika('i-mdi:home') // [Valid] Autocomplete for icons
+const icon = pika('i-fake') // [Invalid] Type error
 ```
 
 ### 5. Configuration Validation
 
 ```typescript
 export default defineEngineConfig({
-	prefix: 'pika-', // ✅ Valid option
-	unknownOption: 'value' // ❌ TypeScript error
+	prefix: 'pika-', // [Valid] Valid option
+	unknownOption: 'value' // [Invalid] TypeScript error
 })
 ```
 
@@ -130,9 +130,9 @@ const styles = pika({
 ```typescript
 pika({
   // Type first few letters and get autocomplete
-  col    // → color, columnCount, columnGap, etc.
-  flex   // → flex, flexBasis, flexDirection, flexGrow, etc.
-  --my   // → Custom CSS property suggestions
+  col    // -> color, columnCount, columnGap, etc.
+  flex   // -> flex, flexBasis, flexDirection, flexGrow, etc.
+  --my   // -> Custom CSS property suggestions
 })
 ```
 

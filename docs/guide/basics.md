@@ -14,11 +14,11 @@ This is a critical concept in PikaCSS. All arguments passed to `pika()` must be 
 For a comprehensive explanation, see [Important Concepts: Build-Time Evaluation](/guide/important-concepts).
 
 ```ts
-// ❌ This will NOT work - runtime variable
+// [Invalid] This will NOT work - runtime variable
 const userColor = getUserThemeColor()
 pika({ color: userColor })
 
-// ✅ Use CSS variables instead
+// [Valid] Use CSS variables instead
 pika({ color: 'var(--user-theme-color)' })
 // Then set it at runtime: <div style={{ '--user-theme-color': userColor }}>
 ```

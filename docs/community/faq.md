@@ -57,11 +57,11 @@ Yes! PikaCSS works perfectly with Server-Side Rendering and Static Site Generati
 This is due to PikaCSS's **build-time evaluation model**—all style arguments must be statically analyzable before your application runs. See [Important Concepts: Build-Time Evaluation](/guide/important-concepts) for a complete explanation.
 
 ```tsx
-// ❌ Won't work - runtime variable
+// [Invalid] Won't work - runtime variable
 const color = getUserColor()
 pika({ color }) // ERROR
 
-// ✅ Solution - Use CSS variables
+// [Valid] Solution - Use CSS variables
 pika({ color: 'var(--user-color)' })
 // Set at runtime:
 <div style={{ '--user-color': color }} />

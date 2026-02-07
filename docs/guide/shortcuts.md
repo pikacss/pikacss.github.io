@@ -173,12 +173,12 @@ When you define shortcuts in your configuration, PikaCSS automatically generates
 
 ```ts
 // TypeScript will show autocomplete for your defined shortcuts
-pika('flex-center') // ✓ Valid - autocomplete works
-pika('unknown-shortcut') // ✗ Unknown shortcut - no autocomplete
+pika('flex-center') // [Valid] Valid - autocomplete works
+pika('unknown-shortcut') // [Invalid] Unknown shortcut - no autocomplete
 
 // Also works with the __shortcut property
 pika({
-	__shortcut: 'flex-center', // ✓ Valid - autocomplete works
+	__shortcut: 'flex-center', // [Valid] Valid - autocomplete works
 	color: 'blue',
 })
 ```

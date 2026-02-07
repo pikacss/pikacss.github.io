@@ -113,8 +113,8 @@ When you define keyframes in your configuration, PikaCSS automatically generates
 ```ts
 // TypeScript will show autocomplete for your defined keyframes
 pika({
-	animationName: 'fade', // ✓ Valid - autocomplete works
-	animationName: 'unknown-animation' // ✗ Error - unknown animation
+	animationName: 'fade', // [Valid] Valid - autocomplete works
+	animationName: 'unknown-animation' // [Invalid] Error - unknown animation
 })
 ```
 

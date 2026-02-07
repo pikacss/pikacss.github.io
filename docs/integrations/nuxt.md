@@ -101,8 +101,8 @@ The Nuxt module provides zero-config setup. The `pika()` function is globally av
 ```vue
 <!-- app.vue -->
 <script setup lang="ts">
-// ✅ No imports needed - pika() is globally available
-// ✅ No need to import 'pika.css' - auto-injected by Nuxt module
+// [Valid] No imports needed - pika() is globally available
+// [Valid] No need to import 'pika.css' - auto-injected by Nuxt module
 </script>
 
 <template>

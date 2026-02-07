@@ -21,10 +21,10 @@ export default defineConfig({
 	plugins: [
 		pikacss({
 			scan: {
-				// ✅ Only scan necessary directories
+				// [Valid] Only scan necessary directories
 				include: ['src/**/*.{ts,tsx,vue}'],
 
-				// ✅ Explicitly exclude large directories
+				// [Valid] Explicitly exclude large directories
 				exclude: [
 					'node_modules/**',
 					'dist/**',
@@ -158,7 +158,7 @@ PikaCSS only generates CSS for styles you actually use:
 shortcuts: [
 	['btn-primary', { /* used */ }],
 	['btn-secondary', { /* used */ }],
-	['btn-tertiary', { /* NEVER USED - still in config */ }], // ❌
+	['btn-tertiary', { /* NEVER USED - still in config */ }], // [Invalid]
 ]
 ```
 
@@ -293,7 +293,7 @@ Move global styles to preflights:
 // pika.config.ts
 export default defineEngineConfig({
 	preflights: [
-		// ✅ Good - Global CSS in preflights
+		// [Valid] Good - Global CSS in preflights
 		`* { box-sizing: border-box; margin: 0; padding: 0; }`,
 		`:root {
       --color-primary: #3b82f6;
@@ -306,7 +306,7 @@ export default defineEngineConfig({
 **Don't** use pika() for truly global styles:
 
 ```tsx
-// ❌ Bad - Global styles via pika()
+// [Invalid] Bad - Global styles via pika()
 const globalStyles = pika({
 	'*': {
 		boxSizing: 'border-box',
@@ -346,7 +346,7 @@ Generated `pika.gen.ts` provides autocomplete. Keep it fast:
 ```typescript
 // pika.config.ts
 export default defineEngineConfig({
-	// ✅ Limit shortcuts to what you need
+	// [Valid] Limit shortcuts to what you need
 	shortcuts: {
 		shortcuts: [
 			// 50 shortcuts: Fast
@@ -438,10 +438,10 @@ PikaCSS has **zero runtime cost** - all processing happens at build time.
 ### Before Optimization
 
 ```typescript
-// ❌ Scanning everything
+// [Invalid] Scanning everything
 scan: { include: ['**/*'] }
 
-// ❌ No shortcuts, repeated styles
+// [Invalid] No shortcuts, repeated styles
 <Button className={pika({
   padding: '0.5rem 1rem',
   backgroundColor: '#3b82f6',
@@ -450,7 +450,7 @@ scan: { include: ['**/*'] }
 })} />
 // Repeated 50+ times across codebase
 
-// ❌ Complex dynamic shortcuts
+// [Invalid] Complex dynamic shortcuts
 [/^m-(\d{1,3})$/, m => ({ margin: `${m[1]}px` }),
   Array.from({length: 1000}, (_, i) => `m-${i}`)] // 1000 suggestions!
 
@@ -463,13 +463,13 @@ scan: { include: ['**/*'] }
 ### After Optimization
 
 ```typescript
-// ✅ Focused scanning
+// [Valid] Focused scanning
 scan: {
   include: ['src/**/*.{ts,tsx}'],
   exclude: ['**/*.test.ts']
 }
 
-// ✅ Shortcuts for common patterns
+// [Valid] Shortcuts for common patterns
 shortcuts: [
   ['btn-primary', {
     padding: '0.5rem 1rem',
@@ -481,7 +481,7 @@ shortcuts: [
 
 <Button className={pika('btn-primary')} />
 
-// ✅ Limited dynamic shortcuts
+// [Valid] Limited dynamic shortcuts
 [/^m-(\d+)$/, m => ({ margin: `${m[1]}px` }),
   ['m-4', 'm-8', 'm-16', 'm-24']] // Only common values
 

@@ -299,6 +299,6 @@ engine.notifyAutocompleteConfigUpdated()
 ### Store Access
 
 ```typescript
-engine.store.atomicStyleIds // Map<string, string> - Content hash → ID
-engine.store.atomicStyles // Map<string, AtomicStyle> - ID → AtomicStyle
+engine.store.atomicStyleIds // Map<string, string> - Content hash -> ID
+engine.store.atomicStyles // Map<string, AtomicStyle> - ID -> AtomicStyle
 ```
