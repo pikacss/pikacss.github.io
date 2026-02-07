@@ -54,9 +54,17 @@ export function compareSignatures(
 	// For GUIDE context, allow simplified signatures
 	// Check core elements: function name exists, basic structure matches
 	if (context === DocumentationType.GUIDE) {
-		// Extract function/interface/type name from both
-		const extractedName = normExtracted.match(/^(?:function\s+)?(\w+)/)?.[1]
-		const documentedName = normDocumented.match(/^(?:function\s+)?(\w+)/)?.[1]
+		// Helper to extract name from raw signature
+		const extractName = (sig: string) => {
+			// Remove export/async/function/interface/type/class/enum prefixes
+			const clean = sig
+				.replace(/^(?:export\s+)?(?:async\s+)?(?:function|interface|type|class|enum\s+)?/, '')
+				.trim()
+			return clean.match(/^(\w+)/)?.[1]
+		}
+
+		const extractedName = extractName(extracted)
+		const documentedName = extractName(documented)
 
 		// Names must match
 		if (extractedName !== documentedName) {
