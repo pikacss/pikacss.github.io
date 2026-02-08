@@ -2,7 +2,7 @@ packages:
   - docs
   - demo
   - packages/*
-  - .temp-test-* # Integration test fixtures (workspace:* resolution)
+  - .temp-test-*
 
 catalog:
   '@braintree/sanitize-url': ^7.1.1
