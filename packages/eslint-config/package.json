@@ -37,6 +37,7 @@
 	"scripts": {
 		"build": "tsdown",
 		"build:pack": "pnpm build && pnpm pack",
+		"test": "vitest run",
 		"typecheck": "pnpm typecheck:package && pnpm typecheck:test",
 		"typecheck:package": "tsc --project ./tsconfig.package.json --noEmit",
 		"typecheck:test": "tsc --project ./tsconfig.tests.json --noEmit"
@@ -46,6 +47,7 @@
 	},
 	"devDependencies": {
 		"@types/eslint": "^9.6.1",
+		"@typescript-eslint/parser": "^8.54.0",
 		"@typescript-eslint/utils": "^8.54.0",
 		"eslint": "catalog:"
 	}
