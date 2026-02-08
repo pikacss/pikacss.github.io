@@ -42,6 +42,9 @@ This roadmap delivers the `@pikacss/eslint-config` package, a shared ESLint conf
 
 **Goal:** Custom rules are implemented and verified in isolation.
 
+**Plans:**
+- [x] 11-01-PLAN.md — Implement rules engine and tests
+
 **Success Criteria:**
 1. `pika-build-time` rule exists and correctly identifies dynamic arguments in `pika()` calls.
 2. Unit tests using `RuleTester` pass for both valid (static) and invalid (dynamic) cases.
@@ -87,6 +90,6 @@ This roadmap delivers the `@pikacss/eslint-config` package, a shared ESLint conf
 | Phase | Status | Completion |
 |-------|--------|------------|
 | 10 - Foundation | **Completed** | 100% |
-| 11 - Rules Engine | **In Progress** | 0% |
+| 11 - Rules Engine | **Completed** | 100% |
 | 12 - Configuration | Pending | 0% |
 | 13 - Integration | Pending | 0% |
