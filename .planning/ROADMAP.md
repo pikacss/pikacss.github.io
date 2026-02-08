@@ -23,17 +23,20 @@ This roadmap delivers the `@pikacss/eslint-config` package, a shared ESLint conf
 
 ### Phase 10: Foundation & Scaffolding
 
-**Goal:** Package exists, builds, and resolves correctly in workspace (Hybrid Export Strategy).
+**Goal:** Package exists, builds, and resolves correctly in workspace (Standard Dist Export).
+
+**Plans:**
+- [ ] 10-01-PLAN.md — Scaffold package structure and configure dependencies
 
 **Success Criteria:**
 1. Directory `packages/eslint-config` exists with valid `package.json` and `tsdown` config.
 2. `pnpm build` successfully generates ESM artifacts in `dist/`.
-3. `package.json` exports are configured so local dev resolves to `src/` (via `tsx`/`jiti`) and consumers resolve to `dist/`.
+3. `package.json` exports point to `dist/` artifacts (standard export strategy).
 4. Package is recognized by pnpm workspace and installable by other packages.
 
 **Requirements:**
 - **PKG-01**: Create `packages/eslint-config` with `tsdown` build system.
-- **PKG-02**: Configure `package.json` exports for hybrid usage.
+- **PKG-02**: Configure `package.json` exports (descoped to standard dist exports).
 
 ### Phase 11: Rules Migration & Implementation
 
