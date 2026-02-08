@@ -1,12 +1,12 @@
-# PikaCSS Documentation Correction
+# PikaCSS
 
 ## What This Is
 
-A comprehensive documentation correction initiative to eliminate AI-generated hallucinations and inaccuracies across all 73 markdown files in the PikaCSS monorepo. This project verifies every documented claim against the actual codebase implementation, ensuring 100% accuracy between documentation and code reality.
+PikaCSS is a type-safe, atomic CSS-in-JS engine with build-time extraction. It features a monorepo architecture with core style processing, build tool integrations (Unplugin, Nuxt), and now a standardized ESLint configuration for enforcing best practices.
 
 ## Core Value
 
-All documentation must accurately reflect the actual implementation — if it's documented, it must work exactly as described in the current codebase.
+Zero-runtime overhead with full type safety — styles are extracted at build time, and developer tooling (eslint, types) ensures correctness.
 
 ## Requirements
 
@@ -18,66 +18,59 @@ All documentation must accurately reflect the actual implementation — if it's 
 - ✓ TypeScript type system and autocomplete working — existing
 - ✓ Test infrastructure (Vitest) in place — existing
 - ✓ Documentation site built with VitePress — existing
-- ✓ All API documentation matches actual exported APIs and signatures — v0.0.40
-- ✓ All code examples are executable and pass verification tests — v0.0.40
-- ✓ All configuration options documented exist in implementation — v0.0.40
-- ✓ All feature claims are verifiable against source code — v0.0.40
-- ✓ All architecture descriptions accurately reflect codebase structure — v0.0.40
-- ✓ All internal links resolve correctly — v0.0.40
-- ✓ All external references are valid and current — v0.0.40
-- ✓ docs/llm/ validated as intentional LLM knowledge base (not duplication) — v0.0.40
-- ✓ Verification test suite covers all documented claims — v0.0.40
-- ✓ Language policy enforced (English-only for all documentation) — v0.0.40
+- ✓ All API documentation verified against codebase — v0.0.40
+- ✓ All code examples executable and verified — v0.0.40
+- ✓ Verification test suite operational — v0.0.40
 
 ### Active
 
-(None yet — planning next milestone)
+**Milestone v0.0.41: @pikacss/eslint-config**
+
+Goal: Extract internal ESLint configuration to a standalone package for user consumption.
+
+- [ ] **PKG-01**: Create `packages/eslint-config` with `tsdown` build system.
+- [ ] **PKG-02**: Configure `package.json` exports for hybrid usage.
+- [ ] **RULE-01**: Port `pika-build-time` rule to enforce static analysis constraints.
+- [ ] **RULE-02**: Ensure rule has unit tests using `RuleTester`.
+- [ ] **CONF-01**: Create `recommended` preset exporting the plugin and rule.
+- [ ] **CONF-02**: Ensure config is compatible with ESLint 9+ Flat Config.
+- [ ] **INT-01**: Update monorepo root `eslint.config.mjs` to consume `@pikacss/eslint-config`.
+- [ ] **INT-02**: Verify `pnpm lint` passes with new configuration.
 
 ### Out of Scope
 
-- Translating documentation to other languages — English only per project policy
-- Adding new features or functionality — code is correct as-is
-- Restructuring documentation architecture — maintain current VitePress structure
-- Writing new documentation for undocumented features — focus on correcting existing docs
-- Improving writing style or tone — accuracy first, style secondary
+- **Internal Rules**: `pika-package-boundaries` stays in monorepo config (internal only).
+- **Strict Type Checking**: Deferred to v2.
+- **Translating documentation**: English only per policy.
+- **Runtime Style Injection**: strictly build-time extraction.
 
 ## Context
 
-**Current State (v0.0.40):**
-- **Documentation Accuracy:** 100% verified against codebase.
-- **Verification Infrastructure:** ESLint rules, API extraction, integration tests fully operational.
-- **Integration Tests:** Authentic end-to-end verification replaces placeholder tests.
-- **Developer Docs:** AGENTS.md and skills verified.
+**Current State (v0.0.40 Completed):**
+- Documentation is 100% accurate and verified.
+- Infrastructure is solid.
+- Moving to feature development (tooling focus).
 
 **Technical Environment:**
-- Monorepo: pnpm workspace with 8 packages
-- Build: tsdown (TypeScript bundler)
+- Monorepo: pnpm workspace
+- Build: tsdown
+- Linting: ESLint 9+ (Flat Config)
 - Testing: Vitest
-- Docs: VitePress
-- Languages: TypeScript, Vue 3
-- Version: 0.0.40 (unified version across all packages)
-
-**Approach:**
-Test-driven correction — write verification tests for each documented claim, let tests reveal inaccuracies, update docs to match reality, verify tests pass.
 
 ## Constraints
 
-- **Source of Truth**: Codebase is correct — documentation must conform to code, not vice versa
-- **Language Policy**: All documentation content must be in English (per AGENTS.md policy)
-- **No Code Changes**: Fix documentation only — do not modify implementation to match docs
-- **Maintain Structure**: Keep existing VitePress architecture and file organization
-- **Test Coverage**: Every correction must be backed by a passing verification test
-- **Execution Order**: Follow dependency chain (core → integration → framework adapters → plugins)
+- **Build-Time Only**: All styles must be resolvable at build time; ESLint rules must enforce this.
+- **Source of Truth**: Codebase implementation drives documentation and tooling.
+- **English Only**: All public facing content in English.
 
 ## Key Decisions
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Test-driven correction methodology | Ensures objectivity — tests prove accuracy without subjective judgment | Validated |
-| Code as source of truth | PikaCSS implementation is working and correct; docs are suspect | Validated |
-| docs/llm/ is intentional design | LLM-optimized knowledge base complements main docs, not duplication | Confirmed |
-| Process by dependency order | Ensures foundational docs are correct before higher-level docs reference them | Validated |
-| 100% accuracy target | Partial accuracy still leaves users confused — must be complete | Achieved |
+| Extract ESLint Config | Users need the same build-time validation rules as the internal repo | Active |
+| Hybrid Exports for Config | Allows dogfooding local changes without rebuild/publish cycle | Active |
+| Test-driven correction | Ensures docs match code (v0.0.40) | ✓ Validated |
+| Code as source of truth | Implementation is correct; docs must conform | ✓ Validated |
 
 ---
-*Last updated: 2026-02-08 after v0.0.40 milestone*
+*Last updated: 2026-02-08 start of v0.0.41*
