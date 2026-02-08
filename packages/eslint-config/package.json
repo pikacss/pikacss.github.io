@@ -40,5 +40,13 @@
 		"typecheck": "pnpm typecheck:package && pnpm typecheck:test",
 		"typecheck:package": "tsc --project ./tsconfig.package.json --noEmit",
 		"typecheck:test": "tsc --project ./tsconfig.tests.json --noEmit"
+	},
+	"peerDependencies": {
+		"eslint": "^9.39.2"
+	},
+	"devDependencies": {
+		"@types/eslint": "^9.6.1",
+		"@typescript-eslint/utils": "^8.54.0",
+		"eslint": "catalog:"
 	}
 }
