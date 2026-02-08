@@ -26,7 +26,7 @@ This roadmap delivers the `@pikacss/eslint-config` package, a shared ESLint conf
 **Goal:** Package exists, builds, and resolves correctly in workspace (Standard Dist Export).
 
 **Plans:**
-- [ ] 10-01-PLAN.md — Scaffold package structure and configure dependencies
+- [x] 10-01-PLAN.md — Scaffold package structure and configure dependencies
 
 **Success Criteria:**
 1. Directory `packages/eslint-config` exists with valid `package.json` and `tsdown` config.

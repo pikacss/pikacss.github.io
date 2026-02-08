@@ -9,8 +9,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Package Setup
 
-- [ ] **PKG-01**: Create `packages/eslint-config` with `tsdown` build system.
-- [ ] **PKG-02**: Configure `package.json` exports for hybrid usage (local dev via `src`, published via `dist`).
+- [x] **PKG-01**: Create `packages/eslint-config` with `tsdown` build system.
+- [x] **PKG-02**: Configure `package.json` exports for hybrid usage (local dev via `src`, published via `dist`).
 
 ### Custom Rules
 
@@ -43,8 +43,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PKG-01 | Phase 10 | Pending |
-| PKG-02 | Phase 10 | Pending |
+| PKG-01 | Phase 10 | Complete |
+| PKG-02 | Phase 10 | Complete |
 | RULE-01 | Phase 11 | Pending |
 | RULE-02 | Phase 11 | Pending |
 | CONF-01 | Phase 12 | Pending |
