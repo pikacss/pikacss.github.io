@@ -25,4 +25,9 @@ Progress: [--------------------] 0%
 
 - Clear decisions summary (full log in PROJECT.md)
 - Clear resolved blockers
-- Keep open blockers for next milestone (none currently)
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 018 | 幫我清理整個專案去除無用冗餘檔案，確保所有檢查與測試都沒有被破壞 | 2026-02-08 | 87b4728 | [018-cleanup-redundant-files-ensure-checks-pass](./quick/018-cleanup-redundant-files-ensure-checks-pass/) |
