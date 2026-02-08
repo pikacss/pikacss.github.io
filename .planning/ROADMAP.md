@@ -59,6 +59,9 @@ This roadmap delivers the `@pikacss/eslint-config` package, a shared ESLint conf
 
 **Goal:** Users can consume a pre-wired configuration object compatible with Flat Config.
 
+**Plans:**
+- [x] 12-01-PLAN.md — Create consumable ESLint Flat Config preset
+
 **Success Criteria:**
 1. Package exports a `recommended` preset array (Flat Config format).
 2. The preset explicitly includes the plugin instance (avoiding string-based resolution issues).
@@ -91,5 +94,5 @@ This roadmap delivers the `@pikacss/eslint-config` package, a shared ESLint conf
 |-------|--------|------------|
 | 10 - Foundation | **Completed** | 100% |
 | 11 - Rules Engine | **Completed** | 100% |
-| 12 - Configuration | Pending | 0% |
+| 12 - Configuration | **Completed** | 100% |
 | 13 - Integration | Pending | 0% |

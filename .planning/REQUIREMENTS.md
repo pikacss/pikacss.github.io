@@ -14,13 +14,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Custom Rules
 
-- [ ] **RULE-01**: Port `pika-build-time` rule to enforce static analysis constraints on `pika()` arguments.
-- [ ] **RULE-02**: Ensure rule has unit tests using `RuleTester`.
+- [x] **RULE-01**: Port `pika-build-time` rule to enforce static analysis constraints on `pika()` arguments.
+- [x] **RULE-02**: Ensure rule has unit tests using `RuleTester`.
 
 ### Configuration
 
-- [ ] **CONF-01**: Create `recommended` preset exporting the plugin and enabling `pika-build-time` rule.
-- [ ] **CONF-02**: Ensure config is compatible with ESLint 9+ Flat Config format.
+- [x] **CONF-01**: Create `recommended` preset exporting the plugin and enabling `pika-build-time` rule.
+- [x] **CONF-02**: Ensure config is compatible with ESLint 9+ Flat Config format.
 
 ### Integration
 
@@ -45,10 +45,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 |-------------|-------|--------|
 | PKG-01 | Phase 10 | Complete |
 | PKG-02 | Phase 10 | Complete |
-| RULE-01 | Phase 11 | Pending |
-| RULE-02 | Phase 11 | Pending |
-| CONF-01 | Phase 12 | Pending |
-| CONF-02 | Phase 12 | Pending |
+| RULE-01 | Phase 11 | Complete |
+| RULE-02 | Phase 11 | Complete |
+| CONF-01 | Phase 12 | Complete |
+| CONF-02 | Phase 12 | Complete |
 | INT-01 | Phase 13 | Pending |
 | INT-02 | Phase 13 | Pending |
 
