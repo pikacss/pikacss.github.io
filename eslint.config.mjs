@@ -10,7 +10,7 @@ export default await deviltea({
 	ignores: [
 		'.planning/**',
 		'.github/skills/**', // Skill documentation with many TypeScript examples
-		'API-VERIFICATION-BASELINE.md', // Generated baseline file
+
 		'docs/llm/**', // LLM-optimized documentation with many code examples
 		'docs/advanced/**', // Advanced docs with complex TypeScript examples
 		'docs/examples/**', // Example code snippets
