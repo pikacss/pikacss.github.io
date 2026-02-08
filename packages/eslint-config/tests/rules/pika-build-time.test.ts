@@ -15,7 +15,7 @@ const ruleTester = new RuleTester({
 	},
 })
 
-ruleTester.run('pika-build-time', pikaBuildTime, {
+ruleTester.run('pika-build-time', pikaBuildTime as any, {
 	valid: [
 		'pika({ color: \'red\' })',
 		'pika.str(\'foo\')',
