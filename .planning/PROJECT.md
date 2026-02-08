@@ -18,19 +18,20 @@ All documentation must accurately reflect the actual implementation — if it's 
 - ✓ TypeScript type system and autocomplete working — existing
 - ✓ Test infrastructure (Vitest) in place — existing
 - ✓ Documentation site built with VitePress — existing
+- ✓ All API documentation matches actual exported APIs and signatures — v0.0.40
+- ✓ All code examples are executable and pass verification tests — v0.0.40
+- ✓ All configuration options documented exist in implementation — v0.0.40
+- ✓ All feature claims are verifiable against source code — v0.0.40
+- ✓ All architecture descriptions accurately reflect codebase structure — v0.0.40
+- ✓ All internal links resolve correctly — v0.0.40
+- ✓ All external references are valid and current — v0.0.40
+- ✓ docs/llm/ validated as intentional LLM knowledge base (not duplication) — v0.0.40
+- ✓ Verification test suite covers all documented claims — v0.0.40
+- ✓ Language policy enforced (English-only for all documentation) — v0.0.40
 
 ### Active
 
-- [ ] All API documentation matches actual exported APIs and signatures
-- [ ] All code examples are executable and pass verification tests
-- [ ] All configuration options documented exist in implementation
-- [ ] All feature claims are verifiable against source code
-- [ ] All architecture descriptions accurately reflect codebase structure
-- [ ] All internal links resolve correctly
-- [ ] All external references are valid and current
-- [ ] docs/llm/ validated as intentional LLM knowledge base (not duplication)
-- [ ] Verification test suite covers all documented claims
-- [ ] Language policy enforced (English-only for all documentation)
+(None yet — planning next milestone)
 
 ### Out of Scope
 
@@ -42,19 +43,11 @@ All documentation must accurately reflect the actual implementation — if it's 
 
 ## Context
 
-**Current State:**
-- 73 markdown files across the project (docs/, skills/, READMEs, AGENTS.md)
-- Previous AI agents may have hallucinated features, APIs, or configurations
-- Mix of user-facing docs (docs/*) and developer docs (AGENTS.md, skills/*)
-- docs/llm/ contains LLM-optimized knowledge base (intentional design, not duplication)
-- Documentation was generated partially by AI without full verification
-
-**Known Issues:**
-- API mismatches: documented APIs don't match actual implementation
-- Architecture drift: diagrams/descriptions outdated
-- Broken examples: code examples don't work as written
-- Feature hallucinations: features described that don't actually exist
-- Inconsistencies: contradictions between different doc files
+**Current State (v0.0.40):**
+- **Documentation Accuracy:** 100% verified against codebase.
+- **Verification Infrastructure:** ESLint rules, API extraction, integration tests fully operational.
+- **Integration Tests:** Authentic end-to-end verification replaces placeholder tests.
+- **Developer Docs:** AGENTS.md and skills verified.
 
 **Technical Environment:**
 - Monorepo: pnpm workspace with 8 packages
@@ -62,7 +55,7 @@ All documentation must accurately reflect the actual implementation — if it's 
 - Testing: Vitest
 - Docs: VitePress
 - Languages: TypeScript, Vue 3
-- Version: 0.0.39 (unified version across all packages)
+- Version: 0.0.40 (unified version across all packages)
 
 **Approach:**
 Test-driven correction — write verification tests for each documented claim, let tests reveal inaccuracies, update docs to match reality, verify tests pass.
@@ -80,11 +73,11 @@ Test-driven correction — write verification tests for each documented claim, l
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Test-driven correction methodology | Ensures objectivity — tests prove accuracy without subjective judgment | — Pending |
-| Code as source of truth | PikaCSS implementation is working and correct; docs are suspect | — Pending |
-| docs/llm/ is intentional design | LLM-optimized knowledge base complements main docs, not duplication | — Confirmed |
-| Process by dependency order | Ensures foundational docs are correct before higher-level docs reference them | — Pending |
-| 100% accuracy target | Partial accuracy still leaves users confused — must be complete | — Pending |
+| Test-driven correction methodology | Ensures objectivity — tests prove accuracy without subjective judgment | Validated |
+| Code as source of truth | PikaCSS implementation is working and correct; docs are suspect | Validated |
+| docs/llm/ is intentional design | LLM-optimized knowledge base complements main docs, not duplication | Confirmed |
+| Process by dependency order | Ensures foundational docs are correct before higher-level docs reference them | Validated |
+| 100% accuracy target | Partial accuracy still leaves users confused — must be complete | Achieved |
 
 ---
-*Last updated: 2026-02-03 after initialization*
+*Last updated: 2026-02-08 after v0.0.40 milestone*
