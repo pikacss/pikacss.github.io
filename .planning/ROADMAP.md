@@ -86,7 +86,7 @@ This roadmap delivers the `@pikacss/eslint-config` package, a shared ESLint conf
 
 | Phase | Status | Completion |
 |-------|--------|------------|
-| 10 - Foundation | **Pending** | 0% |
-| 11 - Rules Engine | Pending | 0% |
+| 10 - Foundation | **Completed** | 100% |
+| 11 - Rules Engine | **In Progress** | 0% |
 | 12 - Configuration | Pending | 0% |
 | 13 - Integration | Pending | 0% |
