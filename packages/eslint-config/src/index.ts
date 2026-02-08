@@ -1,13 +1,14 @@
-import { pikaBuildTime } from './rules/pika-build-time'
+import type { Linter } from 'eslint'
+import recommended from './configs/recommended'
+import { plugin } from './plugin'
 
-const plugin = {
-	meta: {
-		name: '@pikacss/eslint-config',
-		version: '0.0.40',
-	},
-	rules: {
-		'pika-build-time': pikaBuildTime,
-	},
+export const configs: { recommended: Linter.Config[] } = {
+	recommended,
 }
 
-export default plugin
+const pluginWithConfigs = {
+	...plugin,
+	configs,
+}
+
+export default pluginWithConfigs
