@@ -12,6 +12,7 @@ on:
       - 'scripts/check-*.sh'
       - scripts/run-all-checks.sh
       - scripts/run-pikacss-validation.sh
+      - .github/workflows/docs-validation.yml
 
   pull_request:
     branches:
@@ -24,7 +25,7 @@ on:
       - 'scripts/check-*.sh'
       - scripts/run-all-checks.sh
       - scripts/run-pikacss-validation.sh
-
+      - .github/workflows/docs-validation.yml
 jobs:
   structural-validation:
     name: Structural Validation
