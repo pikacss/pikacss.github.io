@@ -179,6 +179,9 @@ importers:
       '@deviltea/tsconfig':
         specifier: 'catalog:'
         version: 0.0.8(@types/node@24.10.4)(typescript@5.9.3)
+      '@pikacss/eslint-config':
+        specifier: workspace:*
+        version: link:packages/eslint-config
       '@types/node':
         specifier: 'catalog:'
         version: 24.10.4
