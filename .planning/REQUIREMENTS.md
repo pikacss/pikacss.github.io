@@ -24,8 +24,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Integration
 
-- [ ] **INT-01**: Update monorepo root `eslint.config.mjs` to consume `@pikacss/eslint-config` (dogfooding).
-- [ ] **INT-02**: Verify `pnpm lint` passes with new configuration.
+- [x] **INT-01**: Update monorepo root `eslint.config.mjs` to consume `@pikacss/eslint-config` (dogfooding).
+- [x] **INT-02**: Verify `pnpm lint` passes with new configuration.
 
 ## Out of Scope
 

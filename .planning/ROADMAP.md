@@ -79,6 +79,7 @@ This roadmap delivers the `@pikacss/eslint-config` package, a shared ESLint conf
 **Plans:**
 - [x] 13-01-PLAN.md — Integration & Dogfooding
 - [x] 13-02-PLAN.md — Cleanup Local Rules
+- [x] 13-03-PLAN.md — Verify Enforcement
 
 **Success Criteria:**
 1. Root `eslint.config.mjs` imports from `@pikacss/eslint-config` instead of local rule files.
