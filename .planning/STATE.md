@@ -6,35 +6,35 @@
 
 ## Current Position
 
-- **Phase:** 12 (Configuration)
+- **Phase:** 13 (Integration)
 - **Status:** Phase Complete
 - **Progress:** 100% (1/1 plans)
 
 ## Context
 
-We have successfully implemented the ESLint Flat Config preset for `pika-build-time` rule. The package now exports a zero-dependency plugin and a recommended configuration that can be easily consumed by users.
+We have successfully integrated the `@pikacss/eslint-config` package into the monorepo root configuration. The local `pika-build-time` rule implementation has been replaced by the package version. Linting passes across the repository (with appropriate ignores for documentation).
 
-## Implementation Plan (Phase 12)
+## Implementation Plan (Phase 13)
 
-1.  [x] Refactor rule for zero runtime dependencies.
-2.  [x] Create plugin definition object.
-3.  [x] Create recommended config preset.
-4.  [x] Update package exports.
-5.  [x] Add integration tests.
+1.  [x] Add package dependency to root `package.json`.
+2.  [x] Build the config package.
+3.  [x] Update `eslint.config.mjs` to use the package.
+4.  [x] Verify linting.
 
 ## Session Continuity
 
-- **Last Action:** Completed 12-01-PLAN.md (Configuration).
-- **Next Action:** Begin Phase 13 (Documentation/Release - assumed next phase).
-- **Blockers:** None.
+- **Last Session:** 2026-02-09
+- **Stopped at:** Completed Phase 13 (Integration)
+- **Next Action:** Review project status or release v0.0.41
+- **Blockers:** None
 
 ## Metrics
 
 | Metric | Value |
 |--------|-------|
-| Phases Completed | 3/4 |
-| Requirements Met | 8/8 (Configuration complete) |
-| Test Coverage | 100% (Rules + Integration) |
+| Phases Completed | 4/4 |
+| Requirements Met | 10/10 (Integration complete) |
+| Test Coverage | N/A (Integration task) |
 
 ## Decisions Log
 
@@ -46,3 +46,6 @@ We have successfully implemented the ESLint Flat Config preset for `pika-build-t
 | 11 | Added package-level vitest.config.ts | Enables isolated testing of the package without interference from root config. |
 | 12 | Removed @typescript-eslint/utils runtime dependency | Ensure users don't need to install large dev-deps in production. |
 | 12 | Isolated integration tests with overrideConfigFile | Prevent interference from monorepo root ESLint config during package testing. |
+| 13 | Replaced local rule with package | Dogfooding the public package ensures it works as expected and reduces code duplication. |
+| 13 | Kept boundaries/augmentation rules local | These rules are specific to the monorepo structure and not part of the public package scope. |
+| 13 | Added ignores for skills/ and fixtures | The new strict AST-based rule flags runtime variables in examples/tests, which is correct but noisy for docs. |

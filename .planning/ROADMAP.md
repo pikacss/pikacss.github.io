@@ -76,6 +76,9 @@ This roadmap delivers the `@pikacss/eslint-config` package, a shared ESLint conf
 
 **Goal:** The monorepo relies on the new package for its own linting.
 
+**Plans:**
+- [x] 13-01-PLAN.md — Integration & Dogfooding
+
 **Success Criteria:**
 1. Root `eslint.config.mjs` imports from `@pikacss/eslint-config` instead of local rule files.
 2. `pnpm lint` passes across the entire monorepo without errors.
@@ -95,4 +98,4 @@ This roadmap delivers the `@pikacss/eslint-config` package, a shared ESLint conf
 | 10 - Foundation | **Completed** | 100% |
 | 11 - Rules Engine | **Completed** | 100% |
 | 12 - Configuration | **Completed** | 100% |
-| 13 - Integration | Pending | 0% |
+| 13 - Integration | **Completed** | 100% |
