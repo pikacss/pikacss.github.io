@@ -44,6 +44,9 @@ jobs:
       - name: install dependencies
         run: pnpm install
 
+      - name: build @pikacss/eslint-config (needed for validation scripts)
+        run: pnpm --filter @pikacss/eslint-config build
+
       - name: run documentation validation
         run: bash scripts/run-all-checks.sh
 
