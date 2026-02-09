@@ -1,7 +1,8 @@
 import deviltea from '@deviltea/eslint-config'
-import { pikaBuildTimeRule, pikaModuleAugmentationRule, pikaPackageBoundariesRule } from './.eslint/rules/index.ts'
+import pikaConfig from '@pikacss/eslint-config'
+import { pikaModuleAugmentationRule, pikaPackageBoundariesRule } from './.eslint/rules/index.ts'
 
-export default await deviltea({
+const baseConfig = await deviltea({
 	stylistic: {
 		overrides: {
 			'style/no-mixed-spaces-and-tabs': 'warn',
@@ -19,19 +20,24 @@ export default await deviltea({
 		'docs/guide/**', // User guides with code examples
 		'docs/integrations/**', // Integration guides with examples
 		'AGENTS.md', // Comprehensive guide with many examples
+		'skills/**', // Skill documentation
+		'.eslint/tests/**', // ESLint rule tests and fixtures
 	],
 	plugins: {
 		pikacss: {
 			rules: {
-				'pika-build-time': pikaBuildTimeRule,
 				'pika-package-boundaries': pikaPackageBoundariesRule,
 				'pika-module-augmentation': pikaModuleAugmentationRule,
 			},
 		},
 	},
 	rules: {
-		'pikacss/pika-build-time': 'error',
 		'pikacss/pika-package-boundaries': 'error',
 		'pikacss/pika-module-augmentation': 'error',
 	},
 })
+
+export default [
+	...baseConfig,
+	...pikaConfig.configs.recommended,
+]
