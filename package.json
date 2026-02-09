@@ -34,6 +34,7 @@
 		"@clack/prompts": "catalog:",
 		"@deviltea/eslint-config": "catalog:",
 		"@deviltea/tsconfig": "catalog:",
+		"@pikacss/eslint-config": "workspace:*",
 		"@types/node": "catalog:",
 		"@typescript-eslint/rule-tester": "^8.54.0",
 		"@typescript-eslint/utils": "^8.54.0",
