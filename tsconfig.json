@@ -3,10 +3,9 @@
 		"./docs/tsconfig.json",
 		"./packages/core/tsconfig.json",
 		"./packages/integration/tsconfig.json",
-		"./packages/vite/tsconfig.json",
+		"./packages/unplugin/tsconfig.json",
 		"./packages/nuxt/tsconfig.json",
 		"./packages/plugin-icons/tsconfig.json",
-		"./packages/unplugin/tsconfig.json",
 		"./packages/plugin-reset/tsconfig.json",
 		"./packages/plugin-typography/tsconfig.json"
 	],
