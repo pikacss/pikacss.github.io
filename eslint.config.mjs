@@ -1,15 +1,9 @@
 import deviltea from '@deviltea/eslint-config'
 
 export default await deviltea({
-	stylistic: {
+	markdown: {
 		overrides: {
-			'style/no-mixed-spaces-and-tabs': 'warn',
+			'style/indent': ['error', 2],
 		},
 	},
-	ignores: [
-		'**/README.md',
-		'docs/**/*.md',
-		'.github/skills/**/*.md',
-		'**/AGENTS.md',
-	],
 })
