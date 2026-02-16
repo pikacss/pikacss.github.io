@@ -370,17 +370,6 @@ describe('createCtx', () => {
 			.toContain('[\'c-red\']')
 	})
 
-	it('transform pika.inl forces inline', async () => {
-		const ctx = createCtx(opts({ transformedFormat: 'string' }))
-		await ctx.setup()
-		const r = await ctx.transform('pika.inl(\'color:red\')', 'x.ts')
-		expect(r?.code)
-			.toContain('c-red')
-		expect(r?.code)
-			.not
-			.toContain('\'c-red\'')
-	})
-
 	it('transform preview variant pikap', async () => {
 		const ctx = createCtx(opts({ transformedFormat: 'string' }))
 		await ctx.setup()
@@ -403,14 +392,6 @@ describe('createCtx', () => {
 		const r = await ctx.transform('pikap.arr(\'color:red\')', 'x.ts')
 		expect(r?.code)
 			.toContain('[\'c-red\']')
-	})
-
-	it('transform preview variant pikap.inl', async () => {
-		const ctx = createCtx(opts({ transformedFormat: 'string' }))
-		await ctx.setup()
-		const r = await ctx.transform('pikap.inl(\'color:red\')', 'x.ts')
-		expect(r?.code)
-			.toContain('c-red')
 	})
 
 	it('transform bracket access pika["str"]', async () => {

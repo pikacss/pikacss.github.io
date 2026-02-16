@@ -11,7 +11,6 @@ export interface FnUtils {
 	isNormal: (fnName: string) => boolean
 	isForceString: (fnName: string) => boolean
 	isForceArray: (fnName: string) => boolean
-	isForceInline: (fnName: string) => boolean
 	isPreview: (fnName: string) => boolean
 	RE: RegExp
 }

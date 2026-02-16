@@ -9,7 +9,3 @@ const str = pika.str({ color: 'red', fontSize: '1rem' })
 // pika.arr() - Force array output
 const arr = pika.arr({ color: 'red', fontSize: '1rem' })
 // => ["a", "b"]
-
-// pika.inl() - Force inline style output (for SSR or special cases)
-pika.inl({ color: 'red', fontSize: '1rem' })
-// Applies styles inline, no return value

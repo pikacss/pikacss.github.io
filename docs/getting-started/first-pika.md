@@ -79,7 +79,6 @@ By default, `pika()` returns a space-separated string of class names (e.g. `"a b
 | `pika()`      | Configured  | Default (usually `string`)                  |
 | `pika.str()`  | `string`    | Force space-separated string                |
 | `pika.arr()`  | `string[]`  | Force array of class names                  |
-| `pika.inl()`  | `void`      | Force inline style application              |
 
 ### IDE preview with `pikap`
 
