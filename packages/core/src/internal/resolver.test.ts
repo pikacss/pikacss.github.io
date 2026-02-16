@@ -1,0 +1,379 @@
+import type { DynamicRule, StaticRule } from './resolver'
+import { describe, expect, it, vi } from 'vitest'
+import { AbstractResolver } from './resolver'
+
+class TestResolver extends AbstractResolver<string> {}
+
+describe('abstractResolver', () => {
+	describe('addStaticRule / removeStaticRule', () => {
+		it('should add a static rule to the map', () => {
+			const resolver = new TestResolver()
+			const rule: StaticRule<string> = { key: 'a', string: 'foo', resolved: 'bar' }
+			resolver.addStaticRule(rule)
+			expect(resolver.staticRulesMap.get('a'))
+				.toBe(rule)
+		})
+
+		it('should support chaining on addStaticRule', () => {
+			const resolver = new TestResolver()
+			const result = resolver
+				.addStaticRule({ key: 'a', string: 'foo', resolved: 'bar' })
+				.addStaticRule({ key: 'b', string: 'baz', resolved: 'qux' })
+			expect(result)
+				.toBe(resolver)
+			expect(resolver.staticRulesMap.size)
+				.toBe(2)
+		})
+
+		it('should remove a static rule and its cached resolved result', async () => {
+			const resolver = new TestResolver()
+			resolver.addStaticRule({ key: 'a', string: 'foo', resolved: 'bar' })
+			// Resolve to populate the cache
+			await resolver._resolve('foo')
+			expect(resolver._resolvedResultsMap.has('foo'))
+				.toBe(true)
+
+			resolver.removeStaticRule('a')
+			expect(resolver.staticRulesMap.has('a'))
+				.toBe(false)
+			expect(resolver._resolvedResultsMap.has('foo'))
+				.toBe(false)
+		})
+
+		it('should return this when removing a non-existent static rule', () => {
+			const resolver = new TestResolver()
+			const result = resolver.removeStaticRule('nonexistent')
+			expect(result)
+				.toBe(resolver)
+		})
+
+		it('should support chaining on removeStaticRule', () => {
+			const resolver = new TestResolver()
+			resolver.addStaticRule({ key: 'a', string: 'foo', resolved: 'bar' })
+			resolver.addStaticRule({ key: 'b', string: 'baz', resolved: 'qux' })
+			const result = resolver.removeStaticRule('a')
+				.removeStaticRule('b')
+			expect(result)
+				.toBe(resolver)
+			expect(resolver.staticRulesMap.size)
+				.toBe(0)
+		})
+
+		it('should overwrite when adding a rule with the same key', () => {
+			const resolver = new TestResolver()
+			resolver.addStaticRule({ key: 'a', string: 'foo', resolved: 'bar' })
+			resolver.addStaticRule({ key: 'a', string: 'foo2', resolved: 'bar2' })
+			expect(resolver.staticRulesMap.size)
+				.toBe(1)
+			expect(resolver.staticRulesMap.get('a')!.resolved)
+				.toBe('bar2')
+		})
+	})
+
+	describe('addDynamicRule / removeDynamicRule', () => {
+		it('should add a dynamic rule to the map', () => {
+			const resolver = new TestResolver()
+			const rule: DynamicRule<string> = {
+				key: 'd1',
+				stringPattern: /^color-(.+)$/,
+				createResolved: matched => `resolved-${matched[1]}`,
+			}
+			resolver.addDynamicRule(rule)
+			expect(resolver.dynamicRulesMap.get('d1'))
+				.toBe(rule)
+		})
+
+		it('should support chaining on addDynamicRule', () => {
+			const resolver = new TestResolver()
+			const result = resolver
+				.addDynamicRule({ key: 'd1', stringPattern: /^a-(.+)$/, createResolved: m => m[1]! })
+				.addDynamicRule({ key: 'd2', stringPattern: /^b-(.+)$/, createResolved: m => m[1]! })
+			expect(result)
+				.toBe(resolver)
+			expect(resolver.dynamicRulesMap.size)
+				.toBe(2)
+		})
+
+		it('should remove a dynamic rule and clear matching cached results', async () => {
+			const resolver = new TestResolver()
+			resolver.addDynamicRule({
+				key: 'd1',
+				stringPattern: /^color-(.+)$/,
+				createResolved: matched => `resolved-${matched[1]}`,
+			})
+			// Resolve some strings to populate the cache
+			await resolver._resolve('color-red')
+			await resolver._resolve('color-blue')
+			expect(resolver._resolvedResultsMap.has('color-red'))
+				.toBe(true)
+			expect(resolver._resolvedResultsMap.has('color-blue'))
+				.toBe(true)
+
+			resolver.removeDynamicRule('d1')
+			expect(resolver.dynamicRulesMap.has('d1'))
+				.toBe(false)
+			expect(resolver._resolvedResultsMap.has('color-red'))
+				.toBe(false)
+			expect(resolver._resolvedResultsMap.has('color-blue'))
+				.toBe(false)
+		})
+
+		it('should only clear cached results matching the removed rule pattern', async () => {
+			const resolver = new TestResolver()
+			resolver.addDynamicRule({
+				key: 'd1',
+				stringPattern: /^color-(.+)$/,
+				createResolved: matched => `color-${matched[1]}`,
+			})
+			resolver.addDynamicRule({
+				key: 'd2',
+				stringPattern: /^size-(.+)$/,
+				createResolved: matched => `size-${matched[1]}`,
+			})
+			await resolver._resolve('color-red')
+			await resolver._resolve('size-lg')
+
+			resolver.removeDynamicRule('d1')
+			expect(resolver._resolvedResultsMap.has('color-red'))
+				.toBe(false)
+			expect(resolver._resolvedResultsMap.has('size-lg'))
+				.toBe(true)
+		})
+
+		it('should return this when removing a non-existent dynamic rule', () => {
+			const resolver = new TestResolver()
+			const result = resolver.removeDynamicRule('nonexistent')
+			expect(result)
+				.toBe(resolver)
+		})
+	})
+
+	describe('staticRules / dynamicRules getters', () => {
+		it('should return an array of static rules from the map', () => {
+			const resolver = new TestResolver()
+			const rule1: StaticRule<string> = { key: 'a', string: 'foo', resolved: 'bar' }
+			const rule2: StaticRule<string> = { key: 'b', string: 'baz', resolved: 'qux' }
+			resolver.addStaticRule(rule1)
+				.addStaticRule(rule2)
+
+			const rules = resolver.staticRules
+			expect(rules)
+				.toEqual([rule1, rule2])
+			// Should return a new array each time
+			expect(resolver.staticRules).not.toBe(rules)
+		})
+
+		it('should return an empty array when no static rules exist', () => {
+			const resolver = new TestResolver()
+			expect(resolver.staticRules)
+				.toEqual([])
+		})
+
+		it('should return an array of dynamic rules from the map', () => {
+			const resolver = new TestResolver()
+			const rule1: DynamicRule<string> = { key: 'd1', stringPattern: /^a$/, createResolved: () => 'a' }
+			const rule2: DynamicRule<string> = { key: 'd2', stringPattern: /^b$/, createResolved: () => 'b' }
+			resolver.addDynamicRule(rule1)
+				.addDynamicRule(rule2)
+
+			const rules = resolver.dynamicRules
+			expect(rules)
+				.toEqual([rule1, rule2])
+			expect(resolver.dynamicRules).not.toBe(rules)
+		})
+
+		it('should return an empty array when no dynamic rules exist', () => {
+			const resolver = new TestResolver()
+			expect(resolver.dynamicRules)
+				.toEqual([])
+		})
+	})
+
+	describe('_resolve', () => {
+		it('should resolve a static rule match', async () => {
+			const resolver = new TestResolver()
+			resolver.addStaticRule({ key: 'a', string: 'foo', resolved: 'bar' })
+
+			const result = await resolver._resolve('foo')
+			expect(result)
+				.toEqual({ value: 'bar' })
+		})
+
+		it('should resolve a dynamic rule match via regex', async () => {
+			const resolver = new TestResolver()
+			resolver.addDynamicRule({
+				key: 'd1',
+				stringPattern: /^color-(.+)$/,
+				createResolved: matched => `resolved-${matched[1]}`,
+			})
+
+			const result = await resolver._resolve('color-red')
+			expect(result)
+				.toEqual({ value: 'resolved-red' })
+		})
+
+		it('should support async createResolved in dynamic rules', async () => {
+			const resolver = new TestResolver()
+			resolver.addDynamicRule({
+				key: 'd1',
+				stringPattern: /^async-(.+)$/,
+				createResolved: async matched => `async-${matched[1]}`,
+			})
+
+			const result = await resolver._resolve('async-test')
+			expect(result)
+				.toEqual({ value: 'async-test' })
+		})
+
+		it('should return cached result on subsequent calls', async () => {
+			const resolver = new TestResolver()
+			resolver.addStaticRule({ key: 'a', string: 'foo', resolved: 'bar' })
+
+			const result1 = await resolver._resolve('foo')
+			const result2 = await resolver._resolve('foo')
+			expect(result1)
+				.toBe(result2) // Same reference
+		})
+
+		it('should return undefined when no rule matches', async () => {
+			const resolver = new TestResolver()
+			resolver.addStaticRule({ key: 'a', string: 'foo', resolved: 'bar' })
+
+			const result = await resolver._resolve('unknown')
+			expect(result)
+				.toBeUndefined()
+		})
+
+		it('should prefer cached result over re-resolving', async () => {
+			const resolver = new TestResolver()
+			const createResolved = vi.fn((matched: RegExpMatchArray) => `resolved-${matched[1]}`)
+			resolver.addDynamicRule({
+				key: 'd1',
+				stringPattern: /^x-(.+)$/,
+				createResolved,
+			})
+
+			await resolver._resolve('x-first')
+			await resolver._resolve('x-first')
+			// createResolved should only be called once due to caching
+			expect(createResolved)
+				.toHaveBeenCalledTimes(1)
+		})
+
+		it('should call onResolved callback for static matches', async () => {
+			const resolver = new TestResolver()
+			const onResolved = vi.fn()
+			resolver.onResolved = onResolved
+			resolver.addStaticRule({ key: 'a', string: 'foo', resolved: 'bar' })
+
+			await resolver._resolve('foo')
+			expect(onResolved)
+				.toHaveBeenCalledTimes(1)
+			expect(onResolved)
+				.toHaveBeenCalledWith('foo', 'static', { value: 'bar' })
+		})
+
+		it('should call onResolved callback for dynamic matches', async () => {
+			const resolver = new TestResolver()
+			const onResolved = vi.fn()
+			resolver.onResolved = onResolved
+			resolver.addDynamicRule({
+				key: 'd1',
+				stringPattern: /^color-(.+)$/,
+				createResolved: matched => `resolved-${matched[1]}`,
+			})
+
+			await resolver._resolve('color-blue')
+			expect(onResolved)
+				.toHaveBeenCalledTimes(1)
+			expect(onResolved)
+				.toHaveBeenCalledWith('color-blue', 'dynamic', { value: 'resolved-blue' })
+		})
+
+		it('should not call onResolved when result is from cache', async () => {
+			const resolver = new TestResolver()
+			const onResolved = vi.fn()
+			resolver.onResolved = onResolved
+			resolver.addStaticRule({ key: 'a', string: 'foo', resolved: 'bar' })
+
+			await resolver._resolve('foo')
+			await resolver._resolve('foo')
+			expect(onResolved)
+				.toHaveBeenCalledTimes(1)
+		})
+
+		it('should not call onResolved when no rule matches', async () => {
+			const resolver = new TestResolver()
+			const onResolved = vi.fn()
+			resolver.onResolved = onResolved
+
+			await resolver._resolve('unknown')
+			expect(onResolved).not.toHaveBeenCalled()
+		})
+
+		it('should try static rules before dynamic rules', async () => {
+			const resolver = new TestResolver()
+			const createResolved = vi.fn(() => 'dynamic-result')
+			resolver.addStaticRule({ key: 's1', string: 'test', resolved: 'static-result' })
+			resolver.addDynamicRule({
+				key: 'd1',
+				stringPattern: /^test$/,
+				createResolved,
+			})
+
+			const result = await resolver._resolve('test')
+			expect(result)
+				.toEqual({ value: 'static-result' })
+			expect(createResolved).not.toHaveBeenCalled()
+		})
+
+		it('should match the first dynamic rule when multiple patterns match', async () => {
+			const resolver = new TestResolver()
+			resolver.addDynamicRule({
+				key: 'd1',
+				stringPattern: /^color-(.+)$/,
+				createResolved: matched => `first-${matched[1]}`,
+			})
+			resolver.addDynamicRule({
+				key: 'd2',
+				stringPattern: /^color-red$/,
+				createResolved: () => 'second',
+			})
+
+			const result = await resolver._resolve('color-red')
+			expect(result)
+				.toEqual({ value: 'first-red' })
+		})
+	})
+
+	describe('_setResolvedResult', () => {
+		it('should set a new resolved result', () => {
+			const resolver = new TestResolver()
+			resolver._setResolvedResult('foo', 'bar')
+
+			const result = resolver._resolvedResultsMap.get('foo')
+			expect(result)
+				.toEqual({ value: 'bar' })
+		})
+
+		it('should update an existing resolved result in place', async () => {
+			const resolver = new TestResolver()
+			resolver.addStaticRule({ key: 'a', string: 'foo', resolved: 'bar' })
+			const result = await resolver._resolve('foo')
+
+			resolver._setResolvedResult('foo', 'updated')
+			// The same object reference should be updated
+			expect(result)
+				.toEqual({ value: 'updated' })
+			expect(resolver._resolvedResultsMap.get('foo'))
+				.toBe(result)
+		})
+
+		it('should create a new entry when updating a non-existent key', () => {
+			const resolver = new TestResolver()
+			resolver._setResolvedResult('new-key', 'new-value')
+			expect(resolver._resolvedResultsMap.get('new-key'))
+				.toEqual({ value: 'new-value' })
+		})
+	})
+})
