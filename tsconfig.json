@@ -14,5 +14,8 @@
 			"path": "./tsconfig.scripts.json"
 		}
 	],
-	"files": []
+	"files": [],
+	"exclude": [
+		"./docs/.examples/**/*"
+	]
 }

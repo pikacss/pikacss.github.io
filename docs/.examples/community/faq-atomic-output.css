@@ -1,0 +1,6 @@
+/* Each property-value pair becomes one atomic class */
+.a { color: white; }
+.b { background-color: blue; }
+.c { text-decoration: underline; }
+
+/* btn → "a b", link → "a c" — the class for `color: white` is shared */

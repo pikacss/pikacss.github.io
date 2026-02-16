@@ -1,0 +1,22 @@
+/* Each CSS property becomes its own atomic class */
+.a {
+  padding: 0.5rem 1rem;
+}
+.b {
+  border-radius: 0.5rem;
+}
+.c {
+  background-color: #0ea5e9;
+}
+.d {
+  color: white;
+}
+.e {
+  border: none;
+}
+.f {
+  cursor: pointer;
+}
+.g {
+  font-size: 1rem;
+}

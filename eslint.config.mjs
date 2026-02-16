@@ -6,4 +6,7 @@ export default await deviltea({
 			'style/indent': ['error', 2],
 		},
 	},
+	ignores: [
+		'./docs/.examples/**/*',
+	],
 })

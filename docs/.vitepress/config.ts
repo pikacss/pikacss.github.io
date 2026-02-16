@@ -19,11 +19,8 @@ export default withMermaid({
 
 		// https://vitepress.dev/reference/default-theme-config
 		nav: [
-			{ text: 'Guide', link: '/getting-started/what-is-pikacss' },
-			{ text: 'Examples', link: '/examples/components' },
-			{ text: 'Advanced', link: '/advanced/architecture' },
-			{ text: 'Integrations', link: '/integrations/vite' },
-			{ text: 'Community', link: '/community/faq' },
+			{ text: 'Getting Started', link: '/getting-started/what-is-pikacss' },
+			{ text: 'FAQ', link: '/community/faq' },
 		],
 
 		sidebar: {
@@ -33,26 +30,51 @@ export default withMermaid({
 					items: [
 						{ text: 'What is PikaCSS?', link: '/getting-started/what-is-pikacss' },
 						{ text: 'Installation', link: '/getting-started/installation' },
-						{ text: 'Comparison', link: '/getting-started/comparison' },
+						{ text: 'Zero Config', link: '/getting-started/zero-config' },
+						{ text: 'First Pika', link: '/getting-started/first-pika' },
 					],
 				},
 				{
-					text: 'Guide',
+					text: 'Core Principles',
 					items: [
-						{ text: 'Basics', link: '/guide/basics' },
-						{ text: 'Configuration', link: '/guide/configuration' },
-						{ text: 'Preflights', link: '/guide/preflights' },
-						{ text: 'Variables', link: '/guide/variables' },
-						{ text: 'Keyframes', link: '/guide/keyframes' },
-						{ text: 'Selectors', link: '/guide/selectors' },
-						{ text: 'Shortcuts', link: '/guide/shortcuts' },
-						{ text: 'Important', link: '/guide/important' },
-						{ text: 'Migration', link: '/guide/migration' },
-						{ text: 'Plugin System', link: '/guide/plugin-system' },
+						{ text: 'Build-time Compile', link: '/principles/build-time-compile' },
+						{ text: 'Zero Sideeffect', link: '/principles/zero-sideeffect' },
 					],
 				},
 				{
-					text: 'Plugins',
+					text: 'Integrations',
+					items: [
+						{ text: 'Overview', link: '/integrations/overview' },
+						{ text: 'Vite', link: '/integrations/vite' },
+						{ text: 'Rollup', link: '/integrations/rollup' },
+						{ text: 'Nuxt', link: '/integrations/nuxt' },
+						{ text: 'Webpack', link: '/integrations/webpack' },
+						{ text: 'Rspack', link: '/integrations/rspack' },
+						{ text: 'Esbuild', link: '/integrations/esbuild' },
+						{ text: 'Rolldown', link: '/integrations/rolldown' },
+					],
+				},
+				{
+					text: 'Config & Built-ins',
+					items: [
+						{ text: 'Configuration', link: '/guide/configuration' },
+						{ text: 'Built-in Plugins', link: '/guide/built-in-plugins' },
+						{ text: 'Important', link: '/guide/built-ins/important' },
+						{ text: 'Variables', link: '/guide/built-ins/variables' },
+						{ text: 'Keyframes', link: '/guide/built-ins/keyframes' },
+						{ text: 'Selectors', link: '/guide/built-ins/selectors' },
+						{ text: 'Shortcuts', link: '/guide/built-ins/shortcuts' },
+					],
+				},
+				{
+					text: 'Plugin System',
+					items: [
+						{ text: 'Overview', link: '/plugin-system/overview' },
+						{ text: 'Create Plugin', link: '/plugin-system/create-plugin' },
+					],
+				},
+				{
+					text: 'Official Plugins',
 					items: [
 						{ text: 'Icons', link: '/plugins/icons' },
 						{ text: 'Reset', link: '/plugins/reset' },
@@ -60,84 +82,8 @@ export default withMermaid({
 					],
 				},
 				{
-					text: 'Examples',
-					items: [
-						{ text: 'Components', link: '/examples/components' },
-					],
-				},
-				{
-					text: 'Community',
-					items: [
-						{ text: 'FAQ', link: '/community/faq' },
-						{ text: 'Contributing', link: '/community/contributing' },
-						{ text: 'Ecosystem', link: '/community/ecosystem' },
-					],
-				},
-			],
-			'/advanced/': [
-				{
-					text: 'Advanced',
-					items: [
-						{ text: 'Architecture', link: '/advanced/architecture' },
-						{ text: 'SSR/SSG', link: '/advanced/ssr' },
-						{ text: 'Performance', link: '/advanced/performance' },
-						{ text: 'Testing', link: '/advanced/testing' },
-						{ text: 'Plugin Development', link: '/advanced/plugin-development' },
-						{ text: 'Plugin Hooks', link: '/advanced/plugin-hooks' },
-						{ text: 'Module Augmentation', link: '/advanced/module-augmentation' },
-						{ text: 'API Reference', link: '/advanced/api-reference' },
-						{ text: 'Troubleshooting', link: '/advanced/troubleshooting' },
-					],
-				},
-			],
-			'/integrations/': [
-				{
-					text: 'Integrations',
-					items: [
-						{ text: 'Vite', link: '/integrations/vite' },
-						{ text: 'Nuxt', link: '/integrations/nuxt' },
-						{ text: 'Webpack', link: '/integrations/webpack' },
-						{ text: 'Rspack', link: '/integrations/rspack' },
-						{ text: 'Esbuild', link: '/integrations/esbuild' },
-						{ text: 'Farm', link: '/integrations/farm' },
-						{ text: 'Rolldown', link: '/integrations/rolldown' },
-					],
-				},
-			],
-			'/examples/': [
-				{
-					text: 'Examples',
-					items: [
-						{ text: 'Components', link: '/examples/components' },
-					],
-				},
-			],
-			'/community/': [
-				{
-					text: 'Community',
-					items: [
-						{ text: 'FAQ', link: '/community/faq' },
-						{ text: 'Contributing', link: '/community/contributing' },
-						{ text: 'Ecosystem', link: '/community/ecosystem' },
-					],
-				},
-			],
-			'/llm/': [
-				{
-					text: 'LLM Knowledge Base',
-					items: [
-						{ text: 'Overview', link: '/llm/' },
-						{ text: 'Architecture', link: '/llm/architecture' },
-						{ text: 'Basics', link: '/llm/basics' },
-						{ text: 'Configuration', link: '/llm/configuration' },
-						{ text: 'Installation', link: '/llm/installation' },
-						{ text: 'Integrations', link: '/llm/integrations' },
-						{ text: 'Selectors', link: '/llm/selectors' },
-						{ text: 'Plugins', link: '/llm/plugins' },
-						{ text: 'Icons Plugin', link: '/llm/icons-plugin' },
-						{ text: 'API Reference', link: '/llm/api-reference' },
-						{ text: 'Troubleshooting', link: '/llm/troubleshooting' },
-					],
+					text: 'FAQ',
+					items: [{ text: 'FAQ', link: '/community/faq' }],
 				},
 			],
 		},

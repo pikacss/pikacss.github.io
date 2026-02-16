@@ -1,0 +1,6 @@
+.a { color: black; }
+.b:hover { color: blue; }
+[data-theme="dark"] .c { color: white; }
+@media (min-width: 768px) {
+  .d { font-size: 1.25rem; }
+}

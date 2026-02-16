@@ -1,0 +1,30 @@
+/* Base styles become atomic classes */
+.a {
+  padding: 0.5em 1em;
+}
+.b {
+  border-radius: 0.25em;
+}
+.c {
+  border: none;
+}
+.d {
+  background-color: #0ea5e9;
+}
+.e {
+  color: white;
+}
+.f {
+  cursor: pointer;
+}
+.g {
+  transition: transform 0.2s ease;
+}
+
+/* Pseudo-selectors also become atomic classes */
+.h:hover {
+  transform: scale(1.05);
+}
+.i:active {
+  transform: scale(0.95);
+}
