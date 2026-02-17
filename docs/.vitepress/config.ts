@@ -52,6 +52,7 @@ export default withMermaid({
 						{ text: 'Rspack', link: '/integrations/rspack' },
 						{ text: 'Esbuild', link: '/integrations/esbuild' },
 						{ text: 'Rolldown', link: '/integrations/rolldown' },
+						{ text: 'ESLint', link: '/integrations/eslint' },
 					],
 				},
 				{

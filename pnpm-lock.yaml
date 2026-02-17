@@ -325,6 +325,12 @@ importers:
         specifier: 'catalog:'
         version: 3.2.3
 
+  packages/eslint-plugin:
+    devDependencies:
+      eslint:
+        specifier: 'catalog:'
+        version: 9.39.2(jiti@2.6.1)
+
   packages/integration:
     dependencies:
       '@pikacss/core':

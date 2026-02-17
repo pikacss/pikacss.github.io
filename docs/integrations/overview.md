@@ -16,6 +16,16 @@ All build-tool plugins are thin adapters around the same core `unpluginFactory`.
 | **Rolldown** | `@pikacss/unplugin-pikacss/rolldown` | [Rolldown →](/integrations/rolldown) |
 | **Nuxt** | `@pikacss/nuxt-pikacss` | [Nuxt →](/integrations/nuxt) |
 
+## Development Tools
+
+PikaCSS also provides developer tooling to enforce best practices and catch errors during development.
+
+| Tool | Package | Purpose |
+|---|---|---|
+| **ESLint** | `@pikacss/eslint-config` | Enforce build-time constraints on `pika()` calls |
+
+[ESLint Plugin →](/integrations/eslint)
+
 ## Quick Setup Examples
 
 ::: code-group
