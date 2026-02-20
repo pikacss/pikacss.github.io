@@ -276,6 +276,24 @@ Example structure in `.examples/`:
 
 Match the folder name to the docs section for easy discovery.
 
+### Documentation Authoring Workflow (Subagent)
+
+When the agent is tasked with creating, updating, or analyzing documentation built with VitePress, the following workflow must be strictly followed to ensure technical accuracy and adherence to the latest VitePress standards:
+
+1. Research Phase: The agent must initialize a subagent equipped with a fetch tool.
+
+2. Fetch Official Context: The subagent must fetch the content of https://vitepress.dev/llms.txt. This file contains LLM-optimized documentation and rules for VitePress usage.
+
+3. Synthesis: Analyze the fetched llms.txt to understand current VitePress best practices, markdown extensions, and architectural requirements.
+
+4. Internal Alignment: Apply the official VitePress knowledge within the context of the PikaCSS Documentation Conventions, specifically regarding:
+
+- External code snippet management in .examples/.
+- The requirement for zero-runtime and atomic CSS terminology.
+- Project-specific VitePress containers and code-groups.
+
+5. Execution: Generate the documentation only after the subagent has confirmed the specific syntax and features required by the current version of VitePress.
+
 ### Documentation Checklist
 
 When creating a new documentation page:
