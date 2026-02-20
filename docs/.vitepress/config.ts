@@ -9,7 +9,7 @@ export default withMermaid({
 	title: 'PikaCSS',
 	description: 'PikaCSS Documents',
 	head: [
-		['link', { rel: 'icon', href: '/pikacss/favicon.svg' }],
+		['link', { rel: 'icon', href: '/favicon.svg' }],
 	],
 
 	locales: {
