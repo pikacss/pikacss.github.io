@@ -4,7 +4,7 @@ import { withMermaid } from 'vitepress-plugin-mermaid'
 
 // https://vitepress.dev/reference/site-config
 export default withMermaid({
-	base: '/pikacss/',
+	base: '/',
 
 	title: 'PikaCSS',
 	description: 'PikaCSS Documents',
