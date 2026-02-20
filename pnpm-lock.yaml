@@ -325,7 +325,7 @@ importers:
         specifier: 'catalog:'
         version: 3.2.3
 
-  packages/eslint-plugin:
+  packages/eslint-config:
     devDependencies:
       eslint:
         specifier: 'catalog:'
