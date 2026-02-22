@@ -34,13 +34,19 @@ export function reset(): EnginePlugin {
 		name: 'reset',
 		order: 'pre',
 		configureRawConfig: (config) => {
-			if (config.reset)
+			if (config.reset) {
 				style = config.reset
+			}
+			config.layers ??= {}
+			config.layers.reset = -1
 		},
 		configureEngine: async (engine) => {
 			const resetCss = resetStyles[style]
 			if (resetCss) {
-				engine.addPreflight(resetCss)
+				engine.addPreflight({
+					layer: 'reset',
+					preflight: resetCss,
+				})
 			}
 		},
 	})
