@@ -34,7 +34,7 @@ type Properties_ExtraCSS = {
 	>
 }
 type Properties_Extra = {
-	[Key in keyof ResolvedAutocomplete['ExtraProperty']]?: GetValue<ResolvedAutocomplete['PropertiesValue'], Key & string>
+	[Key in ResolvedAutocomplete['ExtraProperty']]?: GetValue<ResolvedAutocomplete['PropertiesValue'], Key & string>
 }
 
 export interface Properties extends Properties_CSS, Properties_ExtraCSS, Properties_Extra {}
