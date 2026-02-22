@@ -344,6 +344,64 @@ describe('generateTsCodegenContent', () => {
 			.toContain('fn(...params: [p0: P1_0, p1: P1_1]): ReturnType<StyleFn>')
 	})
 
+	describe('formatUnionStringType escaping via JSON.stringify', () => {
+		function makeCtxWithSelectors(...selectors: string[]): IntegrationContext {
+			return {
+				currentPackageName: '@pikacss/test',
+				fnName: 'pika',
+				transformedFormat: 'string',
+				hasVue: false,
+				engine: {
+					config: {
+						autocomplete: {
+							selectors: new Set(selectors),
+							styleItemStrings: new Set(),
+							extraProperties: new Set(),
+							extraCssProperties: new Set(),
+							properties: new Map(),
+							cssProperties: new Map(),
+						},
+						layers: {},
+					},
+					renderAtomicStyles: vi.fn()
+						.mockResolvedValue(''),
+				},
+				usages: new Map(),
+			} as unknown as IntegrationContext
+		}
+
+		it('should escape double quotes in string values using JSON.stringify', async () => {
+			const selector = '[data-value="active"]'
+			const result = await generateTsCodegenContent(makeCtxWithSelectors(selector))
+			expect(result)
+				.toContain(`Selector: ${JSON.stringify(selector)}`)
+		})
+
+		it('should escape backslashes in string values using JSON.stringify', async () => {
+			const selector = 'path\\to\\file'
+			const result = await generateTsCodegenContent(makeCtxWithSelectors(selector))
+			expect(result)
+				.toContain(`Selector: ${JSON.stringify(selector)}`)
+		})
+
+		it('should not escape single quotes in string values', async () => {
+			const selector = 'it\'s:hover'
+			const result = await generateTsCodegenContent(makeCtxWithSelectors(selector))
+			// JSON.stringify does not escape single quotes
+			expect(result)
+				.toContain(`Selector: ${JSON.stringify(selector)}`)
+		})
+
+		it('should handle multiple selectors where some have special characters', async () => {
+			const selectors = ['[attr="val"]', 'back\\slash', 'plain']
+			const result = await generateTsCodegenContent(makeCtxWithSelectors(...selectors))
+			for (const s of selectors) {
+				expect(result)
+					.toContain(JSON.stringify(s))
+			}
+		})
+	})
+
 	describe('with @layer support', () => {
 		beforeEach(() => {
 			vi.clearAllMocks()
