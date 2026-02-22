@@ -104,6 +104,16 @@
 
 <<< @/.examples/plugin-system/preflight-function.ts
 
+### WithLayer 包裝器
+
+使用 `WithLayer<T>`——`{ layer, preflight }`——將任何前置樣式指定到特定的 CSS `@layer`。型別參數 `T` 可以是 `string`、`PreflightDefinition` 或 `PreflightFn`。三種前置樣式變體均支援：
+
+<<< @/.examples/plugin-system/preflight-with-layer.ts
+
+::: tip 層級順序
+層級渲染順序由 `EngineConfig` 中的 `layers` 設定決定。數值較小的層級會先渲染。命名層級中的前置樣式一律渲染在對應的 `@layer` 區塊內。
+:::
+
 ## 自動補齊 API
 
 插件可以透過新增自訂項目來豐富 TypeScript 自動補齊體驗。這些 API 可在 `configureEngine` 中的 `engine` 實例上使用：
@@ -118,6 +128,16 @@
 | `appendAutocompleteExtraCssProperties(...properties)` | 新增額外 CSS 屬性（例如自訂 CSS 變數） |
 | `appendAutocompletePropertyValues(property, ...tsTypes)` | 為屬性值新增 TypeScript 型別聯合 |
 | `appendAutocompleteCssPropertyValues(property, ...values)` | 為 CSS 屬性新增具體 CSS 值 |
+
+### 層名稱自動補齊
+
+引入命名 CSS 層的插件可以擴增 `PikaAugment['Autocomplete']`，為那些層名稱提供 TypeScript 自動補齊。安裝該插件的使用者在指定 `WithLayer` 前置樣式的 `layer` 欄位時即可獲得建議：
+
+<<< @/.examples/plugin-system/autocomplete-layer-augmentation.ts
+
+::: info
+`ResolvedLayerName`（從 `@pikacss/core` 匯出）在有設定擴增的情況下會解析為擴增的 `Layer` 聯合型別，否則會回退到 `UnionString`（`string & {}`）。
+:::
 
 ## 內建引擎 API
 

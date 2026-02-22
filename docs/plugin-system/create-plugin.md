@@ -104,6 +104,16 @@ A function that receives the engine instance and returns a string or `PreflightD
 
 <<< @/.examples/plugin-system/preflight-function.ts
 
+### WithLayer Wrapper
+
+Wrap any preflight with `WithLayer<T>` — `{ layer, preflight }` — to assign it to a specific CSS `@layer`. The type parameter `T` can be `string`, `PreflightDefinition`, or `PreflightFn`. All three preflight variants are supported:
+
+<<< @/.examples/plugin-system/preflight-with-layer.ts
+
+::: tip Layer Order
+Layer rendering order is determined by the `layers` config in `EngineConfig`. Layers with lower numbers are rendered first. Preflights inside a named layer are always rendered inside their respective `@layer` block.
+:::
+
 ## Autocomplete API
 
 Plugins can enrich the TypeScript autocomplete experience by adding custom entries. These APIs are available on the `engine` instance inside `configureEngine`:
@@ -118,6 +128,16 @@ Plugins can enrich the TypeScript autocomplete experience by adding custom entri
 | `appendAutocompleteExtraCssProperties(...properties)` | Add extra CSS properties (e.g. custom CSS variables) |
 | `appendAutocompletePropertyValues(property, ...tsTypes)` | Add TypeScript type unions for a property's value |
 | `appendAutocompleteCssPropertyValues(property, ...values)` | Add concrete CSS values for a CSS property |
+
+### Layer Name Autocomplete
+
+Plugins that introduce named CSS layers can augment `PikaAugment['Autocomplete']` to register those layer names for TypeScript autocomplete. Users who install the plugin then get suggestions when specifying the `layer` field in a `WithLayer` preflight:
+
+<<< @/.examples/plugin-system/autocomplete-layer-augmentation.ts
+
+::: info
+`ResolvedLayerName` (exported from `@pikacss/core`) resolves to the augmented `Layer` union when set, or falls back to `UnionString` (`string & {}`) when no augmentation is present.
+:::
 
 ## Built-in Engine APIs
 

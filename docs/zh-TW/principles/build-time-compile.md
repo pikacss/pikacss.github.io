@@ -36,7 +36,7 @@ PikaCSS 是一個**建置時期** CSS 引擎。原始碼中的每個 `pika()` �
 
 ### 階段六：CSS 程式碼產生
 
-所有檔案處理完成後，引擎將收集到的所有原子化樣式渲染至 CSS 檔案（預設為 `pika.gen.css`）。TypeScript 型別定義也會寫入 `pika.gen.ts` 以支援自動補齊。
+所有檔案處理完成後，引擎將收集到的所有原子化樣式渲染至 CSS 檔案（預設為 `pika.gen.css`）。產生的檔案開頭為 `@layer` 順序宣告（`@layer preflights, utilities;`），其後為 preflight 樣式與原子化 utility 樣式——各自包裹在對應的 `@layer` 區塊中。TypeScript 型別定義也會寫入 `pika.gen.ts` 以支援自動補齊。
 
 ## 前後對比
 

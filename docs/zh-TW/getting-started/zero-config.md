@@ -80,7 +80,7 @@ PikaCSS 會在你的專案中搜尋符合以下 glob 模式的檔案：
 預設情況下，PikaCSS 在你的專案根目錄產生兩個檔案：
 
 - **`pika.gen.css`** — 包含你原始碼中所有找到樣式的已編譯原子化 CSS。透過虛擬模組 `pika.css` 在應用程式進入點中匯入。
-- **`pika.gen.ts`** — 根據你設定的選擇器、捷徑和變數，為 `pika()` 函式提供自動補齊支援的 TypeScript 宣告檔。此檔案使用 `declare global` 將 `pika` 註冊為全域函式 — 你**不**需要從此檔案匯入 `pika`。
+- **`pika.gen.ts`** — 根據你設定的選擇器、捷徑、變數和圖層，為 `pika()` 函式提供自動補齊支援的 TypeScript 宣告檔。此檔案使用 `declare global` 將 `pika` 註冊為全域函式 — 你**不**需要從此檔案匯入 `pika`。
 
 ## 何時需要自訂
 

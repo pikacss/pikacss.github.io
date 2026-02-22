@@ -57,8 +57,40 @@ PikaCSS 會自動偵測符合以下模式的設定檔：
 1. **CSS 字串** — 直接注入
 2. **前置樣式定義物件** — CSS-in-JS 物件（如 `{ ':root': { fontSize: '16px' } }`）
 3. **函式** `(engine, isFormatted) => string | PreflightDefinition` — 使用引擎實例動態產生 CSS
+4. **`WithLayer` 包裝器** `{ layer, preflight }` — 將以上任意形式指派至特定的 CSS `@layer`
 
 <<< @/.examples/guide/config-preflights.ts
+
+若要將前置樣式指派至特定的 CSS `@layer`，請使用 `WithLayer` 包裝器：
+
+<<< @/.examples/guide/config-preflights-with-layer.ts
+
+### `layers`
+
+- **型別：** `Record<string, number>`
+- **預設值：** `{ preflights: 1, utilities: 10 }`
+
+設定 CSS `@layer` 的順序。鍵為層名稱，值為順序數字——數字越小越先渲染。自訂項目會與預設值合併，未指定的層保留其預設順序。
+
+::: tip
+從 `@pikacss/core` 匯出的 `sortLayerNames` 會回傳依順序值排列的層名稱陣列——適用於除錯或插件開發。
+:::
+
+<<< @/.examples/guide/config-layers.ts
+
+### `defaultPreflightsLayer`
+
+- **型別：** `string`
+- **預設值：** `'preflights'`
+
+未明確指定 `layer` 屬性的前置樣式（preflights）所放入的 CSS `@layer`。
+
+### `defaultUtilitiesLayer`
+
+- **型別：** `string`
+- **預設值：** `'utilities'`
+
+原子化工具樣式預設放入的 CSS `@layer`。
 
 ## Core Plugin 設定
 

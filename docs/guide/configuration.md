@@ -57,8 +57,40 @@ Global CSS injected before atomic styles. Each item can be:
 1. A **CSS string** — injected as-is
 2. A **preflight definition object** — a CSS-in-JS object (like `{ ':root': { fontSize: '16px' } }`)
 3. A **function** `(engine, isFormatted) => string | PreflightDefinition` — dynamically generates CSS using the engine instance
+4. A **`WithLayer` wrapper** `{ layer, preflight }` — assigns any of the above to a specific CSS `@layer`
 
 <<< @/.examples/guide/config-preflights.ts
+
+To assign preflights to specific CSS `@layer`s, use the `WithLayer` wrapper:
+
+<<< @/.examples/guide/config-preflights-with-layer.ts
+
+### `layers`
+
+- **Type:** `Record<string, number>`
+- **Default:** `{ preflights: 1, utilities: 10 }`
+
+Configure the CSS `@layer` order. Keys are layer names; values are order numbers — lower numbers render first. Custom entries are merged with the defaults, so unspecified layers keep their default order.
+
+::: tip
+`sortLayerNames` exported from `@pikacss/core` returns an array of layer names sorted by their order values — useful for debugging or plugin authoring.
+:::
+
+<<< @/.examples/guide/config-layers.ts
+
+### `defaultPreflightsLayer`
+
+- **Type:** `string`
+- **Default:** `'preflights'`
+
+The CSS `@layer` that preflights without an explicit `layer` property are placed into.
+
+### `defaultUtilitiesLayer`
+
+- **Type:** `string`
+- **Default:** `'utilities'`
+
+The CSS `@layer` that atomic utility styles are placed into by default.
 
 ## Core Plugin Config
 

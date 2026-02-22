@@ -36,7 +36,7 @@ Using MagicString, the plugin replaces each `pika()` call with its output — th
 
 ### Stage 6: CSS Code Generation
 
-After all files are processed, the engine renders all collected atomic styles into a CSS file (`pika.gen.css` by default). TypeScript type definitions are also written to `pika.gen.ts` for autocomplete support.
+After all files are processed, the engine renders all collected atomic styles into a CSS file (`pika.gen.css` by default). The generated file starts with an `@layer` order declaration (`@layer preflights, utilities;`), followed by preflights and atomic utilities — each wrapped in their respective `@layer` blocks. TypeScript type definitions are also written to `pika.gen.ts` for autocomplete support.
 
 ## Before and After
 

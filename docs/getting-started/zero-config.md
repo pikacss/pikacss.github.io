@@ -80,7 +80,7 @@ Key points:
 By default, PikaCSS generates two files in your project root:
 
 - **`pika.gen.css`** — The compiled atomic CSS containing all styles found in your source files. Import this in your app entry via the virtual module `pika.css`.
-- **`pika.gen.ts`** — A TypeScript declaration file that provides autocomplete support for the `pika()` function based on your configured selectors, shortcuts, and variables. This file uses `declare global` to register `pika` as a global function — you do **not** import `pika` from this file.
+- **`pika.gen.ts`** — A TypeScript declaration file that provides autocomplete support for the `pika()` function based on your configured selectors, shortcuts, variables, and layers. This file uses `declare global` to register `pika` as a global function — you do **not** import `pika` from this file.
 
 ## When to customize
 
