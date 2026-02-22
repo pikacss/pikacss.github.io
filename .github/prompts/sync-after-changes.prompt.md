@@ -2,7 +2,6 @@
 description: "After updating source code, inventory changes and synchronize corresponding tests and documentation (PikaCSS monorepo)"
 agent: "agent"
 argument-hint: "Describe the changed package or feature (e.g., 'core engine resolver'), leave blank for auto-detection"
-tools: ["runSubagent", "get_changed_files", "run_in_terminal", "read_file", "file_search", "grep_search", "replace_string_in_file", "create_file"]
 ---
 
 You are maintaining the PikaCSS monorepo. Refer to [AGENTS.md](../../AGENTS.md) to understand project conventions.

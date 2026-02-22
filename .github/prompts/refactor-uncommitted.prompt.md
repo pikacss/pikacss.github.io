@@ -2,7 +2,6 @@
 description: "Multi-round analysis and refactoring of uncommitted changes in the PikaCSS monorepo — dispatches parallel subagents for deep analysis, issue triage, and incremental refactoring"
 agent: "agent"
 argument-hint: "Optional focus area or constraint (e.g., 'performance only', 'core package', 'keep public API stable')"
-tools: ["runSubagent", "get_changed_files", "run_in_terminal", "manage_todo_list", "read_file", "file_search", "grep_search", "replace_string_in_file", "multi_replace_string_in_file", "create_file", "get_errors"]
 ---
 
 You are performing multi-round analysis and refactoring of uncommitted changes in the PikaCSS monorepo.
