@@ -1,8 +1,9 @@
 import type { _Autocomplete, EmptyAutocomplete } from './autocomplete'
 import type { InternalProperties, InternalStyleDefinition, InternalStyleItem, PikaAugment } from './shared'
-import type { ResolveFrom } from './utils'
+import type { IsNever, ResolveFrom, UnionString } from './utils'
 
 export type ResolvedAutocomplete = ResolveFrom<PikaAugment, 'Autocomplete', _Autocomplete, EmptyAutocomplete>
+export type ResolvedLayerName = IsNever<ResolvedAutocomplete['Layer']> extends true ? UnionString : ResolvedAutocomplete['Layer']
 export type ResolvedSelector = ResolveFrom<PikaAugment, 'Selector', string, string>
 export type ResolvedProperties = ResolveFrom<PikaAugment, 'Properties', any, InternalProperties>
 export type ResolvedCSSProperties = Omit<ResolvedProperties, ResolvedAutocomplete['ExtraProperty']>

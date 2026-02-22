@@ -23,6 +23,7 @@ export interface _Autocomplete {
 	StyleItemString: UnionString
 	ExtraProperty: UnionString
 	ExtraCssProperty: UnionString
+	Layer: UnionString
 	PropertiesValue: Record<string, unknown>
 	CssPropertiesValue: Record<string, UnionString | UnionNumber>
 }
@@ -34,6 +35,7 @@ export type EmptyAutocomplete = DefineAutocomplete<{
 	StyleItemString: never
 	ExtraProperty: never
 	ExtraCssProperty: never
+	Layer: never
 	PropertiesValue: never
 	CssPropertiesValue: never
 }>

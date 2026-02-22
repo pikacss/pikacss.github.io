@@ -1,5 +1,5 @@
 import type { IntegrationContext } from './types'
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { generateTsCodegenContent } from './tsCodegen'
 
 function createMockCtx(overrides: Partial<Pick<IntegrationContext, 'currentPackageName' | 'fnName' | 'transformedFormat' | 'hasVue' | 'engine' | 'usages'>> = {}): IntegrationContext {
@@ -18,12 +18,40 @@ function createMockCtx(overrides: Partial<Pick<IntegrationContext, 'currentPacka
 					properties: new Map([['__important', ['boolean']]]),
 					cssProperties: new Map([['color', ['red', 'blue']]]),
 				},
+				layers: {},
 			},
 			renderAtomicStyles: vi.fn()
 				.mockResolvedValue('.a { color: red; }'),
 		},
 		usages: new Map(),
 		...overrides,
+	} as unknown as IntegrationContext
+}
+
+function createMockCtxForTsCodegen(overrides: {
+	layers?: Record<string, number>
+} = {}): IntegrationContext {
+	return {
+		currentPackageName: '@pikacss/test',
+		fnName: 'pika',
+		transformedFormat: 'string',
+		hasVue: false,
+		engine: {
+			config: {
+				autocomplete: {
+					selectors: new Set(),
+					styleItemStrings: new Set(),
+					extraProperties: new Set(),
+					extraCssProperties: new Set(),
+					properties: new Map(),
+					cssProperties: new Map(),
+				},
+				layers: overrides.layers ?? {},
+			},
+			renderAtomicStyles: vi.fn()
+				.mockResolvedValue(''),
+		},
+		usages: new Map(),
 	} as unknown as IntegrationContext
 }
 
@@ -52,17 +80,19 @@ describe('generateTsCodegenContent', () => {
 		expect(result)
 			.toContain('export type Autocomplete = DefineAutocomplete<{')
 		expect(result)
-			.toContain(`Selector: 'hover'`)
+			.toContain(`Selector: "hover"`)
 		expect(result)
-			.toContain(`StyleItemString: 'flex-center'`)
+			.toContain(`StyleItemString: "flex-center"`)
 		expect(result)
-			.toContain(`ExtraProperty: '__important'`)
+			.toContain(`ExtraProperty: "__important"`)
 		expect(result)
-			.toContain(`ExtraCssProperty: '--color'`)
+			.toContain(`ExtraCssProperty: "--color"`)
 		expect(result)
 			.toContain(`PropertiesValue: { '__important': boolean }`)
 		expect(result)
-			.toContain(`CssPropertiesValue: { 'color': 'red' | 'blue' }`)
+			.toContain(`CssPropertiesValue: { 'color': "red" | "blue" }`)
+		expect(result)
+			.toContain('Layer: never')
 	})
 
 	it('should generate Autocomplete with empty sets as never', async () => {
@@ -77,6 +107,7 @@ describe('generateTsCodegenContent', () => {
 						properties: new Map(),
 						cssProperties: new Map(),
 					},
+					layers: {},
 				},
 				renderAtomicStyles: vi.fn()
 					.mockResolvedValue(''),
@@ -216,6 +247,7 @@ describe('generateTsCodegenContent', () => {
 						properties: new Map([['__important', ['boolean']]]),
 						cssProperties: new Map([['color', ['red', 'blue']]]),
 					},
+					layers: {},
 				},
 				renderAtomicStyles: mockRenderAtomicStyles,
 			} as unknown as IntegrationContext['engine'],
@@ -254,6 +286,7 @@ describe('generateTsCodegenContent', () => {
 						properties: new Map(),
 						cssProperties: new Map(),
 					},
+					layers: {},
 				},
 				renderAtomicStyles: mockRenderAtomicStyles,
 			} as unknown as IntegrationContext['engine'],
@@ -293,6 +326,7 @@ describe('generateTsCodegenContent', () => {
 						properties: new Map(),
 						cssProperties: new Map(),
 					},
+					layers: {},
 				},
 				renderAtomicStyles: mockRenderAtomicStyles,
 			} as unknown as IntegrationContext['engine'],
@@ -308,5 +342,55 @@ describe('generateTsCodegenContent', () => {
 			.toContain('fn(...params: [p0: P0_0]): ReturnType<StyleFn>')
 		expect(result)
 			.toContain('fn(...params: [p0: P1_0, p1: P1_1]): ReturnType<StyleFn>')
+	})
+
+	describe('with @layer support', () => {
+		beforeEach(() => {
+			vi.clearAllMocks()
+		})
+
+		it('should include Layer in Autocomplete when layers is configured', async () => {
+			const ctx = createMockCtxForTsCodegen({ layers: { preflights: 0, atomic: 1 } })
+			const result = await generateTsCodegenContent(ctx)
+			expect(result)
+				.toContain('Layer:')
+			expect(result)
+				.toContain('"preflights"')
+			expect(result)
+				.toContain('"atomic"')
+		})
+
+		it('should generate Layer as union type of layer names sorted by priority', async () => {
+			const ctx = createMockCtxForTsCodegen({ layers: { preflights: 0, atomic: 1 } })
+			const result = await generateTsCodegenContent(ctx)
+			expect(result)
+				.toContain('Layer: "preflights" | "atomic"')
+		})
+
+		it('should include Layer inside the Autocomplete type block', async () => {
+			const ctx = createMockCtxForTsCodegen({ layers: { preflights: 0, atomic: 1 } })
+			const result = await generateTsCodegenContent(ctx)
+			const autocompleteStart = result.indexOf('DefineAutocomplete<{')
+			const autocompleteEnd = result.indexOf('}>', autocompleteStart)
+			const layerIndex = result.indexOf('Layer:', autocompleteStart)
+			expect(layerIndex)
+				.toBeGreaterThan(autocompleteStart)
+			expect(layerIndex)
+				.toBeLessThan(autocompleteEnd)
+		})
+
+		it('should generate Layer as never when layers is not configured', async () => {
+			const ctx = createMockCtxForTsCodegen()
+			const result = await generateTsCodegenContent(ctx)
+			expect(result)
+				.toContain('Layer: never')
+		})
+
+		it('should generate Layer containing all configured layer names when three layers are configured', async () => {
+			const ctx = createMockCtxForTsCodegen({ layers: { base: 0, components: 1, utilities: 2 } })
+			const result = await generateTsCodegenContent(ctx)
+			expect(result)
+				.toContain('Layer: "base" | "components" | "utilities"')
+		})
 	})
 })

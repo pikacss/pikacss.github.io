@@ -1,6 +1,6 @@
 import type { EnginePlugin } from '../plugin'
 import type { ResolvedAutocompleteConfig } from './autocomplete'
-import type { Preflight, PreflightFn } from './preflight'
+import type { Preflight, ResolvedPreflight } from './preflight'
 
 // #region EngineConfig
 export interface EngineConfig {
@@ -65,6 +65,35 @@ export interface EngineConfig {
 	 * ```
 	 */
 	preflights?: Preflight[]
+
+	/**
+	 * Configure CSS @layer order. Keys are layer names, values are order numbers (lower = earlier).
+	 * Merged on top of the default layers `{ preflights: 1, utilities: 10 }`, so any keys not
+	 * specified here will keep their default order values.
+	 *
+	 * @default { preflights: 1, utilities: 10 }
+	 * @example
+	 * ```ts
+	 * {
+	 *   layers: { base: 0, components: 5, utilities: 10 }
+	 * }
+	 * ```
+	 */
+	layers?: Record<string, number>
+
+	/**
+	 * The layer name that unlayered preflights are automatically wrapped into.
+	 *
+	 * @default 'preflights'
+	 */
+	defaultPreflightsLayer?: string
+
+	/**
+	 * The layer name that atomic styles without an explicit `__layer` are placed into.
+	 *
+	 * @default 'utilities'
+	 */
+	defaultUtilitiesLayer?: string
 }
 // #endregion EngineConfig
 
@@ -73,6 +102,10 @@ export interface ResolvedEngineConfig {
 	prefix: string
 	defaultSelector: string
 	plugins: EnginePlugin[]
-	preflights: PreflightFn[]
+	preflights: ResolvedPreflight[]
 	autocomplete: ResolvedAutocompleteConfig
+	/** Always contains at least the default layers (`preflights` and `utilities`). */
+	layers: Record<string, number>
+	defaultPreflightsLayer: string
+	defaultUtilitiesLayer: string
 }

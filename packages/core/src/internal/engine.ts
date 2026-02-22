@@ -1,5 +1,5 @@
 import type { ExtractFn } from './extractor'
-import type { AtomicStyle, CSSStyleBlockBody, CSSStyleBlocks, EngineConfig, ExtractedStyleContent, InternalStyleDefinition, InternalStyleItem, Preflight, PreflightDefinition, PreflightFn, ResolvedEngineConfig, StyleContent } from './types'
+import type { AtomicStyle, CSSStyleBlockBody, CSSStyleBlocks, EngineConfig, ExtractedStyleContent, InternalStyleDefinition, InternalStyleItem, Preflight, PreflightDefinition, PreflightFn, ResolvedEngineConfig, ResolvedPreflight, StyleContent, WithLayer } from './types'
 import { ATOMIC_STYLE_ID_PLACEHOLDER, ATOMIC_STYLE_ID_PLACEHOLDER_RE_GLOBAL } from './constants'
 import { createExtractFn, normalizeSelectors, normalizeValue } from './extractor'
 import { hooks, resolvePlugins } from './plugin'
@@ -9,6 +9,10 @@ import { selectors } from './plugins/selectors'
 import { shortcuts } from './plugins/shortcuts'
 import { variables } from './plugins/variables'
 import { appendAutocompleteCssPropertyValues, appendAutocompleteExtraCssProperties, appendAutocompleteExtraProperties,	appendAutocompletePropertyValues,	appendAutocompleteSelectors,	appendAutocompleteStyleItemStrings,	isNotNullish,	isPropertyValue,	log,	numberToChars,	renderCSSStyleBlocks,	serialize, toKebab } from './utils'
+
+export const DEFAULT_PREFLIGHTS_LAYER = 'preflights'
+export const DEFAULT_UTILITIES_LAYER = 'utilities'
+export const DEFAULT_LAYERS: Record<string, number> = { [DEFAULT_PREFLIGHTS_LAYER]: 1, [DEFAULT_UTILITIES_LAYER]: 10 }
 
 export async function createEngine(config: EngineConfig = {}): Promise<Engine> {
 	log.debug('Creating engine with config:', config)
@@ -43,6 +47,10 @@ export async function createEngine(config: EngineConfig = {}): Promise<Engine> {
 	)
 
 	let engine = new Engine(resolvedConfig)
+
+	engine.appendAutocompleteExtraProperties('__layer')
+	engine.appendAutocompletePropertyValues('__layer', 'Autocomplete[\'Layer\']')
+
 	log.debug('Engine instance created')
 	engine = await hooks.configureEngine(
 		engine.config.plugins,
@@ -156,19 +164,53 @@ export class Engine {
 	async renderPreflights(isFormatted: boolean) {
 		log.debug('Rendering preflights...')
 		const lineEnd = isFormatted ? '\n' : ''
-		const results = await Promise.all(this.config.preflights.map(async (p) => {
-			const result = await p(this, isFormatted)
-			if (typeof result === 'string')
-				return result
 
-			return renderPreflightDefinition({
-				engine: this,
-				preflightDefinition: result,
-				isFormatted,
-			})
-		}))
-		log.debug(`Rendered ${results.length} preflights`)
-		return results.join(lineEnd)
+		const rendered: { layer?: string, css: string }[] = await Promise.all(
+			this.config.preflights.map(async ({ layer, fn }) => {
+				const result = await fn(this, isFormatted)
+				const css = typeof result === 'string'
+					? result
+					: await renderPreflightDefinition({ engine: this, preflightDefinition: result, isFormatted })
+				return { layer, css }
+			}),
+		)
+		log.debug(`Rendered ${rendered.length} preflights`)
+
+		const unlayeredParts: string[] = []
+		const layerGroups = new Map<string, string[]>()
+		for (const { layer, css } of rendered) {
+			if (layer == null) {
+				unlayeredParts.push(css)
+			}
+			else {
+				if (!layerGroups.has(layer))
+					layerGroups.set(layer, [])
+				layerGroups.get(layer)!.push(css)
+			}
+		}
+
+		const outputParts: string[] = []
+		if (unlayeredParts.length > 0) {
+			const unlayeredContent = unlayeredParts.join(lineEnd)
+			const { defaultPreflightsLayer } = this.config
+			// Unlayered preflights are automatically wrapped inside the defaultPreflightsLayer
+			// when that layer name exists in the configured layers.
+			if (defaultPreflightsLayer in this.config.layers)
+				outputParts.push(`@layer ${defaultPreflightsLayer} {${lineEnd}${unlayeredContent}${lineEnd}}`)
+			else
+				outputParts.push(unlayeredContent)
+		}
+		const configLayerOrder = sortLayerNames(this.config.layers)
+		const orderedLayerNames = [
+			...configLayerOrder.filter(name => layerGroups.has(name)),
+			...[...layerGroups.keys()].filter(name => !configLayerOrder.includes(name)),
+		]
+		for (const layerName of orderedLayerNames) {
+			const cssList = layerGroups.get(layerName)!
+			const content = cssList.join(lineEnd)
+			outputParts.push(`@layer ${layerName} {${lineEnd}${content}${lineEnd}}`)
+		}
+		return outputParts.join(lineEnd)
 	}
 
 	async renderAtomicStyles(isFormatted: boolean, options: { atomicStyleIds?: string[], isPreview?: boolean } = {}) {
@@ -185,7 +227,17 @@ export class Engine {
 			isPreview,
 			isFormatted,
 			defaultSelector: this.config.defaultSelector,
+			layers: this.config.layers,
+			defaultUtilitiesLayer: this.config.defaultUtilitiesLayer,
 		})
+	}
+
+	renderLayerOrderDeclaration(): string {
+		const { layers } = this.config
+		if (Object.keys(layers).length === 0)
+			return ''
+		return `@layer ${sortLayerNames(layers)
+			.join(', ')};`
 	}
 }
 
@@ -195,8 +247,27 @@ export function calcAtomicStyleRenderingWeight(style: AtomicStyle, defaultSelect
 	return isDefaultSelector ? 0 : selector.length
 }
 
-export function resolvePreflight(preflight: Preflight): PreflightFn {
-	return typeof preflight === 'function' ? preflight : () => preflight
+export function sortLayerNames(layers: Record<string, number>): string[] {
+	return Object.entries(layers)
+		.sort((a, b) => a[1] - b[1] || a[0].localeCompare(b[0]))
+		.map(([name]) => name)
+}
+
+function isWithLayer(p: Preflight): p is WithLayer<string | PreflightDefinition | PreflightFn> {
+	if (typeof p !== 'object' || p === null)
+		return false
+	const record = p as Record<string, unknown>
+	return typeof record.layer === 'string' && 'preflight' in record
+}
+
+export function resolvePreflight(preflight: Preflight): ResolvedPreflight {
+	if (isWithLayer(preflight)) {
+		const inner = preflight.preflight
+		const fn: PreflightFn = typeof inner === 'function' ? inner : () => inner
+		return { layer: preflight.layer, fn }
+	}
+	const fn: PreflightFn = typeof preflight === 'function' ? preflight : () => preflight
+	return { fn }
 }
 
 export async function resolveEngineConfig(config: EngineConfig): Promise<ResolvedEngineConfig> {
@@ -206,6 +277,9 @@ export async function resolveEngineConfig(config: EngineConfig): Promise<Resolve
 		plugins = [],
 		preflights = [],
 	} = config
+	const layers: Record<string, number> = Object.assign({}, DEFAULT_LAYERS, config.layers)
+	const defaultPreflightsLayer = config.defaultPreflightsLayer ?? DEFAULT_PREFLIGHTS_LAYER
+	const defaultUtilitiesLayer = config.defaultUtilitiesLayer ?? DEFAULT_UTILITIES_LAYER
 	log.debug(`Resolving engine config with prefix: "${prefix}", plugins: ${plugins.length}, preflights: ${preflights.length}`)
 
 	const resolvedConfig: ResolvedEngineConfig = {
@@ -214,6 +288,9 @@ export async function resolveEngineConfig(config: EngineConfig): Promise<Resolve
 		prefix,
 		defaultSelector,
 		preflights: [],
+		layers,
+		defaultPreflightsLayer,
+		defaultUtilitiesLayer,
 		autocomplete: {
 			selectors: new Set(),
 			styleItemStrings: new Set(),
@@ -241,7 +318,7 @@ export function getAtomicStyleId({
 	prefix: string
 	stored: Map<string, string>
 }) {
-	const key = serialize([content.selector, content.property, content.value])
+	const key = serialize([content.selector, content.property, content.value, content.layer])
 	const cached = stored.get(key)
 	if (cached != null) {
 		log.debug(`Atomic style cached: ${cached}`)
@@ -258,16 +335,26 @@ export function getAtomicStyleId({
 export function optimizeAtomicStyleContents(list: ExtractedStyleContent[]) {
 	const map = new Map<string, StyleContent>()
 	list.forEach((content) => {
-		const key = serialize([content.selector, content.property])
+		const key = serialize([content.selector, content.property, content.layer])
 
 		map.delete(key)
 
 		if (content.value == null)
 			return
 
-		map.set(key, content as StyleContent)
+		map.set(key, { ...content } as StyleContent)
 	})
 	return [...map.values()]
+}
+
+function extractLayerFromStyleItem(item: InternalStyleDefinition): { layer: string | undefined, definition: InternalStyleDefinition } {
+	const record = item as Record<string, unknown>
+	const layer = typeof record.__layer === 'string' ? record.__layer : undefined
+	if (layer == null) {
+		return { layer: undefined, definition: item }
+	}
+	const { __layer: _, ...rest } = record
+	return { layer, definition: rest as InternalStyleDefinition }
 }
 
 export async function resolveStyleItemList({
@@ -282,10 +369,17 @@ export async function resolveStyleItemList({
 	const unknown = new Set<string>()
 	const list: ExtractedStyleContent[] = []
 	for (const styleItem of await transformStyleItems(itemList)) {
-		if (typeof styleItem === 'string')
+		if (typeof styleItem === 'string') {
 			unknown.add(styleItem)
-		else
-			list.push(...await extractStyleDefinition(styleItem))
+		}
+		else {
+			const { layer, definition } = extractLayerFromStyleItem(styleItem)
+			const extracted = await extractStyleDefinition(definition)
+			if (layer != null) {
+				extracted.forEach(c => (c.layer = layer))
+			}
+			list.push(...extracted)
+		}
 	}
 	return {
 		unknown,
@@ -293,18 +387,19 @@ export async function resolveStyleItemList({
 	}
 }
 
-export function renderAtomicStyles(payload: { atomicStyles: AtomicStyle[], isPreview: boolean, isFormatted: boolean, defaultSelector: string }) {
-	const { atomicStyles, isPreview, isFormatted, defaultSelector } = payload
+function sortAtomicStyles(styles: AtomicStyle[], defaultSelector: string): AtomicStyle[] {
+	return [...styles].sort(
+		(a, b) => calcAtomicStyleRenderingWeight(a, defaultSelector) - calcAtomicStyleRenderingWeight(b, defaultSelector),
+	)
+}
+
+function renderAtomicStylesCss({ atomicStyles, isPreview, isFormatted }: {
+	atomicStyles: AtomicStyle[]
+	isPreview: boolean
+	isFormatted: boolean
+}): string {
 	const blocks: CSSStyleBlocks = new Map()
-	Array.from(atomicStyles)
-		// sort by selector:
-		// 1. default selector first
-		// 2. then by selector levels
-		.sort((a, b) => {
-			const weightA = calcAtomicStyleRenderingWeight(a, defaultSelector)
-			const weightB = calcAtomicStyleRenderingWeight(b, defaultSelector)
-			return weightA - weightB
-		})
+	atomicStyles
 		.forEach(({ id, content: { selector, property, value } }) => {
 			const isValidSelector = selector.some(s => s.includes(ATOMIC_STYLE_ID_PLACEHOLDER))
 			if (isValidSelector === false || value == null)
@@ -312,9 +407,7 @@ export function renderAtomicStyles(payload: { atomicStyles: AtomicStyle[], isPre
 
 			const renderObject = {
 				selector: isPreview
-				// keep the placeholder
 					? selector
-				// replace the placeholder with the real id
 					: selector.map(s => s.replace(ATOMIC_STYLE_ID_PLACEHOLDER_RE_GLOBAL, id)),
 				properties: value.map(v => ({ property, value: v })),
 			}
@@ -337,6 +430,59 @@ export function renderAtomicStyles(payload: { atomicStyles: AtomicStyle[], isPre
 			}
 		})
 	return renderCSSStyleBlocks(blocks, isFormatted)
+}
+
+export function renderAtomicStyles(payload: { atomicStyles: AtomicStyle[], isPreview: boolean, isFormatted: boolean, defaultSelector: string, layers?: Record<string, number>, defaultUtilitiesLayer?: string }): string {
+	const { atomicStyles, isPreview, isFormatted, defaultSelector, layers, defaultUtilitiesLayer } = payload
+
+	// Sort once up-front so each sub-render receives styles in correct order.
+	const sortedStyles = sortAtomicStyles(atomicStyles, defaultSelector)
+
+	if (layers == null) {
+		return renderAtomicStylesCss({ atomicStyles: sortedStyles, isPreview, isFormatted })
+	}
+
+	const layerOrder = sortLayerNames(layers)
+	const lineEnd = isFormatted ? '\n' : ''
+
+	const unlayeredStyles: AtomicStyle[] = []
+	const layerGroups = new Map<string, AtomicStyle[]>(layerOrder.map(name => [name, []]))
+	const candidateDefaultLayer = defaultUtilitiesLayer ?? layerOrder[layerOrder.length - 1]
+	const defaultLayer = (candidateDefaultLayer != null && layerGroups.has(candidateDefaultLayer))
+		? candidateDefaultLayer
+		: layerOrder[layerOrder.length - 1]
+
+	for (const style of sortedStyles) {
+		const layer = style.content.layer
+		if (layer != null && layerGroups.has(layer)) {
+			layerGroups.get(layer)!.push(style)
+		}
+		else if (layer != null) {
+			log.warn(`Unknown layer "${layer}" encountered in atomic style; falling back to unlayered output.`)
+			unlayeredStyles.push(style)
+		}
+		else if (defaultLayer != null) {
+			layerGroups.get(defaultLayer)!.push(style)
+		}
+		else {
+			unlayeredStyles.push(style)
+		}
+	}
+
+	const parts: string[] = []
+
+	if (unlayeredStyles.length > 0)
+		parts.push(renderAtomicStylesCss({ atomicStyles: unlayeredStyles, isPreview, isFormatted }))
+
+	for (const layerName of layerOrder) {
+		const styles = layerGroups.get(layerName)!
+		if (styles.length === 0)
+			continue
+		const innerCss = renderAtomicStylesCss({ atomicStyles: styles, isPreview, isFormatted })
+		parts.push(`@layer ${layerName} {${lineEnd}${innerCss}${lineEnd}}`)
+	}
+
+	return parts.join(lineEnd)
 }
 
 export async function _renderPreflightDefinition({

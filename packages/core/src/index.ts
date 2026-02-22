@@ -9,6 +9,7 @@ import type { StyleDefinition } from './types'
 export {
 	createEngine,
 	type Engine,
+	sortLayerNames,
 } from './internal/engine'
 
 export {
@@ -28,6 +29,12 @@ export type {
 	DefineAutocomplete,
 	EngineConfig,
 	PikaAugment,
+	Preflight,
+	PreflightDefinition,
+	PreflightFn,
+	ResolvedLayerName,
+	ResolvedPreflight,
+	WithLayer,
 } from './internal/types'
 
 export type * from './internal/types/utils'
