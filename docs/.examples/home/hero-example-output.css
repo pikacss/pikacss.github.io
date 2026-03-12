@@ -1,0 +1,20 @@
+@layer utilities {
+  .pk-a {
+    display: grid;
+  }
+  .pk-b {
+    gap: 1rem;
+  }
+  .pk-c {
+    padding: 2rem;
+  }
+  .pk-d {
+    border-radius: 1.5rem;
+  }
+  .pk-e {
+    background: linear-gradient(135deg, #0f172a, #1d4ed8);
+  }
+  .pk-f {
+    color: white;
+  }
+}

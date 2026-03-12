@@ -1,0 +1,17 @@
+@layer utilities {
+  .pk-a {
+    background-color: var(--badge-color);
+  }
+  .pk-b {
+    color: white;
+  }
+  .pk-c {
+    border: 1px solid var(--badge-color);
+  }
+  .pk-d {
+    color: var(--badge-color);
+  }
+  .pk-e {
+    background-color: transparent;
+  }
+}

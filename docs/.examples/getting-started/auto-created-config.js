@@ -1,6 +1,6 @@
-/// <reference path="./pika.gen.ts" />
 import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
 
 export default defineEngineConfig({
-	// Add your PikaCSS engine config here
+	// Start empty. Add selectors, shortcuts, variables, or plugins
+	// when the project stops being a first-run experiment.
 })

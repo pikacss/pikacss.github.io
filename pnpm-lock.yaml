@@ -309,9 +309,18 @@ importers:
       '@iconify-json/mdi':
         specifier: 'catalog:'
         version: 1.2.3
+      '@pikacss/core':
+        specifier: workspace:*
+        version: link:../packages/core
+      '@pikacss/integration':
+        specifier: workspace:*
+        version: link:../packages/integration
       '@pikacss/plugin-icons':
         specifier: workspace:*
         version: link:../packages/plugin-icons
+      '@pikacss/plugin-typography':
+        specifier: workspace:*
+        version: link:../packages/plugin-typography
       '@pikacss/unplugin-pikacss':
         specifier: workspace:*
         version: link:../packages/unplugin

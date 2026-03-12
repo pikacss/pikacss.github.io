@@ -1,0 +1,11 @@
+@layer utilities {
+  .pk-a {
+    display: inline-flex;
+  }
+  .pk-b {
+    gap: 0.5rem;
+  }
+  .pk-c {
+    align-items: center;
+  }
+}

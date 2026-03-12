@@ -1,18 +1,26 @@
+---
+description: Get quick answers to common adoption questions about build-time behavior, atomic output, generated files, and where PikaCSS fits best.
+---
+
 # FAQ
 
 ## Is `pika()` a runtime function?
 
-No. It is build-time input. The call is scanned and transformed during the build.
+No. `pika()` is build-time input. The engine scans the call, extracts the style data it can understand statically, and generates CSS before the app runs.
 
-## Why do static arguments matter so much?
+## Why do static constraints matter so much?
 
-Because static input is what allows PikaCSS to generate deterministic atomic CSS, deduplicate declarations, and provide generated autocomplete.
+Static input is what makes deterministic CSS generation, deduplication, and generated autocomplete possible. If the build cannot read the styling intent from source, the engine cannot safely produce the output you expect.
 
-See [Static Arguments](/getting-started/static-arguments).
+See [Static Constraints](/getting-started/static-arguments).
+
+## What is the fastest way to know whether PikaCSS fits my project?
+
+Ask whether most styling in the project can be expressed as static source input. If the answer is no, the mismatch is structural, not something a few helper utilities will hide.
 
 ## Is PikaCSS just another utility CSS framework?
 
-No. The output is atomic CSS, but the authoring model is style-definition based. You write style objects and plugin-driven config, not only predefined utility class tokens.
+No. The output is atomic CSS, but the authoring model is style-definition driven. You can write style objects, selectors, variables, shortcuts, and plugins instead of only choosing from a fixed utility dictionary.
 
 <<< @/.examples/community/faq-atomic-input.ts
 
@@ -20,35 +28,35 @@ No. The output is atomic CSS, but the authoring model is style-definition based.
 
 ## Does class token order decide the final result?
 
-Not by itself.
-
-When atomic declarations have the same specificity, the browser still resolves conflicts by stylesheet declaration order. That is why overlapping utilities can produce surprising results in many atomic systems.
-
-PikaCSS detects overlapping property effects and keeps later overlapping declarations order-sensitive, so local author order stays meaningful where it actually affects the cascade.
+Not by itself. In atomic CSS, equal-specificity declarations are still resolved by stylesheet order. PikaCSS tracks overlapping property effects so later overlapping declarations can remain locally meaningful when order actually affects the cascade.
 
 See [Atomic Order And Cascade](/concepts/atomic-order-and-cascade).
 
 ## Can I use nested selectors?
 
-Yes. Nested selectors are part of the normal style-definition model.
+Yes. Nested selectors are part of the normal style-definition model, not a separate escape hatch.
 
 <<< @/.examples/community/faq-nested.ts
 
 ## Should I keep zero-config forever?
 
-Usually no. Zero-config is a fast starting point. Real projects should centralize selectors, variables, shortcuts, and plugin usage in config.
+Usually no. Zero-config is an onboarding convenience. Real projects should centralize naming, variables, selectors, shortcuts, and plugins in config as soon as patterns become shared.
 
 ## Should I edit `pika.gen.ts` or `pika.gen.css`?
 
-No. Generated files are output artifacts. Fix config or source instead.
+No. Both files are generated artifacts. Fix the engine config, source usage, or integration wiring instead.
 
 ## When should I use the ESLint integration?
 
-As early as possible. It prevents invalid runtime-style habits from spreading through the codebase.
+As early as possible. It prevents runtime-style habits from spreading before the codebase has strong conventions.
+
+## What should I inspect when setup looks wrong?
+
+Start with scan coverage, generated files, and whether the generated CSS is actually imported. Those three checks explain most setup failures much faster than speculative config changes.
 
 ## Next
 
-- [Static Arguments](/getting-started/static-arguments)
+- [Static Constraints](/getting-started/static-arguments)
 - [Common Problems](/troubleshooting/common-problems)
 - [Configuration](/guide/configuration)
 - [Plugin System Overview](/plugin-system/overview)

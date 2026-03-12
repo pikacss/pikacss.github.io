@@ -1,52 +1,65 @@
+---
+description: 建立一條最小可成功的 PikaCSS 流程、檢查產生的 CSS，並在擴大使用前把 build-time 模型具體化。
+---
+
 # First Pika
 
-這一頁的目標很簡單：先讓 `pika()` 成功跑通一次，看看輸出會長什麼樣子，也順便理解 engine 幫你做了哪些轉換。
+這一頁的目標很簡單：先讓一條 `pika()` 流程成功跑通、檢查輸出，並在擴大使用前把 build-time 模型具體化。
 
-## Entry 設定
+## 1. 匯入 virtual CSS module
 
 先在應用程式的 entry 匯入 virtual CSS module：
 
-<<< @/.examples/zh-TW/getting-started/first-pika-entry.ts
+<<< @/zh-TW/.examples/getting-started/first-pika-entry.ts
 
-## 最小 style definition
+## 2. 寫一個靜態 style block
 
-下面是最小但已經實用的 `pika()` 呼叫：
+這是最小但已經有用的 `pika()` 呼叫：
 
-<<< @/.examples/zh-TW/getting-started/first-pika-basic.ts
+<<< @/zh-TW/.examples/getting-started/first-pika-basic.ts
 
 如果你使用的是 Vue，同樣的概念可以寫成這樣：
 
-<<< @/.examples/zh-TW/getting-started/first-pika-basic.vue
+<<< @/zh-TW/.examples/getting-started/first-pika-basic.vue
 
-## 輸出最後會變成什麼
+## 3. 看看產生的結果
 
-PikaCSS 不會在 runtime 保留這個 object。它會把這段呼叫轉成 atomic class names，並在 build 期間產生 CSS。
+PikaCSS 不會在 runtime 保留這個 object。integration 會把它轉成 atomic class names，並在 build 期間輸出 CSS。
 
-<<< @/.examples/zh-TW/getting-started/first-pika-output.css
+<<< @/zh-TW/.examples/getting-started/first-pika-output.css
 
-## 多個 arguments 很正常
+至少在一開始檢查一次 generated CSS。這會讓後面的文件讀起來像工程細節，而不是行銷用語。
 
-你可以用多個 `pika()` arguments，把穩定的 base styles 和局部 overrides 分開。
+## 4. 用多個 arguments 做 composition
 
-<<< @/.examples/zh-TW/getting-started/first-pika-multiple-args.vue
+你可以用多個 `pika()` arguments，把穩定的結構和局部意圖拆開。
 
-這種組合方式比把所有東西塞進同一個巨大 object 更容易維護，也更容易擴展。
+<<< @/zh-TW/.examples/getting-started/first-pika-multiple-args.vue
 
-## String 與 array variants
+這種 composition 模式，比把所有關注點都塞進同一個巨大 object 更容易擴展。
 
-請選擇最符合你的 framework 與呼叫方式的輸出形式。
+## 5. 使用最適合呼叫位置的輸出形式
 
-<<< @/.examples/zh-TW/getting-started/first-pika-variants.ts
+請使用最符合 framework 與實際消費 class names 位置的輸出形式。
 
-## 巢狀 selectors 本來就是模型的一部分
+<<< @/zh-TW/.examples/getting-started/first-pika-variants.ts
 
-要加 pseudo states 或 at-rules 時，不需要跳出 style object 另外寫。
+## 6. 把狀態與 at-rules 留在靜態輸入內
 
-<<< @/.examples/zh-TW/getting-started/first-pika-nested.vue
+當你要加入 pseudo states 或 at-rules 時，不需要離開 style object。
 
-<<< @/.examples/zh-TW/getting-started/first-pika-nested-output.css
+<<< @/zh-TW/.examples/getting-started/first-pika-nested.vue
 
-## 該做與不該做
+<<< @/zh-TW/.examples/getting-started/first-pika-nested-output.css
+
+## 繼續往下之前要確認的事
+
+- app entry 已經匯入 `pika.css`。
+- 至少有一個字面值 `pika()` 呼叫成功被轉換。
+- 你已經至少檢查過一次 generated CSS。
+- 你理解 selectors 和 composition 都應該留在靜態 style 輸入裡。
+
+## 實務上的該做與不該做
 
 | 該做 | 不該做 |
 | --- | --- |
@@ -56,7 +69,7 @@ PikaCSS 不會在 runtime 保留這個 object。它會把這段呼叫轉成 atom
 
 ## Next
 
-- [Static Arguments](/zh-TW/getting-started/static-arguments)
-- [How PikaCSS Works](/zh-TW/concepts/how-pikacss-works)
-- [Component Styling](/zh-TW/patterns/component-styling)
 - [Generated Files](/zh-TW/guide/generated-files)
+- [靜態限制](/zh-TW/getting-started/static-arguments)
+- [PikaCSS 如何運作](/zh-TW/concepts/how-pikacss-works)
+- [Component Styling](/zh-TW/patterns/component-styling)

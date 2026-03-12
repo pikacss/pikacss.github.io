@@ -1,6 +1,3 @@
-// After build-time compilation, pika() calls are replaced
-// with plain string literals — no function call remains.
+const buttonClass = 'pk-a pk-b pk-c pk-d'
 
-const buttonClass = 'a b c d e'
-
-document.querySelector('#btn')!.className = buttonClass
+document.querySelector('#launch-button')?.setAttribute('class', buttonClass)

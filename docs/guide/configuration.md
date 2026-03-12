@@ -1,13 +1,29 @@
+---
+description: Learn how to separate engine config, external plugins, and integration options so PikaCSS stays predictable as a project grows.
+---
+
 # Configuration
 
-PikaCSS configuration has two layers, and confusing them is one of the easiest ways to misread the system.
+PikaCSS configuration becomes much easier once you stop treating it as one flat object. There are three distinct buckets, and each one solves a different problem.
 
-1. Engine config controls how styles are understood and rendered.
-2. Build plugin options control how the integration finds, transforms, and generates files.
+1. top-level engine config changes how styles are understood and emitted
+2. the `plugins` array registers installable external plugins
+3. integration options control scanning, generated files, and transform behavior
+
+## When to add a config file
+
+Zero-config works for a first validation build. Add a config file as soon as any of these signals appear:
+
+- The same selector name, shortcut recipe, or variable token appears in two or more components.
+- A second developer joins the project and needs to know which naming conventions to follow.
+- The team wants consistent breakpoint aliases, shared theme tokens, or reusable shortcut recipes across the codebase.
+- A plugin requires configuration that should be shared across all builds.
+
+The earliest reliable signal is duplication: if you defined the same `screen-md` breakpoint in two places, move it into a shared config before it appears in a third.
 
 ## Engine config
 
-Use engine config for things that change styling behavior:
+Use engine config for styling behavior that should stay true no matter which bundler is loading the engine.
 
 - plugins
 - autocomplete
@@ -24,19 +40,21 @@ Use engine config for things that change styling behavior:
 
 <<< @/.examples/guide/config-full-example.ts
 
+Keep this file focused on shared styling rules. If a setting only exists to help the bundler find files or choose an output path, it belongs in the integration layer instead.
+
 ## Custom autocomplete
 
-Use `autocomplete` when your app or design system has stable custom style tokens that do not come from a plugin.
+Use `autocomplete` when your design system has stable tokens, selectors, or style item strings that should feel native in editor suggestions.
 
-These entries are merged with built-in and external plugin autocomplete, then written into the generated TypeScript types.
+Those additions merge with built-in engine autocomplete and plugin-provided autocomplete, then flow into `pika.gen.ts`.
 
 <<< @/.examples/guide/config-autocomplete.ts
 
 ## Semantic variable autocomplete
 
-Use `variables.*.semanticType` when a CSS variable represents a stable value family and you want PikaCSS to attach `var(--token)` only to matching CSS property autocomplete.
+Use `variables.*.semanticType` when a token belongs to a stable CSS value family and should only surface for matching properties.
 
-Current built-in semantic families with runtime expansion are:
+Current built-in semantic families are:
 
 - `color`
 - `length`
@@ -45,17 +63,19 @@ Current built-in semantic families with runtime expansion are:
 - `easing`
 - `font-family`
 
-`semanticType` expands to the built-in property set first, then unions with any explicit `autocomplete.asValueOf` entries you add for project-specific outliers.
+`semanticType` expands into the built-in property family first, then unions with any explicit `autocomplete.asValueOf` targets you add yourself.
 
 <<< @/.examples/guide/config-variables-semantic-type.ts
 
-## Built-in plugins are configured by top-level keys
+## Core features are configured by top-level keys
 
-This is important because built-in plugin configuration does not live inside `plugins`.
+Variables, keyframes, selectors, shortcuts, and `important` are part of the engine itself. They are not registered through the external `plugins` array.
 
-<<< @/.examples/guide/built-in-plugins-config.ts
+Older references may call them built-in plugins, but the user-facing rule is simpler: if the config key is `variables`, `keyframes`, `selectors`, `shortcuts`, or `important`, keep it at the top level.
 
-| Built-in capability | Where to configure it |
+<<< @/.examples/guide/core-features-config.ts
+
+| Core feature | Where to configure it |
 | --- | --- |
 | variables | `variables` |
 | keyframes | `keyframes` |
@@ -68,20 +88,22 @@ This is important because built-in plugin configuration does not live inside `pl
 <<< @/.examples/guide/config-plugins.ts
 
 ::: warning Common misunderstanding
-If you put official external plugins such as reset, fonts, icons, or typography under built-in config keys, nothing useful happens. Built-in plugin config and external plugin registration are two different mechanisms.
+Official plugins such as reset, icons, fonts, and typography are installed modules. They do not replace top-level core feature config, and core feature config does not register them for you.
 :::
 
 ## Build plugin options
 
-Use build plugin options for integration behavior such as scanning, config path resolution, generated file locations, and function name detection.
+Use integration options for file scanning, config path resolution, generated file paths, and alternate function names.
 
 <<< @/.examples/integrations/plugin-options.ts
 
+That separation matters because integration options are adapter-specific, while engine config should stay portable across adapters.
+
 ## Layers, CSS imports, preflights, and ordering
 
-For larger systems, layer control matters because it makes output order intentional instead of accidental.
+For larger systems, CSS order must be intentional. Layers make output precedence reviewable instead of accidental.
 
-Use `cssImports` when you need top-level `@import` rules to stay ahead of layered preflights and generated utilities. This is the config-level equivalent of `engine.appendCssImport()`.
+Use `cssImports` when top-level `@import` rules need to stay ahead of generated layers. Use layered preflights when resets or base rules need a stable slot in the output.
 
 <<< @/.examples/guide/config-layers.ts
 
@@ -91,7 +113,7 @@ Use `cssImports` when you need top-level `@import` rules to stay ahead of layere
 
 ## Type helpers
 
-PikaCSS exports identity helpers that improve autocomplete and document intent.
+PikaCSS exports identity helpers so config and extracted style objects stay typed without changing runtime behavior.
 
 - `defineEngineConfig()`
 - `defineStyleDefinition()`
@@ -115,6 +137,6 @@ PikaCSS exports identity helpers that improve autocomplete and document intent.
 ## Next
 
 - [Generated Files](/guide/generated-files)
-- [Integrations Overview](/integrations/overview)
+- [Core Features Overview](/guide/core-features-overview)
 - [Theming And Variables](/patterns/theming-and-variables)
 - [Plugin System Overview](/plugin-system/overview)

@@ -1,35 +1,41 @@
-// pika.config.ts
-import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
+import { defineEngineConfig } from '@pikacss/core'
 
 export default defineEngineConfig({
 	shortcuts: {
 		shortcuts: [
-			// Static shortcut: [name, styleDefinition]
-			['flex-center', {
+			['cluster', {
 				display: 'flex',
 				alignItems: 'center',
-				justifyContent: 'center',
+				gap: '0.75rem',
 			}],
-
-			// Static shortcut with multiple style items
-			['btn-base', [
-				{ padding: '0.5rem 1rem', borderRadius: '0.25rem', cursor: 'pointer' },
-				{ border: 'none', fontSize: '1rem' },
+			['button-base', [
+				{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' },
+				{ paddingInline: '1rem', paddingBlock: '0.625rem', borderRadius: '9999px' },
 			]],
-
-			// Dynamic shortcut: [pattern, resolver, autocomplete?]
-			[
-				/^m-(\d+)$/,
-				m => ({ margin: `${Number(m[1]) * 0.25}rem` }),
-				['m-1', 'm-2', 'm-4', 'm-8'], // autocomplete hints
-			],
-
-			// Dynamic shortcut returning multiple style items
-			[
-				/^size-(\d+)$/,
-				m => ({ width: `${m[1]}px`, height: `${m[1]}px` }),
-				['size-16', 'size-24', 'size-32'],
-			],
+			[/^stack-(\d+)$/, (match: RegExpMatchArray) => ({ gap: `${match[1]}px` }), [
+				'stack-8',
+				'stack-12',
+				'stack-16',
+			]],
+			{
+				shortcut: 'sr-only',
+				value: {
+					position: 'absolute',
+					width: '1px',
+					height: '1px',
+					padding: '0',
+					margin: '-1px',
+					overflow: 'hidden',
+					clip: 'rect(0, 0, 0, 0)',
+					whiteSpace: 'nowrap',
+					borderWidth: '0',
+				},
+			},
+			{
+				shortcut: /^radius-(\d+)$/,
+				value: (match: RegExpMatchArray) => ({ borderRadius: `${match[1]}px` }),
+				autocomplete: ['radius-8', 'radius-12', 'radius-16'],
+			},
 		],
 	},
 })

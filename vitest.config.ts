@@ -2,7 +2,7 @@ import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
 	test: {
-		projects: ['packages/*'],
+		projects: ['packages/*', 'docs'],
 		coverage: {
 			enabled: true,
 			exclude: [

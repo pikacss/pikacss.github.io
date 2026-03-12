@@ -195,4 +195,4 @@ $RECYCLE.BIN/
 # repomix
 repomix/
 
-.audit
+.github/prompts/docs-audit/artifacts/

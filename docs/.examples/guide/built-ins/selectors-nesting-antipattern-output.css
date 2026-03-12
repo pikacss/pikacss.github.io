@@ -1,0 +1,11 @@
+/* ❌ wrong — '&:hover' as a pika() key produces a CSS nesting rule, not a flat atomic rule */
+.pk-abc {
+  &:hover {
+    color: blue;
+  }
+}
+
+/* ✅ correct — a registered 'hover' selector produces a flat atomic rule */
+.pk-abc:hover {
+  color: blue;
+}

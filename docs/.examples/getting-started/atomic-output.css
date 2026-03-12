@@ -1,12 +1,19 @@
-/* Each CSS property-value pair becomes its own atomic class */
-.pk-a { color: red }
-.pk-b { font-size: 16px }
-.pk-c { color: black }
-.pk-d { padding: 1rem }
-
-/* Selectors are also scoped per atomic class */
-.pk-e:hover { color: blue }
-
-@media screen and (min-width: 768px) {
-  .pk-f { font-size: 1.25rem }
+@layer utilities {
+  .pk-a {
+    padding: 1rem;
+  }
+  .pk-b {
+    border-radius: 0.75rem;
+  }
+  .pk-c {
+    background-color: white;
+  }
+  .pk-d {
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  }
+  hover {
+    .pk-e {
+      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.12);
+    }
+  }
 }

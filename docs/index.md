@@ -1,73 +1,75 @@
 ---
 layout: home
+description: Evaluate whether PikaCSS fits a static styling workflow, then move from constraints to a first successful build-time setup.
 
 hero:
   name: PikaCSS
-  text: Build-time atomic CSS-in-JS that still feels like writing CSS
-  tagline: Use familiar style objects, get full TypeScript autocomplete, ship static CSS, and keep overlapping atomic declarations predictable instead of hoping global utility order works out.
+  text: Build-time atomic CSS-in-JS for teams that want static output without giving up CSS structure
+  tagline: Author style objects in TypeScript, let the build extract class names and CSS, and keep overlapping declarations predictable where normal atomic systems usually flatten local intent.
   image:
     src: /logo-white.svg
     alt: PikaCSS logo
   actions:
     - theme: brand
-      text: Start Here
+      text: Evaluate Fit
+      link: /getting-started/what-is-pikacss
+    - theme: alt
+      text: Start Setup
       link: /getting-started/installation
     - theme: alt
-      text: Learn Real Patterns
-      link: /patterns/component-styling
-    - theme: alt
-      text: Build Plugins
-      link: /plugin-system/overview
+      text: Inspect Core Features
+      link: /guide/core-features-overview
 
 features:
   - icon: ⚙️
-    title: CSS-in-JS authoring, build-time output
-    details: Write style definitions in JavaScript or TypeScript, then let PikaCSS turn them into static atomic CSS during the build.
+    title: CSS-in-JS authoring, static delivery
+    details: Write style objects in JavaScript or TypeScript, then ship generated atomic CSS instead of a client-side styling runtime.
   - icon: 🧠
-    title: Static on purpose
-    details: PikaCSS optimizes aggressively because inputs must be statically analyzable. The docs show where that boundary helps and where it will surprise you.
+    title: Static by contract
+    details: PikaCSS only accepts source the build can read ahead of time. That boundary enables generated files, autocomplete, and zero runtime styling work.
   - icon: 🧩
-    title: Real CSS composition
-    details: Use variables, selectors, shortcuts, keyframes, layers, and plugins without switching mental models between utility classes and handwritten CSS.
+    title: CSS concepts stay intact
+    details: Use variables, selectors, shortcuts, keyframes, preflights, and layers without switching from CSS rules to a utility naming game.
   - icon: 🔌
     title: One engine, multiple integrations
-    details: Start with Vite, Nuxt, Rollup, Webpack, Rspack, Rolldown, or esbuild without changing how you author styles.
+    details: Start in Vite, Nuxt, Rollup, Webpack, Rspack, Rolldown, or esbuild without changing how the team writes styles.
   - icon: 🛠️
-    title: Plugin system with public APIs
-    details: Extend selectors, shortcuts, variables, keyframes, preflights, and autocomplete through a consistent hook system.
+    title: Extensible through public hooks
+    details: Extend selectors, shortcuts, variables, keyframes, preflights, and autocomplete through one engine plugin model.
   - icon: 📚
-    title: Docs for both adopters and extenders
-    details: The main path targets product teams using PikaCSS daily. Advanced sections cover plugin authors separately.
+    title: Reader path before feature sprawl
+    details: The docs are organized to help teams evaluate fit, get one setup working, then scale usage with the right mental model.
 
 ---
 
-## Start with the constraints, not after them
+## Start with the engine boundary, not the API surface
 
-PikaCSS is strongest when your team wants the ergonomics of typed CSS-in-JS without paying runtime styling costs in production. It is not trying to be a runtime styling system, and it is not pretending dynamic expressions can always be optimized away.
+PikaCSS is strongest when your team wants CSS-in-JS ergonomics, but is willing to keep style input inside a static, build-time boundary. The engine is not trying to make arbitrary JavaScript styling logic fast later. It is trying to turn known source input into generated CSS before the app runs.
 
-Its most practical advantage is that it does not treat atomic reuse as more important than correct cascade behavior. When declarations overlap, PikaCSS keeps later author intent local and predictable instead of letting the final result depend on whichever shared utility happened to be emitted later in the global stylesheet.
+That matters for more than bundle size. PikaCSS still deduplicates atomic declarations, but it also tracks when overlap would make reuse unsafe. Later local intent can stay local instead of being overridden by whichever shared utility happened to land later in the stylesheet.
 
-That tradeoff is the whole point. If you accept statically analyzable inputs, PikaCSS can generate deduplicated atomic CSS, complete autocomplete, and predictable output. If you need arbitrary runtime styling, you should know that before you adopt it.
+If your project can live inside that tradeoff, you get static CSS output, generated files, and strong autocomplete from the same model. If the project depends on computing style objects from live runtime data, reject PikaCSS early and move on.
 
 ::: warning What to read first
-Do not skip [Static Arguments](/getting-started/static-arguments). Most incorrect first impressions of PikaCSS come from assuming `pika()` behaves like a runtime function.
+Do not skip [Static Constraints](/getting-started/static-arguments). Most incorrect first impressions of PikaCSS come from assuming `pika()` behaves like a runtime function.
 :::
 
-## A practical reading path
+## Read in this order
 
-1. Read [What Is PikaCSS?](/getting-started/what-is-pikacss) to decide if the engine fits your constraints.
-2. Follow [Installation](/getting-started/installation) and [First Pika](/getting-started/first-pika) to get one successful flow working.
-3. Read [Static Arguments](/getting-started/static-arguments) before you scale usage across a team.
-4. Move into [Component Styling](/patterns/component-styling), [Responsive And Selectors](/patterns/responsive-and-selectors), and [Theming And Variables](/patterns/theming-and-variables) for real project patterns.
-5. Keep [Common Problems](/troubleshooting/common-problems) open when something looks missing or incorrect.
+1. Read [What Is PikaCSS?](/getting-started/what-is-pikacss), [Static Constraints](/getting-started/static-arguments), [How PikaCSS Works](/concepts/how-pikacss-works), and [Atomic Order And Cascade](/concepts/atomic-order-and-cascade) before you judge the tool.
+2. Move to [Installation](/getting-started/installation), [First Pika](/getting-started/first-pika), and [Generated Files](/guide/generated-files) to prove one build-time path end to end.
+3. Add [ESLint](/integrations/eslint) during onboarding so invalid `pika()` usage stops in the editor instead of leaking across the codebase.
+4. Standardize [Configuration](/guide/configuration) and [Core Features Overview](/guide/core-features-overview) before each component starts inventing its own local conventions. Start with [Selectors](/guide/core-features/selectors) and [Variables](/guide/core-features/variables), then add [Shortcuts](/guide/core-features/shortcuts). Introduce [Keyframes](/guide/core-features/keyframes) and [Important](/guide/core-features/important) only when the team has a specific need for them.
+5. Use [Component Styling](/patterns/component-styling), [Dynamic Values With CSS Variables](/patterns/dynamic-values-with-css-variables), and [Theming And Variables](/patterns/theming-and-variables) for the patterns the team will repeat in production.
+6. When the team grows, revisit [Configuration](/guide/configuration) to lock shared conventions. Rely on [ESLint](/integrations/eslint) and [Common Problems](/troubleshooting/common-problems) to prevent usage drift as new developers onboard.
 
 ## For plugin authors
 
-The primary docs path is intentionally user-first. If you are extending the engine instead of only consuming it, jump to [Plugin System Overview](/plugin-system/overview).
+The main docs path is intentionally adopter-first. If you are extending the engine instead of only consuming it, jump to [Plugin System Overview](/plugin-system/overview) after you understand the core engine model.
 
 ## Next
 
 - [What Is PikaCSS?](/getting-started/what-is-pikacss)
 - [Installation](/getting-started/installation)
-- [Component Styling](/patterns/component-styling)
+- [Core Features Overview](/guide/core-features-overview)
 - [Plugin System Overview](/plugin-system/overview)

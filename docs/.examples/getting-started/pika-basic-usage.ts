@@ -1,11 +1,11 @@
-// In a Vue component template or any supported file:
-// The `pika()` function accepts style definition objects
-// and returns atomic CSS class names at build time.
-
-// Single style object
-const className = pika({
-	color: 'red',
-	fontSize: '16px',
+const promoCardClass = pika({
+	padding: '1rem',
+	borderRadius: '0.75rem',
+	backgroundColor: 'white',
+	boxShadow: '0 10px 30px rgba(15, 23, 42, 0.08)',
+	hover: {
+		boxShadow: '0 14px 36px rgba(15, 23, 42, 0.12)',
+	},
 })
-// At build time, this becomes something like: "pk-a pk-b"
-// where `pk-a` → `.pk-a { color: red }` and `pk-b` → `.pk-b { font-size: 16px }`
+
+document.querySelector('#promo-card')?.setAttribute('class', promoCardClass)

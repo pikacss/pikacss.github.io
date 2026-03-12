@@ -17,7 +17,10 @@
 	"devDependencies": {
 		"@braintree/sanitize-url": "catalog:",
 		"@iconify-json/mdi": "catalog:",
+		"@pikacss/core": "workspace:*",
+		"@pikacss/integration": "workspace:*",
 		"@pikacss/plugin-icons": "workspace:*",
+		"@pikacss/plugin-typography": "workspace:*",
 		"@pikacss/unplugin-pikacss": "workspace:*",
 		"@shikijs/vitepress-twoslash": "catalog:",
 		"cytoscape": "catalog:",

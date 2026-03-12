@@ -1,12 +1,8 @@
-// pika() is available as a global function — no import needed
-
-// A button component using pika() for styling
 const buttonClass = pika({
-	padding: '0.5rem 1rem',
-	borderRadius: '0.5rem',
-	backgroundColor: '#0ea5e9',
+	padding: '0.75rem 1rem',
+	borderRadius: '0.75rem',
+	backgroundColor: '#0f172a',
 	color: 'white',
-	cursor: 'pointer',
 })
 
-document.querySelector('#btn')!.className = buttonClass
+document.querySelector('#launch-button')?.setAttribute('class', buttonClass)

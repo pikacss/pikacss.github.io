@@ -1,0 +1,19 @@
+@layer utilities {
+  .pk-a {
+    color: tomato;
+  }
+  .pk-b {
+    color: white;
+  }
+  .pk-c {
+    background-color: black;
+  }
+  .pk-d {
+    padding-inline: 1rem;
+  }
+  hover {
+    .pk-e {
+      opacity: 0.9;
+    }
+  }
+}

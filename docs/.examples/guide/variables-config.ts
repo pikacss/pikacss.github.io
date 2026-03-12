@@ -1,23 +1,27 @@
-// pika.config.ts
-import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
+import { defineEngineConfig } from '@pikacss/core'
 
 export default defineEngineConfig({
 	variables: {
 		variables: {
-			// Top-level variables are placed under :root
-			'--color-primary': '#0ea5e9',
-			'--color-bg': '#ffffff',
-			'--color-text': '#1e293b',
-
-			// Nest under a selector to scope variables
+			'--surface-bg': '#ffffff',
+			'--surface-fg': '#0f172a',
+			'--brand-ring': '#0ea5e9',
+			'--card-padding': '1.5rem',
 			'[data-theme="dark"]': {
-				'--color-bg': '#0f172a',
-				'--color-text': '#e2e8f0',
+				'--surface-bg': '#020617',
+				'--surface-fg': '#e2e8f0',
+				'--brand-ring': '#38bdf8',
+			},
+			'--space-unit': {
+				value: '0.25rem',
+				autocomplete: {
+					asValueOf: ['margin', 'padding', 'gap'],
+					asProperty: true,
+				},
+				pruneUnused: false,
 			},
 		},
-		// Prune variables not referenced in any atomic style (default: true)
 		pruneUnused: true,
-		// Always keep these variables even if unused
-		safeList: ['--color-primary'],
+		safeList: ['--surface-bg', '--surface-fg'],
 	},
 })

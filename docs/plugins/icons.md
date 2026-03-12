@@ -1,15 +1,19 @@
+---
+description: Learn how the icons plugin turns Iconify collections and custom SVG sources into static PikaCSS style input.
+---
+
 # Icons
 
-`@pikacss/plugin-icons` is the fastest way to pull large icon sets into the same build-time styling workflow as the rest of your PikaCSS system.
+`@pikacss/plugin-icons` pulls icons into the same static authoring model as the rest of PikaCSS. Instead of introducing a separate runtime component layer, the plugin resolves icon names during the build and emits CSS-driven icon styles that still fit the engine's atomic workflow.
 
 ## When to use it
 
 Use the icons plugin when you want:
 
-- icon names to behave like style-item strings
-- zero runtime icon component overhead
-- Iconify collection coverage
-- CSS output that can still be themed through your existing styling model
+- icon usage to stay in static source strings
+- large Iconify collections without runtime icon components
+- custom SVG sources that still follow the same naming model
+- CSS output that can inherit color, sizing, and theming from the rest of the system
 
 ## Install
 
@@ -29,19 +33,21 @@ Use the icons plugin when you want:
 
 <<< @/.examples/plugins/icons-usage.vue
 
+The important part is not only that icons work. The icon name still needs to appear inside static PikaCSS input, even when you later bind the returned class names in a template. That keeps icon usage reviewable static source and makes search, linting, and naming conventions much easier to enforce across a large codebase.
+
 ## Naming model
 
-The default naming pattern uses the `i-` prefix plus `collection:name`, for example `i-mdi:home`.
+By default, icon names use an `i-` prefix followed by `collection:name`, such as `i-mdi:home`. That shape matters because it keeps icons aligned with the rest of PikaCSS input: plain source strings that can be scanned, transformed, and reasoned about at build time.
 
-This is valuable because icons become part of the same static authoring surface as shortcuts and selectors. Teams can review them as plain source strings instead of a separate runtime component system.
+Once icon usage is just source input, naming drift becomes a maintenance problem. Decide the prefix and collection rules early so teams do not invent competing conventions.
 
 ## Do and do not
 
 | Do | Do not |
 | --- | --- |
-| Install the icon collections you actually use. | Assume every remote icon will always resolve in CI without configuration. |
-| Keep icon naming conventions consistent across the project. | Mix several prefixes and ad hoc conventions without reason. |
-| Use autocomplete for common icons. | Expect humans to remember hundreds of icon names accurately. |
+| Install or preload the collections your project actually uses. | Assume every icon will resolve remotely in every CI environment. |
+| Keep one naming convention for prefixes and collection names. | Mix runtime components, ad hoc prefixes, and raw collection names without a plan. |
+| Seed autocomplete for the icon names people reach for every day. | Expect everyone to remember dozens of collection-specific names accurately. |
 
 ## Advanced customization
 
@@ -49,11 +55,13 @@ This is valuable because icons become part of the same static authoring surface 
 
 <<< @/.examples/plugins/icons-custom-collections.ts
 
-If you want to keep your own SVG files in the repository, you can point a custom collection at a directory and keep using the same `i-collection:name` naming model.
-
-This uses Iconify's filesystem loader, so it should be configured in a Node-based build environment such as Vite, Nuxt, or the PikaCSS CLI.
+You can also point a custom collection at repository-owned SVG assets and keep the same `i-collection:name` syntax across first-party and third-party icons.
 
 <<< @/.examples/plugins/icons-directory-collection.ts
+
+## A practical rule
+
+Treat icon naming as part of design-system vocabulary, not as incidental syntax. The plugin works best when icon names are stable, searchable, and reviewable.
 
 ## Next
 

@@ -1,7 +1,17 @@
-/* With __important: false (overrides default: true) */
-.pk-a { color: red; }
-.pk-b { font-size: 1rem; }
+@layer utilities {
+  .pk-a {
+    color: red;
+  }
+  .pk-b {
+    font-size: 1rem;
+  }
+}
 
-/* With __important: true (overrides default: false) */
-.pk-c { color: blue !important; }
-.pk-d { font-size: 2rem !important; }
+@layer utilities {
+  .pk-a {
+    color: blue !important;
+  }
+  .pk-b {
+    font-size: 2rem !important;
+  }
+}

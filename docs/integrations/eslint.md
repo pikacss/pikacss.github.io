@@ -1,6 +1,12 @@
+---
+description: Use ESLint to enforce PikaCSS static constraints before invalid authoring patterns spread through your codebase.
+---
+
 # ESLint
 
-The ESLint integration exists to catch invalid `pika()` inputs before they become build confusion.
+The ESLint integration exists to catch invalid `pika()` usage where it is cheapest to fix: in the editor, in review, and in CI before the build output becomes confusing.
+
+Treat linting as onboarding, not cleanup. PikaCSS has one boundary teams must learn early, and that boundary is static input.
 
 ## Install
 
@@ -14,6 +20,14 @@ The ESLint integration exists to catch invalid `pika()` inputs before they becom
 
 <<< @/.examples/integrations/eslint-recommended-config.mjs
 
+Add the rule before PikaCSS spreads across many components. It is much easier to preserve good habits than to unwind dynamic styling patterns later.
+
+## What this protects you from
+
+The rule mainly blocks runtime CSS-in-JS habits from leaking into a build-time engine.
+
+That usually means variable references, computed keys, conditional object values, and other shapes that only become knowable after the app runs.
+
 ## What valid usage looks like
 
 <<< @/.examples/integrations/eslint-valid-example.ts
@@ -24,15 +38,15 @@ The ESLint integration exists to catch invalid `pika()` inputs before they becom
 
 ## Why this is worth enforcing
 
-Without linting, teams often discover the static boundary too late, after style output looks missing or unexpected. With linting, the editor and CI enforce the correct authoring model continuously.
+Without linting, invalid style input often looks like a missing transform, a broken scan path, or a generated CSS bug. With linting, the real problem is named immediately and close to the source.
 
 ::: tip Team recommendation
-Adopt the ESLint rule before PikaCSS usage spreads beyond one or two files. It is much cheaper than cleaning up invalid patterns after they become habits.
+Enable the rule in local development and CI. The cost is low, and it keeps the entire team aligned on the same authoring model.
 :::
 
 ## Next
 
-- [Static Arguments](/getting-started/static-arguments)
-- [Common Problems](/troubleshooting/common-problems)
+- [Installation](/getting-started/installation)
+- [Static Constraints](/getting-started/static-arguments)
+- [Generated Files](/guide/generated-files)
 - [Configuration](/guide/configuration)
-- [Plugin System Overview](/plugin-system/overview)

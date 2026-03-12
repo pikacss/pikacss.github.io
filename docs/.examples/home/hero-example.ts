@@ -1,11 +1,8 @@
-// pika() is available as a global function — no import needed
-
-const button = pika({
-	'color': 'white',
-	'backgroundColor': '#3b82f6',
-	'padding': '8px 16px',
-	'borderRadius': '6px',
-	'&:hover': {
-		backgroundColor: '#2563eb',
-	},
+const hero = pika({
+	display: 'grid',
+	gap: '1rem',
+	padding: '2rem',
+	borderRadius: '1.5rem',
+	background: 'linear-gradient(135deg, #0f172a, #1d4ed8)',
+	color: 'white',
 })

@@ -1,14 +1,14 @@
-type ProgressBarProps = {
-	value: number
-	color: string
+type MeterProps = {
+	progress: number
+	accent: string
 }
 
-function ProgressBar({ value, color }: ProgressBarProps) {
+export function Meter({ progress, accent }: MeterProps) {
 	return (
 		<div
 			className={pika({
-				width: `${value}%`,
-				backgroundColor: color,
+				width: `${progress}%`,
+				backgroundColor: accent,
 			})}
 		/>
 	)

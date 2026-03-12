@@ -1,23 +1,21 @@
 <template>
 	<button
 		:class="pika({
-			'padding': '0.5em 1em',
-			'borderRadius': '0.25em',
-			'border': 'none',
-			'backgroundColor': '#0ea5e9',
-			'color': 'white',
-			'cursor': 'pointer',
-			'transition': 'transform 0.2s ease',
+			padding: '0.75rem 1rem',
+			borderRadius: '0.75rem',
+			backgroundColor: '#111827',
+			color: 'white',
+			transition: 'background-color 160ms ease',
 
-			':hover': {
-				transform: 'scale(1.05)',
+			hover: {
+				backgroundColor: '#1f2937',
 			},
 
-			':active': {
-				transform: 'scale(0.95)',
+			'@media (min-width: 768px)': {
+				padding: '0.875rem 1.25rem',
 			},
 		})"
 	>
-		Hover me
+		Open workspace
 	</button>
 </template>

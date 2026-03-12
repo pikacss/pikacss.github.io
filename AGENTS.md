@@ -22,6 +22,9 @@ pnpm lint                              # ESLint auto-fix
 pnpm newpkg                            # scaffold a new package
 pnpm newplugin                         # scaffold a new plugin
 pnpm docs:dev                          # VitePress dev server
+pnpm docs:check-examples              # scan docs md files for example refs missing tests
+pnpm docs:verify-examples             # verify docs example CSS outputs
+pnpm docs:update-examples             # regenerate output.css from engine
 ```
 
 ## Development Workflow
@@ -95,5 +98,5 @@ Config auto-detected as: `pika.config.{js,ts,mjs,mts,cjs,cts}`
 Docs live in `docs/` (VitePress). All code examples must be stored in `docs/.examples/` and imported with `<<<` syntax — never inline code in markdown.
 
 For full documentation authoring conventions, see `.github/instructions/documentation.instructions.md`.
-For zh-TW localized markdown pages, also follow `.github/instructions/translation.instructions.md`.
-For zh-TW localized example files under `docs/.examples/zh-TW/`, also follow `.github/instructions/translation-examples.instructions.md`.
+For zh-TW localized markdown pages, also follow `.github/instructions/documentation.instructions.md` (zh-TW Translation section).
+For zh-TW localized example files under `docs/.examples/zh-TW/`, also follow `.github/instructions/documentation.instructions.md` (zh-TW Example Localization section).

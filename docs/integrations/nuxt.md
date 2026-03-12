@@ -1,6 +1,12 @@
+---
+description: Add PikaCSS to a Nuxt app without losing the same static build-time workflow used by the lower-level integrations.
+---
+
 # Nuxt
 
-Nuxt has its own PikaCSS module path, but the same core rules still apply: import the generated CSS entry, keep style input static, and move reusable patterns into config.
+Nuxt wraps the Vite adapter in a module, but it does not change PikaCSS fundamentals. The style authoring rules stay the same: keep `pika()` static, load the generated CSS entry, and move shared styling rules into engine config.
+
+This page is for teams already committed to Nuxt. If you are still learning the engine model, read the Vite page first and then come back here for Nuxt-specific setup.
 
 ## Install
 
@@ -14,22 +20,33 @@ Nuxt has its own PikaCSS module path, but the same core rules still apply: impor
 
 <<< @/.examples/integrations/nuxt.config.ts
 
+The module takes care of wiring the Vite plugin and loading `pika.css` into the app. That keeps Nuxt setup short, but the generated files and static constraints still behave the same way.
+
 ## When to customize scanning
 
-If your project has non-standard source locations, customize scanning deliberately instead of assuming Nuxt module defaults will discover everything.
+Nuxt defaults are a starting point, not a promise that every project layout will be discovered automatically.
 
 <<< @/.examples/integrations/nuxt.config.scan-all.ts
 
+Reach for custom scanning only when your source tree actually needs it, such as shared UI packages, unusual app directories, or extra file types.
+
 ## What usually goes wrong
 
-- missing CSS entry import
-- styles authored outside scanned files
-- runtime expressions inside `pika()`
-- assuming zero-config should cover all team-wide conventions
+- styles are authored in files outside the configured scan globs
+- runtime values are pushed directly into `pika()`
+- generated files are expected in a different place than the module writes them
+- project-wide conventions are left in `nuxt.config.ts` instead of moved into `pika.config.ts`
+
+## A good Nuxt workflow
+
+1. Register the Nuxt module and confirm the app boots.
+2. Verify one simple literal `pika()` call transforms as expected.
+3. Inspect generated files before assuming the issue is Nuxt-specific.
+4. Only then widen scanning or add shared engine config.
 
 ## Next
 
-- [Static Arguments](/getting-started/static-arguments)
+- [Static Constraints](/getting-started/static-arguments)
 - [Integrations Overview](/integrations/overview)
 - [Generated Files](/guide/generated-files)
 - [Common Problems](/troubleshooting/common-problems)

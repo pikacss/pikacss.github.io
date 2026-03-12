@@ -1,15 +1,19 @@
+---
+description: Learn how the fonts plugin manages hosted fonts, local font faces, and semantic font tokens in one PikaCSS workflow.
+---
+
 # Fonts
 
-`@pikacss/plugin-fonts` brings hosted fonts, local `@font-face` definitions, and semantic font tokens into the same build-time workflow as the rest of your PikaCSS configuration.
+`@pikacss/plugin-fonts` lets you treat font loading and font naming as one system. Instead of scattering `@import` rules, `@font-face` blocks, and semantic aliases across multiple files, you can describe them once in engine config and let the plugin generate the CSS imports, variables, and shortcuts.
 
 ## When to use it
 
 Use the fonts plugin when you want:
 
-- provider-driven web font imports without hand-writing URLs
-- semantic tokens such as `sans`, `mono`, and `display` that become reusable utilities
-- a single config surface for hosted fonts and local `@font-face` families
-- room for provider-specific options and custom provider definitions
+- hosted font imports to live in config instead of handwritten URLs
+- semantic names like `sans`, `mono`, or `display` instead of vendor-specific family strings everywhere
+- local `@font-face` rules and remote providers to share one vocabulary
+- provider-specific query options without building URLs by hand
 
 ## Install
 
@@ -23,27 +27,29 @@ Use the fonts plugin when you want:
 
 <<< @/.examples/plugins/fonts-basic-config.ts
 
-Each token creates both a `font-{token}` shortcut and a matching `--pk-font-{token}` CSS variable.
+Each configured token becomes a reusable font family stack plus a matching `font-{token}` shortcut. That makes the plugin useful even when a team later changes providers, because application code can keep the semantic token names.
 
 ## Provider-specific options
 
-Google Fonts is the default provider, and Bunny, Fontshare, and Coollabs are built in as well.
-
-When a provider needs its own query parameters, pass them through `providerOptions` instead of hard-coding URL logic into your config.
+Built-in providers cover the common hosted workflows, but provider URLs still need small differences such as `text` subsets or display settings. Put that detail in `providerOptions` so the rest of the project can stay focused on font roles.
 
 <<< @/.examples/plugins/fonts-provider-options.ts
 
 ## Custom providers
 
-The v2 provider interface lets you register your own import builder while still reusing the same token model and generated utilities.
+When a provider is not built in, define a provider once and keep the same token model for the rest of the project. That preserves the value of semantic font names even when the import mechanism is custom.
 
 <<< @/.examples/plugins/fonts-custom-provider.ts
 
 ## Manual `@font-face` and local files
 
-If the font files already live in your project or CDN, define `faces` and map them into semantic families.
+Hosted imports are optional. If a project already owns the font files, the plugin can still register local faces and expose them through the same family tokens.
 
 <<< @/.examples/plugins/fonts-font-face.ts
+
+## A practical rule
+
+Name font tokens by role, not by vendor. `sans`, `mono`, and `display` survive redesigns much better than tokens that expose the first provider choice.
 
 ## Next
 

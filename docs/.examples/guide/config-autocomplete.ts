@@ -1,16 +1,15 @@
-// pika.config.ts
 import { defineEngineConfig } from '@pikacss/core'
 
 export default defineEngineConfig({
 	autocomplete: {
-		styleItemStrings: ['btn-primary', 'btn-secondary'],
+		shortcuts: ['surface-card', 'eyebrow-label'],
 		extraProperties: ['variant'],
 		properties: {
-			variant: ['"solid"', '"ghost"'],
+			variant: ['"filled"', '"outline"'],
 		},
 		patterns: {
 			selectors: ['screen-${number}'],
-			styleItemStrings: ['icon-${string}'],
+			shortcuts: ['icon-${string}', 'col-span-${number}'],
 		},
 	},
 })

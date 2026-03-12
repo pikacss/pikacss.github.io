@@ -1,0 +1,32 @@
+@layer utilities {
+  .pk-a {
+    --svg-icon: var(--pk-svg-icon-mdi-home);
+  }
+  .pk-b {
+    -webkit-mask: var(--svg-icon) no-repeat;
+  }
+  .pk-c {
+    mask: var(--svg-icon) no-repeat;
+  }
+  .pk-d {
+    -webkit-mask-size: 100% 100%;
+  }
+  .pk-e {
+    mask-size: 100% 100%;
+  }
+  .pk-f {
+    background-color: currentColor;
+  }
+  .pk-g {
+    color: inherit;
+  }
+  .pk-h {
+    width: 1em;
+  }
+  .pk-i {
+    height: 1em;
+  }
+  .pk-j {
+    --svg-icon: var(--pk-svg-icon-tabler-settings);
+  }
+}

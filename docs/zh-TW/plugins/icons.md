@@ -1,59 +1,67 @@
+---
+description: 了解 icons plugin 如何把 Iconify collections 和自訂 SVG 來源轉成靜態的 PikaCSS style input。
+---
+
 # Icons
 
-`@pikacss/plugin-icons` 是把大型 icon sets 拉進同一套 build-time styling workflow 的最快方式，能直接融入你的 PikaCSS 系統。
+`@pikacss/plugin-icons` 會把 icons 拉進和其他 PikaCSS 一樣的靜態撰寫模型。它不需要額外引入一層 runtime component，而是在 build 過程中解析 icon names，並輸出仍然符合 engine atomic workflow 的 CSS 驅動 icon styles。
 
 ## 什麼時候該用它
 
 當你想要下面這些能力時，就用 icons plugin：
 
-- icon names 能像 style-item strings 一樣使用
-- 不需要 runtime icon component 的額外負擔
-- 使用 Iconify collections
-- 仍然能透過既有 styling model 進行主題化的 CSS 輸出
+- 讓 icon usage 維持在靜態原始碼字串裡
+- 使用大型 Iconify collections，但不引入 runtime icon components
+- 使用自訂 SVG 來源，同時維持同一套命名模型
+- 讓 CSS 輸出繼承系統其餘部分的顏色、尺寸與主題化能力
 
 ## Install
 
 ::: code-group
-<<< @/.examples/zh-TW/plugins/icons-install.sh [pnpm]
-<<< @/.examples/zh-TW/plugins/icons-install-npm.sh [npm]
-<<< @/.examples/zh-TW/plugins/icons-install-yarn.sh [yarn]
+<<< @/zh-TW/.examples/plugins/icons-install.sh [pnpm]
+<<< @/zh-TW/.examples/plugins/icons-install-npm.sh [npm]
+<<< @/zh-TW/.examples/plugins/icons-install-yarn.sh [yarn]
 :::
 
 ## 最小設定
 
-<<< @/.examples/zh-TW/plugins/icons-basic-config.ts
+<<< @/zh-TW/.examples/plugins/icons-basic-config.ts
 
 ## Usage
 
-<<< @/.examples/zh-TW/plugins/icons-usage.ts
+<<< @/zh-TW/.examples/plugins/icons-usage.ts
 
-<<< @/.examples/zh-TW/plugins/icons-usage.vue
+<<< @/zh-TW/.examples/plugins/icons-usage.vue
+
+重點不只是 icons 能正常運作，而是 icon names 即使用在 template 綁定裡，也仍然要先出現在靜態的 PikaCSS 輸入中。這樣 icon 使用才會維持成可審查的靜態原始碼，也能讓大型 codebase 更容易做搜尋、linting 與命名規範管理。
 
 ## 命名模型
 
-預設命名模式會使用 `i-` prefix，加上 `collection:name`，例如 `i-mdi:home`。
+預設情況下，icon names 會使用 `i-` prefix，再接上 `collection:name`，例如 `i-mdi:home`。這個形狀很重要，因為它讓 icons 和其他 PikaCSS 輸入保持一致，都是可以在 build-time 掃描、轉換、推理的普通原始碼字串。
 
-這很有價值，因為 icons 會成為和 shortcuts、selectors 同一層級的靜態 authoring surface。團隊可以把它們當成一般的原始碼字串來 review，而不是另一套 runtime component system。
+一旦 icon 使用只是原始碼輸入，命名漂移就會變成維護問題。請盡早決定 prefix 與 collection 規則，避免團隊後續各自發明互相競爭的慣例。
 
 ## 該做與不該做
 
 | 該做 | 不該做 |
 | --- | --- |
-| 安裝你實際會用到的 icon collections。 | 假設所有遠端 icons 在 CI 中都一定會在無設定下解析成功。 |
-| 在整個專案中維持一致的 icon naming conventions。 | 無理由地混用多種 prefixes 與臨時命名方式。 |
-| 為常用 icons 使用 autocomplete。 | 期待人類能準確記住幾百個 icon names。 |
+| 安裝或預載專案實際會用到的 collections。 | 假設所有 icon 在每個 CI 環境裡都一定能遠端解析成功。 |
+| 對 prefixes 與 collection names 維持單一命名慣例。 | 在沒有規劃的情況下混用 runtime components、臨時 prefixes 和 raw collection names。 |
+| 先為大家每天最常用的 icon names 準備 autocomplete。 | 期待每個人都能準確記住幾十個 collection 專屬名稱。 |
 
 ## 進階自訂
 
-<<< @/.examples/zh-TW/plugins/icons-advanced-config.ts
+<<< @/zh-TW/.examples/plugins/icons-advanced-config.ts
 
-<<< @/.examples/zh-TW/plugins/icons-custom-collections.ts
+<<< @/zh-TW/.examples/plugins/icons-custom-collections.ts
 
-如果你想把自己的 SVG 檔案放在專案裡，也可以把 custom collection 指到指定目錄，並維持同樣的 `i-collection:name` 命名模型。
+你也可以把 custom collection 指到由 repository 自己維護的 SVG assets，並在第一方與第三方 icons 之間共用同一套 `i-collection:name` 語法。
 
-這是透過 Iconify 的 filesystem loader 完成的，所以應該放在 Vite、Nuxt 或 PikaCSS CLI 這類 Node-based build environment 裡設定。
+<<< @/zh-TW/.examples/plugins/icons-directory-collection.ts
 
-<<< @/.examples/zh-TW/plugins/icons-directory-collection.ts
+## 一個實用規則
+
+把 icon 命名當成 design-system vocabulary 的一部分，而不是偶然出現的語法。當 icon names 穩定、可搜尋、可審查時，這個 plugin 才能發揮最好效果。
 
 ## Next
 

@@ -1,0 +1,20 @@
+@layer utilities {
+  .pk-a {
+    display: inline-flex;
+  }
+  .pk-b {
+    gap: 0.5rem;
+  }
+  .pk-c {
+    background-color: #0ea5e9;
+  }
+  .pk-d {
+    color: white;
+  }
+  .pk-e {
+    padding: 0.5rem 0.75rem;
+  }
+  .pk-f {
+    border-radius: 9999px;
+  }
+}

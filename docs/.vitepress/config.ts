@@ -3,30 +3,56 @@ import { groupIconMdPlugin as MarkdownItGroupIcon } from 'vitepress-plugin-group
 import { withMermaid } from 'vitepress-plugin-mermaid'
 
 const englishNav = [
-	{ text: 'Start Here', link: '/getting-started/what-is-pikacss' },
+	{ text: 'Discover', link: '/getting-started/what-is-pikacss' },
+	{ text: 'Getting Started', link: '/getting-started/installation' },
 	{ text: 'Patterns', link: '/patterns/component-styling' },
-	{ text: 'Reference', link: '/guide/configuration' },
-	{ text: 'Advanced', link: '/plugin-system/overview' },
-	{ text: 'FAQ', link: '/community/faq' },
+	{ text: 'Plugin API', link: '/plugin-system/overview' },
 ]
 
 const englishSidebar = [
 	{
-		text: 'Start Here',
+		text: 'Discover',
 		items: [
 			{ text: 'What Is PikaCSS?', link: '/getting-started/what-is-pikacss' },
+			{ text: 'Static Constraints', link: '/getting-started/static-arguments' },
+			{ text: 'How PikaCSS Works', link: '/concepts/how-pikacss-works' },
+			{ text: 'Build-time Engine', link: '/concepts/build-time-engine' },
+			{ text: 'Atomic Order And Cascade', link: '/concepts/atomic-order-and-cascade' },
+		],
+	},
+	{
+		text: 'Getting Started',
+		items: [
 			{ text: 'Installation', link: '/getting-started/installation' },
 			{ text: 'First Pika', link: '/getting-started/first-pika' },
-			{ text: 'Static Arguments', link: '/getting-started/static-arguments' },
+			{ text: 'Generated Files', link: '/guide/generated-files' },
+			{ text: 'ESLint', link: '/integrations/eslint' },
 			{ text: 'Zero Config', link: '/getting-started/zero-config' },
 		],
 	},
 	{
-		text: 'Core Concepts',
+		text: 'Framework Integrations',
 		items: [
-			{ text: 'How PikaCSS Works', link: '/concepts/how-pikacss-works' },
-			{ text: 'Atomic Order And Cascade', link: '/concepts/atomic-order-and-cascade' },
-			{ text: 'Build-time Engine', link: '/concepts/build-time-engine' },
+			{ text: 'Overview', link: '/integrations/overview' },
+			{ text: 'Vite', link: '/integrations/vite' },
+			{ text: 'Nuxt', link: '/integrations/nuxt' },
+		],
+	},
+	{
+		text: 'Configuration',
+		items: [
+			{ text: 'Configuration', link: '/guide/configuration' },
+		],
+	},
+	{
+		text: 'Core Features',
+		items: [
+			{ text: 'Overview', link: '/guide/core-features-overview' },
+			{ text: 'Important', link: '/guide/core-features/important' },
+			{ text: 'Variables', link: '/guide/core-features/variables' },
+			{ text: 'Keyframes', link: '/guide/core-features/keyframes' },
+			{ text: 'Selectors', link: '/guide/core-features/selectors' },
+			{ text: 'Shortcuts', link: '/guide/core-features/shortcuts' },
 		],
 	},
 	{
@@ -39,30 +65,13 @@ const englishSidebar = [
 		],
 	},
 	{
-		text: 'Reference',
-		items: [
-			{ text: 'Configuration', link: '/guide/configuration' },
-			{ text: 'Built-in Plugins', link: '/guide/built-in-plugins' },
-			{ text: 'Generated Files', link: '/guide/generated-files' },
-		],
-	},
-	{
-		text: 'Integrations',
-		items: [
-			{ text: 'Overview', link: '/integrations/overview' },
-			{ text: 'Vite', link: '/integrations/vite' },
-			{ text: 'Nuxt', link: '/integrations/nuxt' },
-			{ text: 'ESLint', link: '/integrations/eslint' },
-		],
-	},
-	{
 		text: 'Troubleshooting',
 		items: [
 			{ text: 'Common Problems', link: '/troubleshooting/common-problems' },
 		],
 	},
 	{
-		text: 'Official Plugins',
+		text: 'Plugins Ecosystem',
 		items: [
 			{ text: 'Fonts', link: '/plugins/fonts' },
 			{ text: 'Icons', link: '/plugins/icons' },
@@ -71,7 +80,7 @@ const englishSidebar = [
 		],
 	},
 	{
-		text: 'Extend PikaCSS',
+		text: 'Plugin Developer API',
 		items: [
 			{ text: 'Plugin System Overview', link: '/plugin-system/overview' },
 			{ text: 'Create A Plugin', link: '/plugin-system/create-plugin' },
@@ -87,30 +96,56 @@ const englishSidebar = [
 ]
 
 const zhTwNav = [
-	{ text: '從這裡開始', link: '/zh-TW/getting-started/what-is-pikacss' },
+	{ text: '認識 PikaCSS', link: '/zh-TW/getting-started/what-is-pikacss' },
+	{ text: '快速起步', link: '/zh-TW/getting-started/installation' },
 	{ text: '實作模式', link: '/zh-TW/patterns/component-styling' },
-	{ text: '參考', link: '/zh-TW/guide/configuration' },
-	{ text: '進階', link: '/zh-TW/plugin-system/overview' },
-	{ text: 'FAQ', link: '/zh-TW/community/faq' },
+	{ text: 'Plugin API', link: '/zh-TW/plugin-system/overview' },
 ]
 
 const zhTwSidebar = [
 	{
-		text: '從這裡開始',
+		text: '認識 PikaCSS',
 		items: [
 			{ text: '什麼是 PikaCSS？', link: '/zh-TW/getting-started/what-is-pikacss' },
+			{ text: '靜態限制', link: '/zh-TW/getting-started/static-arguments' },
+			{ text: 'PikaCSS 如何運作', link: '/zh-TW/concepts/how-pikacss-works' },
+			{ text: 'Build-time Engine', link: '/zh-TW/concepts/build-time-engine' },
+			{ text: 'Atomic 順序與 Cascade', link: '/zh-TW/concepts/atomic-order-and-cascade' },
+		],
+	},
+	{
+		text: '快速起步',
+		items: [
 			{ text: '安裝', link: '/zh-TW/getting-started/installation' },
 			{ text: '第一個 Pika', link: '/zh-TW/getting-started/first-pika' },
-			{ text: '靜態參數', link: '/zh-TW/getting-started/static-arguments' },
+			{ text: '產生檔案', link: '/zh-TW/guide/generated-files' },
+			{ text: 'ESLint', link: '/zh-TW/integrations/eslint' },
 			{ text: '零設定', link: '/zh-TW/getting-started/zero-config' },
 		],
 	},
 	{
-		text: '核心概念',
+		text: '框架整合',
 		items: [
-			{ text: 'PikaCSS 如何運作', link: '/zh-TW/concepts/how-pikacss-works' },
-			{ text: 'Atomic 順序與 Cascade', link: '/zh-TW/concepts/atomic-order-and-cascade' },
-			{ text: 'Build-time Engine', link: '/zh-TW/concepts/build-time-engine' },
+			{ text: '總覽', link: '/zh-TW/integrations/overview' },
+			{ text: 'Vite', link: '/zh-TW/integrations/vite' },
+			{ text: 'Nuxt', link: '/zh-TW/integrations/nuxt' },
+		],
+	},
+	{
+		text: '設定',
+		items: [
+			{ text: '設定方式', link: '/zh-TW/guide/configuration' },
+		],
+	},
+	{
+		text: '核心功能',
+		items: [
+			{ text: '總覽', link: '/zh-TW/guide/core-features-overview' },
+			{ text: 'Important', link: '/zh-TW/guide/core-features/important' },
+			{ text: 'Variables', link: '/zh-TW/guide/core-features/variables' },
+			{ text: 'Keyframes', link: '/zh-TW/guide/core-features/keyframes' },
+			{ text: 'Selectors', link: '/zh-TW/guide/core-features/selectors' },
+			{ text: 'Shortcuts', link: '/zh-TW/guide/core-features/shortcuts' },
 		],
 	},
 	{
@@ -123,30 +158,13 @@ const zhTwSidebar = [
 		],
 	},
 	{
-		text: '參考',
-		items: [
-			{ text: '設定方式', link: '/zh-TW/guide/configuration' },
-			{ text: '內建 Plugins', link: '/zh-TW/guide/built-in-plugins' },
-			{ text: '產生檔案', link: '/zh-TW/guide/generated-files' },
-		],
-	},
-	{
-		text: '整合',
-		items: [
-			{ text: '總覽', link: '/zh-TW/integrations/overview' },
-			{ text: 'Vite', link: '/zh-TW/integrations/vite' },
-			{ text: 'Nuxt', link: '/zh-TW/integrations/nuxt' },
-			{ text: 'ESLint', link: '/zh-TW/integrations/eslint' },
-		],
-	},
-	{
 		text: '疑難排解',
 		items: [
 			{ text: '常見問題', link: '/zh-TW/troubleshooting/common-problems' },
 		],
 	},
 	{
-		text: '官方 Plugins',
+		text: 'Plugins 生態系',
 		items: [
 			{ text: 'Fonts', link: '/zh-TW/plugins/fonts' },
 			{ text: 'Icons', link: '/zh-TW/plugins/icons' },
@@ -155,7 +173,7 @@ const zhTwSidebar = [
 		],
 	},
 	{
-		text: '擴充 PikaCSS',
+		text: 'Plugin Developer API',
 		items: [
 			{ text: 'Plugin 系統總覽', link: '/zh-TW/plugin-system/overview' },
 			{ text: '建立 Plugin', link: '/zh-TW/plugin-system/create-plugin' },

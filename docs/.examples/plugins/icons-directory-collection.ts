@@ -1,7 +1,7 @@
 // pika.config.ts
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 import { icons } from '@pikacss/plugin-icons'
-import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
+import { defineEngineConfig } from '@pikacss/core'
 
 export default defineEngineConfig({
 	plugins: [icons()],

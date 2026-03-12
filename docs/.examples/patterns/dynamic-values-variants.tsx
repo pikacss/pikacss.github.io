@@ -6,10 +6,12 @@ const badgeClassNames = {
 	solid: pika({
 		backgroundColor: 'var(--badge-color)',
 		color: 'white',
+		border: '1px solid var(--badge-color)',
 	}),
 	outline: pika({
 		border: '1px solid var(--badge-color)',
 		color: 'var(--badge-color)',
+		backgroundColor: 'transparent',
 	}),
 } satisfies Record<BadgeVariant, string>
 

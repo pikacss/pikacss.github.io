@@ -8,9 +8,11 @@ type ProgressBarProps = {
 const progressBar = pika({
 	width: 'var(--progress-width)',
 	backgroundColor: 'var(--progress-color)',
+	height: '0.5rem',
+	borderRadius: '9999px',
 })
 
-function ProgressBar({ value, color }: ProgressBarProps) {
+export function ProgressBar({ value, color }: ProgressBarProps) {
 	return (
 		<div
 			className={progressBar}

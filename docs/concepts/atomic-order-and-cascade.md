@@ -1,10 +1,14 @@
+---
+description: See why class token order does not control atomic conflicts and how PikaCSS preserves local intent when declarations overlap.
+---
+
 # Atomic Order And Cascade
 
 Atomic CSS has a common footgun: the order of class tokens in markup is not what decides the final result.
 
 The browser resolves conflicts by comparing the generated CSS declarations in the stylesheet. When two atomic declarations have the same specificity, the declaration that appears later in CSS wins.
 
-## The common atomic ordering problem
+## The usual atomic ordering failure
 
 You may have seen this in utility-first workflows such as UnoCSS or TailwindCSS.
 
@@ -22,7 +26,7 @@ If `.px-4` is emitted after `.pl-2`, both elements end with `padding-left: 1rem`
 
 The markup changed, but the cascade did not.
 
-## Why this happens
+## Why utility token order does not save you
 
 Atomic systems try to reuse one declaration everywhere.
 
@@ -35,7 +39,7 @@ The problem becomes visible when declarations overlap in effect, for example:
 - patched shorthand families such as `overflow-x` and `overflow`
 - universal resets such as `all` combined with any later property
 
-## What PikaCSS does differently
+## How PikaCSS handles overlap differently
 
 PikaCSS still deduplicates normal atomic declarations, but it treats overlap as a first-class problem.
 
@@ -51,7 +55,7 @@ In this example, `padding-left: 8px` appears twice on purpose.
 
 The second `padding-left` is not reused from the first component, because reusing it would detach it from the `padding: 24px` declaration that comes right before it. PikaCSS keeps a fresh atomic class so the later overlap still wins in the correct local order.
 
-## The key tradeoff
+## The tradeoff PikaCSS makes
 
 PikaCSS does not disable deduplication globally just to solve cascade issues.
 
@@ -63,7 +67,7 @@ That gives PikaCSS a more useful balance:
 - normal atomic reuse for unrelated declarations
 - no requirement to manually reason about global utility emission order
 
-## What this means for real projects
+## What this means in production code
 
 You can write style definitions in the order that expresses intent and trust the engine to preserve that intent when property effects overlap.
 
@@ -77,6 +81,12 @@ This behavior matters most when your project has:
 - plugin-generated declarations that expand into overlapping CSS families
 - reset patterns using `all`
 - teams that expect later author intent to stay local and predictable
+
+## The practical takeaway
+
+If you are evaluating PikaCSS against other atomic systems, this is one of the most important differences to understand.
+
+PikaCSS is not trying to maximize reuse at any cost. It is trying to keep reuse compatible with real CSS behavior.
 
 ## Next
 

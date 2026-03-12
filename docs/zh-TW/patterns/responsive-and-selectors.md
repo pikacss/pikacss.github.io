@@ -1,41 +1,65 @@
+---
+description: 建立 responsive rules、states 與 context-driven styling 的共享 selector vocabulary，讓你的團隊不再需要在每個 component 裡重新定義相同條件。
+---
+
 # Responsive And Selectors
 
-Selectors 是 PikaCSS 從小工具走向系統化的重要分水嶺。你可以把 states、主題與 breakpoints 先定義好，之後在任何地方重複使用。
+Selectors 是 PikaCSS 從 helper 變成系統的起點。它們讓你把 states、主題與 breakpoints 先在 config 中命名一次，再在所有地方重用這些名稱。
 
-## 在 config 中定義 selectors
+真正的價值不是語法變短，而是為結構性樣式條件建立一套共享 vocabulary。
 
-<<< @/.examples/zh-TW/guide/selectors-config.ts
+## 設計你的 breakpoint vocabulary
 
-## 在 style definitions 中使用它們
+把所有 breakpoint aliases 定義在 engine config 裡，不要放進個別 component。這能讓命名保持一致，也讓團隊可以在整個 codebase 中掃描 breakpoint 使用情況。
 
-<<< @/.examples/zh-TW/guide/selectors-usage.ts
+<<< @/zh-TW/.examples/guide/selectors-config.ts
 
-<<< @/.examples/zh-TW/guide/selectors-output.css
+偏好用像 `screen-sm`、`screen-md` 和 `screen-lg` 這樣樸素、可預期的名稱。如果每個開發者都發明不同的命名方式，具名 selectors 就不再是共享語言，而只會退回成局部語法雜訊。
 
-## 讓 responsive naming 保持樸素
+## 在 components 中使用 selectors
 
-Selectors 的命名應該一眼就看得懂，也要容易記。請優先使用專案共用的 aliases，例如 `screen-sm`、`screen-md`、`screen-lg`，不要把一次性的 media query strings 散落在各個 component 檔案裡。
+一旦 selectors 登記完成，就可以在 `pika()` style objects 中把它們的名稱當作 key 使用。Component 檔案永遠不需要知道原始的 media query 或 selector 字串。
 
-## 巢狀 selectors 仍然是靜態的
+<<< @/zh-TW/.examples/guide/selectors-usage.ts
 
-巢狀 selector blocks 仍然符合 build-time 模型，因為它們的結構在原始碼裡就是明確寫死的。
+<<< @/zh-TW/.examples/guide/selectors-output.css
 
-<<< @/.examples/zh-TW/getting-started/first-pika-nested.vue
+## 巢狀 selector objects 仍然是靜態的
+
+把 style object 巢入 selector key 之下是在原始碼中宣告的，而不是在 runtime 計算出來的，它與 build-time model 完全相容。
+
+完整 API（包含 `$` placeholder 與展開機制）請參閱 [Selectors](/zh-TW/guide/core-features/selectors)。
+
+## 搭配 shortcuts 使用 selectors
+
+當 selector 驅動的樣式組合在多個 component 中反覆出現，通常就是將其提取成 shortcut 的時機。
+
+Shortcuts 能把建立在 selectors 之上的重複靜態組合收斂成一個具名慣例，而不是讓同樣的 key pattern 一再重複。
+
+定義 shortcut recipes 的方式請參閱 [Shortcuts](/zh-TW/guide/core-features/shortcuts)。
+
+## 把責任切乾淨
+
+Selectors 應該描述結構：state、context 與 breakpoints。
+
+Variables 應該承載會變化的值。
+
+Shortcuts 應該捕捉建立在這些 selectors 之上的重複靜態組合。
 
 ## 建議模式
 
-- 把 breakpoint aliases 放在 config，不要放在各個 components 裡。
-- 讓 selector names 在團隊層級具備足夠語意，值得重用。
-- 用 selectors 表達狀態結構，用 variables 表達值的變化。
-- 當 selector-driven 的模式在多個 components 中反覆出現時，就把它收進 shortcuts。
+- 把 breakpoint aliases 放在 config，不要放在個別 component 裡。
+- 讓 selector names 具備足以在團隊層級重用的語意。
+- 用 selectors 表達結構條件，用 variables 表達值的變化。
+- 當 selector 驅動的模式反覆出現時，就用 shortcuts 收斂。
 
 ::: warning 不要讓 selectors 過度承載
-如果一個 selector name 把太多互不相干的規則都包在一起，review 會變難，局部 overrides 也會跟著失去可預測性。Selector alias 應該描述一個穩定條件，而不是整個 component contract。
+如果一個 selector alias 把太多互不相干的規則都藏在裡面，review 會變難，局部覆寫也會變得不可預測。Selector 應該描述一個穩定條件，而不是整個 component contract。
 :::
 
 ## Next
 
-- [Theming And Variables](/zh-TW/patterns/theming-and-variables)
-- [Configuration](/zh-TW/guide/configuration)
 - [Component Styling](/zh-TW/patterns/component-styling)
-- [Plugins: Typography](/zh-TW/plugins/typography)
+- [Theming And Variables](/zh-TW/patterns/theming-and-variables)
+- [Dynamic Values With CSS Variables](/zh-TW/patterns/dynamic-values-with-css-variables)
+- [Configuration](/zh-TW/guide/configuration)

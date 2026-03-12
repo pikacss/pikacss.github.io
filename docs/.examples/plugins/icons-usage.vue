@@ -1,15 +1,15 @@
+<script setup lang="ts">
+const links = [
+	{ iconClass: pika('i-mdi:home'), label: 'Home' },
+	{ iconClass: pika('i-tabler:settings?mask'), label: 'Settings' },
+]
+</script>
+
 <template>
-	<div>
-		<!-- Basic icon -->
-		<span :class="pika('i-mdi:home')" />
-
-		<!-- Force mask mode: icon color follows text color -->
-		<span
-			:class="pika('i-mdi:account?mask')"
-			style="color: red;"
-		/>
-
-		<!-- Force bg mode: icon keeps its original SVG colors -->
-		<span :class="pika('i-mdi:palette?bg')" />
-	</div>
+	<nav>
+		<a v-for="link in links" :key="link.label" class="inline-flex items-center gap-2">
+			<span :class="link.iconClass" />
+			{{ link.label }}
+		</a>
+	</nav>
 </template>

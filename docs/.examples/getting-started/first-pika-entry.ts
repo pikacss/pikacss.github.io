@@ -1,8 +1,5 @@
 import { createApp } from 'vue'
-
 import App from './App.vue'
-// src/main.ts
-import 'pika.css' // Import the generated CSS
+import 'pika.css'
 
-createApp(App)
-	.mount('#app')
+createApp(App).mount('#app')

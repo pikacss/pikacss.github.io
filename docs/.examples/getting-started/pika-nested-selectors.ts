@@ -1,17 +1,8 @@
-// Nested selectors let you scope styles to pseudo-classes,
-// media queries, or custom selectors defined in your config.
 const className = pika({
-	'color': 'black',
-	// Pseudo-class nesting (requires selector config)
-	':hover': {
-		color: 'blue',
-	},
-	// Custom selector (defined in pika.config)
-	'@dark': {
-		color: 'white',
-	},
-	// Media query nesting (defined in pika.config)
-	'@screen-md': {
-		fontSize: '1.25rem',
+	padding: '1rem',
+	borderRadius: '0.75rem',
+	backgroundColor: '#f8fafc',
+	'@media (min-width: 768px)': {
+		padding: '1.5rem',
 	},
 })

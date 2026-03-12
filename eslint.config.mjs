@@ -9,8 +9,10 @@ export default await deviltea(
 			},
 		},
 		ignores: [
-			'.planning/**/*',
+			'.github/instructions/**/*',
+			'.github/prompts/**/*',
 			'./docs/.examples/**/*',
+			'./docs/zh-TW/.examples/**/*',
 			// Ignore the generated files
 			'packages/core/src/csstype.ts',
 		],

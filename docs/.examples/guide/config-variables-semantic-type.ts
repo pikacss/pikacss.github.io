@@ -3,38 +3,36 @@ import { defineEngineConfig } from '@pikacss/core'
 export default defineEngineConfig({
 	variables: {
 		variables: {
-			// Built-in semantic families scope autocomplete to matching CSS properties.
-			'--color-primary': {
-				value: '#3b82f6',
+			'--accent-color': {
+				value: '#0ea5e9',
 				semanticType: 'color',
 			},
-			'--space-md': {
-				value: '16px',
+			'--sidebar-width': {
+				value: '18rem',
 				semanticType: 'length',
 			},
 			'--motion-fast': {
-				value: '120ms',
+				value: '140ms',
 				semanticType: 'time',
 			},
-			'--layer-popover': {
-				value: '20',
+			'--elevation-popover': {
+				value: '40',
 				semanticType: 'number',
 			},
-			'--ease-standard': {
-				value: 'ease-in-out',
+			'--ease-emphasized': {
+				value: 'cubic-bezier(0.2, 0, 0, 1)',
 				semanticType: 'easing',
 			},
-			'--font-ui': {
-				value: 'Inter, sans-serif',
+			'--font-display': {
+				value: '"Space Grotesk", sans-serif',
 				semanticType: 'font-family',
 			},
-
-			// Explicit autocomplete targets still union with semanticType expansion.
 			'--brand-accent': {
-				value: '#0ea5e9',
+				value: '#38bdf8',
 				semanticType: 'color',
 				autocomplete: {
 					asValueOf: 'scrollbar-color',
+					asProperty: false,
 				},
 			},
 		},

@@ -1,18 +1,22 @@
-# Atomic Order And Cascade
+---
+description: 了解為什麼 class token 的順序不能控制 atomic 衝突，以及 PikaCSS 如何在 declarations 重疊時保留局部意圖。
+---
 
-Atomic CSS 有一個很常見的陷阱：markup 裡 class tokens 的順序，並不會直接決定最後結果。
+# Atomic 順序與 Cascade
+
+Atomic CSS 有一個常見陷阱：markup 裡 class tokens 的順序，並不會決定最後結果。
 
 瀏覽器在處理衝突時，比的是 stylesheet 裡產生的 CSS declarations。當兩個 atomic declarations 的 specificity 相同時，較晚出現在 CSS 裡的 declaration 會獲勝。
 
-## 常見的 atomic 排序問題
+## 常見的 atomic 排序失敗
 
-如果你使用過 UnoCSS 或 TailwindCSS 這類 utility-first 工作流，應該見過這個問題。
+如果你用過 UnoCSS 或 TailwindCSS 這類 utility-first workflow，應該見過這個問題。
 
-<<< @/.examples/zh-TW/principles/order-class-order-problem.tsx
+<<< @/zh-TW/.examples/principles/order-class-order-problem.tsx
 
 上面兩個元素，最後仍然可能指向同一批共享的全域 declarations：
 
-<<< @/.examples/zh-TW/principles/order-class-order-problem.css
+<<< @/zh-TW/.examples/principles/order-class-order-problem.css
 
 也就是說，兩個元素最終吃到的是同一套 stylesheet 順序，不會因為 `class` attribute 裡 token 的順序不同而改變。
 
@@ -22,7 +26,7 @@ Atomic CSS 有一個很常見的陷阱：markup 裡 class tokens 的順序，並
 
 Markup 改了，cascade 卻沒跟著改。
 
-## 為什麼會這樣
+## 為什麼 utility token 順序救不了你
 
 Atomic systems 會盡量在所有地方重用同一個 declaration。
 
@@ -35,23 +39,23 @@ Atomic systems 會盡量在所有地方重用同一個 declaration。
 - `overflow-x` 與 `overflow` 這種 patched shorthand family
 - `all` 與任何後續 property 組合的 universal reset
 
-## PikaCSS 有什麼不同
+## PikaCSS 如何用不同方式處理重疊
 
 PikaCSS 依然會去重一般的 atomic declarations，但它把「效果重疊」當成需要正面處理的問題。
 
 當 engine 發現同一個 selector scope 裡，後面的 declaration 可能改變前面 declaration 的實際結果時，它會把這個後續 declaration 標記成對順序敏感，而不是去重用全域快取 class。
 
-換句話說，真正重要的地方，author 順序還是會被保留下來。
+實務上，這代表真正重要的地方，author 順序會被保留下來。
 
-<<< @/.examples/zh-TW/principles/order-pika-overlap.ts
+<<< @/zh-TW/.examples/principles/order-pika-overlap.ts
 
-<<< @/.examples/zh-TW/principles/order-pika-overlap.css
+<<< @/zh-TW/.examples/principles/order-pika-overlap.css
 
 在這個例子裡，`padding-left: 8px` 會刻意出現兩次。
 
 第二個 `padding-left` 不會重用第一個 component 的 class，因為一旦重用，它就會和前面緊鄰的 `padding: 24px` 脫鉤。PikaCSS 會保留一個新的 atomic class，確保後續的重疊關係仍然按照正確的局部順序生效。
 
-## 核心取捨
+## PikaCSS 做出的取捨
 
 PikaCSS 不會為了解決 cascade 問題，就乾脆把 deduplication 全域關掉。
 
@@ -69,7 +73,7 @@ PikaCSS 不會為了解決 cascade 問題，就乾脆把 deduplication 全域關
 
 你還是得思考一般 CSS 規則，例如 specificity、selector 形狀與 layers。PikaCSS 不是要繞過 cascade，而是讓 atomic generation 和 cascade 好好配合，不要彼此打架。
 
-## 什麼情況下最重要
+## 什麼情況下最值得注意
 
 這個行為在以下專案中尤其重要：
 
@@ -78,9 +82,15 @@ PikaCSS 不會為了解決 cascade 問題，就乾脆把 deduplication 全域關
 - 使用 `all` 的 reset 模式
 - 期待後續 author intent 保持局部且可預測的團隊
 
+## 實務上的結論
+
+如果你是拿 PikaCSS 去和其他 atomic systems 做比較，這是最值得先搞懂的差異之一。
+
+PikaCSS 不追求不計代價的最大化重用。它追求的是：重用不能違反真實的 CSS 行為。
+
 ## Next
 
-- [How PikaCSS Works](/zh-TW/concepts/how-pikacss-works)
+- [PikaCSS 如何運作](/zh-TW/concepts/how-pikacss-works)
 - [Build-time Engine](/zh-TW/concepts/build-time-engine)
 - [Configuration](/zh-TW/guide/configuration)
 - [Common Problems](/zh-TW/troubleshooting/common-problems)

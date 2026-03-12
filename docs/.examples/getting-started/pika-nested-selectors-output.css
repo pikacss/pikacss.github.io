@@ -1,0 +1,16 @@
+@layer utilities {
+  .pk-a {
+    padding: 1rem;
+  }
+  .pk-b {
+    border-radius: 0.75rem;
+  }
+  .pk-c {
+    background-color: #f8fafc;
+  }
+  @media (min-width: 768px) {
+    .pk-d {
+      padding: 1.5rem;
+    }
+  }
+}

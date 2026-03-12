@@ -1,6 +1,12 @@
+---
+description: Structure PikaCSS component styling around static composition, explicit variants, and shared recipes that remain easy to review.
+---
+
 # Component Styling
 
-The most reliable PikaCSS components are built from small, static layers.
+The most durable PikaCSS components are built from small static pieces. The goal is not cleverness. The goal is a styling shape that remains easy to review, easy to reuse, and compatible with build-time extraction.
+
+When component styling becomes difficult, the usual cause is not missing power. It is too many responsibilities collapsed into one object.
 
 ## Start with composition, not conditionals
 
@@ -8,29 +14,39 @@ Base styles, variant styles, and local overrides should usually be separate argu
 
 <<< @/.examples/getting-started/first-pika-multiple-args.vue
 
-This pattern scales because each piece has a stable purpose:
+That pattern scales because each piece keeps one job:
 
 - base styles define structure
 - variant styles define intent
-- local overrides solve one-off layout or context needs
+- local overrides solve narrow context needs
+
+When those roles collapse into one giant object, review gets harder and reuse gets weaker.
 
 ## Use shortcuts for shared recipes
 
-When the same style bundle appears across multiple components, move it into a shortcut instead of repeating a large object in every file.
+When the same style bundle appears across several components, move it into a shortcut instead of copying the object from file to file.
 
-<<< @/.examples/guide/shortcuts-config.ts
+<<< @/.examples/guide/config-shortcuts.ts
 
 <<< @/.examples/guide/shortcuts-usage.ts
 
 <<< @/.examples/guide/shortcuts-output.css
 
+Shortcuts are a good home for shared static recipes. They are not a place to hide runtime decisions.
+
 ## Prefer explicit variants
 
-For component states such as `primary`, `secondary`, `danger`, or `compact`, create separate static style blocks and choose between them at runtime.
+For states such as `primary`, `secondary`, `danger`, or `compact`, create separate static style blocks and let runtime code choose between them.
 
 ::: tip Good runtime usage
-Runtime code should decide which static class string to use. Runtime code should not build the style content itself.
+Runtime code should choose among predeclared class strings. Runtime code should not construct the style content itself.
 :::
+
+## Push changing values into variables
+
+If a component still needs per-instance values such as width, accent color, or user-driven data, keep the structural style block static and move the changing value into CSS variables.
+
+That preserves the build-time model without giving up runtime flexibility where it actually belongs.
 
 ## Recommended review checklist
 
@@ -46,12 +62,12 @@ Runtime code should decide which static class string to use. Runtime code should
 | Do | Do not |
 | --- | --- |
 | Compose `pika(base, primary, localOverride)`. | Put every possible branch in one inline expression. |
-| Move shared recipes into shortcuts. | Copy the same 12-line object across files. |
+| Move shared recipes into shortcuts. | Copy the same large object across files. |
 | Keep variants stable and named. | Invent new dynamic shape rules per component. |
 
 ## Next
 
 - [Responsive And Selectors](/patterns/responsive-and-selectors)
+- [Dynamic Values With CSS Variables](/patterns/dynamic-values-with-css-variables)
 - [Theming And Variables](/patterns/theming-and-variables)
 - [Configuration](/guide/configuration)
-- [Static Arguments](/getting-started/static-arguments)

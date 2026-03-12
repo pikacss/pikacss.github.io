@@ -1,9 +1,7 @@
-// pika.config.ts
-import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
+import { defineEngineConfig } from '@pikacss/core'
 
 export default defineEngineConfig({
 	important: {
-		// When true, all CSS values get `!important` by default
 		default: true,
 	},
 })

@@ -35,6 +35,12 @@ jobs:
       - name: typecheck
         run: pnpm typecheck
 
+      - name: typecheck docs
+        run: pnpm --filter @pikacss/docs typecheck
+
+      - name: check docs examples
+        run: pnpm docs:check-examples
+
   test:
     runs-on: ${{ matrix.os }}
 

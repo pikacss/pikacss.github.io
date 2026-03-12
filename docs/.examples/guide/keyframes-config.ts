@@ -1,37 +1,28 @@
-// pika.config.ts
-import { defineEngineConfig } from '@pikacss/unplugin-pikacss'
+import { defineEngineConfig } from '@pikacss/core'
 
 export default defineEngineConfig({
 	keyframes: {
 		keyframes: [
-			// Tuple form: [name, frames, autocomplete?, pruneUnused?]
-			['fade-in', {
+			'external-spinner',
+			['enter-fade', {
 				from: { opacity: '0' },
 				to: { opacity: '1' },
-			}, ['fade-in 0.3s ease']],
-
-			// Object form
+			}, ['enter-fade 180ms ease-out']],
 			{
 				name: 'slide-up',
 				frames: {
-					from: { transform: 'translateY(100%)' },
-					to: { transform: 'translateY(0)' },
+					from: { transform: 'translateY(1rem)', opacity: '0' },
+					to: { transform: 'translateY(0)', opacity: '1' },
 				},
-				autocomplete: ['slide-up 0.5s ease-out'],
-				pruneUnused: false, // always include in CSS output
+				autocomplete: ['slide-up 240ms ease-out'],
+				pruneUnused: false,
 			},
-
-			// Percentage-based keyframes
-			['bounce', {
-				'0%': { transform: 'translateY(0)' },
-				'50%': { transform: 'translateY(-20px)' },
-				'100%': { transform: 'translateY(0)' },
+			['pulse-ring', {
+				'0%': { transform: 'scale(0.95)', opacity: '0.4' },
+				'70%': { transform: 'scale(1)', opacity: '1' },
+				'100%': { transform: 'scale(0.95)', opacity: '0.4' },
 			}],
-
-			// String-only form: register an external animation name for autocomplete
-			'external-animation',
 		],
-		// Prune keyframes not referenced in atomic styles (default: true)
 		pruneUnused: true,
 	},
 })

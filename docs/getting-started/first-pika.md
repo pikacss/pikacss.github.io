@@ -1,14 +1,18 @@
+---
+description: Build one minimal PikaCSS flow, inspect the emitted CSS, and make the build-time model concrete before scaling usage.
+---
+
 # First Pika
 
-The goal of this page is simple: get one successful `pika()` flow working, inspect the output, and understand what the engine transformed for you.
+The goal of this page is simple: get one successful `pika()` flow working, inspect the output, and make the build-time model concrete before you scale usage.
 
-## Entry setup
+## 1. Import the virtual CSS module
 
 Import the virtual CSS module in your application entry:
 
 <<< @/.examples/getting-started/first-pika-entry.ts
 
-## Minimal style definition
+## 2. Write one static style block
 
 This is the smallest useful `pika()` call:
 
@@ -18,27 +22,29 @@ If you are working in Vue, the same idea looks like this:
 
 <<< @/.examples/getting-started/first-pika-basic.vue
 
-## What the output becomes
+## 3. Look at the generated result
 
-PikaCSS does not keep this object around at runtime. It transforms the call into atomic class names and emits CSS during the build.
+PikaCSS does not keep this object around at runtime. The integration turns it into atomic class names and emits CSS during the build.
 
 <<< @/.examples/getting-started/first-pika-output.css
 
-## Multiple arguments are normal
+Inspect the generated CSS once, early. It makes the rest of the docs read like engineering details instead of marketing language.
 
-Use multiple `pika()` arguments to separate stable base styles from local overrides.
+## 4. Compose with multiple arguments
+
+Use multiple `pika()` arguments to separate stable structure from local intent.
 
 <<< @/.examples/getting-started/first-pika-multiple-args.vue
 
-That composition pattern scales much better than one giant object.
+That composition pattern scales better than collapsing every concern into one giant object.
 
-## String and array variants
+## 5. Use the output shape that fits the call site
 
-Use the output form that best matches your framework and calling style.
+Use the output form that best matches the framework and the place where you consume the class names.
 
 <<< @/.examples/getting-started/first-pika-variants.ts
 
-## Nested selectors are part of the model
+## 6. Keep states and at-rules inside static input
 
 You do not need to leave the style object when you add pseudo states or at-rules.
 
@@ -46,7 +52,14 @@ You do not need to leave the style object when you add pseudo states or at-rules
 
 <<< @/.examples/getting-started/first-pika-nested-output.css
 
-## Do and do not
+## What to verify before continuing
+
+- Your app imports `pika.css` from an entry file.
+- One literal `pika()` call transforms successfully.
+- You have inspected generated CSS at least once.
+- You understand that selectors and composition stay inside static style input.
+
+## Practical do and do not
 
 | Do | Do not |
 | --- | --- |
@@ -56,7 +69,7 @@ You do not need to leave the style object when you add pseudo states or at-rules
 
 ## Next
 
-- [Static Arguments](/getting-started/static-arguments)
+- [Generated Files](/guide/generated-files)
+- [Static Constraints](/getting-started/static-arguments)
 - [How PikaCSS Works](/concepts/how-pikacss-works)
 - [Component Styling](/patterns/component-styling)
-- [Generated Files](/guide/generated-files)

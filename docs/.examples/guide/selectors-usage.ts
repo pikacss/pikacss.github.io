@@ -1,12 +1,14 @@
+export const selectorUsage = ['hover', { color: 'var(--docs-accent)' }] as const
+
 const className = pika({
-	'color': 'black',
-	'hover': {
+	color: 'var(--surface-fg)',
+	hover: {
 		color: 'blue',
 	},
-	'@dark': {
+	'theme-dark': {
 		color: 'white',
 	},
-	'@md': {
+	'screen-md': {
 		fontSize: '1.25rem',
 	},
 })

@@ -1,41 +1,65 @@
+---
+description: Build a shared selector vocabulary for responsive rules, states, and context-driven styling so your team stops reinventing the same conditions in every component.
+---
+
 # Responsive And Selectors
 
-Selectors are where PikaCSS stops feeling like a small helper and starts feeling like a system. They let you encode states, themes, and breakpoints once, then reuse them everywhere.
+Selectors are where PikaCSS starts to feel like a system instead of a helper. They let you name states, themes, and breakpoints once in config, then reuse those names everywhere.
 
-## Define selectors in config
+The real value is not shorter syntax. The value is a shared vocabulary for structural styling conditions.
+
+## Design your breakpoint vocabulary
+
+Define all breakpoint aliases in engine config, not inside individual components. That keeps the naming consistent and allows teams to scan breakpoint usage across the entire codebase.
 
 <<< @/.examples/guide/selectors-config.ts
 
-## Use them in style definitions
+Prefer boring, predictable names like `screen-sm`, `screen-md`, and `screen-lg`. If every developer invents a different naming convention, named selectors stop being shared language and turn back into local syntax noise.
+
+## Use selectors in components
+
+Once selectors are registered, use their names as keys in `pika()` style objects. Component files never need to know the raw media query or selector string.
 
 <<< @/.examples/guide/selectors-usage.ts
 
 <<< @/.examples/guide/selectors-output.css
 
-## Keep responsive naming boring
+## Nested selector objects are still static
 
-Your selectors should be easy to scan and easy to remember. Prefer project-wide aliases like `screen-sm`, `screen-md`, and `screen-lg` over one-off media query strings spread through component files.
+Nesting a style object under a selector key is declared in source, not computed at runtime. It remains fully compatible with the build-time model.
 
-## Nested selectors are still static
+See [Selectors](/guide/core-features/selectors) for the full API, including the `$` placeholder and how expansion works.
 
-Nested selector blocks stay within the build-time model because the structure is declared in source.
+## Combine selectors with shortcuts
 
-<<< @/.examples/getting-started/first-pika-nested.vue
+When a selector-driven style combination repeats across many components, that is usually a sign it should become a shortcut.
+
+Shortcuts capture the repeated static combination built on top of selectors, so the pattern becomes a named convention instead of a recurring pattern of keys.
+
+See [Shortcuts](/guide/core-features/shortcuts) for how to define shortcut recipes.
+
+## Split responsibilities cleanly
+
+Selectors should describe structure: state, context, and breakpoints.
+
+Variables should carry changing values.
+
+Shortcuts should capture repeated static combinations built on top of those selectors.
 
 ## Recommended patterns
 
 - Put breakpoint aliases in config, not in individual components.
 - Keep selector names semantic enough for team-wide reuse.
-- Use selectors for state structure and variables for value changes.
-- Use shortcuts when a selector-driven pattern repeats across components.
+- Use selectors for structural conditions and variables for changing values.
+- Use shortcuts when a selector-driven pattern repeats.
 
 ::: warning Do not overload selectors
-If a selector name hides too many unrelated rules, reviews become harder and local overrides become unpredictable. A selector alias should describe a stable condition, not a whole component contract.
+If one selector alias hides too many unrelated rules, review gets harder and local overrides become unpredictable. A selector should describe a stable condition, not an entire component contract.
 :::
 
 ## Next
 
-- [Theming And Variables](/patterns/theming-and-variables)
-- [Configuration](/guide/configuration)
 - [Component Styling](/patterns/component-styling)
-- [Plugins: Typography](/plugins/typography)
+- [Theming And Variables](/patterns/theming-and-variables)
+- [Dynamic Values With CSS Variables](/patterns/dynamic-values-with-css-variables)
+- [Configuration](/guide/configuration)

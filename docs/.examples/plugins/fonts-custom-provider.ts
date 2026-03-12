@@ -1,4 +1,3 @@
-// pika.config.ts
 import { defineEngineConfig } from '@pikacss/core'
 import { defineFontsProvider, fonts } from '@pikacss/plugin-fonts'
 
