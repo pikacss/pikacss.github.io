@@ -6,7 +6,7 @@ import { generateTsCodegenContent } from './tsCodegen'
 function createMockCtx(overrides: Partial<Pick<IntegrationContext, 'currentPackageName' | 'fnName' | 'transformedFormat' | 'hasVue' | 'engine' | 'usages'>> = {}): IntegrationContext {
 	const patterns = {
 		selectors: new Set<string>(),
-		styleItemStrings: new Set<string>(),
+		shortcuts: new Set<string>(),
 		properties: new Map<string, string[]>(),
 		cssProperties: new Map<string, string[]>(),
 	}
@@ -20,7 +20,7 @@ function createMockCtx(overrides: Partial<Pick<IntegrationContext, 'currentPacka
 			config: {
 				autocomplete: {
 					selectors: new Set(['hover']),
-					styleItemStrings: new Set(['flex-center']),
+					shortcuts: new Set(['flex-center']),
 					extraProperties: new Set(['__important']),
 					extraCssProperties: new Set(['--color']),
 					properties: new Map([['__important', ['boolean']]]),
@@ -42,7 +42,7 @@ function createMockCtxForTsCodegen(overrides: {
 } = {}): IntegrationContext {
 	const patterns = {
 		selectors: new Set<string>(),
-		styleItemStrings: new Set<string>(),
+		shortcuts: new Set<string>(),
 		properties: new Map<string, string[]>(),
 		cssProperties: new Map<string, string[]>(),
 	}
@@ -56,7 +56,7 @@ function createMockCtxForTsCodegen(overrides: {
 			config: {
 				autocomplete: {
 					selectors: new Set(),
-					styleItemStrings: new Set(),
+					shortcuts: new Set(),
 					extraProperties: new Set(),
 					extraCssProperties: new Set(),
 					properties: new Map(),
@@ -99,7 +99,7 @@ describe('generateTsCodegenContent', () => {
 		expect(result)
 			.toContain(`Selector: "hover"`)
 		expect(result)
-			.toContain(`StyleItemString: "flex-center"`)
+			.toContain(`Shortcut: "flex-center"`)
 		expect(result)
 			.toContain(`PropertyValue: { "__important": boolean }`)
 		expect(result)
@@ -114,14 +114,14 @@ describe('generateTsCodegenContent', () => {
 				config: {
 					autocomplete: {
 						selectors: new Set(),
-						styleItemStrings: new Set(),
+						shortcuts: new Set(),
 						extraProperties: new Set(),
 						extraCssProperties: new Set(),
 						properties: new Map(),
 						cssProperties: new Map(),
 						patterns: {
 							selectors: new Set(),
-							styleItemStrings: new Set(),
+							shortcuts: new Set(),
 							properties: new Map(),
 							cssProperties: new Map(),
 						},
@@ -136,7 +136,7 @@ describe('generateTsCodegenContent', () => {
 		expect(result)
 			.toContain('Selector: never')
 		expect(result)
-			.toContain('StyleItemString: never')
+			.toContain('Shortcut: never')
 		expect(result)
 			.toContain('PropertyValue: never')
 		expect(result)
@@ -149,14 +149,14 @@ describe('generateTsCodegenContent', () => {
 				config: {
 					autocomplete: {
 						selectors: new Set(['hover']),
-						styleItemStrings: new Set(['flex-center']),
+						shortcuts: new Set(['flex-center']),
 						extraProperties: new Set(['__icon']),
 						extraCssProperties: new Set(['mask-image']),
 						properties: new Map([['__icon', ['boolean']]]),
 						cssProperties: new Map([['mask-image', ['none']]]),
 						patterns: {
 							selectors: new Set(['screen-${number}']),
-							styleItemStrings: new Set(['i-${string}:${string}']),
+							shortcuts: new Set(['i-${string}:${string}']),
 							properties: new Map([['__icon', ['`i-${string}:${string}`']]]),
 							cssProperties: new Map([['mask-image', ['`var(--icon-${string})`']]]),
 						},
@@ -171,7 +171,7 @@ describe('generateTsCodegenContent', () => {
 		expect(result)
 			.toContain('Selector: "hover" | screen-${number}')
 		expect(result)
-			.toContain('StyleItemString: "flex-center" | i-${string}:${string}')
+			.toContain('Shortcut: "flex-center" | i-${string}:${string}')
 		expect(result)
 			.toContain('PropertyValue: { "__icon": boolean | `i-${string}:${string}` }')
 		expect(result)
@@ -287,7 +287,7 @@ describe('generateTsCodegenContent', () => {
 				config: {
 					autocomplete: {
 						selectors: new Set(['hover']),
-						styleItemStrings: new Set(['flex-center']),
+						shortcuts: new Set(['flex-center']),
 						extraProperties: new Set(['__important']),
 						extraCssProperties: new Set(['--color']),
 						properties: new Map([['__important', ['boolean']]]),
@@ -326,7 +326,7 @@ describe('generateTsCodegenContent', () => {
 				config: {
 					autocomplete: {
 						selectors: new Set(),
-						styleItemStrings: new Set(),
+						shortcuts: new Set(),
 						extraProperties: new Set(),
 						extraCssProperties: new Set(),
 						properties: new Map(),
@@ -366,7 +366,7 @@ describe('generateTsCodegenContent', () => {
 				config: {
 					autocomplete: {
 						selectors: new Set(),
-						styleItemStrings: new Set(),
+						shortcuts: new Set(),
 						extraProperties: new Set(),
 						extraCssProperties: new Set(),
 						properties: new Map(),
@@ -396,7 +396,7 @@ describe('generateTsCodegenContent', () => {
 				config: {
 					autocomplete: {
 						selectors: new Set(),
-						styleItemStrings: new Set(),
+						shortcuts: new Set(),
 						extraProperties: new Set(),
 						extraCssProperties: new Set(),
 						properties: new Map([['emptyProp', []]]),
@@ -419,7 +419,7 @@ describe('generateTsCodegenContent', () => {
 				config: {
 					autocomplete: {
 						selectors: new Set(),
-						styleItemStrings: new Set(),
+						shortcuts: new Set(),
 						extraProperties: new Set(),
 						extraCssProperties: new Set(),
 						properties: new Map(),
@@ -442,7 +442,7 @@ describe('generateTsCodegenContent', () => {
 				config: {
 					autocomplete: {
 						selectors: new Set(),
-						styleItemStrings: new Set(),
+						shortcuts: new Set(),
 						extraProperties: new Set(),
 						extraCssProperties: new Set(),
 						properties: new Map([
@@ -474,7 +474,7 @@ describe('generateTsCodegenContent', () => {
 				config: {
 					autocomplete: {
 						selectors: new Set(),
-						styleItemStrings: new Set(),
+						shortcuts: new Set(),
 						extraProperties: new Set(),
 						extraCssProperties: new Set(),
 						properties: new Map([
@@ -510,7 +510,7 @@ describe('generateTsCodegenContent', () => {
 					config: {
 						autocomplete: {
 							selectors: new Set(selectors),
-							styleItemStrings: new Set(),
+							shortcuts: new Set(),
 							extraProperties: new Set(),
 							extraCssProperties: new Set(),
 							properties: new Map(),

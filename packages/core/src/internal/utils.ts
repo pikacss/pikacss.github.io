@@ -165,13 +165,13 @@ export function appendAutocomplete(
 	const { patterns, properties, cssProperties, ...literals } = contribution
 	return [
 		appendAutocompleteEntries(config.autocomplete.selectors, literals.selectors),
-		appendAutocompleteEntries(config.autocomplete.styleItemStrings, literals.styleItemStrings),
+		appendAutocompleteEntries(config.autocomplete.shortcuts, literals.shortcuts),
 		appendAutocompleteEntries(config.autocomplete.extraProperties, literals.extraProperties),
 		appendAutocompleteEntries(config.autocomplete.extraCssProperties, literals.extraCssProperties),
 		appendAutocompleteRecordEntries(config.autocomplete.properties, normalizeAutocompleteRecordEntries(properties)),
 		appendAutocompleteRecordEntries(config.autocomplete.cssProperties, normalizeAutocompleteRecordEntries(cssProperties)),
 		appendAutocompleteEntries(config.autocomplete.patterns.selectors, patterns?.selectors),
-		appendAutocompleteEntries(config.autocomplete.patterns.styleItemStrings, patterns?.styleItemStrings),
+		appendAutocompleteEntries(config.autocomplete.patterns.shortcuts, patterns?.shortcuts),
 		appendAutocompleteRecordEntries(config.autocomplete.patterns.properties, patterns?.properties),
 		appendAutocompleteRecordEntries(config.autocomplete.patterns.cssProperties, patterns?.cssProperties),
 	].some(Boolean)

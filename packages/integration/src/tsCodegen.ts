@@ -42,7 +42,7 @@ function generateAutocomplete(ctx: IntegrationContext) {
 	const autocomplete = ctx.engine.config.autocomplete
 	const patterns = autocomplete.patterns ?? {
 		selectors: new Set<string>(),
-		styleItemStrings: new Set<string>(),
+		shortcuts: new Set<string>(),
 		properties: new Map<string, string[]>(),
 		cssProperties: new Map<string, string[]>(),
 	}
@@ -51,7 +51,7 @@ function generateAutocomplete(ctx: IntegrationContext) {
 	return [
 		'export type Autocomplete = DefineAutocomplete<{',
 		`  Selector: ${formatAutocompleteUnion(autocomplete.selectors, patterns.selectors)}`,
-		`  StyleItemString: ${formatAutocompleteUnion(autocomplete.styleItemStrings, patterns.styleItemStrings)}`,
+		`  Shortcut: ${formatAutocompleteUnion(autocomplete.shortcuts, patterns.shortcuts)}`,
 		`  PropertyValue: ${formatAutocompleteValueMap(autocomplete.extraProperties, autocomplete.properties, patterns.properties, (values, patterns) => formatUnionType([...values, ...patterns]))}`,
 		`  CSSPropertyValue: ${formatAutocompleteValueMap(autocomplete.extraCssProperties, autocomplete.cssProperties, patterns.cssProperties, (values, patterns) => formatAutocompleteUnion(values, patterns))}`,
 		`  Layer: ${formatUnionStringType(layerNames)}`,

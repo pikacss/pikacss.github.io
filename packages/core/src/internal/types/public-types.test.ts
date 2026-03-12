@@ -8,13 +8,13 @@ describe('public types - types.ts', () => {
 		it('should expose the stable appendAutocomplete payload type', () => {
 			const contribution: AutocompleteContribution = {
 				selectors: ['hover', 'focus'],
-				styleItemStrings: 'flex-center',
+				shortcuts: 'flex-center',
 				extraProperties: '__shortcut',
 				cssProperties: {
 					color: ['red', 'blue'],
 				},
 				patterns: {
-					styleItemStrings: '`i-${string}:${string}`',
+					shortcuts: '`i-${string}:${string}`',
 				},
 			}
 
@@ -25,7 +25,7 @@ describe('public types - types.ts', () => {
 		it('should expose autocomplete pattern buckets as a separate public type', () => {
 			const patterns: AutocompletePatternsConfig = {
 				selectors: 'screen-${number}',
-				styleItemStrings: ['`i-${string}:${string}`'],
+				shortcuts: ['`i-${string}:${string}`'],
 				properties: {
 					__icon: '`i-${string}:${string}`',
 				},

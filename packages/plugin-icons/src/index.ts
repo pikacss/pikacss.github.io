@@ -309,7 +309,7 @@ function createIconsPlugin(): EnginePlugin {
 
 			engine.appendAutocomplete({
 				patterns: {
-					styleItemStrings: autocompletePatterns,
+					shortcuts: autocompletePatterns,
 				},
 			})
 

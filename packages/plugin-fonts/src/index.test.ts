@@ -51,7 +51,7 @@ describe('fonts plugin', () => {
 		const css = await engine.renderAtomicStyles(false)
 		expect(css)
 			.toContain('font-family:var(--pk-font-sans)')
-		expect(engine.config.autocomplete.styleItemStrings.has('font-sans'))
+		expect(engine.config.autocomplete.shortcuts.has('font-sans'))
 			.toBe(true)
 		expect(engine.config.autocomplete.cssProperties.get('font-family'))
 			.toContain('"Roboto", ui-sans-serif, system-ui, sans-serif')

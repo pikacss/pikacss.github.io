@@ -48,5 +48,5 @@ export type StyleDefinition = Properties | StyleDefinitionMap
 
 export type StyleItem
 	=	| UnionString
-		| ResolvedAutocomplete['StyleItemString']
+		| ResolvedAutocomplete['Shortcut']
 		| StyleDefinition

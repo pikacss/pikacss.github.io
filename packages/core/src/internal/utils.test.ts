@@ -551,14 +551,14 @@ function createMockAutocompleteConfig(): Pick<ResolvedEngineConfig, 'autocomplet
 	return {
 		autocomplete: {
 			selectors: new Set<string>(),
-			styleItemStrings: new Set<string>(),
+			shortcuts: new Set<string>(),
 			extraProperties: new Set<string>(),
 			extraCssProperties: new Set<string>(),
 			properties: new Map<string, string[]>(),
 			cssProperties: new Map<string, string[]>(),
 			patterns: {
 				selectors: new Set<string>(),
-				styleItemStrings: new Set<string>(),
+				shortcuts: new Set<string>(),
 				properties: new Map<string, string[]>(),
 				cssProperties: new Map<string, string[]>(),
 			},
@@ -571,13 +571,13 @@ describe('appendAutocomplete', () => {
 		const config = createMockAutocompleteConfig()
 		appendAutocomplete(config, {
 			selectors: ['.foo', '.bar'],
-			styleItemStrings: 'text-red',
+			shortcuts: 'text-red',
 			extraProperties: '__test',
 			cssProperties: {
 				color: ['red', 'blue'],
 			},
 			patterns: {
-				styleItemStrings: 'i-${string}:${string}',
+				shortcuts: 'i-${string}:${string}',
 			},
 		})
 
@@ -585,13 +585,13 @@ describe('appendAutocomplete', () => {
 			.toBe(true)
 		expect(config.autocomplete.selectors.has('.bar'))
 			.toBe(true)
-		expect(config.autocomplete.styleItemStrings.has('text-red'))
+		expect(config.autocomplete.shortcuts.has('text-red'))
 			.toBe(true)
 		expect(config.autocomplete.extraProperties.has('__test'))
 			.toBe(true)
 		expect(config.autocomplete.cssProperties.get('color'))
 			.toEqual(['red', 'blue'])
-		expect(config.autocomplete.patterns.styleItemStrings.has('i-${string}:${string}'))
+		expect(config.autocomplete.patterns.shortcuts.has('i-${string}:${string}'))
 			.toBe(true)
 	})
 

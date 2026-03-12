@@ -78,7 +78,7 @@ export function shortcuts() {
 							return
 
 						if (typeof resolved === 'string') {
-							engine.appendAutocomplete({ styleItemStrings: resolved })
+							engine.appendAutocomplete({ shortcuts: resolved })
 							return
 						}
 
@@ -87,7 +87,7 @@ export function shortcuts() {
 						else if (resolved.type === 'dynamic')
 							engine.shortcuts.resolver.addDynamicRule(resolved.rule)
 
-						engine.appendAutocomplete({ styleItemStrings: resolved.autocomplete })
+						engine.appendAutocomplete({ shortcuts: resolved.autocomplete })
 					})
 				},
 			}
@@ -96,11 +96,11 @@ export function shortcuts() {
 
 			engine.shortcuts.resolver.onResolved = (string, type) => {
 				if (type === 'dynamic') {
-					engine.appendAutocomplete({ styleItemStrings: string })
+					engine.appendAutocomplete({ shortcuts: string })
 				}
 			}
 
-			const unionType = ['(string & {})', 'Autocomplete[\'StyleItemString\']'].join(' | ')
+			const unionType = ['(string & {})', 'Autocomplete[\'Shortcut\']'].join(' | ')
 			engine.appendAutocomplete({
 				extraProperties: '__shortcut',
 				properties: {

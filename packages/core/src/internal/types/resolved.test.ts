@@ -9,7 +9,7 @@ describe('autocomplete and resolved types', () => {
 		it('should have all never fields', () => {
 			expectTypeOf<EmptyAutocomplete['Selector']>()
 				.toEqualTypeOf<never>()
-			expectTypeOf<EmptyAutocomplete['StyleItemString']>()
+			expectTypeOf<EmptyAutocomplete['Shortcut']>()
 				.toEqualTypeOf<never>()
 			expectTypeOf<EmptyAutocomplete['Layer']>()
 				.toEqualTypeOf<never>()
@@ -24,7 +24,7 @@ describe('autocomplete and resolved types', () => {
 		it('should preserve the autocomplete type', () => {
 			type Custom = DefineAutocomplete<{
 				Selector: 'hover' | 'focus'
-				StyleItemString: 'flex-center'
+				Shortcut: 'flex-center'
 				Layer: 'base' | 'components'
 				PropertyValue: { __myProp: boolean }
 				CSSPropertyValue: never
@@ -42,7 +42,7 @@ describe('autocomplete and resolved types', () => {
 		it('should have all required fields', () => {
 			expectTypeOf<keyof _Autocomplete>()
 				.toEqualTypeOf<
-				'Selector' | 'StyleItemString' | 'Layer' | 'PropertyValue' | 'CSSPropertyValue'
+				'Selector' | 'Shortcut' | 'Layer' | 'PropertyValue' | 'CSSPropertyValue'
 			>()
 		})
 	})

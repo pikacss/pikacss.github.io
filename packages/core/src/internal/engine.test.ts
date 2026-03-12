@@ -248,9 +248,9 @@ describe('resolveEngineConfig', () => {
 			.toBeInstanceOf(Set)
 		expect(resolved.autocomplete.selectors.size)
 			.toBe(0)
-		expect(resolved.autocomplete.styleItemStrings)
+		expect(resolved.autocomplete.shortcuts)
 			.toBeInstanceOf(Set)
-		expect(resolved.autocomplete.styleItemStrings.size)
+		expect(resolved.autocomplete.shortcuts.size)
 			.toBe(0)
 		expect(resolved.autocomplete.extraProperties)
 			.toBeInstanceOf(Set)
@@ -262,7 +262,7 @@ describe('resolveEngineConfig', () => {
 			.toBeInstanceOf(Map)
 		expect(resolved.autocomplete.patterns.selectors)
 			.toBeInstanceOf(Set)
-		expect(resolved.autocomplete.patterns.styleItemStrings)
+		expect(resolved.autocomplete.patterns.shortcuts)
 			.toBeInstanceOf(Set)
 		expect(resolved.autocomplete.patterns.properties)
 			.toBeInstanceOf(Map)
@@ -845,23 +845,23 @@ describe('engine autocomplete helpers', () => {
 		const engine = await createEngine({
 			autocomplete: {
 				selectors: '.custom',
-				styleItemStrings: 'btn-primary',
+				shortcuts: 'btn-primary',
 				properties: {
 					variant: ['"solid"', '"ghost"'],
 				},
 				patterns: {
-					styleItemStrings: 'icon-${string}',
+					shortcuts: 'icon-${string}',
 				},
 			},
 		})
 
 		expect(engine.config.autocomplete.selectors.has('.custom'))
 			.toBe(true)
-		expect(engine.config.autocomplete.styleItemStrings.has('btn-primary'))
+		expect(engine.config.autocomplete.shortcuts.has('btn-primary'))
 			.toBe(true)
 		expect(engine.config.autocomplete.properties.get('variant'))
 			.toEqual(['"solid"', '"ghost"'])
-		expect(engine.config.autocomplete.patterns.styleItemStrings.has('icon-${string}'))
+		expect(engine.config.autocomplete.patterns.shortcuts.has('icon-${string}'))
 			.toBe(true)
 	})
 
@@ -869,7 +869,7 @@ describe('engine autocomplete helpers', () => {
 		const engine = await createEngine()
 		engine.appendAutocomplete({
 			selectors: '.foo',
-			styleItemStrings: 'txt-red',
+			shortcuts: 'txt-red',
 			properties: { color: ['"red"', '"blue"'] },
 			patterns: {
 				selectors: 'screen-${number}',
@@ -877,7 +877,7 @@ describe('engine autocomplete helpers', () => {
 		})
 		expect(engine.config.autocomplete.selectors.has('.foo'))
 			.toBe(true)
-		expect(engine.config.autocomplete.styleItemStrings.has('txt-red'))
+		expect(engine.config.autocomplete.shortcuts.has('txt-red'))
 			.toBe(true)
 		expect(engine.config.autocomplete.properties.get('color'))
 			.toEqual(['"red"', '"blue"'])

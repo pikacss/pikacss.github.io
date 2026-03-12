@@ -26,7 +26,7 @@ describe('engine types', () => {
 				defaultPreflightsLayer: 'preflights',
 				defaultUtilitiesLayer: 'utilities',
 				autocomplete: {
-					styleItemStrings: ['btn-primary'],
+					shortcuts: ['btn-primary'],
 					patterns: {
 						selectors: ['screen-${number}'],
 					},

@@ -425,14 +425,14 @@ export async function resolveEngineConfig(config: EngineConfig): Promise<Resolve
 		defaultUtilitiesLayer,
 		autocomplete: {
 			selectors: new Set(),
-			styleItemStrings: new Set(),
+			shortcuts: new Set(),
 			extraProperties: new Set(),
 			extraCssProperties: new Set(),
 			properties: new Map(),
 			cssProperties: new Map(),
 			patterns: {
 				selectors: new Set(),
-				styleItemStrings: new Set(),
+				shortcuts: new Set(),
 				properties: new Map(),
 				cssProperties: new Map(),
 			},

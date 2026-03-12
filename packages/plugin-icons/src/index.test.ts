@@ -298,13 +298,13 @@ describe('icons plugin', () => {
 	it('should register autocomplete patterns for icon shortcuts', async () => {
 		const engine = await createIconsEngine()
 
-		expect(engine.config.autocomplete.patterns.styleItemStrings.has('`i-${string}:${string}`'))
+		expect(engine.config.autocomplete.patterns.shortcuts.has('`i-${string}:${string}`'))
 			.toBe(true)
-		expect(engine.config.autocomplete.patterns.styleItemStrings.has('`i-${string}:${string}?mask`'))
+		expect(engine.config.autocomplete.patterns.shortcuts.has('`i-${string}:${string}?mask`'))
 			.toBe(true)
-		expect(engine.config.autocomplete.patterns.styleItemStrings.has('`i-${string}:${string}?bg`'))
+		expect(engine.config.autocomplete.patterns.shortcuts.has('`i-${string}:${string}?bg`'))
 			.toBe(true)
-		expect(engine.config.autocomplete.patterns.styleItemStrings.has('`i-${string}:${string}?auto`'))
+		expect(engine.config.autocomplete.patterns.shortcuts.has('`i-${string}:${string}?auto`'))
 			.toBe(true)
 	})
 
@@ -315,9 +315,9 @@ describe('icons plugin', () => {
 			},
 		})
 
-		expect(engine.config.autocomplete.patterns.styleItemStrings.has('`i-${string}:${string}`'))
+		expect(engine.config.autocomplete.patterns.shortcuts.has('`i-${string}:${string}`'))
 			.toBe(true)
-		expect(engine.config.autocomplete.patterns.styleItemStrings.has('`icon-${string}:${string}`'))
+		expect(engine.config.autocomplete.patterns.shortcuts.has('`icon-${string}:${string}`'))
 			.toBe(true)
 	})
 })

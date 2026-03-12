@@ -121,7 +121,7 @@ export interface EngineConfig {
 	 * ```ts
 	 * {
 	 *   autocomplete: {
-	 *     styleItemStrings: ['btn-primary'],
+	 *     shortcuts: ['btn-primary'],
 	 *     properties: {
 	 *       variant: ['"solid"', '"ghost"']
 	 *     },

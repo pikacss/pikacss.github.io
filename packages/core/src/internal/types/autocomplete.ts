@@ -4,14 +4,14 @@ export type AutocompleteKeys<T> = [T] extends [never] ? never : Extract<keyof T,
 
 export interface AutocompletePatternsConfig {
 	selectors?: Arrayable<string>
-	styleItemStrings?: Arrayable<string>
+	shortcuts?: Arrayable<string>
 	properties?: Record<string, Arrayable<string>>
 	cssProperties?: Record<string, Arrayable<string>>
 }
 
 export interface AutocompleteContribution {
 	selectors?: Arrayable<string>
-	styleItemStrings?: Arrayable<string>
+	shortcuts?: Arrayable<string>
 	extraProperties?: Arrayable<string>
 	extraCssProperties?: Arrayable<string>
 	properties?: Record<string, Arrayable<string>>
@@ -21,7 +21,7 @@ export interface AutocompleteContribution {
 
 export interface AutocompleteConfig {
 	selectors?: Arrayable<string>
-	styleItemStrings?: Arrayable<string>
+	shortcuts?: Arrayable<string>
 	extraProperties?: Arrayable<string>
 	extraCssProperties?: Arrayable<string>
 	properties?: [property: string, tsType: Arrayable<string>][] | Record<string, Arrayable<string>>
@@ -31,14 +31,14 @@ export interface AutocompleteConfig {
 
 export interface ResolvedAutocompletePatternsConfig {
 	selectors: Set<string>
-	styleItemStrings: Set<string>
+	shortcuts: Set<string>
 	properties: Map<string, string[]>
 	cssProperties: Map<string, string[]>
 }
 
 export interface ResolvedAutocompleteConfig {
 	selectors: Set<string>
-	styleItemStrings: Set<string>
+	shortcuts: Set<string>
 	extraProperties: Set<string>
 	extraCssProperties: Set<string>
 	properties: Map<string, string[]>
@@ -48,7 +48,7 @@ export interface ResolvedAutocompleteConfig {
 
 export interface _Autocomplete {
 	Selector: UnionString
-	StyleItemString: UnionString
+	Shortcut: UnionString
 	Layer: UnionString
 	PropertyValue: Record<string, unknown>
 	CSSPropertyValue: Record<string, UnionString>
@@ -58,7 +58,7 @@ export type DefineAutocomplete<A extends _Autocomplete> = A
 
 export type EmptyAutocomplete = DefineAutocomplete<{
 	Selector: never
-	StyleItemString: never
+	Shortcut: never
 	Layer: never
 	PropertyValue: never
 	CSSPropertyValue: never
