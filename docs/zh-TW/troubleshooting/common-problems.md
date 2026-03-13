@@ -6,6 +6,17 @@ description: 在盲目調整 config 之前，先從 scan 範圍、generated file
 
 當 PikaCSS 輸出看起來不對時，原因通常不是 engine 深層 bug，而是少數幾種一再出現的典型問題。這一頁專注在那些能最快排除常見錯誤的檢查。
 
+## 先從第一次成功路徑開始
+
+在改 config 之前，先按順序確認這條短路徑：
+
+1. bundler plugin 已經註冊
+2. app 有匯入 `pika.css`
+3. 有一個字面值 `pika()` 呼叫出現在會被掃描的檔案裡
+4. `pika.gen.css` 和 `pika.gen.ts` 顯示了你預期的輸出
+
+如果這條鏈本身就斷掉，先把它修好，再去除錯更進階的問題。
+
 ## `pika()` 沒有產生我預期的內容
 
 先檢查下面幾點：
@@ -16,6 +27,17 @@ description: 在盲目調整 config 之前，先從 scan 範圍、generated file
 4. 你是否有實際檢查 generated CSS 或 generated typings，而不是只靠猜測？
 
 這四項檢查能排除大多數第一次遇到的失敗情況。如果它們本身就有問題，再加更多 config 通常只會讓真正原因更難看見。
+
+## 第一次失敗時的 recovery checklist
+
+第一次設定失敗時，請照這個順序排查：
+
+1. 重讀 [安裝](/zh-TW/getting-started/installation)，確認 plugin 註冊與 `pika.css` 匯入真的符合目前專案。
+2. 重讀 [Generated Files](/zh-TW/guide/generated-files)，確認你正在檢查這個 integration 真正使用的 `pika.gen.ts` / `pika.gen.css` 路徑。
+3. 重讀 [靜態限制](/zh-TW/getting-started/static-arguments)，把第一個測試案例裡所有 runtime-derived values 都移除。
+4. 在擴大調查範圍之前先啟用 [ESLint](/zh-TW/integrations/eslint)。
+
+這個順序可以在不靠猜測的情況下縮小大多數 onboarding failures。
 
 ## 我在 `pika()` 裡用了 runtime values
 
@@ -34,6 +56,8 @@ PikaCSS 需要 build-time 可讀的輸入。當 styling 選擇真的來自 runti
 Generated files 是輸出 artifacts，不是 source files。請改原始的 `pika()` 呼叫、engine config、plugin 設定或 integration wiring。如果 generated files 一直出現讓你意外的變化，真正的 source of truth 仍然在上游。
 
 ## 我加了 plugin，但什麼都沒變
+
+## Plugin authoring 與進階輸出問題
 
 請先確認你是在設定 built-in core feature，還是在註冊外部 plugin。這是兩種不同的擴充介面。也請確認 plugin 真的出現在 `plugins` 裡，而不是只安裝在 `package.json` 裡。
 
@@ -69,7 +93,7 @@ Preflights 在 component styles 執行之前，全域套用到每一頁。如果
 
 ## Next
 
-- [Static Constraints](/zh-TW/getting-started/static-arguments)
+- [靜態限制](/zh-TW/getting-started/static-arguments)
 - [Dynamic Values With CSS Variables](/zh-TW/patterns/dynamic-values-with-css-variables)
-- [Generated Files](/zh-TW/guide/generated-files)
+- [產生檔案](/zh-TW/guide/generated-files)
 - [ESLint](/zh-TW/integrations/eslint)

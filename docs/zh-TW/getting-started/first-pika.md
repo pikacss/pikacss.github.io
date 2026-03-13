@@ -48,7 +48,9 @@ PikaCSS 不會在 runtime 保留這個 object。integration 會把它轉成 atom
 
 只要 key 是在原始碼中明確宣告的，巢狀 style object 仍然是靜態的。
 
-像 `@media` 這類 at-rules 可以直接寫。Pseudo states 與可重用的 context 條件，則應在你開始使用共享 config 後改成已登記的 selector 名稱。
+像 `@media` 這類 at-rules 可以直接寫，因為它們只是包住生成的 atomic selector。
+
+Pseudo states 與可重用的 context 條件，則應在你開始使用共享 config 後改成已登記的 selector 名稱。請用 `hover` 或 `theme-dark` 這種名字，而不是像 `'&:hover'` 這樣的原始 key，讓 engine 能持續輸出 flat atomic rules。
 
 <<< @/zh-TW/.examples/getting-started/first-pika-nested.pikainput.vue
 
@@ -61,7 +63,7 @@ PikaCSS 不會在 runtime 保留這個 object。integration 會把它轉成 atom
 - app entry 已經匯入 `pika.css`。
 - 至少有一個字面值 `pika()` 呼叫成功被轉換。
 - 你已經至少檢查過一次 generated CSS。
-- 你理解 at-rules 和已登記 selectors 都應該留在靜態 style 輸入裡。
+- 你理解 at-rules 和已登記 selectors 都應該留在靜態 style 輸入裡，但原始 pseudo-selector keys 不是建議的擴展路徑。
 
 ## 實務上的該做與不該做
 
@@ -73,7 +75,7 @@ PikaCSS 不會在 runtime 保留這個 object。integration 會把它轉成 atom
 
 ## Next
 
-- [Generated Files](/zh-TW/guide/generated-files)
+- [產生檔案](/zh-TW/guide/generated-files)
 - [靜態限制](/zh-TW/getting-started/static-arguments)
 - [PikaCSS 如何運作](/zh-TW/concepts/how-pikacss-works)
-- [Component Styling](/zh-TW/patterns/component-styling)
+- [元件樣式設計](/zh-TW/patterns/component-styling)

@@ -2,13 +2,8 @@
   .pk-a {
     color: black;
   }
-  &:hover {
-    .pk-b {
-      color: blue;
-    }
-  }
   @media (max-width: 768px) {
-    .pk-c {
+    .pk-b {
       font-size: 14px;
     }
   }

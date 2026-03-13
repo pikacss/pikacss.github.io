@@ -42,6 +42,14 @@ Use engine config for styling behavior that should stay true no matter which bun
 
 Keep this file focused on shared styling rules. If a setting only exists to help the bundler find files or choose an output path, it belongs in the integration layer instead.
 
+## Selector output shape
+
+Atomic ids and emitted selectors are related, but they are not the same thing.
+
+`prefix` controls the generated atomic id itself. `defaultSelector` controls how that id is wrapped when CSS is emitted. The default is `.%`, which means the engine emits class selectors. Projects that prefer another selector shell can change `defaultSelector` without changing how authors write `pika()` input.
+
+The most common alternative is an attribute selector such as `[data-pika~="%"]`. The authoring model stays static either way: the integration still extracts the same atomic ids, then swaps them into a different selector template at output time.
+
 ## Custom autocomplete
 
 Use `autocomplete` when your design system has stable tokens, selectors, or style item strings that should feel native in editor suggestions.
@@ -54,14 +62,21 @@ Those additions merge with built-in engine autocomplete and plugin-provided auto
 
 Use `variables.*.semanticType` when a token belongs to a stable CSS value family and should only surface for matching properties.
 
-Current built-in semantic families are:
+The built-in semantic taxonomy currently reserves these family names:
 
 - `color`
 - `length`
 - `time`
 - `number`
+- `percentage`
+- `angle`
+- `image`
+- `url`
+- `position`
 - `easing`
 - `font-family`
+
+Today, the first-pass generated property mappings are populated for `color`, `length`, `time`, `number`, `easing`, and `font-family`. The other reserved family names are still useful as stable taxonomy, but they do not all contribute the same property suggestions yet.
 
 `semanticType` expands into the built-in property family first, then unions with any explicit `autocomplete.asValueOf` targets you add yourself.
 
@@ -105,6 +120,14 @@ For larger systems, CSS order must be intentional. Layers make output precedence
 
 Use `cssImports` when top-level `@import` rules need to stay ahead of generated layers. Use layered preflights when resets or base rules need a stable slot in the output.
 
+If one style definition needs a different layer than the project default, assign `__layer` on that definition. That per-style override is stripped from the emitted declarations and only affects which named layer receives the generated atomic rule.
+
+Layer fallbacks matter too:
+
+- `defaultPreflightsLayer` only wraps unlayered preflights when that layer actually exists in `layers`.
+- `defaultUtilitiesLayer` is the preferred destination for atomic styles without `__layer`.
+- If `defaultUtilitiesLayer` names a layer that does not exist, atomic output falls back to the last configured layer.
+
 <<< @/.examples/guide/config-layers.ts
 
 <<< @/.examples/guide/config-css-imports.ts
@@ -117,6 +140,7 @@ PikaCSS exports identity helpers so config and extracted style objects stay type
 
 - `defineEngineConfig()`
 - `defineStyleDefinition()`
+- `definePreflight()`
 - `defineSelector()`
 - `defineShortcut()`
 - `defineKeyframes()`
@@ -124,6 +148,8 @@ PikaCSS exports identity helpers so config and extracted style objects stay type
 - `defineEnginePlugin()`
 
 <<< @/.examples/guide/built-ins/style-definition-define-helper.pikainput.ts
+
+Use `definePreflight()` when you want exported or shared preflight payloads to stay typed in the same way as `defineStyleDefinition()`. This is most useful in plugin packages or shared config modules where preflight objects are assembled outside the immediate `engine.addPreflight()` call.
 
 ## What most teams should standardize
 

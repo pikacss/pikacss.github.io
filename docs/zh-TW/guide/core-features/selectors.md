@@ -29,6 +29,8 @@ description: 理解 `$` placeholder 的作用、學習如何定義 state、conte
 你在 selector config values 裡看到的 `$`，是目前 default selector 的 placeholder。預設情況下這個 selector 是 `.%`，所以 `$` 是大多數使用者會接觸到的簡寫。它是 engine config 語法，不是 CSS 語法，也永遠不會出現在 `pika()` 呼叫裡。
 :::
 
+這個警告主要是針對 pseudo states 與可重用的 context selectors。像 `@media` 這種 wrapper at-rules，仍然可以直接寫成靜態 object keys，只要你需要的只是 wrapper 本身。這也是為什麼 onboarding 頁面會先示範直接寫 at-rules，再把 hover、dark mode 與其他共享條件交給具名 selectors。
+
 ::: tip 從 Tailwind 轉換過來的開發者
 如果你的團隊使用 Tailwind，Tailwind 的 `md:` prefix 對應的就是在 PikaCSS config 裡登記一個 `screen-md` selector。名稱的選擇完全由你決定——engine 對命名方式沒有限制。同樣地，Tailwind 的 `hover:` prefix 對應的是 PikaCSS 裡的 `hover` selector。
 :::
@@ -104,6 +106,8 @@ Selector 的值可以引用另一個已登記 selector 的名稱。Engine 會遞
 Selectors 很適合拿來表示穩定條件：hover states、focus 行為、主題 context、breakpoint aliases，以及其他可重用的結構規則。
 
 這能讓 component 程式碼更容易閱讀，也能防止原始 selector 語法或重複的 media queries 散落在整個應用程式裡。
+
+如果某個條件應該成為團隊共享 vocabulary，即使原始 CSS 語法技術上可行，也應該把它登記成 selector。
 
 ## selectors 不是什麼
 

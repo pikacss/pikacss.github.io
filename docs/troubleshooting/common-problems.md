@@ -6,6 +6,17 @@ description: Diagnose the most common PikaCSS failures by checking scan coverage
 
 When PikaCSS output looks wrong, the cause is usually one of a few repeat offenders rather than a deep engine bug. This page focuses on the checks that eliminate those common mistakes quickly.
 
+## Start with the first-run path
+
+Before changing config, confirm this short chain in order:
+
+1. the bundler plugin is registered
+2. the app imports `pika.css`
+3. one literal `pika()` call is present in a scanned file
+4. `pika.gen.css` and `pika.gen.ts` show the output you expected
+
+If that chain is broken, fix it before debugging anything more advanced.
+
 ## `pika()` did not generate what I expected
 
 Check these first:
@@ -16,6 +27,17 @@ Check these first:
 4. Did you inspect the generated CSS or generated typings instead of guessing?
 
 Those four checks rule out most first-run failures. If they are wrong, changing more config usually just makes the real problem harder to see.
+
+## First-run recovery checklist
+
+Use this order when the first setup fails:
+
+1. Re-read [Installation](/getting-started/installation) and confirm the plugin registration and `pika.css` import really match the current project.
+2. Re-read [Generated Files](/guide/generated-files) and confirm you are checking the real `pika.gen.ts` / `pika.gen.css` locations for this integration.
+3. Re-read [Static Constraints](/getting-started/static-arguments) and remove any runtime-derived values from the first test case.
+4. Enable [ESLint](/integrations/eslint) before widening the investigation.
+
+That order narrows most onboarding failures without guessing.
 
 ## I used runtime values inside `pika()`
 
@@ -34,6 +56,8 @@ See [Dynamic Values With CSS Variables](/patterns/dynamic-values-with-css-variab
 Generated files are output artifacts, not source files. Edit the source `pika()` call, engine config, plugin setup, or integration wiring instead. If generated files keep changing in surprising ways, the source of truth is still upstream.
 
 ## I added a plugin but nothing changed
+
+## Plugin authoring and advanced output issues
 
 Check whether you configured a built-in core feature or registered an external plugin. Those are different extension surfaces. Also verify that the plugin is actually in `plugins`, not only installed in `package.json`.
 

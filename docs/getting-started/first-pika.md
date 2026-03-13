@@ -48,7 +48,9 @@ Use the output form that best matches the framework and the place where you cons
 
 Nested style objects are still static when their keys are declared in source.
 
-At-rules such as `@media` can be written directly. Pseudo states and reusable context conditions should move to registered selector names once you introduce shared config.
+At-rules such as `@media` can be written directly because they wrap the generated atomic selector.
+
+Pseudo states and reusable context conditions should move to registered selector names once you introduce shared config. Use names such as `hover` or `theme-dark` instead of raw keys such as `'&:hover'` so the engine can keep emitting flat atomic rules.
 
 <<< @/.examples/getting-started/first-pika-nested.pikainput.vue
 
@@ -61,7 +63,7 @@ This page keeps the example to an at-rule so the first mental model stays simple
 - Your app imports `pika.css` from an entry file.
 - One literal `pika()` call transforms successfully.
 - You have inspected generated CSS at least once.
-- You understand that at-rules and registered selectors stay inside static style input.
+- You understand that at-rules and registered selectors stay inside static style input, but raw pseudo-selector keys are not the recommended scaling path.
 
 ## Practical do and do not
 

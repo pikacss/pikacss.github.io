@@ -53,11 +53,30 @@ description: 了解 icons plugin 如何把 Iconify collections 和自訂 SVG 來
 
 <<< @/zh-TW/.examples/plugins/icons-advanced-config.ts
 
+進階 surface 不只有 `scale` 和 `mode`：
+
+- `prefix` 可以是一個字串，也可以是一組 prefixes，適合在 migration 期間同時支援多種命名慣例。
+- `cwd` 控制本地 Iconify packages 要從哪個工作目錄解析。
+- `autoInstall` 可以在 Node build 過程中安裝缺少的 Iconify packages，但它終究只是 build-environment 的便利功能，不代表每個 editor 或 CI context 都會用同一條解析路徑。
+- `cdn` 可以是 base URL，也可以是包含 `{collection}` 的 URL template，用來抓遠端 collection JSON。
+- `processor` 會收到生成的 style item 與 icon source metadata，因此它是做最後一哩 CSS 微調的正確位置。
+- `extraProperties` 和 `unit` 讓 plugin 可以直接建立 display 與 sizing defaults，而不需要再額外包一層 shortcut。
+
+這裡要特別注意執行環境邊界。plugin 只有在一般 Node build context 中才會嘗試解析本地 Iconify packages；在 VS Code 與 ESLint 環境裡，這條本地 package 路徑會被跳過，因此 custom collections 與 CDN fallback 才是跨工具維持可預測解析行為的可攜做法。
+
 <<< @/zh-TW/.examples/plugins/icons-custom-collections.ts
 
 你也可以把 custom collection 指到由 repository 自己維護的 SVG assets，並在第一方與第三方 icons 之間共用同一套 `i-collection:name` 語法。
 
 <<< @/zh-TW/.examples/plugins/icons-directory-collection.ts
+
+## 給把 Icons 當成參考實作的 plugin authors
+
+如果你的 plugin 需要從靜態原始碼字串做非同步的 build-time 展開，就把這一頁當成參考實作來讀。
+
+- 這個 plugin 很適合拿來觀察 build-time resolution 工作如何仍然維持靜態 authoring。
+- 它比較適合當成 async asset 或 collection handling 的參考，而不是簡單 additive config 的參考。
+- 請搭配 [Create A Plugin](/zh-TW/plugin-system/create-plugin) 與 [Hook Execution](/zh-TW/plugin-system/hook-execution) 一起看，避免 hook 選擇失焦。
 
 ## 一個實用規則
 
@@ -67,5 +86,5 @@ description: 了解 icons plugin 如何把 Iconify collections 和自訂 SVG 來
 
 - [Reset](/zh-TW/plugins/reset)
 - [Typography](/zh-TW/plugins/typography)
-- [Create A Plugin](/zh-TW/plugin-system/create-plugin)
-- [Configuration](/zh-TW/guide/configuration)
+- [建立 Plugin](/zh-TW/plugin-system/create-plugin)
+- [設定方式](/zh-TW/guide/configuration)

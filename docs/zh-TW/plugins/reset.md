@@ -26,6 +26,15 @@ description: 了解 reset plugin 何時有用、如何安裝，以及如何把 r
 
 這是大多數團隊都該採用的起點。先挑一個 preset、註冊 plugin，只有在重複遇到瀏覽器預設差異、而且已經開始拖慢實際工作時，再往上加規則。
 
+## Layer 行為
+
+這個 plugin 在註冊時，會刻意做兩件事：
+
+- 確保有一個排序很前面的具名 `reset` layer
+- 把選定的 reset preset 以 preflight 的形式輸出到這個 `reset` layer 裡
+
+這讓 reset 輸出可以作為獨立槽位被審查，而不是悄悄和後面的 utilities 混在一起。如果專案要在同一層再加一些全域 baseline 規則，應該把它們也維持在這個早期 layer，而不是混進 component 層級輸出。
+
 ## 可用 presets
 
 <<< @/zh-TW/.examples/plugins/reset-all-presets.ts

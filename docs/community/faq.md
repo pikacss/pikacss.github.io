@@ -34,7 +34,13 @@ See [Atomic Order And Cascade](/concepts/atomic-order-and-cascade).
 
 ## Can I use nested selectors?
 
-Yes. Nested selectors are part of the normal style-definition model, not a separate escape hatch.
+Yes, but keep two cases separate.
+
+Wrapper at-rules such as `@media` can be written directly inside `pika()` and still stay inside the normal static model.
+
+Pseudo states and reusable context conditions should usually move to registered selector names such as `hover` or `theme-dark`. That keeps the output flat and atomic instead of producing one-off nesting rules.
+
+See [Selectors](/guide/core-features/selectors) for the canonical rule.
 
 <<< @/.examples/community/faq-nested.pikainput.ts
 
@@ -58,5 +64,5 @@ Start with scan coverage, generated files, and whether the generated CSS is actu
 
 - [Static Constraints](/getting-started/static-arguments)
 - [Common Problems](/troubleshooting/common-problems)
+- [Selectors](/guide/core-features/selectors)
 - [Configuration](/guide/configuration)
-- [Plugin System Overview](/plugin-system/overview)

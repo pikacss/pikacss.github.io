@@ -18,7 +18,7 @@ description: 從靜態原始碼輸入一路看到抽出的 class names 與 gener
 
 ## 2. integration 會抽取並改寫呼叫
 
-integration 會掃描原始碼檔案、抽出 style 輸入，再把它轉成 atomic class names。
+integration 會掃描原始碼檔案、抽出 style 輸入，再把它轉成 atomic identifiers。多數專案會把這些 identifiers 輸出成 class names，但 selector 輸出形狀本身仍然可以透過 engine config 調整。
 
 <<< @/zh-TW/.examples/concepts/build-compiled.ts
 
@@ -26,7 +26,7 @@ integration 會掃描原始碼檔案、抽出 style 輸入，再把它轉成 ato
 
 ## 3. build 會輸出 generated CSS
 
-這些 class names 會對應到產生的 CSS declarations：
+這些 identifiers 會對應到產生的 CSS declarations。預設情況下，產生出的 selector 是 class selector；但同一組 atomic ids 也可以改成輸出到其他 selector template，例如 attribute selector。
 
 <<< @/zh-TW/.examples/concepts/build.pikaoutput.css
 

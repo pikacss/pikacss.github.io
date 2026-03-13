@@ -14,7 +14,7 @@ hero:
       text: 評估適配性
       link: /zh-TW/getting-started/what-is-pikacss
     - theme: alt
-      text: 開始設定
+      text: 通過適配檢查後再設定
       link: /zh-TW/getting-started/installation
     - theme: alt
       text: 查看核心功能
@@ -54,6 +54,8 @@ features:
 不要跳過 [靜態限制](/zh-TW/getting-started/static-arguments)。很多人第一次誤解 PikaCSS，都是因為先把 `pika()` 當成 runtime function 來理解。
 :::
 
+如果你還沒有通過這個適配檢查，就先不要開始安裝。設定路徑只會在你已經理解靜態邊界後才有幫助。
+
 ## 建議照這個順序閱讀
 
 1. 先讀 [PikaCSS 是什麼？](/zh-TW/getting-started/what-is-pikacss)、[靜態限制](/zh-TW/getting-started/static-arguments)、[PikaCSS 如何運作](/zh-TW/concepts/how-pikacss-works) 與 [Atomic 順序與 Cascade](/zh-TW/concepts/atomic-order-and-cascade)，再判斷這個工具是否適合。
@@ -70,6 +72,6 @@ features:
 ## Next
 
 - [PikaCSS 是什麼？](/zh-TW/getting-started/what-is-pikacss)
+- [靜態限制](/zh-TW/getting-started/static-arguments)
 - [安裝](/zh-TW/getting-started/installation)
 - [核心功能總覽](/zh-TW/guide/core-features-overview)
-- [Plugin System Overview](/zh-TW/plugin-system/overview)

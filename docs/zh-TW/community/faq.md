@@ -34,7 +34,13 @@ description: 快速回答關於 build-time 行為、atomic 輸出、generated fi
 
 ## 我可以使用巢狀 selectors 嗎？
 
-可以。巢狀 selectors 是正常 style-definition model 的一部分，不是另外開的一條逃生路徑。
+可以，但要把兩種情況分清楚。
+
+像 `@media` 這種 wrapper at-rules 可以直接寫在 `pika()` 裡，仍然屬於正常的靜態模型。
+
+Pseudo states 與可重用的 context 條件，通常應該改成像 `hover` 或 `theme-dark` 這樣的具名 selectors。這樣輸出才能維持 flat atomic，而不是變成一次性的 nesting rules。
+
+正式規則請看 [Selectors](/zh-TW/guide/core-features/selectors)。
 
 <<< @/zh-TW/.examples/community/faq-nested.pikainput.ts
 
@@ -56,7 +62,7 @@ description: 快速回答關於 build-time 行為、atomic 輸出、generated fi
 
 ## Next
 
-- [Static Constraints](/zh-TW/getting-started/static-arguments)
-- [Common Problems](/zh-TW/troubleshooting/common-problems)
-- [Configuration](/zh-TW/guide/configuration)
-- [Plugin System Overview](/zh-TW/plugin-system/overview)
+- [靜態限制](/zh-TW/getting-started/static-arguments)
+- [常見問題](/zh-TW/troubleshooting/common-problems)
+- [Selectors](/zh-TW/guide/core-features/selectors)
+- [設定方式](/zh-TW/guide/configuration)

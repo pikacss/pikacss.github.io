@@ -35,6 +35,18 @@ description: 了解 fonts plugin 如何在同一套 PikaCSS workflow 中管理 h
 
 <<< @/zh-TW/.examples/plugins/fonts-provider-options.ts
 
+## 內建 provider matrix
+
+內建的 hosted provider 名稱如下：
+
+- `google`
+- `bunny`
+- `fontshare`
+- `coollabs`
+- `none`
+
+當專案仍然想保留語意化 font tokens 與 generated shortcuts，但不希望 plugin 輸出 hosted import URLs 時，就使用 `none`。這是把字體交回 self-hosted、手動管理 font delivery，或分階段從第三方 provider 遷移出去時最乾淨的交接點。
+
 ## Custom providers
 
 當某個 provider 不是內建時，就定義一次 provider，並讓專案其他部分繼續沿用同一套 token model。即使匯入機制是自訂的，這樣仍然能保留語意字體名稱的價值。

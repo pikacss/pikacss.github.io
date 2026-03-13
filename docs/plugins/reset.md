@@ -26,6 +26,15 @@ Use less reset code when the product already has an intentional baseline. A rese
 
 That is the right starting point for most teams. Pick a preset, register the plugin, and only add more rules when repeated browser defaults are slowing real work down.
 
+## Layer behavior
+
+The plugin does two things on purpose when it registers itself:
+
+- it ensures a named `reset` layer exists early in layer order
+- it emits the chosen reset preset as a preflight inside that `reset` layer
+
+That means reset output stays reviewable as its own slot instead of silently mixing with later utilities. If a project adds more global baseline rules around the same concern, keep them in that same early layer rather than folding them into component-level output.
+
 ## Available presets
 
 <<< @/.examples/plugins/reset-all-presets.ts

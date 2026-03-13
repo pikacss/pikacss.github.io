@@ -14,6 +14,8 @@ A capability is a core feature when it changes how the engine interprets style i
 
 That is why these features live directly in engine config instead of the external `plugins` array.
 
+That core surface also includes output defaults such as layer routing. Teams can set shared layer policy in config and override one definition at a time with `__layer` when a style must land somewhere other than the default utilities layer.
+
 ## The core feature set
 
 | Core feature | Use it for | What it changes |

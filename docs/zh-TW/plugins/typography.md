@@ -34,6 +34,16 @@ Typography plugin 適用於：
 
 當 prose 被視為有自己預設值的內容介面，而不是逃避刻意 component styling 的捷徑時，這個 plugin 才能發揮最佳效果。
 
+## Shortcut surface
+
+`prose` 是大多數團隊最先使用的 aggregate shortcut，但公開 surface 其實更完整：
+
+- `prose-base` 是共享 baseline primitive
+- `prose-paragraphs`、`prose-links`、`prose-headings`、`prose-code` 等 module shortcuts 可以獨立組合
+- `prose-sm`、`prose-lg`、`prose-xl`、`prose-2xl` 這些 size variants，則是在 `prose` 之上再加一層可讀性的尺度調整
+
+這個拆分很重要，因為有些團隊想直接用整套 prose system，有些團隊則只想在自訂內容殼層裡挑幾個模組使用。
+
 ## 自訂 variables，而不是手動處理每個 element
 
 <<< @/zh-TW/.examples/plugins/typography-custom-variables.ts

@@ -38,6 +38,19 @@ Reach for earlier or deeper hooks only when `configureEngine` is no longer enoug
 
 <<< @/.examples/plugin-system/hook-configure-resolved-config.ts
 
+## Same problem, different hook choices
+
+Use this quick comparison before reaching for a transform hook:
+
+| If the plugin idea is... | Prefer | Why |
+| --- | --- | --- |
+| adding new selectors, shortcuts, variables, keyframes, preflights, imports, or autocomplete | `configureEngine` | the public engine API already models the change directly |
+| inserting plugin defaults before config resolution | `configureRawConfig` | the plugin can shape user input before defaults settle |
+| reacting to the final resolved config without rewriting payloads | `configureResolvedConfig` | you get the full normalized picture without mutating extracted style data |
+| rewriting extracted selectors, style items, or nested definitions | transform hooks | only use this when additive registration cannot express the job |
+
+If two hooks still look possible, choose the later one first and only move earlier or deeper when a concrete limitation appears.
+
 ## Add types for end users (advanced — only when your plugin adds config keys)
 
 Most plugins do not need module augmentation. If a plugin only calls public engine APIs such as `engine.appendSelectors()`, `engine.appendVariables()`, or `engine.addPreflight()`, TypeScript already knows what is happening. Module augmentation is only needed when your plugin **introduces new top-level config keys** that end users put in `pika.config.ts`.
@@ -68,6 +81,8 @@ Poor candidates: button styles, card layouts, modal overlays, page-specific rule
 
 Use `engine.appendCssImport()` for top-level `@import` rules such as hosted font stylesheets. Those imports must stay at the top of the generated CSS, so they should not be expressed as ordinary preflights.
 
+Use `definePreflight()` when a plugin exports reusable preflight payloads or helper-returned preflight objects. It is the preflight-side equivalent of `defineStyleDefinition()`: runtime behavior stays the same, but shared plugin code keeps the correct public type shape.
+
 <<< @/.examples/plugin-system/css-import-api.ts
 
 <<< @/.examples/plugin-system/preflight-definition.ts
@@ -75,6 +90,8 @@ Use `engine.appendCssImport()` for top-level `@import` rules such as hosted font
 <<< @/.examples/plugin-system/preflight-with-layer.ts
 
 <<< @/.examples/plugin-system/preflight-with-id.ts
+
+If a plugin needs hover states, dark mode contexts, or other reusable conditions, prefer registering selectors through engine config or public engine APIs instead of teaching users to emit raw pseudo-selector nesting. That keeps the plugin aligned with the same flat atomic path documented in [Selectors](/guide/core-features/selectors).
 
 ## A practical first-plugin checklist
 
@@ -87,6 +104,11 @@ Use `engine.appendCssImport()` for top-level `@import` rules such as hosted font
 ## Reference implementations
 
 The official reset, fonts, icons, and typography plugins show different levels of complexity. Use them as implementation references, not as permission to make every plugin equally broad.
+
+- [Reset](/plugins/reset) is the smallest additive reference for preflights and global defaults.
+- [Icons](/plugins/icons) is the best reference when a plugin resolves assets or expands source strings asynchronously.
+- [Fonts](/plugins/fonts) is the best reference when a plugin needs CSS imports and provider switching.
+- [Typography](/plugins/typography) is the best reference when a plugin composes variables and shortcuts into one user-facing API.
 
 ## Next
 

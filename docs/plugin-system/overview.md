@@ -52,6 +52,20 @@ The public interface is intentionally small: a plugin has a name, optional order
 
 Plugins can change raw config, react to resolved config, register behavior on the engine, transform extracted input, and observe downstream events such as preflight or autocomplete updates.
 
+## Canonical lifecycle timeline
+
+Use this as the high-level timeline when deciding where a plugin should intervene:
+
+| Phase | What is stable here | Reach for it when |
+| --- | --- | --- |
+| `configureRawConfig` | user config exists, defaults do not | you need to add or normalize config before resolution happens |
+| `configureResolvedConfig` | resolved config is final, engine state is not | you need the finished config picture before deciding what to register |
+| `configureEngine` | public engine APIs are ready | selectors, shortcuts, variables, keyframes, preflights, CSS imports, and autocomplete are enough |
+| transform hooks | extracted payloads are flowing between plugins | you must rewrite selectors, style items, or nested definitions directly |
+| sync notification hooks | engine events have already happened | you only need logging, bookkeeping, or side effects |
+
+If more than one phase could work, prefer the later one. That usually keeps the plugin smaller and easier to combine with others.
+
 ## How to think about hooks
 
 - use `configureRawConfig` when you need to shape user config before defaults settle
@@ -80,6 +94,8 @@ That ordering only defines how user plugins relate to one another. It does not m
 ## Recommended learning path
 
 Start with [Create A Plugin](/plugin-system/create-plugin), then continue to [Hook Execution](/plugin-system/hook-execution). After that, inspect official plugins as reference implementations for real packaging and API design.
+
+Read official plugin pages with one narrow question in mind. Reset is the clearest additive example, Icons is the clearest async expansion example, Fonts is the clearest CSS import example, and Typography is the clearest variables-plus-shortcuts example.
 
 ## Next
 

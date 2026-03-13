@@ -34,6 +34,16 @@ Use the typography plugin for:
 
 The plugin works best when prose is treated as a content surface with its own defaults, not as a shortcut for avoiding deliberate component styling.
 
+## Shortcut surface
+
+`prose` is the aggregate shortcut most teams start with, but the public surface is broader:
+
+- `prose-base` provides the shared baseline primitive
+- module shortcuts such as `prose-paragraphs`, `prose-links`, `prose-headings`, `prose-code`, and the rest of the prose modules can be composed independently
+- size variants such as `prose-sm`, `prose-lg`, `prose-xl`, and `prose-2xl` layer readable scale changes on top of `prose`
+
+That split matters when one team wants the full prose system while another only wants selected modules inside a custom content shell.
+
 ## Customize variables, not every element by hand
 
 <<< @/.examples/plugins/typography-custom-variables.ts

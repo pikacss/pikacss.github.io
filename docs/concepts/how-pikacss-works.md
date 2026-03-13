@@ -18,7 +18,7 @@ The engine only succeeds when that input is readable from source. It is not eval
 
 ## 2. The integration extracts and rewrites calls
 
-The integration scans source files, extracts the style input, and turns it into atomic class names.
+The integration scans source files, extracts the style input, and turns it into atomic identifiers. Most projects emit those identifiers as class names, but selector output is still configurable through engine config.
 
 <<< @/.examples/concepts/build-compiled.ts
 
@@ -26,7 +26,7 @@ This is why the docs keep repeating static constraints. Extraction is the whole 
 
 ## 3. The build emits generated CSS
 
-Those class names point to generated CSS declarations:
+Those identifiers point to generated CSS declarations. By default the generated selector is a class selector, but the same atomic ids can also be emitted into another selector template such as an attribute selector.
 
 <<< @/.examples/concepts/build.pikaoutput.css
 

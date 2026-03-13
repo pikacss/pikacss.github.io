@@ -14,7 +14,7 @@ hero:
       text: Evaluate Fit
       link: /getting-started/what-is-pikacss
     - theme: alt
-      text: Start Setup
+      text: Start Setup After Fit Check
       link: /getting-started/installation
     - theme: alt
       text: Inspect Core Features
@@ -54,6 +54,8 @@ If your project can live inside that tradeoff, you get static CSS output, genera
 Do not skip [Static Constraints](/getting-started/static-arguments). Most incorrect first impressions of PikaCSS come from assuming `pika()` behaves like a runtime function.
 :::
 
+If you have not passed that fit check yet, do not start with installation. The setup path only helps after the static boundary already makes sense for the project.
+
 ## Read in this order
 
 1. Read [What Is PikaCSS?](/getting-started/what-is-pikacss), [Static Constraints](/getting-started/static-arguments), [How PikaCSS Works](/concepts/how-pikacss-works), and [Atomic Order And Cascade](/concepts/atomic-order-and-cascade) before you judge the tool.
@@ -70,6 +72,6 @@ The main docs path is intentionally adopter-first. If you are extending the engi
 ## Next
 
 - [What Is PikaCSS?](/getting-started/what-is-pikacss)
+- [Static Constraints](/getting-started/static-arguments)
 - [Installation](/getting-started/installation)
 - [Core Features Overview](/guide/core-features-overview)
-- [Plugin System Overview](/plugin-system/overview)

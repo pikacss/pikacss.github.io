@@ -52,6 +52,20 @@ Plugins 是用 `defineEnginePlugin()` 宣告的普通物件。
 
 Plugins 可以修改 raw config、對 resolved config 做出反應、在 engine 上註冊行為、轉換抽出的輸入，並觀察像 preflight 或 autocomplete 更新這類下游事件。
 
+## Canonical lifecycle timeline
+
+當你在判斷 plugin 應該在哪裡介入時，請把這張表當成高層時間線：
+
+| 階段 | 在這裡已經穩定的是什麼 | 什麼情況下該選它 |
+| --- | --- | --- |
+| `configureRawConfig` | user config 已存在，但 defaults 尚未套用 | 你需要在 resolution 發生前補 defaults 或正規化 config |
+| `configureResolvedConfig` | resolved config 已經定案，但 engine state 尚未建立 | 你需要先看到完整 config 圖像，才能決定要註冊什麼 |
+| `configureEngine` | 公開 engine APIs 已可使用 | selectors、shortcuts、variables、keyframes、preflights、CSS imports 與 autocomplete 已經足夠 |
+| transform hooks | 抽出的 payload 正在 plugins 之間流動 | 你必須直接改寫 selectors、style items 或 nested definitions |
+| sync notification hooks | 下游 engine events 已經發生 | 你只需要 logging、bookkeeping 或副作用 |
+
+如果超過一個階段都能解決問題，優先選更晚的那個。這通常能讓 plugin 更小，也更容易和其他 plugin 組合。
+
 ## 怎麼看待 hooks
 
 - 當你需要在 defaults 穩定之前塑形 user config，請用 `configureRawConfig`
@@ -81,8 +95,10 @@ Plugins 會依序以 `pre`、預設、再到 `post` 的順序執行。
 
 先從 [Create A Plugin](/zh-TW/plugin-system/create-plugin) 開始，再繼續讀 [Hook Execution](/zh-TW/plugin-system/hook-execution)。之後再把官方 plugins 當成實際的封裝與 API 設計參考實作來看。
 
+閱讀官方 plugin 頁面時，請一次只帶著一個狹窄問題去看。Reset 最適合看 additive preflight，Icons 最適合看 async expansion，Fonts 最適合看 CSS imports，Typography 最適合看 variables 加 shortcuts 的組合。
+
 ## Next
 
-- [Create A Plugin](/zh-TW/plugin-system/create-plugin)
-- [Hook Execution](/zh-TW/plugin-system/hook-execution)
-- [Core Features Overview](/zh-TW/guide/core-features-overview)
+- [建立 Plugin](/zh-TW/plugin-system/create-plugin)
+- [Hook 執行順序](/zh-TW/plugin-system/hook-execution)
+- [核心功能總覽](/zh-TW/guide/core-features-overview)

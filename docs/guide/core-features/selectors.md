@@ -29,6 +29,8 @@ Wrong: a raw CSS key such as `'&:hover'` renders a nesting rule instead.
 The `$` character you see in selector config values is a placeholder for the current default selector. By default that selector is `.%`, so `$` is the shorthand most users interact with. It is engine config syntax, not CSS syntax, and it never appears inside `pika()` calls.
 :::
 
+This warning is specifically about pseudo states and reusable context selectors. Wrapper at-rules such as `@media` can still be written directly as static object keys when you only need the wrapper itself. That is why onboarding pages may show direct at-rules first, then move to named selectors for hover, dark mode, and other shared conditions.
+
 ## Mental model: `$`, the default selector, and at-rules
 
 There are two different places where selector logic happens:
@@ -100,6 +102,8 @@ A selector value can reference another registered selector by name. The engine r
 Use selectors for stable conditions: hover states, focus behavior, theme contexts, breakpoint aliases, and other reusable structural rules.
 
 That keeps component code readable and prevents raw selector syntax or repeated media queries from spreading through the application.
+
+If a condition should become shared team vocabulary, register it as a selector even when raw CSS syntax would technically work.
 
 ## What selectors are not
 

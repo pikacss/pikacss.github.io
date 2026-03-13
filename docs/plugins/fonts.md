@@ -35,6 +35,18 @@ Built-in providers cover the common hosted workflows, but provider URLs still ne
 
 <<< @/.examples/plugins/fonts-provider-options.ts
 
+## Built-in provider matrix
+
+The built-in hosted provider names are:
+
+- `google`
+- `bunny`
+- `fontshare`
+- `coollabs`
+- `none`
+
+Use `none` when the project still wants semantic font tokens and generated shortcuts, but does not want the plugin to emit hosted import URLs. That is the clean handoff point for self-hosted fonts, manually managed font delivery, or staged migrations away from a third-party provider.
+
 ## Custom providers
 
 When a provider is not built in, define a provider once and keep the same token model for the rest of the project. That preserves the value of semantic font names even when the import mechanism is custom.

@@ -30,6 +30,8 @@ When autocomplete looks incomplete or out of date, this file is one of the first
 Generated files are overwritten. If the output is wrong, fix the source style definition, engine config, or integration setup instead of patching the generated artifact.
 :::
 
+By default, integrations write `pika.gen.ts` and `pika.gen.css` in the project root. If the integration config overrides `tsCodegen` or `cssCodegen`, treat those configured paths as the real artifact locations instead.
+
 ## When generated files are useful
 
 Generated files are excellent diagnostics:
@@ -40,6 +42,8 @@ Generated files are excellent diagnostics:
 
 When setup behaves unexpectedly, generated files usually tell you whether the problem is extraction, config resolution, or integration wiring.
 
+They are also part of the normal daily workflow, not only emergency debugging. Check them when you add a new selector family, change shared config, or are unsure whether a new `pika()` call was extracted the way you expected.
+
 ## When generated files are not the solution
 
 - They are not where design tokens should be customized.
@@ -48,12 +52,35 @@ When setup behaves unexpectedly, generated files usually tell you whether the pr
 
 Those changes belong in source or config, not in generated output.
 
+## Output helpers and preview variants
+
+The generated files help explain why PikaCSS exposes multiple output helpers.
+
+- `pika()` follows the integration's configured output format.
+- `pika.str()` always forces a string result.
+- `pika.arr()` always forces an array result.
+- `pikap()` and its `.str()` / `.arr()` variants keep the same output-shape rules while preserving preview-oriented workflows.
+
+If a call site expects one exact output shape, use the matching helper and then inspect generated output once to confirm the build emitted what you expected.
+
+See [First Pika](/getting-started/first-pika) for the basic output-shape examples.
+
+## A simple daily workflow
+
+1. Import `pika.css` once from the application entry.
+2. Keep one literal `pika()` call nearby while the integration is being verified.
+3. Check `pika.gen.css` when you need to confirm extraction or selector expansion.
+4. Check `pika.gen.ts` when autocomplete, selectors, shortcuts, or variables look incomplete.
+5. Return to source or config for fixes instead of editing generated output.
+
 ## A simple debugging order
 
 1. Confirm the source file contains a supported static `pika()` call.
 2. Confirm the application imports `pika.css`.
 3. Inspect `pika.gen.ts` and `pika.gen.css` to see what the build emitted.
 4. If output is still missing, check config discovery and ESLint warnings next.
+
+If the problem is still unclear after those four checks, continue with [Common Problems](/troubleshooting/common-problems) instead of changing multiple config knobs at once.
 
 ## Next
 

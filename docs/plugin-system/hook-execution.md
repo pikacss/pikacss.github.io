@@ -8,15 +8,27 @@ If you only keep one plugin-authoring rule in mind, keep this one: choose the la
 
 ## Hook decision table
 
-| Need | Hook |
-| --- | --- |
-| modify user config before defaults are applied | `configureRawConfig` |
-| react after config has been resolved | `configureResolvedConfig` |
-| register engine behavior through public APIs | `configureEngine` |
-| rewrite selector chains directly | `transformSelectors` |
-| rewrite extracted style items | `transformStyleItems` |
-| rewrite nested style definitions | `transformStyleDefinitions` |
-| observe engine events only | sync notification hooks |
+| Need | Hook | Why this is the least intrusive option |
+| --- | --- | --- |
+| modify user config before defaults are applied | `configureRawConfig` | shape incoming config once before resolution |
+| react after config has been resolved | `configureResolvedConfig` | act on normalized config without rewriting extracted payloads |
+| register engine behavior through public APIs | `configureEngine` | additive engine APIs are easier to compose than payload rewrites |
+| rewrite selector chains directly | `transformSelectors` | only when selector registration cannot express the change |
+| rewrite extracted style items | `transformStyleItems` | only when you must replace the extracted item payload itself |
+| rewrite nested style definitions | `transformStyleDefinitions` | only when the definition tree must be rewritten directly |
+| observe engine events only | sync notification hooks | use for logs, side effects, or diagnostics |
+
+## Canonical execution order
+
+The practical order is:
+
+1. raw config hooks
+2. resolved config hooks
+3. engine registration hooks
+4. async transform hooks as extracted payloads move through the pipeline
+5. sync notification hooks when downstream events are emitted
+
+That sequence is why the usual advice is to start at `configureEngine`, then move earlier or deeper only when you can name the missing capability precisely.
 
 ## Payload chaining
 

@@ -6,6 +6,8 @@ description: Install the main integration, verify one baseline setup, and unders
 
 Most projects should start with the unplugin package. That path covers Vite, Rollup, Webpack, Rspack, Rolldown, and esbuild through one shared integration model.
 
+If you are still deciding whether PikaCSS fits the project at all, read [What Is PikaCSS?](/getting-started/what-is-pikacss) and [Static Constraints](/getting-started/static-arguments) first. Installation assumes the project has already passed that fit check.
+
 ::: code-group
 <<< @/.examples/getting-started/install-unplugin.sh [pnpm]
 <<< @/.examples/getting-started/install-unplugin-npm.sh [npm]
@@ -17,6 +19,8 @@ If you are using Nuxt, go straight to [Nuxt](/integrations/nuxt).
 ## Start with one working baseline
 
 Start with Vite unless the project already runs on something else. The goal of the first setup is not to design the final architecture. The goal is to prove that the build sees `pika()` calls, rewrites them, and emits CSS you can inspect.
+
+If the project already runs on Rollup, Webpack, Rspack, Rolldown, or esbuild, keep that adapter and reproduce the same baseline there: register the plugin, import `pika.css`, and verify one literal `pika()` call. Use [Integrations Overview](/integrations/overview) to confirm the shared mental model before adapting framework-specific details.
 
 The smallest successful setup has three pieces:
 
@@ -46,7 +50,7 @@ See [Integrations Overview](/integrations/overview) for the full matrix.
 
 ## Add config when the project stops being trivial
 
-PikaCSS automatically discovers config files named `pika.config.{js,ts,mjs,mts,cjs,cts}`. Zero-config is fine for a first pass, but most real projects should add a config file as soon as they need selectors, shortcuts, variables, plugins, or consistent layer control.
+PikaCSS automatically discovers both `pika.config.{js,ts,mjs,mts,cjs,cts}` and `pikacss.config.{js,ts,mjs,mts,cjs,cts}`. Zero-config is fine for a first pass, but most real projects should add a config file as soon as they need selectors, shortcuts, variables, plugins, or consistent layer control.
 
 <<< @/.examples/getting-started/pika.config.ts
 
@@ -57,6 +61,8 @@ The integration may generate:
 - `pika.gen.ts` for autocomplete and type augmentation.
 - `pika.gen.css` as the generated CSS output file on disk.
 - The virtual module `pika.css`, which resolves to generated CSS at build time.
+
+By default, `pika.gen.ts` and `pika.gen.css` are written in the project root. If you override `tsCodegen` or `cssCodegen`, inspect those custom paths instead.
 
 Read [Generated Files](/guide/generated-files) before editing anything that looks auto-created.
 
@@ -74,6 +80,7 @@ Read [ESLint](/integrations/eslint) immediately after your first successful setu
 - Confirm your app imports `pika.css`.
 - Confirm one literal `pika()` call produces class names and generated CSS.
 - Confirm you understand which files are generated and should not be edited.
+- Confirm where `pika.gen.ts` and `pika.gen.css` should appear in this project.
 - Confirm the team has read [Static Constraints](/getting-started/static-arguments) before broad adoption.
 - **Install [ESLint](/integrations/eslint) now.** Do not wait until after invalid `pika()` usage has already spread through the codebase.
 

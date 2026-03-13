@@ -22,13 +22,15 @@ This section exists to keep setup decisions small. Once the shared workflow is c
 Every adapter has the same four jobs:
 
 1. scan source files for supported `pika()` usage
-2. resolve engine config from an inline object or `pika.config.*`
+2. resolve engine config from an inline object, `pika.config.*`, or `pikacss.config.*`
 3. write generated CSS and generated TypeScript types
 4. expose the `pika.css` virtual module so the app can load emitted styles
 
 <<< @/.examples/integrations/plugin-options.ts
 
 If those four pieces are working, the integration is working. Most setup issues come from one of them being missing rather than from advanced config.
+
+If you are not on Vite, still debug against that same four-part model first. The adapter-specific page should only change registration details, not the build-time mental model.
 
 ## What changes by integration
 
@@ -51,6 +53,8 @@ Choose Nuxt when the application is already Nuxt-shaped. It is the right adapter
 2. The application loads `pika.css` or the integration-specific equivalent.
 3. Your `pika()` calls live in files matched by the scan config.
 4. `pika.gen.css` and `pika.gen.ts` appear where you expect them.
+
+If a call site needs one specific output shape, remember that `pika()` follows the integration default, while `pika.str()`, `pika.arr()`, and the `pikap` preview variants force a particular string or array shape at the call site.
 
 ## Next
 

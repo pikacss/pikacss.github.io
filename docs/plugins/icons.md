@@ -53,11 +53,30 @@ Once icon usage is just source input, naming drift becomes a maintenance problem
 
 <<< @/.examples/plugins/icons-advanced-config.ts
 
+The advanced surface is larger than `scale` and `mode`:
+
+- `prefix` accepts either one string or an array of prefixes when a codebase needs more than one naming convention during a migration.
+- `cwd` controls where local Iconify packages are resolved from.
+- `autoInstall` can install missing Iconify packages during a Node build, but it is still a build-environment convenience, not a guarantee that every editor or CI context can resolve packages the same way.
+- `cdn` can be either a base URL or a URL template containing `{collection}` for remote collection JSON.
+- `processor` receives the generated style item plus metadata about the resolved icon source, which makes it the right place for last-mile CSS adjustments.
+- `extraProperties` and `unit` let the plugin enforce display and sizing defaults without wrapping every icon in another shortcut.
+
+Environment boundaries matter here. The plugin only attempts local Iconify package resolution in a normal Node build context. In VS Code and ESLint environments it skips that local-package path, so custom collections and CDN fallback become the portable ways to keep icon resolution predictable across tooling.
+
 <<< @/.examples/plugins/icons-custom-collections.ts
 
 You can also point a custom collection at repository-owned SVG assets and keep the same `i-collection:name` syntax across first-party and third-party icons.
 
 <<< @/.examples/plugins/icons-directory-collection.ts
+
+## For plugin authors using Icons as a reference
+
+Read this page as a reference implementation when your plugin needs async build-time expansion from static source strings.
+
+- The plugin is a good model for build-time resolution work that still preserves static authoring.
+- It is a better reference for async asset or collection handling than for simple additive config.
+- Pair this page with [Create A Plugin](/plugin-system/create-plugin) and [Hook Execution](/plugin-system/hook-execution) so the hook choice stays clear.
 
 ## A practical rule
 

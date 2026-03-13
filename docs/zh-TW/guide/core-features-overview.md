@@ -14,6 +14,8 @@ PikaCSS 內建了一組不需要額外安裝套件就能使用的 engine capabil
 
 這也是為什麼這些功能直接放在 engine config，而不是 external `plugins` array。
 
+這個 core surface 也包含輸出預設值，例如 layer routing。團隊可以在 config 裡定義共享 layer 策略，並在單一 definition 上用 `__layer` 覆寫，讓某段樣式改送到不是預設 utilities layer 的位置。
+
 ## 核心功能集合
 
 | 核心功能 | 用途 | 它改變的是什麼 |
