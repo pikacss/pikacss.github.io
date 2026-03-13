@@ -53,7 +53,7 @@ core  (no internal deps)
         └── unplugin
               └── nuxt
 
-plugin-icons, plugin-reset, plugin-typography  →  depend on core
+plugin-*  →  depend on core
 ```
 
 Each package: `src/index.ts` entry · co-located tests (`src/foo.ts` → `src/foo.test.ts`) · `tsconfig.json` + `tsdown.config.ts` + `vitest.config.ts`.
@@ -70,30 +70,7 @@ Each package: `src/index.ts` entry · co-located tests (`src/foo.ts` → `src/fo
 - When in doubt or anything feels unclear, ask questions instead of guessing; use the ask‑questions mechanism to get my input.
 - In `tests`, `docs`, and `src` directories, do **not** reference absolute file system paths.
 
-## Key APIs
-
-Non-obvious patterns specific to this codebase:
-
-| API | Purpose |
-|-----|---------|
-| `defineEnginePlugin()` | Create engine plugins |
-| `defineEngineConfig()` | Engine configuration |
-| `defineStyleDefinition()` | Type-safe style objects |
-| `createCtx()` | Build integration context |
-| `unpluginFactory` | Build tool plugin factory |
-
-Config auto-detected as: `pika.config.{js,ts,mjs,mts,cjs,cts}`
-
 ## Forbidden Actions
 
 - Do NOT edit files in `dist/` or `coverage/` — generated, never edited manually
 - Do NOT run `pnpm build` during development — use `vitest run` + `typecheck`
-- Do NOT write code inline in docs markdown — use VitePress `<<<` snippet imports from `docs/.examples/`
-
-## Documentation
-
-Docs live in `docs/` (VitePress). All code examples must be stored in `docs/.examples/` and imported with `<<<` syntax — never inline code in markdown.
-
-For full documentation authoring conventions, see `.github/instructions/documentation.instructions.md`.
-For zh-TW localized markdown pages, also follow `.github/instructions/translation.instructions.md`.
-For zh-TW localized example files under `docs/.examples/zh-TW/`, also follow `.github/instructions/translation-examples.instructions.md`.
