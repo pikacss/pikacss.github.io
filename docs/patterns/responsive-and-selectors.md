@@ -26,9 +26,14 @@ Once selectors are registered, use their names as keys in `pika()` style objects
 
 ## Nested selector objects are still static
 
-Nesting a style object under a selector key is declared in source, not computed at runtime. It remains fully compatible with the build-time model.
+Nesting a style object under a selector key is declared in source, not computed at runtime. It remains fully compatible with the build-time model when the key is either:
 
-See [Selectors](/guide/core-features/selectors) for the full API, including the `$` placeholder and how expansion works.
+- a registered selector name such as `hover`, `theme-dark`, or `screen-md`
+- a direct at-rule such as `@media (min-width: 768px)`
+
+For pseudo states and reusable context rules, prefer registered selector names so the engine emits flat atomic rules instead of ad hoc nesting output.
+
+See [Selectors](/guide/core-features/selectors) for the full API, including the `$` placeholder, the default selector mental model, and how wrapper conditions such as `@media` expand.
 
 ## Combine selectors with shortcuts
 

@@ -14,14 +14,12 @@
   .pk-e {
     transition: background-color 160ms ease;
   }
-  hover {
-    .pk-f {
-      background-color: #1f2937;
-    }
-  }
   @media (min-width: 768px) {
-    .pk-g {
+    .pk-f {
       padding: 0.875rem 1.25rem;
+    }
+    .pk-g {
+      background-color: #1f2937;
     }
   }
 }

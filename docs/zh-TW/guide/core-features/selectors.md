@@ -26,26 +26,43 @@ description: 理解 `$` placeholder 的作用、學習如何定義 state、conte
 
 <<< @/zh-TW/.examples/guide/built-ins/selectors-nesting-wrong.pikaoutput.css
 
-你在 selector config values 裡看到的 `$` 是一個 placeholder，標示生成的 atomic class name 在 CSS rule 中出現的位置。它是 engine config 語法，不是 CSS 語法，也永遠不會出現在 `pika()` 呼叫裡。
+你在 selector config values 裡看到的 `$`，是目前 default selector 的 placeholder。預設情況下這個 selector 是 `.%`，所以 `$` 是大多數使用者會接觸到的簡寫。它是 engine config 語法，不是 CSS 語法，也永遠不會出現在 `pika()` 呼叫裡。
 :::
 
 ::: tip 從 Tailwind 轉換過來的開發者
 如果你的團隊使用 Tailwind，Tailwind 的 `md:` prefix 對應的就是在 PikaCSS config 裡登記一個 `screen-md` selector。名稱的選擇完全由你決定——engine 對命名方式沒有限制。同樣地，Tailwind 的 `hover:` prefix 對應的是 PikaCSS 裡的 `hover` selector。
 :::
 
-## `$` placeholder
+## 心智模型：`$`、default selector 與 at-rules
+
+Selector 邏輯其實發生在兩個不同的位置：
+
+- 在 `pika()` 裡，你把像 `hover`、`theme-dark`、`screen-md` 這些 selector 名稱寫成靜態 object keys。
+- 在 selector config 裡，你決定這些名稱要如何展開成 CSS 條件。
+
+`$` 的意思是「把目前的 default selector 放在這裡」。在預設設定下，這個 selector 是 `.%`，所以這些規則最後會渲染成像 `.pk-a` 這樣的 atomic class name。
+
+這也是為什麼 inline 條件需要 `$`，但 wrapper 條件通常不需要：
+
+- `['hover', '$:hover']` 會把元素 selector 放在 pseudo state 前面。
+- `['dark', '[data-theme="dark"] $']` 會把元素 selector 放進父層 context 裡。
+- `['md', '@media (min-width: 768px)']` 不需要 `$`，因為 at-rule 是包住 atomic selector，而不是內嵌放置它。
+
+如果一整條 selector chain 只產生像 `@media` 這種 wrappers，沒有自行放入 atomic selector，engine 會在最內層自動補上 default selector。
+
+## config 裡的 `$` placeholder
 
 當你定義一個針對元素本身的 selector 時，在 pattern 字串中使用 `$` 作為 placeholder，標示生成的原子 class name 在最終 CSS rule 中出現的位置。
 
 <<< @/zh-TW/.examples/guide/built-ins/selectors-placeholder-pseudo.ts
 
-Engine 會在 build time 將 `$` 替換成生成的 class name：
+Engine 會先透過目前的 default selector 展開 `$`，再在 build time 將其渲染成生成的 class name：
 
 - `['hover', '$:hover']` → `.pk-a:hover { ... }`
 - `['before', '$::before']` → `.pk-a::before { ... }`
 - `['dark', '[data-theme="dark"] $']` → `[data-theme="dark"] .pk-a { ... }`
 
-像 `@media` 這類 at-rules 不需要 `$`。Engine 會自動將原子 class 巢入 at-rule block 內：
+像 `@media` 這類 at-rules 不需要 `$`。Engine 會把它們視為 wrappers，並自動將原子 selector 巢入 at-rule block 內：
 
 <<< @/zh-TW/.examples/guide/built-ins/selectors-at-rule.pikaoutput.css
 
@@ -56,7 +73,7 @@ Engine 會在 build time 將 `$` 替換成生成的 class name：
 Config 支援四種形式：
 
 - **純字串** — 只登記 autocomplete hint，不建立展開規則。
-- **靜態 tuple** — 將名稱對應到一或多個包含 `$` 的 CSS selector patterns。
+- **靜態 tuple** — 將名稱對應到一或多個 CSS selector patterns；當條件需要內嵌放置元素 selector 時，可以包含 `$`。
 - **動態 regex tuple** — 從符合 regex 的名稱推導出 selector pattern。
 - **Object form** — 與 tuple 形式等價，以具名物件形式撰寫。
 
@@ -69,6 +86,8 @@ Config 支援四種形式：
 ## Selector 如何在 pika() 中展開
 
 在任何傳入 `pika()` 的 style object 中，以已登記的 selector 名稱作為 key。Engine 會將其展開成對應的 CSS 條件。
+
+如果展開後的 selector pattern 已經用了 `$`，那個 pattern 就精確決定 atomic selector 要放在哪裡。如果展開後的 pattern 只是像 `@media` 這樣的 wrapper，engine 會自動在裡面補上 default selector。
 
 <<< @/zh-TW/.examples/guide/built-ins/selectors.pikainput.ts
 

@@ -26,22 +26,39 @@ Wrong: a raw CSS key such as `'&:hover'` renders a nesting rule instead.
 
 <<< @/.examples/guide/built-ins/selectors-nesting-wrong.pikaoutput.css
 
-The `$` character you see in selector config values is a placeholder. It marks where the generated atomic class name should appear in the CSS rule. It is engine config syntax, not CSS syntax, and it never appears inside `pika()` calls.
+The `$` character you see in selector config values is a placeholder for the current default selector. By default that selector is `.%`, so `$` is the shorthand most users interact with. It is engine config syntax, not CSS syntax, and it never appears inside `pika()` calls.
 :::
 
-## The `$` placeholder
+## Mental model: `$`, the default selector, and at-rules
+
+There are two different places where selector logic happens:
+
+- Inside `pika()`, you write selector names such as `hover`, `theme-dark`, or `screen-md` as static object keys.
+- Inside selector config, you decide how those names expand into CSS conditions.
+
+`$` means “insert the current default selector here.” With the default config, that selector is `.%`, so these rules eventually render atomic class names such as `.pk-a` in the final CSS.
+
+That is why inline conditions need `$`, but wrapper conditions usually do not:
+
+- `['hover', '$:hover']` positions the element selector inline.
+- `['dark', '[data-theme="dark"] $']` positions the element selector inside a parent context.
+- `['md', '@media (min-width: 768px)']` does not need `$` because the at-rule wraps the atomic selector instead of placing it inline.
+
+If a selector chain only produces wrappers such as `@media` and does not place the atomic selector itself, the engine appends the default selector at the innermost level automatically.
+
+## The `$` placeholder in config
 
 When you define a selector that targets the element itself, use `$` as a placeholder in the pattern string to mark where the generated atomic class name appears in the final CSS rule.
 
 <<< @/.examples/guide/built-ins/selectors-placeholder-pseudo.ts
 
-The engine replaces `$` with the generated class name at build time:
+The engine expands `$` through the current default selector and then renders the atomic class name at build time:
 
 - `['hover', '$:hover']` → `.pk-a:hover { ... }`
 - `['before', '$::before']` → `.pk-a::before { ... }`
 - `['dark', '[data-theme="dark"] $']` → `[data-theme="dark"] .pk-a { ... }`
 
-At-rules such as `@media` do not need `$`. The engine nests the atomic class automatically inside the at-rule block:
+At-rules such as `@media` do not need `$`. The engine treats them as wrappers and nests the atomic selector automatically inside the at-rule block:
 
 <<< @/.examples/guide/built-ins/selectors-at-rule.pikaoutput.css
 
@@ -52,7 +69,7 @@ At-rules such as `@media` do not need `$`. The engine nests the atomic class aut
 The config supports four forms:
 
 - **Plain string** — registers an autocomplete-only hint with no expansion rule.
-- **Static tuple** — maps a name to one or more CSS selector patterns containing `$`.
+- **Static tuple** — maps a name to one or more CSS selector patterns, optionally containing `$` when the condition needs to place the element selector inline.
 - **Dynamic regex tuple** — derives a selector pattern from a name that matches a regex.
 - **Object form** — equivalent to the tuple forms, written as a named object.
 
@@ -65,6 +82,8 @@ A static selector can expand to multiple CSS selector patterns. Wrap the pattern
 ## How selectors expand in pika()
 
 Use a registered selector name as a key in any style object passed to `pika()`. The engine expands it into the corresponding CSS condition.
+
+If the resolved selector pattern already uses `$`, that pattern decides exactly where the atomic selector lands. If the resolved selector pattern is only a wrapper such as `@media`, the engine appends the default selector inside that wrapper automatically.
 
 <<< @/.examples/guide/built-ins/selectors.pikainput.ts
 

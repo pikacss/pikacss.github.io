@@ -44,20 +44,24 @@ Use the output form that best matches the framework and the place where you cons
 
 <<< @/.examples/getting-started/first-pika-variants.pikainput.ts
 
-## 6. Keep states and at-rules inside static input
+## 6. Keep at-rules and named conditions inside static input
 
-You do not need to leave the style object when you add pseudo states or at-rules.
+Nested style objects are still static when their keys are declared in source.
+
+At-rules such as `@media` can be written directly. Pseudo states and reusable context conditions should move to registered selector names once you introduce shared config.
 
 <<< @/.examples/getting-started/first-pika-nested.pikainput.vue
 
 <<< @/.examples/getting-started/first-pika-nested.pikaoutput.css
+
+This page keeps the example to an at-rule so the first mental model stays simple. See [Selectors](/guide/core-features/selectors) for named pseudo states, context selectors, and the `$` placeholder used in selector config.
 
 ## What to verify before continuing
 
 - Your app imports `pika.css` from an entry file.
 - One literal `pika()` call transforms successfully.
 - You have inspected generated CSS at least once.
-- You understand that selectors and composition stay inside static style input.
+- You understand that at-rules and registered selectors stay inside static style input.
 
 ## Practical do and do not
 

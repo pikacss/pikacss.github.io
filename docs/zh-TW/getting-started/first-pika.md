@@ -44,20 +44,24 @@ PikaCSS 不會在 runtime 保留這個 object。integration 會把它轉成 atom
 
 <<< @/zh-TW/.examples/getting-started/first-pika-variants.pikainput.ts
 
-## 6. 把狀態與 at-rules 留在靜態輸入內
+## 6. 把 at-rules 與具名條件留在靜態輸入內
 
-當你要加入 pseudo states 或 at-rules 時，不需要離開 style object。
+只要 key 是在原始碼中明確宣告的，巢狀 style object 仍然是靜態的。
+
+像 `@media` 這類 at-rules 可以直接寫。Pseudo states 與可重用的 context 條件，則應在你開始使用共享 config 後改成已登記的 selector 名稱。
 
 <<< @/zh-TW/.examples/getting-started/first-pika-nested.pikainput.vue
 
 <<< @/zh-TW/.examples/getting-started/first-pika-nested.pikaoutput.css
+
+這一頁刻意把例子維持在 at-rule，讓第一個心智模型保持簡單。具名 pseudo states、context selectors，以及 selector config 裡的 `$` placeholder，請看 [Selectors](/zh-TW/guide/core-features/selectors)。
 
 ## 繼續往下之前要確認的事
 
 - app entry 已經匯入 `pika.css`。
 - 至少有一個字面值 `pika()` 呼叫成功被轉換。
 - 你已經至少檢查過一次 generated CSS。
-- 你理解 selectors 和 composition 都應該留在靜態 style 輸入裡。
+- 你理解 at-rules 和已登記 selectors 都應該留在靜態 style 輸入裡。
 
 ## 實務上的該做與不該做
 

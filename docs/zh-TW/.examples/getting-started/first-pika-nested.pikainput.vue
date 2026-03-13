@@ -7,12 +7,9 @@
 			color: 'white',
 			transition: 'background-color 160ms ease',
 
-			hover: {
-				backgroundColor: '#1f2937',
-			},
-
 			'@media (min-width: 768px)': {
 				padding: '0.875rem 1.25rem',
+				backgroundColor: '#1f2937',
 			},
 		})"
 	>
