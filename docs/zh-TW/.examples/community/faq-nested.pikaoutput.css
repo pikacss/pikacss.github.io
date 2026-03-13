@@ -1,0 +1,15 @@
+@layer utilities {
+  .pk-a {
+    color: black;
+  }
+  &:hover {
+    .pk-b {
+      color: blue;
+    }
+  }
+  @media (max-width: 768px) {
+    .pk-c {
+      font-size: 14px;
+    }
+  }
+}

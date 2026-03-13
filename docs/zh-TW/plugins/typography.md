@@ -30,7 +30,7 @@ Typography plugin 適用於：
 
 ## Usage
 
-<<< @/zh-TW/.examples/plugins/typography-usage-prose.ts
+<<< @/zh-TW/.examples/plugins/typography-usage-prose.pikainput.ts
 
 當 prose 被視為有自己預設值的內容介面，而不是逃避刻意 component styling 的捷徑時，這個 plugin 才能發揮最佳效果。
 

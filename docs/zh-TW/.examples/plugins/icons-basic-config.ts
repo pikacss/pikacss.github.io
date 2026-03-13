@@ -1,5 +1,5 @@
-import { defineEngineConfig } from '@pikacss/core'
 import { icons } from '@pikacss/plugin-icons'
+import { defineEngineConfig } from '@pikacss/core'
 
 export default defineEngineConfig({
 	plugins: [icons()],

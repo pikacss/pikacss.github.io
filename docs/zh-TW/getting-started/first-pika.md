@@ -16,17 +16,17 @@ description: 建立一條最小可成功的 PikaCSS 流程、檢查產生的 CSS
 
 這是最小但已經有用的 `pika()` 呼叫：
 
-<<< @/zh-TW/.examples/getting-started/first-pika-basic.ts
+<<< @/zh-TW/.examples/getting-started/first-pika-basic.pikainput.ts
 
 如果你使用的是 Vue，同樣的概念可以寫成這樣：
 
-<<< @/zh-TW/.examples/getting-started/first-pika-basic.vue
+<<< @/zh-TW/.examples/getting-started/first-pika-basic-vue.pikainput.vue
 
 ## 3. 看看產生的結果
 
 PikaCSS 不會在 runtime 保留這個 object。integration 會把它轉成 atomic class names，並在 build 期間輸出 CSS。
 
-<<< @/zh-TW/.examples/getting-started/first-pika-output.css
+<<< @/zh-TW/.examples/getting-started/first-pika-basic.pikaoutput.css
 
 至少在一開始檢查一次 generated CSS。這會讓後面的文件讀起來像工程細節，而不是行銷用語。
 
@@ -34,7 +34,7 @@ PikaCSS 不會在 runtime 保留這個 object。integration 會把它轉成 atom
 
 你可以用多個 `pika()` arguments，把穩定的結構和局部意圖拆開。
 
-<<< @/zh-TW/.examples/getting-started/first-pika-multiple-args.vue
+<<< @/zh-TW/.examples/getting-started/first-pika-multiple-args.pikainput.vue
 
 這種 composition 模式，比把所有關注點都塞進同一個巨大 object 更容易擴展。
 
@@ -42,15 +42,15 @@ PikaCSS 不會在 runtime 保留這個 object。integration 會把它轉成 atom
 
 請使用最符合 framework 與實際消費 class names 位置的輸出形式。
 
-<<< @/zh-TW/.examples/getting-started/first-pika-variants.ts
+<<< @/zh-TW/.examples/getting-started/first-pika-variants.pikainput.ts
 
 ## 6. 把狀態與 at-rules 留在靜態輸入內
 
 當你要加入 pseudo states 或 at-rules 時，不需要離開 style object。
 
-<<< @/zh-TW/.examples/getting-started/first-pika-nested.vue
+<<< @/zh-TW/.examples/getting-started/first-pika-nested.pikainput.vue
 
-<<< @/zh-TW/.examples/getting-started/first-pika-nested-output.css
+<<< @/zh-TW/.examples/getting-started/first-pika-nested.pikaoutput.css
 
 ## 繼續往下之前要確認的事
 

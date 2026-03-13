@@ -16,9 +16,9 @@ The config supports name-only entries, tuple form, object form, autocomplete hin
 
 ## Use them in style definitions
 
-<<< @/.examples/guide/keyframes-usage.ts
+<<< @/.examples/guide/keyframes.pikainput.ts
 
-<<< @/.examples/guide/keyframes-output.css
+<<< @/.examples/guide/keyframes.pikaoutput.css
 
 ## Why this belongs in core features
 

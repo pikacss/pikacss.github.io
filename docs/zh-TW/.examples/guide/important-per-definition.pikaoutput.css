@@ -1,0 +1,8 @@
+@layer utilities {
+  .pk-a {
+    color: var(--text-muted);
+  }
+  .pk-b {
+    font-size: 0.875rem;
+  }
+}

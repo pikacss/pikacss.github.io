@@ -13,8 +13,7 @@ export default defineEngineConfig({
 		providers: {
 			acme: defineFontsProvider({
 				buildImportUrls(fonts, context) {
-					return `https://cdn.example.com/fonts.css?family=${fonts.map(font => font.name)
-						.join(',')}&display=${context.display}&text=${context.options.text}&subset=${fonts[0]?.options?.subset}`
+					return `https://cdn.example.com/fonts.css?family=${fonts.map(font => font.name).join(',')}&display=${context.display}&text=${context.options.text}&subset=${fonts[0]?.options?.subset}`
 				},
 			}),
 		},

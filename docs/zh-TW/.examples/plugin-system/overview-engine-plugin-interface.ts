@@ -1,19 +1,19 @@
 import type { Engine, EngineConfig } from '@pikacss/core'
 import { defineEnginePlugin } from '@pikacss/core'
 
-// 所有 hooks 均可選 — 只需實作 plugin 所需的部分。
-// Hook 參數型別會從 EnginePlugin 介面自動推導。
+// All hooks are optional — implement only what the plugin needs.
+// Hook parameter types are inferred automatically from the EnginePlugin interface.
 export default defineEnginePlugin({
 	name: 'example-plugin',
 	order: 'pre',
-	configureRawConfig(config: EngineConfig) { /* 在預設值確定前整形原始 config */ },
-	configureResolvedConfig(resolvedConfig) { /* 回應最終已解析的 config */ },
-	configureEngine(engine: Engine) { /* 呼叫公開的 engine API */ },
-	transformSelectors(selectors) { /* 過濾或修改 selector 清單 */ },
-	transformStyleItems(styleItems) { /* 映射或過濾提取的 style items */ },
-	transformStyleDefinitions(styleDefinitions) { /* 映射或過濾 style definitions */ },
-	rawConfigConfigured(config) { /* 讀取原始 config — 不可修改 */ },
-	preflightUpdated() { /* 回應 preflight 變更 */ },
-	atomicStyleAdded(atomicStyle) { /* 觀察已註冊的 atomic rules */ },
-	autocompleteConfigUpdated() { /* 回應 autocomplete config 變更 */ },
+	configureRawConfig(config: EngineConfig) { /* shape raw config before defaults settle */ },
+	configureResolvedConfig(resolvedConfig) { /* react to final resolved config */ },
+	configureEngine(engine: Engine) { /* call public engine APIs */ },
+	transformSelectors(selectors) { /* filter or modify the selector list */ },
+	transformStyleItems(styleItems) { /* map or filter extracted style items */ },
+	transformStyleDefinitions(styleDefinitions) { /* map or filter style definitions */ },
+	rawConfigConfigured(config) { /* observe raw config — do not mutate */ },
+	preflightUpdated() { /* react to preflight changes */ },
+	atomicStyleAdded(atomicStyle) { /* observe registered atomic rules */ },
+	autocompleteConfigUpdated() { /* react to autocomplete config changes */ },
 })

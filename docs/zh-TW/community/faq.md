@@ -22,9 +22,9 @@ description: 快速回答關於 build-time 行為、atomic 輸出、generated fi
 
 不是。輸出雖然是 atomic CSS，但 authoring model 是由 style definitions 驅動。你可以撰寫 style objects、selectors、variables、shortcuts 和 plugins，而不是只能從固定的 utility 字典裡挑選。
 
-<<< @/zh-TW/.examples/community/faq-atomic-input.ts
+<<< @/zh-TW/.examples/community/faq-atomic.pikainput.ts
 
-<<< @/zh-TW/.examples/community/faq-atomic-output.css
+<<< @/zh-TW/.examples/community/faq-atomic.pikaoutput.css
 
 ## Class token 順序會決定最終結果嗎？
 
@@ -36,7 +36,7 @@ description: 快速回答關於 build-time 行為、atomic 輸出、generated fi
 
 可以。巢狀 selectors 是正常 style-definition model 的一部分，不是另外開的一條逃生路徑。
 
-<<< @/zh-TW/.examples/community/faq-nested.ts
+<<< @/zh-TW/.examples/community/faq-nested.pikainput.ts
 
 ## 我應該永遠維持 zero-config 嗎？
 

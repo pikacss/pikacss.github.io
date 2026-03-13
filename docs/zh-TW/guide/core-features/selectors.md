@@ -14,9 +14,17 @@ description: 理解 `$` placeholder 的作用、學習如何定義 state、conte
 
 永遠要把條件登記為 config 裡的具名 selector，並以該名稱作為 key：
 
-<<< @/zh-TW/.examples/guide/built-ins/selectors-nesting-antipattern.ts
+正確寫法：使用已登記的 selector 名稱，讓 engine 輸出 flat atomic rule。
 
-<<< @/zh-TW/.examples/guide/built-ins/selectors-nesting-antipattern-output.css
+<<< @/zh-TW/.examples/guide/built-ins/selectors-nesting-correct.pikainput.ts
+
+<<< @/zh-TW/.examples/guide/built-ins/selectors-nesting-correct.pikaoutput.css
+
+錯誤寫法：像 `'&:hover'` 這種原始 CSS key 會改成輸出 nesting rule。
+
+<<< @/zh-TW/.examples/guide/built-ins/selectors-nesting-wrong.pikainput.ts
+
+<<< @/zh-TW/.examples/guide/built-ins/selectors-nesting-wrong.pikaoutput.css
 
 你在 selector config values 裡看到的 `$` 是一個 placeholder，標示生成的 atomic class name 在 CSS rule 中出現的位置。它是 engine config 語法，不是 CSS 語法，也永遠不會出現在 `pika()` 呼叫裡。
 :::
@@ -39,7 +47,7 @@ Engine 會在 build time 將 `$` 替換成生成的 class name：
 
 像 `@media` 這類 at-rules 不需要 `$`。Engine 會自動將原子 class 巢入 at-rule block 內：
 
-<<< @/zh-TW/.examples/guide/built-ins/selectors-at-rule-output.css
+<<< @/zh-TW/.examples/guide/built-ins/selectors-at-rule.pikaoutput.css
 
 ## 在 config 中定義 selectors
 
@@ -62,9 +70,9 @@ Config 支援四種形式：
 
 在任何傳入 `pika()` 的 style object 中，以已登記的 selector 名稱作為 key。Engine 會將其展開成對應的 CSS 條件。
 
-<<< @/zh-TW/.examples/guide/built-ins/selectors-usage.ts
+<<< @/zh-TW/.examples/guide/built-ins/selectors.pikainput.ts
 
-<<< @/zh-TW/.examples/guide/built-ins/selectors-output.css
+<<< @/zh-TW/.examples/guide/built-ins/selectors.pikaoutput.css
 
 ## Selector aliases
 

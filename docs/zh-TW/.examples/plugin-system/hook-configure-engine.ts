@@ -3,14 +3,14 @@ import { defineEnginePlugin } from '@pikacss/core'
 export const plugin = defineEnginePlugin({
 	name: 'example',
 
-	// 非同步 — engine 建立後呼叫
+	// Async — called after engine is created
 	configureEngine: async (engine) => {
-		// 新增 CSS 變數
+		// Add CSS variables
 		engine.variables.add({
 			'--brand-color': '#0ea5e9',
 		})
 
-		// 新增 shortcuts
+		// Add shortcuts
 		engine.shortcuts.add([
 			'flex-center',
 			{
@@ -20,17 +20,17 @@ export const plugin = defineEnginePlugin({
 			},
 		])
 
-		// 新增自訂 selectors
+		// Add custom selectors
 		engine.selectors.add(['hover', '$:hover'])
 
-		// 新增 keyframes 動畫
+		// Add keyframe animations
 		engine.keyframes.add([
 			'fade-in',
 			{ from: { opacity: '0' }, to: { opacity: '1' } },
 			['fade-in 0.3s ease'],
 		])
 
-		// 新增 preflight CSS
+		// Add preflight CSS
 		engine.addPreflight('*, *::before, *::after { box-sizing: border-box; }')
 	},
 })

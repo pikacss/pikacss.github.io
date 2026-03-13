@@ -14,15 +14,15 @@ There are two ways to apply a shortcut inside `pika()`.
 
 **String argument** — pass the shortcut name as the first argument to `pika()`. Additional style definitions can follow as extra arguments.
 
-<<< @/.examples/guide/built-ins/shortcuts-usage-string-arg.ts
+<<< @/.examples/guide/built-ins/shortcuts-string-arg.pikainput.ts
 
-<<< @/.examples/guide/built-ins/shortcuts-output-string-arg.css
+<<< @/.examples/guide/built-ins/shortcuts-string-arg.pikaoutput.css
 
 **`__shortcut` property** — include a `__shortcut` key in a style definition object. Set it to a shortcut name or an array of names. Other properties in the same object are applied on top of the shortcut.
 
-<<< @/.examples/guide/built-ins/shortcuts-usage-property.ts
+<<< @/.examples/guide/built-ins/shortcuts-property.pikainput.ts
 
-<<< @/.examples/guide/built-ins/shortcuts-output-property.css
+<<< @/.examples/guide/built-ins/shortcuts-property.pikaoutput.css
 
 ## Define shortcuts in config
 

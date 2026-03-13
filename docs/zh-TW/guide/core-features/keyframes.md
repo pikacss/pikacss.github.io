@@ -16,9 +16,9 @@ description: 把 animation names 與 frame definitions 註冊一次，讓 keyfra
 
 ## 在 style definitions 中使用它們
 
-<<< @/zh-TW/.examples/guide/keyframes-usage.ts
+<<< @/zh-TW/.examples/guide/keyframes.pikainput.ts
 
-<<< @/zh-TW/.examples/guide/keyframes-output.css
+<<< @/zh-TW/.examples/guide/keyframes.pikaoutput.css
 
 ## 為什麼這屬於 core features
 

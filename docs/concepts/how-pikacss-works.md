@@ -12,7 +12,7 @@ The important part is not just that CSS gets generated. The important part is th
 
 You write `pika()` calls in supported files:
 
-<<< @/.examples/principles/build-source.ts
+<<< @/.examples/concepts/build.pikainput.ts
 
 The engine only succeeds when that input is readable from source. It is not evaluating live runtime state.
 
@@ -20,7 +20,7 @@ The engine only succeeds when that input is readable from source. It is not eval
 
 The integration scans source files, extracts the style input, and turns it into atomic class names.
 
-<<< @/.examples/principles/build-compiled.ts
+<<< @/.examples/concepts/build-compiled.ts
 
 This is why the docs keep repeating static constraints. Extraction is the whole model.
 
@@ -28,15 +28,15 @@ This is why the docs keep repeating static constraints. Extraction is the whole 
 
 Those class names point to generated CSS declarations:
 
-<<< @/.examples/principles/build-generated.css
+<<< @/.examples/concepts/build.pikaoutput.css
 
 ## 4. Atomic output is reused when reuse is safe
 
 PikaCSS does not emit one class per component block. It breaks style content into reusable atomic declarations. When the same declaration appears again, the engine can reuse the same atomic class.
 
-<<< @/.examples/principles/build-dedup-source.ts
+<<< @/.examples/concepts/build-dedup.pikainput.ts
 
-<<< @/.examples/principles/build-dedup-output.css
+<<< @/.examples/concepts/build-dedup.pikaoutput.css
 
 ## 5. Overlap changes the reuse decision
 

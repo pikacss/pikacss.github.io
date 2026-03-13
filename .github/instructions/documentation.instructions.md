@@ -109,7 +109,7 @@ Because this docs site uses `vitepress-plugin-llms`, every markdown page should 
 - When localizing a page under `docs/zh-TW/`, preserve any existing `<llm-only>` and `<llm-exclude>` structure from the English source in the same position unless the English source changes first.
 
 ```markdown
-<<< @/.examples/getting-started/pika-basic.ts
+<<< @/.examples/getting-started/pika-basic.pikainput.ts
 <<< @/.examples/guide/config-basic.ts{3-5}
 ```
 
@@ -158,20 +158,32 @@ Not every page needs installation steps. Do not force the same outline onto page
 ```plaintext
 docs/.examples/
 ├── community/         # faq examples
+├── concepts/          # build-time model and cascade examples
 ├── getting-started/   # install, first-pika, zero-config
-├── guide/             # config, core features, built-ins
-│   └── built-ins/     # per-feature reference examples
-├── home/              # landing page examples
+├── guide/             # config and core feature examples
 ├── integrations/      # vite, nuxt, eslint, etc.
 ├── patterns/          # dynamic values, theming, component patterns
 ├── plugin-system/     # plugin authoring examples
 ├── plugins/           # reset, icons, typography, fonts
-└── principles/        # concepts and build-time model examples
+└── troubleshooting/   # recovery and debugging examples
 
 docs/zh-TW/.examples/  ← mirrors docs/.examples/ 1:1 with zh-TW comment translations
 ```
 
-Match the folder name to the docs section. Keep examples that are not yet referenced in any doc page unless the file is clearly misplaced or duplicates an existing referenced example in a different directory.
+Only reader-facing docs chapters may own long-term example roots. Do not introduce hidden taxonomy folders such as `principles` or `home` for user-facing examples. If an example is used by a page under `docs/concepts/`, place it under `docs/.examples/concepts/`; apply the same rule to every other docs chapter. Non-IA roots are invalid and must be renamed or removed.
+
+## Example Naming Policy
+
+- If a snippet exists to show `pika()` input and the emitted CSS output, use one scenario family with this minimum file set:
+  - `<name>.pikainput.ts`, `<name>.pikainput.tsx`, or `<name>.pikainput.vue`
+  - `<name>.pikaoutput.css`
+  - `<name>.test.ts`
+- Every `pika()` scenario must keep the full family. If `<name>.pikainput.*` exists, `<name>.pikaoutput.css` and `<name>.test.ts` must also exist.
+- A single docs scenario may have only one `pikainput` file. If a page needs a comparison such as valid vs invalid, React vs Vue, or before vs after, split it into separate scenario families such as `<name>-valid`, `<name>-invalid`, `<name>-react`, and `<name>-vue`.
+- Scenario-specific support files should keep semantic role names, but they must share the scenario prefix. Examples: `<name>.config.ts`, `<name>.helper.ts`, `<name>.types.ts`.
+- Use semantic scenario prefixes instead of numeric suffixes. Prefer names such as `<name>-basic`, `<name>-advanced`, and `<name>-invalid` over `<name>-1` and `<name>-2`.
+- Keep the test filename simple: `<name>.test.ts`. A test file may contain multiple assertions, but they must stay within one scenario family.
+- Do not keep temporary alias files or duplicate legacy names. Rename each example family directly to the canonical convention.
 
 ## Example Correctness Rules
 
@@ -180,18 +192,21 @@ Match the folder name to the docs section. Keep examples that are not yet refere
 - CSS property values in `pika()` calls must always be strings. `fontWeight: '600'` not `fontWeight: 600`. Number values are not valid `PropertyValue` types and will be silently dropped by the extractor.
 - Selectors inside `pika()` must use registered named selectors (`hover`, `dark`, `screen-md`), not raw CSS selector strings (`'&:hover'`, `'&:focus'`). Raw CSS pseudo-selectors produce CSS nesting output, not the flat atomic rules expected from the engine.
 - CSS at-rules such as `'@media (min-width: 768px)'` may be used directly as keys if no named selector is configured, but named selectors are always preferred for readability and autocomplete.
+- For normal usage-and-output documentation snippets, markdown should reference the canonical pair `<name>.pikainput.*` and `<name>.pikaoutput.css`. Do not use hand-authored CSS files for this normal path.
+- Hand-authored CSS files are reserved for anti-pattern documentation only. Use them only when the page needs an explanatory contrast, such as a nesting pitfall, ordering problem, or other mismatch that should not be presented as the engine's canonical output.
+- If an anti-pattern example still includes a real `pika()` input, keep the full family `<name>.pikainput.*`, `<name>.pikaoutput.css`, and `<name>.test.ts` alongside any manual illustration file.
 - CSS output examples (`.css` files) must be consistent with their paired source TypeScript examples. Check that every declaration in the output corresponds to a real engine-emitted rule from the source config and usage files.
 - When a config example demonstrates `pruneUnused: false` on a variable, the corresponding output file must include that variable's declaration.
 - Paired config + usage + output triples within the same doc section must all reference the same shortcut, variable, or keyframe names. A config file that defines `flex-center` cannot be paired with a usage file that calls `cluster`.
 
 ## Example Output Verification
 
-CSS output files (`*-output.css`, `*-generated.css`) that demonstrate engine-generated results are **engine-managed snapshots** verified by Vitest. They must not be hand-edited.
+CSS output files (`*.pikaoutput.css`) that demonstrate engine-generated results are **engine-managed snapshots** verified by Vitest. They must not be hand-edited.
 
 ### Architecture
 
-- Each testable output file has a co-located `*-output.test.ts` (or `*-generated.test.ts`) that uses `renderExampleCSS()` from `__test-utils__/render-example.ts`.
-- The test helper creates an integration context with the example's `*-config.ts`, transforms the `*-usage.ts` source code, and renders CSS output.
+- Each `pika()` scenario has a co-located `<name>.test.ts` that uses `renderExampleCSS()` from `__test-utils__/render-example.ts`.
+- The test helper creates an integration context with the scenario's support files, transforms the `<name>.pikainput.*` source code, and renders CSS output.
 - `toMatchFileSnapshot()` ensures the output file matches the engine's actual CSS output.
 
 ### Commands
@@ -204,20 +219,21 @@ pnpm docs:update-examples      # regenerate output files from engine (vitest --u
 ### Rules
 
 - Every example file in `docs/.examples/` **must** have corresponding test coverage — no exceptions:
-  - Files with `pika()` calls: individual `*-output.test.ts` using `renderExampleCSS()` + `toMatchFileSnapshot()`.
-  - Files with `pika()` calls that use dynamic/non-static values (anti-patterns): individual `*-output.test.ts` asserting `expect(css).toBe('')`.
-  - Files with `pika()` calls referencing local variables (e.g., `pika(varName)`): individual `*-output.test.ts` asserting empty CSS (transform cannot resolve variable references).
-  - Plugin-dependent `pika()` examples: individual `*-output.test.ts` with plugin config (e.g., `{ plugins: [typography()] }` or `{ plugins: [icons()], icons: { collections: { ... } } }`).
+  - Files with `pika()` calls: individual `<name>.test.ts` using `renderExampleCSS()` + `toMatchFileSnapshot('./<name>.pikaoutput.css')`.
+  - Files with `pika()` calls that use dynamic or non-static values (anti-patterns): individual `<name>.test.ts` asserting the generated CSS matches the intentionally empty `<name>.pikaoutput.css` snapshot.
+  - Files with `pika()` calls referencing local variables (e.g., `pika(varName)`): individual `<name>.test.ts` asserting empty CSS by matching the corresponding empty `<name>.pikaoutput.css` snapshot.
+  - Plugin-dependent `pika()` examples: individual `<name>.test.ts` with plugin config (e.g., `{ plugins: [typography()] }` or `{ plugins: [icons()], icons: { collections: { ... } } }`).
   - Shell scripts (`.sh`): covered by `__test-utils__/shell-scripts.test.ts` batch test.
   - All other files (configs, types, HTML, `.gitignore`, `.txt`, `.css`, `.mjs`): covered by `__test-utils__/completeness.test.ts` (non-empty content check + pika() file coverage check).
-- Never hand-edit output CSS files. Run `pnpm docs:update-examples` to regenerate them.
-- Manually maintained CSS illustrations (e.g., `selectors-nesting-antipattern-output.css`, `order-class-order-problem.css`, `icons-mask-output.css`, `icons-bg-output.css`) are verified for non-empty content by the completeness test. If the corresponding source file also has `pika()` calls, a separate engine-generated snapshot (e.g., `*-generated.css`) must be created alongside the manual illustration.
+- Never hand-edit `*.pikaoutput.css` files. Run `pnpm docs:update-examples` to regenerate them.
+- Manually maintained CSS illustrations should use a separate semantic role name such as `<name>.manual.css` and should appear only in anti-pattern documentation. If the corresponding source file also has `pika()` calls, keep the engine-generated `<name>.pikaoutput.css` snapshot alongside the manual illustration.
+- `pnpm docs:check-examples` is a blocking validation step. It must fail when it finds non-IA roots, legacy family naming, or legacy batch scenario tests.
 - When creating a new example:
   1. Write the source file(s) in the appropriate `docs/.examples/` subdirectory.
   2. Create a corresponding test file following the conventions above.
   3. Run `pnpm docs:update-examples` to generate snapshots.
   4. Review the generated output for correctness.
-  5. Copy any new `*-output.css` or `*-generated.css` to `docs/zh-TW/.examples/` counterparts.
+  5. Copy any new `<name>.pikaoutput.css` and any anti-pattern-only companion files to `docs/zh-TW/.examples/` counterparts.
 - When modifying engine behavior, run `pnpm docs:verify-examples` to detect affected outputs, then `pnpm docs:update-examples` to regenerate.
 - zh-TW output CSS files must be identical to their English counterparts. The `zh-tw-sync.test.ts` verifies this automatically.
 
@@ -306,8 +322,9 @@ pnpm docs:update-examples      # regenerate output files from engine (vitest --u
 ## Source Of Truth
 
 - English examples under `docs/.examples/` are the only source of truth.
-- Every localized example under `docs/.examples/zh-TW/` must mirror the English source 1:1.
+- Every localized example under `docs/zh-TW/.examples/` must mirror the English source 1:1.
 - Keep the same relative path, file name, file type, code order, and snippet shape as the English source.
+- Keep the same scenario family naming, including `.pikainput.*`, `.pikaoutput.css`, `.test.ts`, and any support-file prefixes.
 - Do not add, remove, or reorder code, comments, or output blocks unless the English source changes first.
 
 ## Localization Workflow

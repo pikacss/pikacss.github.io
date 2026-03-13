@@ -12,11 +12,11 @@ The browser resolves conflicts by comparing the generated CSS declarations in th
 
 You may have seen this in utility-first workflows such as UnoCSS or TailwindCSS.
 
-<<< @/.examples/principles/order-class-order-problem.tsx
+<<< @/.examples/concepts/order-class-order-problem.tsx
 
 Both elements above can still point at the same shared global declarations:
 
-<<< @/.examples/principles/order-class-order-problem.css
+<<< @/.examples/concepts/order-class-order-problem.manual.css
 
 That means both elements use the same stylesheet order, regardless of the token order inside the `class` attribute.
 
@@ -47,9 +47,9 @@ When the engine sees a later declaration that can change the effective result of
 
 In practice, that means author order is preserved where it actually matters.
 
-<<< @/.examples/principles/order-pika-overlap.ts
+<<< @/.examples/concepts/order-pika-overlap.pikainput.ts
 
-<<< @/.examples/principles/order-pika-overlap.css
+<<< @/.examples/concepts/order-pika-overlap.pikaoutput.css
 
 In this example, `padding-left: 8px` appears twice on purpose.
 

@@ -1,7 +1,7 @@
 // pika.config.ts
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
-import { defineEngineConfig } from '@pikacss/core'
 import { icons } from '@pikacss/plugin-icons'
+import { defineEngineConfig } from '@pikacss/core'
 
 export default defineEngineConfig({
 	plugins: [icons()],
@@ -11,4 +11,4 @@ export default defineEngineConfig({
 		},
 	},
 })
-// 用法：pika('i-custom:logo') → ./src/assets/icons/logo.svg
+// Usage: pika('i-custom:logo') -> ./src/assets/icons/logo.svg

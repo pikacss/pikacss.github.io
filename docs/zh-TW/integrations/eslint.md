@@ -30,11 +30,11 @@ ESLint integration 的目的，是在最便宜的階段攔下無效的 `pika()` 
 
 ## 合法用法長什麼樣子
 
-<<< @/zh-TW/.examples/integrations/eslint-valid-example.ts
+<<< @/zh-TW/.examples/integrations/eslint-valid-example.pikainput.ts
 
 ## 非法用法長什麼樣子
 
-<<< @/zh-TW/.examples/integrations/eslint-invalid-example.ts
+<<< @/zh-TW/.examples/integrations/eslint-invalid-example.pikainput.ts
 
 ## 為什麼值得強制執行
 

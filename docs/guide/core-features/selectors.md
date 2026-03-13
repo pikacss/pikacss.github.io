@@ -14,9 +14,17 @@ A common mistake is writing raw CSS selector syntax such as `'&:hover'` directly
 
 Always register the condition as a named selector in config and use that name as the key:
 
-<<< @/.examples/guide/built-ins/selectors-nesting-antipattern.ts
+Correct: use the registered selector name so the engine emits a flat atomic rule.
 
-<<< @/.examples/guide/built-ins/selectors-nesting-antipattern-output.css
+<<< @/.examples/guide/built-ins/selectors-nesting-correct.pikainput.ts
+
+<<< @/.examples/guide/built-ins/selectors-nesting-correct.pikaoutput.css
+
+Wrong: a raw CSS key such as `'&:hover'` renders a nesting rule instead.
+
+<<< @/.examples/guide/built-ins/selectors-nesting-wrong.pikainput.ts
+
+<<< @/.examples/guide/built-ins/selectors-nesting-wrong.pikaoutput.css
 
 The `$` character you see in selector config values is a placeholder. It marks where the generated atomic class name should appear in the CSS rule. It is engine config syntax, not CSS syntax, and it never appears inside `pika()` calls.
 :::
@@ -35,7 +43,7 @@ The engine replaces `$` with the generated class name at build time:
 
 At-rules such as `@media` do not need `$`. The engine nests the atomic class automatically inside the at-rule block:
 
-<<< @/.examples/guide/built-ins/selectors-at-rule-output.css
+<<< @/.examples/guide/built-ins/selectors-at-rule.pikaoutput.css
 
 ## Define selectors in config
 
@@ -58,9 +66,9 @@ A static selector can expand to multiple CSS selector patterns. Wrap the pattern
 
 Use a registered selector name as a key in any style object passed to `pika()`. The engine expands it into the corresponding CSS condition.
 
-<<< @/.examples/guide/built-ins/selectors-usage.ts
+<<< @/.examples/guide/built-ins/selectors.pikainput.ts
 
-<<< @/.examples/guide/built-ins/selectors-output.css
+<<< @/.examples/guide/built-ins/selectors.pikaoutput.css
 
 ## Selector aliases
 

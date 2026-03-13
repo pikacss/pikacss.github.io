@@ -30,7 +30,7 @@ Use the typography plugin for:
 
 ## Usage
 
-<<< @/.examples/plugins/typography-usage-prose.ts
+<<< @/.examples/plugins/typography-usage-prose.pikainput.ts
 
 The plugin works best when prose is treated as a content surface with its own defaults, not as a shortcut for avoiding deliberate component styling.
 

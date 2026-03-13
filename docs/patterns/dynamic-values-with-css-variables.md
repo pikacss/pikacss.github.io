@@ -20,7 +20,7 @@ When a value must change at runtime, keep the style definition static inside `pi
 
 This is the runtime CSS-in-JS habit that usually causes the first mismatch with PikaCSS.
 
-<<< @/.examples/patterns/dynamic-values-bad.tsx
+<<< @/.examples/patterns/dynamic-values-bad.pikainput.tsx
 
 `pika()` cannot safely extract that object because the style values only become knowable after the application runs.
 
@@ -28,7 +28,7 @@ This is the runtime CSS-in-JS habit that usually causes the first mismatch with 
 
 The fix is not to force more runtime logic into `pika()`. The fix is to let PikaCSS emit static declarations that reference CSS variables, then assign those variables from your framework or DOM code.
 
-<<< @/.examples/patterns/dynamic-values-react.tsx
+<<< @/.examples/patterns/dynamic-values-react.pikainput.tsx
 
 This works because PikaCSS only needs to emit declarations such as `width: var(--progress-width)` or `background-color: var(--progress-color)`. Your app still owns the runtime value assignment.
 
@@ -43,7 +43,7 @@ Many components need both forms of dynamism at once:
 
 Handle those concerns separately.
 
-<<< @/.examples/patterns/dynamic-values-variants.tsx
+<<< @/.examples/patterns/dynamic-values-variants.pikainput.tsx
 
 Choose the predeclared class string at runtime. Bind the changing value through a CSS variable.
 

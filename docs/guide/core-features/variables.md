@@ -24,9 +24,9 @@ If a token belongs to a stable family such as color, length, or time, use `seman
 
 ## Use variables in style definitions
 
-<<< @/.examples/guide/variables-usage.ts
+<<< @/.examples/guide/variables.pikainput.ts
 
-<<< @/.examples/guide/variables-output.css
+<<< @/.examples/guide/variables.pikaoutput.css
 
 ## What variables are good at
 

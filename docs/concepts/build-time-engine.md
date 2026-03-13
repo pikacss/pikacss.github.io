@@ -10,11 +10,11 @@ PikaCSS is easiest to use when you remember one rule: the styling engine runs du
 
 Once transformed, the production bundle carries static class names and generated CSS. There is no client-side styling engine resolving style objects on page load.
 
-<<< @/.examples/principles/zero-source.ts
+<<< @/.examples/concepts/zero.pikainput.ts
 
-<<< @/.examples/principles/zero-compiled.ts
+<<< @/.examples/concepts/zero-compiled.ts
 
-<<< @/.examples/principles/zero-generated.css
+<<< @/.examples/concepts/zero.pikaoutput.css
 
 ## Why static inputs are non-negotiable
 

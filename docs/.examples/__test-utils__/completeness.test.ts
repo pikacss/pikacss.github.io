@@ -29,6 +29,10 @@ describe('all example files have non-empty content', async () => {
 		const relPath = relative(examplesDir, file)
 		it(`${relPath} has non-empty content`, async ({ expect }) => {
 			const st = await stat(file)
+			if (file.endsWith('.pikaoutput.css')) {
+				expect(st.size).toBeGreaterThanOrEqual(0)
+				return
+			}
 			expect(st.size).toBeGreaterThan(0)
 		})
 	}

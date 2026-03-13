@@ -18,7 +18,7 @@ Use engine config when the project wants one consistent default rule.
 
 Use `__important` when one style definition needs to opt in or opt out without changing the global default.
 
-<<< @/.examples/guide/important-per-definition.ts
+<<< @/.examples/guide/important-per-definition.pikainput.ts
 
 ## When to use it
 

@@ -29,9 +29,9 @@ Use the icons plugin when you want:
 
 ## Usage
 
-<<< @/.examples/plugins/icons-usage.ts
+<<< @/.examples/plugins/icons-usage.pikainput.ts
 
-<<< @/.examples/plugins/icons-usage.vue
+<<< @/.examples/plugins/icons-usage-vue.pikainput.vue
 
 The important part is not only that icons work. The icon name still needs to appear inside static PikaCSS input, even when you later bind the returned class names in a template. That keeps icon usage reviewable static source and makes search, linting, and naming conventions much easier to enforce across a large codebase.
 

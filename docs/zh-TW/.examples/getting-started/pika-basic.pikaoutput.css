@@ -1,0 +1,19 @@
+@layer utilities {
+  .pk-a {
+    padding: 1rem;
+  }
+  .pk-b {
+    border-radius: 0.75rem;
+  }
+  .pk-c {
+    background-color: white;
+  }
+  .pk-d {
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  }
+  hover {
+    .pk-e {
+      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.12);
+    }
+  }
+}

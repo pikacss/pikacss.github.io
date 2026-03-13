@@ -25,7 +25,7 @@ PikaCSS 是一個 build-time atomic CSS-in-JS engine。你在 JavaScript 或 Typ
 
 你依然是在原始碼裡撰寫 style objects、巢狀 selectors 與 composition。差別在於，瀏覽器不會收到這整套 object model 當成 styling engine。PikaCSS 會在 build 期間抽出它能理解的內容、輸出 atomic CSS，最後在 runtime 只留下 class-name 結果。
 
-<<< @/zh-TW/.examples/getting-started/pika-basic-usage.ts
+<<< @/zh-TW/.examples/getting-started/pika-basic.pikainput.ts
 
 ## 為什麼團隊會選它
 

@@ -1,0 +1,7 @@
+@layer utilities {
+  &:hover {
+    .pk-a {
+      color: blue;
+    }
+  }
+}

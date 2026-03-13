@@ -16,17 +16,17 @@ Import the virtual CSS module in your application entry:
 
 This is the smallest useful `pika()` call:
 
-<<< @/.examples/getting-started/first-pika-basic.ts
+<<< @/.examples/getting-started/first-pika-basic.pikainput.ts
 
 If you are working in Vue, the same idea looks like this:
 
-<<< @/.examples/getting-started/first-pika-basic.vue
+<<< @/.examples/getting-started/first-pika-basic-vue.pikainput.vue
 
 ## 3. Look at the generated result
 
 PikaCSS does not keep this object around at runtime. The integration turns it into atomic class names and emits CSS during the build.
 
-<<< @/.examples/getting-started/first-pika-output.css
+<<< @/.examples/getting-started/first-pika-basic.pikaoutput.css
 
 Inspect the generated CSS once, early. It makes the rest of the docs read like engineering details instead of marketing language.
 
@@ -34,7 +34,7 @@ Inspect the generated CSS once, early. It makes the rest of the docs read like e
 
 Use multiple `pika()` arguments to separate stable structure from local intent.
 
-<<< @/.examples/getting-started/first-pika-multiple-args.vue
+<<< @/.examples/getting-started/first-pika-multiple-args.pikainput.vue
 
 That composition pattern scales better than collapsing every concern into one giant object.
 
@@ -42,15 +42,15 @@ That composition pattern scales better than collapsing every concern into one gi
 
 Use the output form that best matches the framework and the place where you consume the class names.
 
-<<< @/.examples/getting-started/first-pika-variants.ts
+<<< @/.examples/getting-started/first-pika-variants.pikainput.ts
 
 ## 6. Keep states and at-rules inside static input
 
 You do not need to leave the style object when you add pseudo states or at-rules.
 
-<<< @/.examples/getting-started/first-pika-nested.vue
+<<< @/.examples/getting-started/first-pika-nested.pikainput.vue
 
-<<< @/.examples/getting-started/first-pika-nested-output.css
+<<< @/.examples/getting-started/first-pika-nested.pikaoutput.css
 
 ## What to verify before continuing
 

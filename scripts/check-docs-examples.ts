@@ -22,6 +22,20 @@ const rootDir = resolve(__dirname, '..')
 const docsDir = resolve(rootDir, 'docs')
 const examplesDir = resolve(docsDir, '.examples')
 
+const DOCS_EXAMPLE_ROOTS = new Set([
+	'community',
+	'concepts',
+	'getting-started',
+	'guide',
+	'integrations',
+	'patterns',
+	'plugin-system',
+	'plugins',
+	'troubleshooting',
+])
+
+const LEGACY_EXAMPLE_ROOTS = new Set(['home', 'principles'])
+
 const verbose = process.argv.includes('--verbose')
 const shouldClean = process.argv.includes('--clean')
 
@@ -49,6 +63,57 @@ async function findFiles(
 async function fileExists(p: string): Promise<boolean> {
 	return access(p)
 		.then(() => true, () => false)
+}
+
+function getExampleRoot(ref: string): string {
+	return ref.split('/')[0] ?? ''
+}
+
+function getCanonicalFamilyBase(name: string): string | null {
+	const pikaInputMatch = name.match(/^(.*)\.pikainput\.[^.]+$/)
+	if (pikaInputMatch)
+		return pikaInputMatch[1]!
+
+	const pikaOutputMatch = name.match(/^(.*)\.pikaoutput\.css$/)
+	if (pikaOutputMatch)
+		return pikaOutputMatch[1]!
+
+	return null
+}
+
+function getCanonicalTestPath(absPath: string): string | null {
+	const familyBase = getCanonicalFamilyBase(basename(absPath))
+	if (!familyBase)
+		return null
+
+	return resolve(dirname(absPath), `${familyBase}.test.ts`)
+}
+
+function isCanonicalPikaInput(name: string): boolean {
+	return /\.pikainput\.(?:ts|tsx|vue)$/.test(name)
+}
+
+function isCanonicalPikaOutput(name: string): boolean {
+	return name.endsWith('.pikaoutput.css')
+}
+
+function isManualCss(name: string): boolean {
+	return name.endsWith('.manual.css')
+}
+
+function isCanonicalSupportName(name: string): boolean {
+	return /\.(?:config|helper|interface|types)\.(?:ts|tsx|js|mjs)$/.test(name)
+}
+
+function isLegacyBatchScenarioTest(name: string): boolean {
+	return name === 'source-files-output.test.ts'
+}
+
+function hasPikaUsage(content: string): boolean {
+	const withoutComments = content
+		.replace(/\/\*[\s\S]*?\*\//g, '')
+		.replace(/^\s*\/\/.*$/gm, '')
+	return /\bpika\s*\(|pika\.\w+\s*\(/.test(withoutComments)
 }
 
 /**
@@ -125,7 +190,7 @@ function classify(ref: string): CategoryId {
 	if (ext === '.gitignore' || name === '.gitignore')
 		return 'config-file'
 	if (ext === '.css') {
-		return (name.includes('-output') || name.includes('-generated'))
+		return (name.includes('-output') || name.includes('-generated') || isCanonicalPikaOutput(name))
 			? 'css-output'
 			: 'css-plain'
 	}
@@ -133,7 +198,8 @@ function classify(ref: string): CategoryId {
 		return 'text'
 	if (SOURCE_EXTS.has(ext)) {
 		const isConfigOrType
-			= CONFIG_OR_TYPE_INCLUDES.some(s => name.includes(s))
+			= isCanonicalSupportName(name)
+				|| CONFIG_OR_TYPE_INCLUDES.some(s => name.includes(s))
 				|| CONFIG_OR_TYPE_SUFFIXES.some(s => name.endsWith(s))
 				|| CONFIG_OR_TYPE_PREFIXES.some(s => name.startsWith(s))
 		return isConfigOrType ? 'config-or-type' : 'source'
@@ -184,6 +250,13 @@ async function main(): Promise<void> {
 		while ((m = fileRef.exec(content)) !== null) {
 			mentioned.add(m[1]!)
 		}
+
+		const extensionlessRef = /['"`](\.\/[^'"`\n.][^'"`\n]*)['"`]/g
+		while ((m = extensionlessRef.exec(content)) !== null) {
+			const ref = m[1]!
+			mentioned.add(ref)
+			mentioned.add(basename(ref))
+		}
 	}
 
 	// 5. Parse every markdown file and collect refs
@@ -195,27 +268,55 @@ async function main(): Promise<void> {
 		hasTest: boolean
 		fileExists: boolean
 		kind: CategoryId
+		requiresTest: boolean
+	}
+
+	interface ZhTWRefInfo {
+		/** Path relative to docs/zh-TW/.examples/ */
+		ref: string
+		/** zh-TW markdown file (absolute) where it appears */
+		mdFile: string
+		fileExists: boolean
 	}
 
 	const allRefInfos: RefInfo[] = []
+	const allZhTWRefInfos: ZhTWRefInfo[] = []
 	const seenRefs = new Set<string>()
+	const seenZhTWRefs = new Set<string>()
+	const invalidRoots = new Set<string>()
 
 	for (const mdFile of mdFiles) {
 		const content = await readFile(mdFile, 'utf-8')
 		const refs = extractExampleRefs(content)
 		for (const ref of refs) {
+			const root = getExampleRoot(ref)
+			if (!DOCS_EXAMPLE_ROOTS.has(root))
+				invalidRoots.add(ref)
+
 			const absPath = resolve(examplesDir, ref)
 			const dir = dirname(absPath)
 			const name = basename(absPath)
 			const stem = basename(absPath, extname(absPath))
 			const kind = classify(ref)
+			const exists = await fileExists(absPath)
+			let requiresTest = kind === 'css-output'
+
+			if (exists && kind === 'source') {
+				const sourceContent = await readFile(absPath, 'utf-8')
+				requiresTest = hasPikaUsage(sourceContent)
+			}
 
 			// Determine if a test covers this file
 			let hasTest = false
 
 			// 5a. Direct test file with same stem: foo.css -> foo.test.ts
-			const directTest = resolve(dir, `${stem}.test.ts`)
-			if (await fileExists(directTest)) {
+			const directTests = [resolve(dir, `${stem}.test.ts`)]
+			const canonicalTest = getCanonicalTestPath(absPath)
+			if (canonicalTest)
+				directTests.push(canonicalTest)
+
+			if (await Promise.any(directTests.map(fileExists))
+				.catch(() => false)) {
 				hasTest = true
 			}
 
@@ -241,19 +342,45 @@ async function main(): Promise<void> {
 				}
 			}
 
-			const exists = await fileExists(absPath)
-
 			// Deduplicate identical refs (same file, multiple MD refs)
 			const dedupeKey = ref
 			if (!seenRefs.has(dedupeKey)) {
 				seenRefs.add(dedupeKey)
-				allRefInfos.push({ ref, mdFile, hasTest, fileExists: exists, kind })
+				allRefInfos.push({ ref, mdFile, hasTest, fileExists: exists, kind, requiresTest })
 			}
 			else {
 				// Already seen; update hasTest if we now found a test
 				const existing = allRefInfos.find(r => r.ref === dedupeKey)
 				if (existing && !existing.hasTest && hasTest)
 					existing.hasTest = true
+				if (existing)
+					existing.requiresTest = existing.requiresTest || requiresTest
+			}
+		}
+	}
+
+	const zhTWDocsDir = resolve(docsDir, 'zh-TW')
+	const zhTWExamplesDir = resolve(zhTWDocsDir, '.examples')
+	const zhTWMdFiles = await findFiles(
+		zhTWDocsDir,
+		name => name.endsWith('.md'),
+	)
+
+	for (const mdFile of zhTWMdFiles) {
+		const content = await readFile(mdFile, 'utf-8')
+		const refs = extractZhTWExampleRefs(content)
+		for (const ref of refs) {
+			const absPath = resolve(zhTWExamplesDir, ref)
+			const exists = await fileExists(absPath)
+
+			if (!seenZhTWRefs.has(ref)) {
+				seenZhTWRefs.add(ref)
+				allZhTWRefInfos.push({ ref, mdFile, fileExists: exists })
+			}
+			else if (!exists) {
+				const existing = allZhTWRefInfos.find(r => r.ref === ref)
+				if (existing)
+					existing.fileExists = false
 			}
 		}
 	}
@@ -276,13 +403,39 @@ async function main(): Promise<void> {
 
 	const unreferencedFiles: string[] = []
 	const testOnlyFiles: string[] = []
+	const legacyRootFiles = new Set<string>()
+	const legacyNamingFiles = new Set<string>()
+	const batchScenarioTests = new Set<string>()
+	const fileContents = new Map<string, string>()
+
+	await Promise.all(
+		allExampleFiles.map(async (file) => {
+			const ext = extname(file)
+				.toLowerCase()
+			if (SOURCE_EXTS.has(ext))
+				fileContents.set(file, await readFile(file, 'utf-8'))
+		}),
+	)
 
 	for (const f of allExampleFiles) {
+		const rel = relative(examplesDir, f)
+		const root = getExampleRoot(rel)
+		if (!DOCS_EXAMPLE_ROOTS.has(root))
+			legacyRootFiles.add(rel)
+
+		const name = basename(f)
+		const isLegacyOutput = name.includes('-output.css') || name.includes('-generated.css')
+		const content = fileContents.get(f) ?? ''
+		const isPikaSource = hasPikaUsage(content)
+		const isLegacyPikaInput = isPikaSource && !isCanonicalPikaInput(name)
+
+		if ((isLegacyPikaInput || isLegacyOutput) && !isManualCss(name))
+			legacyNamingFiles.add(rel)
+
 		if (referencedAbsPaths.has(f))
 			continue
 
 		const dir = dirname(f)
-		const name = basename(f)
 		const stem = basename(f, extname(f))
 
 		// Check if a co-located test mentions this file by name or stem
@@ -307,7 +460,6 @@ async function main(): Promise<void> {
 			}
 		}
 
-		const rel = relative(examplesDir, f)
 		if (neededByTest) {
 			testOnlyFiles.push(rel)
 		}
@@ -316,13 +468,21 @@ async function main(): Promise<void> {
 		}
 	}
 
+	for (const testFile of testFiles) {
+		const rel = relative(examplesDir, testFile)
+		if (isLegacyBatchScenarioTest(basename(testFile)))
+			batchScenarioTests.add(rel)
+	}
+
 	// 7. Render report
-	const missingTest = allRefInfos.filter(r => !r.hasTest && r.fileExists)
+	const missingTest = allRefInfos.filter(r => r.requiresTest && !r.hasTest && r.fileExists)
 	const missingFile = allRefInfos.filter(r => !r.fileExists)
+	const missingZhTWFile = allZhTWRefInfos.filter(r => !r.fileExists)
+	const structuralViolations = invalidRoots.size + legacyRootFiles.size + legacyNamingFiles.size + batchScenarioTests.size
 
 	const total = allRefInfos.length
 	const covered = allRefInfos.filter(r => r.hasTest && r.fileExists).length
-	const hasIssues = missingTest.length > 0 || unreferencedFiles.length > 0 || missingFile.length > 0
+	const hasIssues = missingTest.length > 0 || unreferencedFiles.length > 0 || missingFile.length > 0 || missingZhTWFile.length > 0 || structuralViolations > 0
 
 	console.log('\n📋 Docs Example Test Coverage Report')
 	console.log('='.repeat(50))
@@ -330,10 +490,14 @@ async function main(): Promise<void> {
 	console.log(`  Covered by tests          : ${covered}`)
 	console.log(`  Missing tests             : ${missingTest.length}`)
 	console.log(`  Unreferenced files        : ${unreferencedFiles.length}`)
+	console.log(`  Structural violations     : ${structuralViolations}`)
 	if (testOnlyFiles.length > 0)
 		console.log(`  Test-only (not in docs)   : ${testOnlyFiles.length}`)
 	if (missingFile.length > 0) {
 		console.log(`  Broken references         : ${missingFile.length}`)
+	}
+	if (missingZhTWFile.length > 0) {
+		console.log(`  Broken zh-TW refs         : ${missingZhTWFile.length}`)
 	}
 	console.log('='.repeat(50))
 
@@ -347,8 +511,45 @@ async function main(): Promise<void> {
 		}
 	}
 
+	if (missingZhTWFile.length > 0) {
+		console.log('\n🔴 Broken zh-TW example references (localized file does not exist):')
+		for (const r of missingZhTWFile) {
+			const relMd = relative(rootDir, r.mdFile)
+			console.log(`   ❌ zh-TW/.examples/${r.ref}`)
+			if (verbose)
+				console.log(`      referenced in: ${relMd}`)
+		}
+	}
+
 	if (!hasIssues) {
 		console.log('\n✅ All referenced example files have tests and no orphaned files found!\n')
+	}
+
+	if (invalidRoots.size > 0 || legacyRootFiles.size > 0) {
+		console.log('\n🔴 Invalid example roots: example files outside the formal docs IA roots:\n')
+		for (const ref of [...new Set([...invalidRoots, ...legacyRootFiles])].sort()) {
+			const root = getExampleRoot(ref)
+			const note = LEGACY_EXAMPLE_ROOTS.has(root)
+				? 'legacy hidden root'
+				: 'unknown root'
+			console.log(`   ⚠️  .examples/${ref}  [${note}]`)
+		}
+	}
+
+	if (legacyNamingFiles.size > 0) {
+		console.log('\n🔴 Invalid example family names detected:\n')
+		for (const ref of [...legacyNamingFiles].sort())
+			console.log(`   ⚠️  .examples/${ref}`)
+	}
+
+	if (batchScenarioTests.size > 0) {
+		console.log('\n🔴 Invalid legacy batch scenario tests detected:\n')
+		for (const ref of [...batchScenarioTests].sort())
+			console.log(`   ⚠️  .examples/${ref}`)
+	}
+
+	if (!hasIssues) {
+		console.log('\n✅ No blocking docs-example integrity issues found.\n')
 		return
 	}
 

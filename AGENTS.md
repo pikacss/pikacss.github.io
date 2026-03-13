@@ -99,4 +99,4 @@ Docs live in `docs/` (VitePress). All code examples must be stored in `docs/.exa
 
 For full documentation authoring conventions, see `.github/instructions/documentation.instructions.md`.
 For zh-TW localized markdown pages, also follow `.github/instructions/documentation.instructions.md` (zh-TW Translation section).
-For zh-TW localized example files under `docs/.examples/zh-TW/`, also follow `.github/instructions/documentation.instructions.md` (zh-TW Example Localization section).
+For zh-TW localized example files under `docs/zh-TW/.examples/`, also follow `.github/instructions/documentation.instructions.md` (zh-TW Example Localization section).

@@ -21,11 +21,11 @@ Those four checks rule out most first-run failures. If they are wrong, changing 
 
 This is the most common failure mode.
 
-<<< @/.examples/community/faq-static-bad.ts
+<<< @/.examples/community/faq-static-bad.pikainput.ts
 
 PikaCSS needs build-time-readable input. When the styling choice is truly runtime data, move the runtime part into CSS variables and keep the style shape static.
 
-<<< @/.examples/community/faq-static-ok.ts
+<<< @/.examples/community/faq-static-ok.pikainput.ts
 
 See [Dynamic Values With CSS Variables](/patterns/dynamic-values-with-css-variables) for the workflow that preserves static extraction while still allowing per-instance values.
 

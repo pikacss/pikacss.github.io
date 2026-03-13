@@ -1,0 +1,11 @@
+@layer utilities {
+  .pk-a {
+    background-color: blue;
+  }
+  .pk-b {
+    color: white;
+  }
+  .pk-c {
+    padding: 8px 16px;
+  }
+}

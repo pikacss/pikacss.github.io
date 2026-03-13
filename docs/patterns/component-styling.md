@@ -12,7 +12,7 @@ When component styling becomes difficult, the usual cause is not missing power. 
 
 Base styles, variant styles, and local overrides should usually be separate arguments.
 
-<<< @/.examples/getting-started/first-pika-multiple-args.vue
+<<< @/.examples/getting-started/first-pika-multiple-args.pikainput.vue
 
 That pattern scales because each piece keeps one job:
 
@@ -28,9 +28,9 @@ When the same style bundle appears across several components, move it into a sho
 
 <<< @/.examples/guide/config-shortcuts.ts
 
-<<< @/.examples/guide/shortcuts-usage.ts
+<<< @/.examples/guide/shortcuts.pikainput.ts
 
-<<< @/.examples/guide/shortcuts-output.css
+<<< @/.examples/guide/shortcuts.pikaoutput.css
 
 Shortcuts are a good home for shared static recipes. They are not a place to hide runtime decisions.
 

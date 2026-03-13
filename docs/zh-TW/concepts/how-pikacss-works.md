@@ -12,7 +12,7 @@ description: 從靜態原始碼輸入一路看到抽出的 class names 與 gener
 
 你會在支援的檔案中寫 `pika()` 呼叫：
 
-<<< @/zh-TW/.examples/principles/build-source.ts
+<<< @/zh-TW/.examples/concepts/build.pikainput.ts
 
 只有當這些輸入能從原始碼直接讀懂時，engine 才會成功。它不是在讀取 live runtime state。
 
@@ -20,7 +20,7 @@ description: 從靜態原始碼輸入一路看到抽出的 class names 與 gener
 
 integration 會掃描原始碼檔案、抽出 style 輸入，再把它轉成 atomic class names。
 
-<<< @/zh-TW/.examples/principles/build-compiled.ts
+<<< @/zh-TW/.examples/concepts/build-compiled.ts
 
 這也是為什麼文件會一直強調靜態限制。抽取本身就是整個模型的核心。
 
@@ -28,15 +28,15 @@ integration 會掃描原始碼檔案、抽出 style 輸入，再把它轉成 ato
 
 這些 class names 會對應到產生的 CSS declarations：
 
-<<< @/zh-TW/.examples/principles/build-generated.css
+<<< @/zh-TW/.examples/concepts/build.pikaoutput.css
 
 ## 4. 當重用安全時，atomic 輸出會被重用
 
 PikaCSS 不會為每個 component block 只產生一個 class。它會把 style 內容拆成可重用的 atomic declarations。當同一個 declaration 再次出現時，engine 可以重用同一個 atomic class。
 
-<<< @/zh-TW/.examples/principles/build-dedup-source.ts
+<<< @/zh-TW/.examples/concepts/build-dedup.pikainput.ts
 
-<<< @/zh-TW/.examples/principles/build-dedup-output.css
+<<< @/zh-TW/.examples/concepts/build-dedup.pikaoutput.css
 
 ## 5. 重疊效果會改變是否能重用的判斷
 

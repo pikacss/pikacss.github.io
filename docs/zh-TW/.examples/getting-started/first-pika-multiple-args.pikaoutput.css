@@ -1,0 +1,35 @@
+@layer utilities {
+  .pk-a {
+    display: inline-flex;
+  }
+  .pk-b {
+    align-items: center;
+  }
+  .pk-c {
+    justify-content: center;
+  }
+  .pk-d {
+    gap: 0.5rem;
+  }
+  .pk-e {
+    padding: 0.75rem 1rem;
+  }
+  .pk-f {
+    border-radius: 9999px;
+  }
+  .pk-g {
+    border: none;
+  }
+  .pk-h {
+    cursor: pointer;
+  }
+  .pk-i {
+    background-color: #0ea5e9;
+  }
+  .pk-j {
+    color: white;
+  }
+  .pk-k {
+    font-size: 0.875rem;
+  }
+}

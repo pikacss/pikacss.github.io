@@ -10,11 +10,11 @@ description: 了解為什麼 PikaCSS 在 build 過程中運作、瀏覽器實際
 
 經過轉換後，正式環境 bundle 裡只會留下靜態 class names 和 generated CSS。頁面載入時，不會再有用戶端 styling engine 去解析 style objects。
 
-<<< @/zh-TW/.examples/principles/zero-source.ts
+<<< @/zh-TW/.examples/concepts/zero.pikainput.ts
 
-<<< @/zh-TW/.examples/principles/zero-compiled.ts
+<<< @/zh-TW/.examples/concepts/zero-compiled.ts
 
-<<< @/zh-TW/.examples/principles/zero-generated.css
+<<< @/zh-TW/.examples/concepts/zero.pikaoutput.css
 
 ## 為什麼靜態輸入沒有協商空間
 

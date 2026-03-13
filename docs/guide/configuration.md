@@ -123,7 +123,7 @@ PikaCSS exports identity helpers so config and extracted style objects stay type
 - `defineVariables()`
 - `defineEnginePlugin()`
 
-<<< @/.examples/guide/built-ins/style-definition-define-helper.ts
+<<< @/.examples/guide/built-ins/style-definition-define-helper.pikainput.ts
 
 ## What most teams should standardize
 

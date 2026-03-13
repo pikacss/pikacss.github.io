@@ -29,9 +29,9 @@ description: 了解 icons plugin 如何把 Iconify collections 和自訂 SVG 來
 
 ## Usage
 
-<<< @/zh-TW/.examples/plugins/icons-usage.ts
+<<< @/zh-TW/.examples/plugins/icons-usage.pikainput.ts
 
-<<< @/zh-TW/.examples/plugins/icons-usage.vue
+<<< @/zh-TW/.examples/plugins/icons-usage-vue.pikainput.vue
 
 重點不只是 icons 能正常運作，而是 icon names 即使用在 template 綁定裡，也仍然要先出現在靜態的 PikaCSS 輸入中。這樣 icon 使用才會維持成可審查的靜態原始碼，也能讓大型 codebase 更容易做搜尋、linting 與命名規範管理。
 

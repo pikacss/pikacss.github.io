@@ -25,7 +25,7 @@ PikaCSS is strongest when styles are known from source code structure: component
 
 You still write style objects, nested selectors, and composition in source files. The difference is that the browser never receives that object model as a styling engine. PikaCSS extracts what it can understand during the build, emits atomic CSS, and leaves runtime with class-name output.
 
-<<< @/.examples/getting-started/pika-basic-usage.ts
+<<< @/.examples/getting-started/pika-basic.pikainput.ts
 
 ## Why teams choose it
 

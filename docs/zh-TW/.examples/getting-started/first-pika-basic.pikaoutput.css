@@ -1,0 +1,23 @@
+@layer utilities {
+  .pk-a {
+    padding: 0.75rem 1rem;
+  }
+  .pk-b {
+    border-radius: 0.75rem;
+  }
+  .pk-c {
+    background-color: #0f172a;
+  }
+  .pk-d {
+    color: white;
+  }
+  .pk-e {
+    border: none;
+  }
+  .pk-f {
+    cursor: pointer;
+  }
+  .pk-g {
+    font-weight: 600;
+  }
+}

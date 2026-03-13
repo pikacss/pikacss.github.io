@@ -11,7 +11,7 @@ export default defineEngineConfig({
 		icons(),
 		typography(),
 	],
-	// Plugin config 選項透過模組擴充確保型別安全
+	// Plugin config options are type-safe via module augmentation
 	reset: 'modern-normalize',
 	fonts: {
 		fonts: {

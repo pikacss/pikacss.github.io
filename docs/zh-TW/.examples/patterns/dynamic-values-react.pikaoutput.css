@@ -1,0 +1,14 @@
+@layer utilities {
+  .pk-a {
+    width: var(--progress-width);
+  }
+  .pk-b {
+    background-color: var(--progress-color);
+  }
+  .pk-c {
+    height: 0.5rem;
+  }
+  .pk-d {
+    border-radius: 9999px;
+  }
+}

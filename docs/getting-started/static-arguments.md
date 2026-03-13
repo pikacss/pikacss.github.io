@@ -31,15 +31,15 @@ If the team can keep style input statically analyzable, PikaCSS can generate CSS
 
 Literal objects, arrays, strings, nested static structures, and stable composition are the happy path.
 
-<<< @/.examples/community/faq-static-ok.ts
+<<< @/.examples/community/faq-static-ok.pikainput.ts
 
 ## What breaks the build-time model
 
 Runtime function calls, mutable state, computed member access, or arbitrary expressions inside `pika()` break the build-time model.
 
-<<< @/.examples/community/faq-static-bad.ts
+<<< @/.examples/community/faq-static-bad.pikainput.ts
 
-<<< @/.examples/integrations/eslint-invalid-example.ts
+<<< @/.examples/integrations/eslint-invalid-example.pikainput.ts
 
 ## Why the restriction pays for itself
 
@@ -72,7 +72,7 @@ If the value itself still has to change at runtime, read [Dynamic Values With CS
 
 Use the ESLint integration so mistakes are caught in editor and CI instead of only during build output inspection.
 
-<<< @/.examples/integrations/eslint-valid-example.ts
+<<< @/.examples/integrations/eslint-valid-example.pikainput.ts
 
 ## Practical do and do not
 

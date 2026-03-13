@@ -123,7 +123,7 @@ PikaCSS 匯出了一組 identity helpers，讓 config 與抽離出來的 style o
 - `defineVariables()`
 - `defineEnginePlugin()`
 
-<<< @/zh-TW/.examples/guide/built-ins/style-definition-define-helper.ts
+<<< @/zh-TW/.examples/guide/built-ins/style-definition-define-helper.pikainput.ts
 
 ## 大多數團隊該標準化什麼
 

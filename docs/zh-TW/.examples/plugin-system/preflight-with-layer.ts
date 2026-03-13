@@ -3,15 +3,15 @@ import { defineEnginePlugin } from '@pikacss/core'
 export const plugin = defineEnginePlugin({
 	name: 'example',
 	configureEngine: async (engine) => {
-		// 將任何 preflight 包裝在 { layer, preflight } 中以放置於 CSS @layer
+		// Wrap any preflight variant with { layer, preflight } to place it inside a CSS @layer
 
-		// 放入 layer 的字串 preflight
+		// String preflight inside a layer
 		engine.addPreflight({
 			layer: 'base',
 			preflight: 'body { margin: 0; box-sizing: border-box; }',
 		})
 
-		// 放入 layer 的 PreflightDefinition
+		// PreflightDefinition inside a layer
 		engine.addPreflight({
 			layer: 'base',
 			preflight: {
@@ -21,7 +21,7 @@ export const plugin = defineEnginePlugin({
 			},
 		})
 
-		// 放入 layer 的 PreflightFn
+		// PreflightFn inside a layer
 		engine.addPreflight({
 			layer: 'base',
 			preflight: (engine, isFormatted) => {

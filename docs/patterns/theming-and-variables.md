@@ -22,9 +22,9 @@ If a token belongs to a stable value family such as color or length, add `semant
 
 ## Use variables in components
 
-<<< @/.examples/guide/variables-usage.ts
+<<< @/.examples/guide/variables.pikainput.ts
 
-<<< @/.examples/guide/variables-output.css
+<<< @/.examples/guide/variables.pikaoutput.css
 
 If a value has to change per instance at runtime, continue with [Dynamic Values With CSS Variables](/patterns/dynamic-values-with-css-variables).
 

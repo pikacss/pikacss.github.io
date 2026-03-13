@@ -21,11 +21,11 @@ description: 在盲目調整 config 之前，先從 scan 範圍、generated file
 
 這是最常見的失敗模式。
 
-<<< @/zh-TW/.examples/community/faq-static-bad.ts
+<<< @/zh-TW/.examples/community/faq-static-bad.pikainput.ts
 
 PikaCSS 需要 build-time 可讀的輸入。當 styling 選擇真的來自 runtime 資料時，請把 runtime 那一部分移到 CSS variables，並讓樣式形狀保持靜態。
 
-<<< @/zh-TW/.examples/community/faq-static-ok.ts
+<<< @/zh-TW/.examples/community/faq-static-ok.pikainput.ts
 
 請參考 [Dynamic Values With CSS Variables](/zh-TW/patterns/dynamic-values-with-css-variables)，那裡說明了如何在保留靜態抽取的前提下，仍然允許每個實例使用不同值。
 

@@ -1,0 +1,17 @@
+@layer utilities {
+  .pk-a {
+    color: red;
+  }
+  .pk-b {
+    font-size: 1rem;
+  }
+}
+
+@layer utilities {
+  .pk-a {
+    color: blue !important;
+  }
+  .pk-b {
+    font-size: 2rem !important;
+  }
+}

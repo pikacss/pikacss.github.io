@@ -12,7 +12,7 @@ description: 用靜態組合、明確 variants 與共享 recipes 來規劃 PikaC
 
 Base styles、variant styles 與局部 overrides，通常都應該拆成不同 arguments。
 
-<<< @/zh-TW/.examples/getting-started/first-pika-multiple-args.vue
+<<< @/zh-TW/.examples/getting-started/first-pika-multiple-args.pikainput.vue
 
 這種模式能擴展，是因為每一個部分都只有一個工作：
 
@@ -28,9 +28,9 @@ Base styles、variant styles 與局部 overrides，通常都應該拆成不同 a
 
 <<< @/zh-TW/.examples/guide/config-shortcuts.ts
 
-<<< @/zh-TW/.examples/guide/shortcuts-usage.ts
+<<< @/zh-TW/.examples/guide/shortcuts.pikainput.ts
 
-<<< @/zh-TW/.examples/guide/shortcuts-output.css
+<<< @/zh-TW/.examples/guide/shortcuts.pikaoutput.css
 
 Shortcuts 很適合承載共享的靜態 recipes，但不是藏 runtime 決策的地方。
 

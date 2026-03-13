@@ -1,0 +1,1 @@
+pika({ '&:hover': { color: 'blue' } })

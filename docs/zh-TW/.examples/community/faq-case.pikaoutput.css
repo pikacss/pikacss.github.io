@@ -1,0 +1,14 @@
+@layer utilities {
+  .pk-a {
+    background-color: tomato;
+  }
+  .pk-b {
+    color: white;
+  }
+  .pk-c {
+    font-weight: 600;
+  }
+  .pk-d {
+    padding: 0.75rem 1rem;
+  }
+}

@@ -1,0 +1,11 @@
+@layer utilities {
+  .pk-a {
+    padding: 1rem;
+  }
+  .pk-b {
+    border-radius: 0.75rem;
+  }
+  .pk-c {
+    background-color: #ffffff;
+  }
+}

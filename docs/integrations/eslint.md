@@ -30,11 +30,11 @@ That usually means variable references, computed keys, conditional object values
 
 ## What valid usage looks like
 
-<<< @/.examples/integrations/eslint-valid-example.ts
+<<< @/.examples/integrations/eslint-valid-example.pikainput.ts
 
 ## What invalid usage looks like
 
-<<< @/.examples/integrations/eslint-invalid-example.ts
+<<< @/.examples/integrations/eslint-invalid-example.pikainput.ts
 
 ## Why this is worth enforcing
 

@@ -20,9 +20,9 @@ Prefer boring, predictable names like `screen-sm`, `screen-md`, and `screen-lg`.
 
 Once selectors are registered, use their names as keys in `pika()` style objects. Component files never need to know the raw media query or selector string.
 
-<<< @/.examples/guide/selectors-usage.ts
+<<< @/.examples/guide/selectors.pikainput.ts
 
-<<< @/.examples/guide/selectors-output.css
+<<< @/.examples/guide/selectors.pikaoutput.css
 
 ## Nested selector objects are still static
 

@@ -1,36 +1,36 @@
 import { defineEnginePlugin } from '@pikacss/core'
 
-// Plugin A：轉換 selectors——篩掉所有名為 'internal' 的 selector
+// Plugin A: transforms selectors — filters out any selector named 'internal'
 export const pluginA = defineEnginePlugin({
 	name: 'plugin-a',
 	transformSelectors(selectors) {
-		// ❌ 有風險——靜默刪除 selectors 卻沒有記錄契約
+		// ❌ risky — silently drops selectors without documenting the contract
 		return selectors.filter(s => s !== 'internal')
 	},
 })
 
-// Plugin B：依賴完整的 selector 清單——當 Plugin A 篩掉項目後會靜默失效
+// Plugin B: depends on the full selector list — breaks silently when Plugin A filters it
 export const pluginB = defineEnginePlugin({
 	name: 'plugin-b',
-	order: 'post', // 在 Plugin A 之後執行
+	order: 'post', // runs after Plugin A
 	transformSelectors(selectors) {
-		// Plugin B 預期 'internal' 仍然存在。
-		// 因為 Plugin A 移除了它，這段邏輯會靜默地什麼都不做。
+		// Plugin B expects 'internal' to still be present.
+		// Because Plugin A removed it, this logic silently does nothing.
 		const internal = selectors.find(s => s === 'internal')
 		if (!internal) {
-			// 沒有錯誤，沒有警告——Plugin B 就這樣跳過它的工作。
+			// No error, no warning — Plugin B just skips its work.
 			return selectors
 		}
 		return selectors.map(s => (s === 'internal' ? 'scoped-internal' : s))
 	},
 })
 
-// ✅ 較安全的 Plugin A：在 plugin 名稱中記錄篩選契約，並回傳完整 payload
+// ✅ safer Plugin A: documents the filtering contract in the plugin name and returns complete payload
 export const saferPluginA = defineEnginePlugin({
 	name: 'plugin-a-no-internal-selectors',
 	transformSelectors(selectors) {
-		// 記錄契約：這個 plugin 刻意移除 'internal'。
-		// 需要 'internal' 的下游 plugins 必須先行執行（使用 order: 'pre'）。
+		// Document the contract: this plugin deliberately removes 'internal'.
+		// Downstream plugins that need 'internal' must run before this plugin (use order: 'pre').
 		return selectors.filter(s => s !== 'internal')
 	},
 })

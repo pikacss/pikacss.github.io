@@ -22,9 +22,9 @@ Ask whether most styling in the project can be expressed as static source input.
 
 No. The output is atomic CSS, but the authoring model is style-definition driven. You can write style objects, selectors, variables, shortcuts, and plugins instead of only choosing from a fixed utility dictionary.
 
-<<< @/.examples/community/faq-atomic-input.ts
+<<< @/.examples/community/faq-atomic.pikainput.ts
 
-<<< @/.examples/community/faq-atomic-output.css
+<<< @/.examples/community/faq-atomic.pikaoutput.css
 
 ## Does class token order decide the final result?
 
@@ -36,7 +36,7 @@ See [Atomic Order And Cascade](/concepts/atomic-order-and-cascade).
 
 Yes. Nested selectors are part of the normal style-definition model, not a separate escape hatch.
 
-<<< @/.examples/community/faq-nested.ts
+<<< @/.examples/community/faq-nested.pikainput.ts
 
 ## Should I keep zero-config forever?
 

@@ -4,16 +4,16 @@ import { defineEnginePlugin } from '@pikacss/core'
 export const plugin = defineEnginePlugin({
 	name: 'example',
 	configureEngine: async (engine) => {
-		// WithId — 指定 id 讓其他 plugins 或 engine 可以識別
-		// 並在多次註冊時去重。
+		// WithId — assign an id so other plugins or the engine can identify
+		// and deduplicate this preflight across multiple registrations.
 
-		// 附帶 id 的字串 preflight
+		// String preflight with id
 		engine.addPreflight({
 			id: 'example:box-sizing',
 			preflight: '*, *::before, *::after { box-sizing: border-box; }',
 		})
 
-		// 附帶 id 的 PreflightDefinition
+		// PreflightDefinition with id
 		const rootVars: PreflightDefinition = {
 			':root': {
 				'--brand-color': '#3b82f6',
