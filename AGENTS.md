@@ -1,6 +1,10 @@
 # AGENTS.md — PikaCSS
 
-PikaCSS is an instant on-demand Atomic CSS-in-JS engine. Monorepo managed with pnpm workspaces.
+PikaCSS is an instant on-demand atomic CSS-in-JS engine. This file is the global contract for agents working in the repository.
+
+Detailed workflow rules live in `.github/instructions/`. Task entry prompts live in `.github/prompts/`. Durable task outputs live in `.ai/tasks/`.
+
+## Repo Facts
 
 | | |
 |---|---|
@@ -11,41 +15,23 @@ PikaCSS is an instant on-demand Atomic CSS-in-JS engine. Monorepo managed with p
 | Lint | ESLint via `@deviltea/eslint-config` |
 | Docs | VitePress (`docs/`) |
 
-## Commands
+## Common Commands
 
 ```bash
-pnpm install                           # install all dependencies
-pnpm vitest run --project <name>       # test a single package (preferred)
-pnpm test                              # run all tests
-pnpm typecheck                         # type-check all packages
-pnpm lint                              # ESLint auto-fix
-pnpm newpkg                            # scaffold a new package
-pnpm newplugin                         # scaffold a new plugin
-pnpm docs:dev                          # VitePress dev server
+pnpm install
+pnpm test
+pnpm typecheck
+pnpm lint
+pnpm --filter @pikacss/<package> test
+pnpm --filter @pikacss/<package> typecheck
+pnpm --filter @pikacss/<package> build
+pnpm --filter @pikacss/docs typecheck
+pnpm docs:dev
 ```
 
-## Development Workflow
+Use package-scoped commands during iterative development. Root-level `vitest --project` filtering is not the canonical package validation path in this repo.
 
-**IMPORTANT: Never run workspace-wide `pnpm build` during iterative development.** Use `pnpm vitest run --project <name>` and `pnpm typecheck` instead.
-
-**IMPORTANT: If a task touches an upstream package (for example, changing `core` while working on a plugin), immediately run a scoped build for that upstream package so tests and downstream packages consume the latest types and public interfaces.**
-
-```bash
-pnpm --filter <upstream-package> build
-# example: pnpm --filter @pikacss/core build
-```
-
-**IMPORTANT: After modifying `core`, ALWAYS verify ALL downstream packages:**
-
-```bash
-pnpm vitest run --project integration
-pnpm vitest run --project unplugin
-# also run plugin packages if they are affected
-```
-
-Pre-commit: `lint-staged` auto-runs ESLint on staged files via `simple-git-hooks`. Always run `pnpm lint` and `pnpm test` before committing.
-
-## Package Dependency Graph
+## Package Graph
 
 ```plaintext
 core  (no internal deps)
@@ -56,21 +42,35 @@ core  (no internal deps)
 plugin-*  →  depend on core
 ```
 
-Each package: `src/index.ts` entry · co-located tests (`src/foo.ts` → `src/foo.test.ts`) · `tsconfig.json` + `tsdown.config.ts` + `vitest.config.ts`.
+Each package uses `src/index.ts` as the entry point, keeps tests co-located with source files, and carries local `tsconfig`, `tsdown`, and `vitest` config files.
 
-## Code Conventions
+## Global Rules
 
-- ES modules only — never `require()`
-- TypeScript strict — no `any` unless unavoidable
-- Named exports preferred over default exports
-- Use `defineConfig` / `defineProject` helpers for config files
-- No comments or docstrings added to unchanged code
-- All content (code, comments, default docs, commits) in **English**
-- Conversation language should remain consistent with the user's choice, including specific variants (e.g. Simplified Chinese vs. Traditional Chinese (Taiwan))
-- When in doubt or anything feels unclear, ask questions instead of guessing; use the ask‑questions mechanism to get my input.
-- In `tests`, `docs`, and `src` directories, do **not** reference absolute file system paths.
+- Prefer minimal, targeted changes over broad refactors.
+- Use package-scoped validation during development. Do not default to workspace-wide commands unless the task requires repo-wide verification.
+- If a task changes an upstream package, rebuild that upstream package before validating downstream consumers.
+- Keep all code, comments, default docs content, prompts, and templates in English.
+- Keep the conversation language aligned with the user's chosen language and locale.
+- Ask clarifying questions instead of guessing when ambiguity affects architecture, scope, safety, or acceptance criteria.
+- In `tests`, `docs`, and `src` directories, do not reference absolute file system paths.
+- Store durable task artifacts under `.ai/tasks/<task-id>/` rather than expanding this file with task-specific history.
+
+## Quality Gates
+
+- Run the smallest credible validation for the changed area before handoff.
+- Run downstream validation when a change affects upstream packages or public behavior.
+- Update tests and docs when behavior, public API, or user-facing guidance changes, or explicitly justify why no update was needed.
+- Run `pnpm lint` and `pnpm test` before commit-time handoff unless the user asked for a narrower checkpoint.
+
+## Clarification Policy
+
+- Clarify before planning when the request leaves multiple reasonable interpretations.
+- Clarify before implementation when the ambiguity could create rework, regressions, or incorrect public behavior.
+- Clarify before skipping tests, docs updates, or downstream verification.
 
 ## Forbidden Actions
 
-- Do NOT edit files in `dist/` or `coverage/` — generated, never edited manually
-- Do NOT run `pnpm build` during development — use `vitest run` + `typecheck`
+- Do not edit generated outputs in `dist/` or `coverage/`.
+- Do not manually edit generated `pika.gen.*` files.
+- Do not run workspace-wide `pnpm build` during iterative development.
+- Do not guess through unclear requirements when a short clarification would remove risk.
