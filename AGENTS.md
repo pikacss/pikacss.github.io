@@ -60,6 +60,8 @@ Each package uses `src/index.ts` as the entry point, keeps tests co-located with
 - Run the smallest credible validation for the changed area before handoff.
 - Run downstream validation when a change affects upstream packages or public behavior.
 - Update tests and docs when behavior, public API, or user-facing guidance changes, or explicitly justify why no update was needed.
+- Treat happy-path-only tests as incomplete coverage. Unit tests should cover relevant failure paths, invalid inputs, edge conditions, and regression-sensitive branches for the touched behavior.
+- Prefer lightweight unit boundaries with co-located tests, mocks, and pure-function checks before expanding to heavier integration-style coverage.
 - Run `pnpm lint` and `pnpm test` before commit-time handoff unless the user asked for a narrower checkpoint.
 
 ## Clarification Policy
