@@ -1,0 +1,155 @@
+---
+url: /api/unplugin.md
+description: >-
+  Generated API reference for @pikacss/unplugin-pikacss from exported surface
+  and JSDoc.
+---
+
+# Unplugin API reference
+
+* Package: `@pikacss/unplugin-pikacss`
+* Generated from the exported surface and JSDoc in `packages/unplugin/src/index.ts`.
+* Source files: `packages/unplugin/src/index.ts`, `packages/unplugin/src/types.ts`
+
+## Package summary
+
+Universal bundler plugins for Vite, Webpack, Rspack, esbuild, Rollup, and Rolldown Re-exports the public surface of [`@pikacss/integration`](/api/integration).
+
+Use [Unplugin integration](/integrations/unplugin) when you need conceptual usage guidance instead of exact symbol lookup.
+
+## Constants
+
+### default {#const-default}
+
+Pre-built universal bundler plugin for PikaCSS.
+
+**Remarks:**
+
+Created by passing `unpluginFactory` to `createUnplugin`. Import the bundler-specific
+sub-path (e.g., `@pikacss/unplugin-pikacss/vite`) for a ready-to-use plugin instance.
+
+```ts
+// vite.config.ts
+import pika from '@pikacss/unplugin-pikacss/vite'
+
+export default defineConfig({
+  plugins: [pika()],
+})
+```
+
+### unpluginFactory {#const-unpluginfactory}
+
+Factory function that produces the bundler-agnostic PikaCSS plugin hooks.
+
+**Remarks:**
+
+This is the core entry-point called by `createUnplugin`. It resolves user options,
+creates an integration context via `createCtx`, and wires bundler-specific lifecycle
+hooks (config resolution, dev-server HMR, build transforms, and config file watching).
+When consumed through the Vite entry, the plugin also declares `enforce: 'pre'`
+so PikaCSS transforms run before framework compiler plugins even if the user's
+Vite `plugins` array lists `vue()` before `pikacss()`.
+
+```ts
+import { unpluginFactory } from '@pikacss/unplugin-pikacss'
+import { createUnplugin } from 'unplugin'
+
+const plugin = createUnplugin(unpluginFactory)
+```
+
+### unpluginPika {#const-unpluginpika}
+
+Pre-built universal bundler plugin for PikaCSS.
+
+**Remarks:**
+
+Created by passing `unpluginFactory` to `createUnplugin`. Import the bundler-specific
+sub-path (e.g., `@pikacss/unplugin-pikacss/vite`) for a ready-to-use plugin instance.
+
+```ts
+// vite.config.ts
+import pika from '@pikacss/unplugin-pikacss/vite'
+
+export default defineConfig({
+  plugins: [pika()],
+})
+```
+
+## Types
+
+### PluginOptions {#interface-pluginoptions}
+
+User-facing configuration options for the PikaCSS bundler plugin.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `cwd?` | `string` | Explicit working directory for resolving config files, codegen output paths, and source scanning globs. When set, overrides the bundler-detected project root. | ``undefined` (use bundler-detected root)` |
+| `scan?` | `ScanOptions` | Glob patterns controlling which source files are scanned for `pika()` calls. | ``{ include: \['**/\*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,vue}'], exclude: \['node\_modules/**', 'dist/**', '.git/**', '.nuxt/**', '.output/**', 'coverage/\*\*'] }``|
+| `config?` | `EngineConfig \| string` | Engine configuration object or a path to a `pika.config.*` file. When omitted, the plugin auto-discovers a config file in the project root. |``undefined` (auto-discover)` |
+| `autoCreateConfig?` | `boolean` | When `true`, automatically scaffolds a default `pika.config.js` file if no existing config is found. | `false` |
+| `fnName?` | `string` | Base function name to recognize in source code. All variants (`.str`, `.arr`, preview) are derived from this name. | `'pika'` |
+| `transformedFormat?` | `'string' \| 'array'` | Default output format for normal `pika()` calls. `'string'` produces a space-joined class string; `'array'` produces a string array of class names. | `'string'` |
+| `tsCodegen?` | `boolean \| string` | Controls TypeScript declaration codegen. `true` writes to `'pika.gen.ts'`, a string sets a custom output path, and `false` disables codegen entirely. | `true` |
+| `cssCodegen?` | `true \| string` | Controls CSS output file generation. `true` writes to `'pika.gen.css'`; a string sets a custom output path. | `true` |
+| `currentPackageName?` | `string` | npm package name of the plugin consumer, embedded in generated file headers and import paths. Override when wrapping the unplugin in a framework-specific package (e.g., `@pikacss/nuxt-pikacss`). | `'@pikacss/unplugin-pikacss'` |
+| `report?` | `boolean \| { 		/** File path (resolved against the project root) to write the full report JSON to. */ 		output?: string 	}` | Emit a design-token usage report at the end of a production build. Requires `@pikacss/plugin-design-tokens` to be registered; a no-op otherwise. | \`\`false` (no report)` |
+
+**Remarks:**
+
+Passed to the unplugin factory when creating a Vite, webpack, Rollup, or esbuild plugin.
+All properties are optional — sensible defaults are applied for zero-config setups.
+
+```ts
+import pika from '@pikacss/unplugin-pikacss/vite'
+
+export default defineConfig({
+  plugins: [
+    pika({
+      config: './pika.config.ts',
+      fnName: 'css',
+      transformedFormat: 'array',
+    }),
+  ],
+})
+```
+
+### ResolvedPluginOptions {#interface-resolvedpluginoptions}
+
+Normalized plugin configuration with all defaults applied and boolean shorthands expanded.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `currentPackageName` | `string` | npm package name of the integration consumer, used in generated file headers and import paths. | — |
+| `configOrPath` | `EngineConfig \| string \| Nullish` | Engine configuration object, a path to a config file, or `null`/`undefined` for auto-discovery. | — |
+| `tsCodegen` | `false \| string` | Resolved TypeScript codegen output path, or `false` when codegen is disabled. | — |
+| `cssCodegen` | `string` | Resolved CSS output file path (always a string after defaults are applied). | — |
+| `scan` | `IntegrationContextOptions['scan']` | Normalized include/exclude glob arrays controlling source file scanning. | — |
+| `fnName` | `string` | Base function name to recognize in source transforms (e.g., `'pika'`). | — |
+| `transformedFormat` | `'string' \| 'array'` | Default output format for normal `pika()` calls: `'string'` or `'array'`. | — |
+| `autoCreateConfig` | `boolean` | Whether to scaffold a default config file when none is found. | — |
+
+**Remarks:**
+
+Produced internally by the unplugin factory from `PluginOptions`. Consumers should not
+construct this type directly — it exists so that internal helpers receive fully resolved,
+non-optional values.
+
+### ScanOptions {#interface-scanoptions}
+
+Glob patterns controlling which source files are scanned for `pika()` calls.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `include?` | `string \| string[]` | File glob patterns to scan. Supports a single string or array of strings. When omitted, the default covers every extension the AST compiler supports: the full JS family plus Vue SFCs. | `['**\/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,vue}']` |
+| `exclude?` | `string \| string[]` | File glob patterns to exclude. Supports a single string or array of strings. The default skips dependencies, build outputs, coverage, VCS metadata, and framework build dirs (`.nuxt`/`.output`). | `['node_modules/**', 'dist/**', '.git/**', '.nuxt/**', '.output/**', 'coverage/**']` |
+
+**Remarks:**
+
+Explicit `include` or `exclude` values replace the corresponding defaults verbatim;
+they are not merged with the default patterns.
+
+## Next
+
+* [Unplugin integration](/integrations/unplugin)
+* [Nuxt API reference](/api/nuxt)
+* [API reference overview](/api/)
