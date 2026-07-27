@@ -1,0 +1,14 @@
+{
+  "solid-ts": {
+    "file": "solid-ts.bin",
+    "bytes": 16110442
+  },
+  "vue-ts": {
+    "file": "vue-ts.bin",
+    "bytes": 15876303
+  },
+  "react-ts": {
+    "file": "react-ts.bin",
+    "bytes": 21583896
+  }
+}

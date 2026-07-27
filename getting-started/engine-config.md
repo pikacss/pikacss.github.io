@@ -1,0 +1,87 @@
+---
+url: /getting-started/engine-config.md
+description: Complete reference for all PikaCSS engine configuration options.
+---
+
+# Engine Config
+
+The engine configuration controls every aspect of PikaCSS. Create a `pika.config.ts` (or `.js`) in your project root — the plugin does not create one for you unless you opt in with `autoCreateConfig: true` (see [Setup](/getting-started/setup#pika-config-js)). Never keep both a `pika.config.ts` and `pika.config.js`: config discovery loads the highest-priority root-level candidate and ignores the rest.
+
+```ts
+import { defineEngineConfig } from '@pikacss/core'
+
+export default defineEngineConfig({
+  // options here
+})
+```
+
+## Config
+
+### Core
+
+| Property | Description |
+|---|---|
+| prefix | Class name prefix prepended to every generated atomic class name. Default: `'pk-'`. |
+| defaultSelector | CSS selector template for atomic styles. `%` is replaced with the generated atomic class ID, so the template must contain `%`. Default: `'.%'`. |
+| plugins | Array of engine plugins to load in resolution order. See [Plugin Development](/plugin-development/create-a-plugin). |
+| layers | Map of CSS `@layer` names to numeric priorities. Lower numbers render earlier. See [Layers](/customizations/layers). |
+| defaultPreflightsLayer | Layer name for preflight styles. Default: `'preflights'`. |
+| defaultUtilitiesLayer | Layer name for atomic utility styles. Default: `'utilities'`. |
+| preflights | Base styles injected before utilities. See [Preflights](/customizations/preflights). |
+| cssImports | Array of CSS `@import` rules included at the top of generated output. |
+| important | When set to `{ default: true }`, all generated declarations include `!important`. See [Important](/customizations/important). |
+
+::: tip Two placeholders
+`%` is the atomic class ID slot used inside `defaultSelector` (e.g. `'.%'` becomes `.pk-a`), while `$` is the nested-selector slot used inside style definitions and custom selectors — it expands to the whole `defaultSelector`.
+:::
+
+### Customizations
+
+| Property | Description |
+|---|---|
+| autocomplete | IDE autocomplete configuration. See [Autocomplete](/customizations/autocomplete). |
+| selectors | Custom selector mappings for nested selectors. See [Selectors](/customizations/selectors). |
+| shortcuts | Reusable style definition aliases. See [Shortcuts](/customizations/shortcuts). |
+| variables | CSS custom properties injected under `:root`. See [Variables](/customizations/variables). |
+| keyframes | CSS `@keyframes` animation definitions. See [Keyframes](/customizations/keyframes). |
+
+### Plugin Config
+
+::: tip
+These fields are added by official plugins via [type augmentation](/plugin-development/type-augmentation). Install the corresponding plugin package to use them.
+:::
+
+| Property | Description |
+|---|---|
+| reset | See [Reset plugin](/official-plugins/reset). |
+| typography | See [Typography plugin](/official-plugins/typography). |
+| icons | See [Icons plugin](/official-plugins/icons). |
+| fonts | See [Fonts plugin](/official-plugins/fonts). |
+| designTokens | See [Design Tokens plugin](/official-plugins/design-tokens). |
+
+> See [API Reference — Core](/api/core) for full type signatures and defaults.
+
+## Examples
+
+```ts
+import { defineEngineConfig } from '@pikacss/core'
+
+export const selectorsConfig = defineEngineConfig({
+	selectors: {
+		definitions: [
+			['@dark', 'html.dark $'],
+			['@light', 'html:not(.dark) $'],
+			['@sm', '@media (min-width: 640px)'],
+			['@md', '@media (min-width: 768px)'],
+			['@lg', '@media (min-width: 1024px)'],
+		],
+	},
+})
+
+```
+
+## Next
+
+* [ESLint Config](/getting-started/eslint-config) — set up linting for PikaCSS.
+* [Customizations](/customizations/layers) — explore all customization options.
+* [Official Plugins](/official-plugins/reset) — add CSS resets, icons, fonts, and more.
