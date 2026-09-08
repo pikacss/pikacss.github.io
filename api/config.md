@@ -1,0 +1,276 @@
+---
+url: /api/config.md
+description: Generated API reference for @pikacss/config from exported surface and JSDoc.
+---
+
+# Config API reference
+
+* Package: `@pikacss/config`
+* Generated from the exported surface and JSDoc in `packages/config/src/index.ts`.
+* Public entries: `@pikacss/config`, `@pikacss/config/host`
+* Source files: `packages/config/src/host-load.ts`, `packages/config/src/host-scan.ts`, `packages/config/src/host-types.ts`, `packages/config/src/host.ts`, `packages/config/src/index.ts`, `packages/config/src/types.ts`
+
+## Package summary
+
+Canonical project configuration and defineConfig authoring surface. Re-exports the public surface of [`@pikacss/core`](/api/core).
+
+Use [Engine configuration](/getting-started/engine-config) when you need conceptual usage guidance instead of exact symbol lookup.
+
+## Functions
+
+### defineConfig {#function-defineconfig}
+
+Defines one canonical PikaCSS project configuration.
+
+#### Overload 1: `defineConfig(config)`
+
+| Parameter | Type | Description |
+|---|---|---|
+| `config` | `SingleProjectConfig` | Single-entry project settings, including the Engine configuration and project-owned runtime, scan, report, and generated-state options. |
+
+**Returns:** `DefinedPikaConfig`
+
+**Remarks:**
+
+The returned value is an opaque transport intended only as a config
+file default export. Do not inspect, spread, or mutate its runtime shape.
+
+#### Overload 2: `defineConfig(entries, options?)`
+
+Defines an explicit non-empty multi-entry PikaCSS project configuration.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `entries` | `readonly [ MultiProjectEntryConfig, ...MultiProjectEntryConfig[] ]` | Ordered project entries. Every explicit entry owns its callable root and logical CSS module. |
+| `options?` | `MultiProjectConfigOptions` | Project-wide generated-state options shared by all entries. |
+
+**Returns:** `DefinedPikaConfig`
+
+**Remarks:**
+
+Explicit multi-entry authoring remains distinct even when the array currently contains one entry; hosts must not infer single-entry CSS auto-import behavior from its length.
+
+## Types
+
+### DefinedPikaConfig {#interface-definedpikaconfig}
+
+Opaque transport produced only by defineConfig.
+
+### MultiProjectConfigOptions {#interface-multiprojectconfigoptions}
+
+Project-wide options for the explicit multi-entry authoring form.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `stateDir?` | `string` | Directory shared by all entries for generated authoring state. | Host-provided default, otherwise `.pikacss`. |
+
+### MultiProjectEntryConfig {#interface-multiprojectentryconfig}
+
+One entry in the explicit multi-entry authoring form.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `engine?` | `EngineConfig` | Engine-specific configuration for this project entry. | `{}` |
+| `fnName` | `string` | Required compile-time callable root used by this entry's source files. | — |
+| `cssModule` | `string` | Required logical CSS module exposed by this entry's runtime stylesheet. | — |
+| `transformedFormat?` | `'string' \| 'array'` | Replacement shape emitted for the configured base callable. | `'string'` |
+| `scan?` | `ScanConfig` | Source scan patterns owned by this entry. | Standard include and exclude patterns from `DEFAULT_SCAN_INCLUDE` and `DEFAULT_SCAN_EXCLUDE`. |
+| `report?` | `ReportConfig` | Final production report behavior for this entry. | `false` |
+
+### ReportConfig {#type-reportconfig}
+
+Optional final production-build report configuration.
+
+**Type:** `boolean | Readonly<{ output: string; }>`
+
+### ResolvedProjectConfig {#interface-resolvedprojectconfig}
+
+Canonical project semantic state consumed by host/runtime layers.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `authoringForm` | `'single' \| 'multi'` | Authoring form used to create this project configuration. | — |
+| `stateDir` | `string` | Resolved project-wide directory for generated authoring state. | — |
+| `entries` | `readonly ResolvedProjectEntry[]` | Normalized entries in their authored order. | — |
+
+### ResolvedProjectEntry {#interface-resolvedprojectentry}
+
+One normalized semantic project entry.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `engine` | `EngineConfig` | Engine-specific configuration retained for this entry. | — |
+| `fnName` | `string` | Validated compile-time callable root for this entry. | — |
+| `cssModule` | `string` | Validated logical CSS module for this entry's runtime stylesheet. | — |
+| `transformedFormat` | `'string' \| 'array'` | Normalized replacement shape emitted for the base callable. | — |
+| `scan` | `ResolvedScanConfig` | Resolved source scan patterns for this entry. | — |
+| `report` | `ResolvedReportConfig` | Normalized final production report behavior for this entry. | — |
+
+### ResolvedReportConfig {#type-resolvedreportconfig}
+
+Normalized report behavior; `false` disables reporting.
+
+**Type:** `false | Readonly<{ output?: string; }>`
+
+### ResolvedScanConfig {#interface-resolvedscanconfig}
+
+Fully normalized ordered scan pattern lists.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `include` | `readonly string[]` | Resolved include patterns used to select source files for scanning. | — |
+| `exclude` | `readonly string[]` | Resolved exclude patterns applied after include matching. | — |
+
+### ScanConfig {#interface-scanconfig}
+
+Ordered scan patterns owned by one project entry.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `include?` | `string \| readonly string[]` | Source-file glob or globs to include in this entry's scan. | `DEFAULT_SCAN_INCLUDE` (all supported JavaScript, TypeScript, and Vue source files) |
+| `exclude?` | `string \| readonly string[]` | Source-file glob or globs to exclude after include matching. | `node_modules/**`, `dist/**`, `.git/**`, `.nuxt/**`, `.output/**`, and `coverage/**` |
+
+### SingleProjectConfig {#interface-singleprojectconfig}
+
+Single-entry authoring form accepted by defineConfig.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `engine?` | `EngineConfig` | Engine-specific configuration for this project entry. | `{}` |
+| `fnName?` | `string` | Compile-time callable root used by this entry's source files. | `'pika'` |
+| `cssModule?` | `string` | Logical CSS module exposed by this entry's runtime stylesheet. | `'pika.css'` |
+| `transformedFormat?` | `'string' \| 'array'` | Replacement shape emitted for the configured base callable. | `'string'` |
+| `scan?` | `ScanConfig` | Source scan patterns owned by this entry. | Standard include and exclude patterns from `DEFAULT_SCAN_INCLUDE` and `DEFAULT_SCAN_EXCLUDE`. |
+| `report?` | `ReportConfig` | Final production report behavior for this entry. | `false` |
+| `stateDir?` | `string` | Project-wide directory for generated authoring state. | Host-provided default, otherwise `.pikacss`. |
+
+## Public subpath: `@pikacss/config/host`
+
+Import this entry as `@pikacss/config/host`.
+
+### ConfigHostDependencyTrace {#subpath-host-interface-confighostdependencytrace}
+
+Deterministic dependency trace for one config-load candidate.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `selection` | `readonly ConfigHostFileDependency[]` | Config-selection paths: all auto candidates or the exact explicit path. | — |
+| `modules` | `readonly ConfigHostFileDependency[]` | Actually evaluated project-local config modules. | — |
+| `all` | `readonly ConfigHostFileDependency[]` | De-duplicated selection + module dependencies. | — |
+
+### ConfigHostFileDependency {#subpath-host-interface-confighostfiledependency}
+
+File dependency emitted by the low-level Config host.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `type` | `'file'` | Dependency discriminator for filesystem-backed config inputs. | — |
+| `path` | `string` | Absolute dependency path watched by the consuming host. | — |
+
+### createPikaScanMatcher(options) {#subpath-host-function-createpikascanmatcher-options}
+
+Creates the canonical source-membership matcher for one normalized entry.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `options` | `CreatePikaScanMatcherOptions` | Normalized scan configuration and resolved state directory. |
+| `options.scan` | `ResolvedScanConfig` | Normalized absolute include/exclude scan patterns. |
+| `options.stateDir` | `string` | Resolved project state directory that is always excluded. |
+
+**Returns:** `PikaScanMatcher`
+
+**Remarks:**
+
+Inputs are the absolute scan patterns emitted by the Config host.
+The resolved state directory is excluded structurally before glob matching,
+even when an include pattern would otherwise match it.
+
+### CreatePikaScanMatcherOptions {#subpath-host-interface-createpikascanmatcheroptions}
+
+Inputs for createPikaScanMatcher.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `scan` | `ResolvedScanConfig` | Normalized absolute include/exclude patterns for one scan entry. | — |
+| `stateDir` | `string` | Resolved project state directory, always excluded regardless of globs. | — |
+
+### LoadedPikaConfig {#subpath-host-interface-loadedpikaconfig}
+
+Canonically loaded and normalized PikaCSS project configuration.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `projectRoot` | `string` | Canonical absolute project root used for config selection and normalization. | — |
+| `selectedConfigPath` | `string \| null` | Selected config spelling, or `null` for the synthetic no-config default. | — |
+| `configDir` | `string` | Filesystem base for authored relative config values. | — |
+| `config` | `ResolvedProjectConfig` | Fully normalized project configuration returned to the host. | — |
+| `dependencies` | `ConfigHostDependencyTrace` | Deterministic config-selection and evaluated-module dependency trace. | — |
+
+### loadPikaConfig(options) {#subpath-host-function-loadpikaconfig-options}
+
+Selects, freshly evaluates, and canonically normalizes one PikaCSS project config.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `options` | `LoadPikaConfigOptions` | Absolute project root plus optional explicit config selection and host state-directory default. |
+
+**Returns:** `Promise<LoadedPikaConfig>`
+
+**Remarks:**
+
+This is a low-level Node host API. It never creates Engines or owns
+generation/watch lifecycle. Selection and actually evaluated project-local
+module dependencies are returned for the caller to aggregate/watch.
+
+### LoadPikaConfigOptions {#subpath-host-interface-loadpikaconfigoptions}
+
+Low-level config selection input.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `projectRoot` | `string` | Immutable absolute project root chosen by the host. | — |
+| `config?` | `string` | Closed explicit config-file selection. Omit for canonical auto-discovery. | — |
+| `defaultStateDir?` | `string` | Resolved absolute host state-directory default used only when config omits stateDir. | — |
+
+### PIKA\_CONFIG\_AUTO\_CANDIDATES {#subpath-host-const-pika-config-auto-candidates}
+
+Canonical config filenames checked, in order, during automatic project-config discovery.
+
+### PikaConfigHostError {#subpath-host-class-pikaconfighosterror}
+
+Error from Config-host selection, evaluation, or normalization.
+
+**Constructors:**
+
+#### constructor(options) {#subpath-host-class-pikaconfighosterror-constructor-options}
+
+Creates an error carrying the failed config-host operation and its dependency trace.
+
+| Parameter | Type | Description | Default |
+|---|---|---|---|
+| `options` | `{ message: string; projectRoot: string; selectedConfigPath?: string \| null; dependencies: ConfigHostDependencyTrace; cause?: unknown; }` | Failed operation details and the dependencies observed before it failed. | — |
+| `options.message` | `string` | Human-readable description of the config-host failure. | — |
+| `options.projectRoot` | `string` | Absolute project root used for config selection. | — |
+| `options.selectedConfigPath?` | `string \| null` | Selected config path, or `null` when no config was selected. | `null` |
+| `options.dependencies` | `ConfigHostDependencyTrace` | Config-selection and evaluated-module dependencies observed before the failure. | — |
+| `options.cause?` | `unknown` | Underlying error, when one caused the failure. | — |
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `projectRoot` | `string` | Project root associated with the failed host operation. | — |
+| `selectedConfigPath` | `string \| null` | Selected config path when known, otherwise `null`. | — |
+| `dependencies` | `ConfigHostDependencyTrace` | Dependency trace accumulated before the host operation failed. | — |
+
+### PikaScanMatcher {#subpath-host-interface-pikascanmatcher}
+
+Efficient matcher for one normalized entry scan.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `matches` | `(filePath: string) => boolean` | Returns whether one absolute physical source path belongs to the entry. | — |
+
+## Next
+
+* [Engine configuration](/getting-started/engine-config)
+* [Integration API reference](/api/integration)
+* [API reference overview](/api/)

@@ -1,0 +1,91 @@
+---
+url: /api/plugin-typography.md
+description: >-
+  Generated API reference for @pikacss/plugin-typography from exported surface
+  and JSDoc.
+---
+
+# Plugin Typography API reference
+
+* Package: `@pikacss/plugin-typography`
+* Generated from the exported surface and JSDoc in `packages/plugin-typography/src/index.ts`.
+* Source files: `packages/plugin-typography/src/index.ts`, `packages/plugin-typography/src/styles.ts`
+
+## Package summary
+
+Prose typography shortcuts.
+
+Use [Typography plugin](/official-plugins/typography) when you need conceptual usage guidance instead of exact symbol lookup.
+
+## Functions
+
+### typography() {#function-typography}
+
+Creates the PikaCSS typography engine plugin.
+
+**Returns:** `EnginePlugin` - An engine plugin that registers prose CSS variables and shortcut
+utilities (`prose`, `prose-sm`, `prose-lg`, `prose-xl`, `prose-2xl`).
+
+**Remarks:**
+
+The plugin reads the `typography` key from the engine config,
+merges user-provided variable overrides with the defaults, and registers
+a full set of typography shortcuts covering paragraphs, links, headings,
+lists, code, tables, and more.
+
+```ts
+import { typography } from '@pikacss/plugin-typography'
+import { defineConfig } from '@pikacss/unplugin-pikacss'
+
+export default defineConfig({
+  engine: {
+    plugins: [typography()],
+    typography: {
+      variables: { '--pk-prose-color-links': '#3b82f6' },
+    },
+  },
+})
+```
+
+## Types
+
+### TypographyPluginOptions {#interface-typographypluginoptions}
+
+Configuration options for the typography plugin.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `variables?` | `Partial<TypographyVariables>` | Partial overrides for the default prose CSS custom properties. | `{}` |
+
+**Remarks:**
+
+Pass this object under the `typography` key in your engine config
+to customize prose color variables.
+
+```ts
+const config = {
+  typography: {
+    variables: { '--pk-prose-color-links': '#3b82f6' },
+  },
+}
+```
+
+### TypographyVariables {#type-typographyvariables}
+
+CSS custom-property values accepted by the typography plugin.
+
+**Type:** `Record<'--pk-prose-color-body' | '--pk-prose-color-headings' | '--pk-prose-color-lead' | '--pk-prose-color-links' | '--pk-prose-color-bold' | '--pk-prose-color-counters' | '--pk-prose-color-bullets' | '--pk-prose-color-hr' | '--pk-prose-color-quotes' | '--pk-prose-color-quote-borders' | '--pk-prose-color-captions' | '--pk-prose-color-code' | '--pk-prose-color-pre-code' | '--pk-prose-color-pre-bg' | '--pk-prose-color-th-borders' | '--pk-prose-color-td-borders' | '--pk-prose-color-kbd' | '--pk-prose-kbd-shadows', string>`
+
+## Module augmentations
+
+### EngineConfig (@pikacss/core) {#augmentation-engineconfig-pikacss-core}
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `typography?` | `TypographyPluginOptions` | Typography plugin options forwarded from the engine config. | `undefined` |
+
+## Next
+
+* [Typography plugin](/official-plugins/typography)
+* [Plugin Design Tokens API reference](/api/plugin-design-tokens)
+* [API reference overview](/api/)

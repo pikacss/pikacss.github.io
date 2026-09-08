@@ -1,0 +1,633 @@
+---
+url: /api/integration.md
+description: >-
+  Generated API reference for @pikacss/integration from exported surface and
+  JSDoc.
+---
+
+# Integration API reference
+
+* Package: `@pikacss/integration`
+* Generated from the exported surface and JSDoc in `packages/integration/src/index.ts`.
+* Source files: `packages/integration/src/compiler/analyze.ts`, `packages/integration/src/compiler/errors.ts`, `packages/integration/src/compiler/evaluate.ts`, `packages/integration/src/compiler/parse.ts`, `packages/integration/src/ctx.ts`, `packages/integration/src/diagnosticScope.ts`, `packages/integration/src/fnConfig.ts`, `packages/integration/src/index.ts`, `packages/integration/src/log.ts`, `packages/integration/src/moduleId.ts`, `packages/integration/src/operations.ts`, `packages/integration/src/processors/js.ts`, `packages/integration/src/processors/registry.ts`, `packages/integration/src/processors/types.ts`, `packages/integration/src/types.ts`
+
+## Package summary
+
+Build-tool integration context. Re-exports the public surface of [`@pikacss/core`](/api/core).
+
+Use [Unplugin integration](/integrations/unplugin) when you need conceptual usage guidance instead of exact symbol lookup.
+
+## Functions
+
+### analyzeJs(code, id, dialect, fnConfig, options?) {#function-analyzejs-code-id-dialect-fnconfig-options}
+
+Parses and analyzes one JS/TS source chunk without evaluating Pika arguments.
+Analyze is pure/Engine-free; bounded static grammar/evaluation belongs to Prepare.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `code` | `string` | The JavaScript or TypeScript source chunk to inspect. |
+| `id` | `string` | The source identifier used in parse diagnostics. |
+| `dialect` | `JsDialect` | The parser dialect matching the source syntax. |
+| `fnConfig` | `FnConfig` | The reserved compile-time root to recognize. |
+| `options?` | `AnalyzeJsOptions` | Optional parser, source-position, and call-collection settings. |
+
+**Returns:** `MacroCall[]` - The recognized macro calls in source order.
+
+### createDefaultProcessorRegistry() {#function-createdefaultprocessorregistry}
+
+Creates the default processor registry: the JS/TS processor (static import —
+it is the hot path) and the Vue SFC processor (lazy — `@vue/compiler-sfc`
+never loads in non-Vue projects).
+
+**Returns:** `ProcessorRegistry` - The default ProcessorRegistry.
+
+### createFnConfig(fnName) {#function-createfnconfig-fnname}
+
+Builds compiler configuration for one reserved Pika function identifier.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `fnName` | `string` | The identifier to recognize as the compile-time root. |
+
+**Returns:** `FnConfig` - Compiler configuration containing the identifier and its root set.
+
+### createPikaCSSContext(options) {#function-createpikacsscontext-options}
+
+Builds the file/auto-config Integration context for a consumer adapter.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `options` | `PikaCSSContextOptions` | Host mechanics and immutable project identity. |
+
+**Returns:** `PikaCSSContext` - A canonical Integration context; no inline engine config or adapter semantic options are accepted.
+
+### createProcessorRegistry() {#function-createprocessorregistry}
+
+Creates an empty processor registry.
+
+**Returns:** `ProcessorRegistry` - A ProcessorRegistry with case-insensitive extension keys and memoized lazy loading.
+
+### dialectForExtension(ext) {#function-dialectforextension-ext}
+
+Maps a file extension to the JsDialect it is parsed as.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `ext` | `string` | Lowercase extension without the leading dot. |
+
+**Returns:** `JsDialect` - The dialect; unknown extensions fall back to `'js'`.
+
+### evaluateStatic(node, ctx) {#function-evaluatestatic-node-ctx}
+
+Statically evaluates a macro-call argument AST node to a plain value.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `node` | `t.Node` | The argument expression node. |
+| `ctx` | `EvaluateContext` | The EvaluateContext carrying module/lexical facts and optional Prepare-time Pika static roots. |
+
+**Returns:** `unknown` - The evaluated recursively-static value; extension terminals are snapshotted into compiler-owned data.
+
+**Remarks:**
+
+Replaces the legacy `new Function()` evaluation of argument source text.
+Supported: literals, `undefined`/`NaN`/`Infinity` (when unshadowed), unary
+`- + ! void`, static template literals, object/array expressions (including
+static computed keys, spreads, and holes), conditional and logical
+short-circuits, binary `+ - * / === !==` on static operands, and Prepare-time
+Pika static-extension member chains supplied through `ctx.pika`.
+
+### getDiagnosticScope() {#function-getdiagnosticscope}
+
+Reads the diagnostic scope of the currently executing async context.
+
+**Returns:** `DiagnosticScope` - The active scope, or an empty object outside any scope.
+
+### initPikaCSS(options) {#function-initpikacss-options}
+
+Conservatively scaffolds one canonical PikaCSS config and returns structured
+follow-up facts. No other project file is modified.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `options` | `InitPikaCSSOptions` | Project root and host identity/defaults for the scaffold. |
+
+**Returns:** `Promise<InitPikaCSSResult>`
+
+### inspectPikaCSSProject(options?) {#function-inspectpikacssproject-options}
+
+Loads only the canonical project configuration needed by outer host setup.
+It never creates Engines, scans sources, publishes generated state, or starts watchers.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `options?` | `InspectPikaCSSProjectOptions` | Project root and optional explicit config selector. |
+
+**Returns:** `Promise<InspectPikaCSSProjectResult>`
+
+### nodeLoc(node) {#function-nodeloc-node}
+
+Extracts a TransformErrorLoc from an AST node's source location.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `node` | `{ loc?: { start: { line: number; column: number; }; } \| null; }` | Any node carrying an optional Babel-style `loc`. |
+| `node.loc?` | `{ start: { line: number; column: number; }; } \| null` | The Babel-style source location, when present. |
+
+**Returns:** `TransformErrorLoc \| null` - The start position, or `null` when the node has no location info.
+
+### parseJs(code, dialect, offsets?) {#function-parsejs-code-dialect-offsets}
+
+Parses a JavaScript/TypeScript source file into a Babel AST.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `code` | `string` | The source chunk to parse. |
+| `dialect` | `JsDialect` | The JsDialect deciding the parser plugin set. |
+| `offsets?` | `ParseOffsets` | Optional ParseOffsets making emitted positions absolute into a surrounding file. |
+
+**Returns:** `t.File` - The parsed `File` node.
+
+### parseJsExpression(code, dialect, offsets?) {#function-parsejsexpression-code-dialect-offsets}
+
+Parses a bare JavaScript/TypeScript expression (e.g. a Vue template expression) into a Babel AST node.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `code` | `string` | The expression source. |
+| `dialect` | `JsDialect` | The JsDialect deciding the parser plugin set. |
+| `offsets?` | `ParseOffsets` | Optional ParseOffsets making emitted positions absolute into a surrounding file. |
+
+**Returns:** `t.Expression` - The parsed expression node.
+
+### parseModuleId(id, cwd) {#function-parsemoduleid-id-cwd}
+
+Parses a bundler module id into its canonical identity.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `id` | `string` | A module id: absolute or `cwd`-relative file path, optionally carrying `?query` and/or `#hash` suffixes. |
+| `cwd` | `string` | The base directory used to resolve relative ids. |
+
+**Returns:** `ParsedModuleId` - The ParsedModuleId with a normalized absolute `file`, the raw `query` (hash excluded), and the lowercase `ext`.
+
+```ts
+parseModuleId('src/App.vue?vue&type=script', '/repo')
+// { file: '/repo/src/App.vue', query: 'vue&type=script', ext: 'vue' }
+```
+
+### preparePikaCSS(options) {#function-preparepikacss-options}
+
+Deterministically derives one project generation and publishes only its
+canonical generated TypeScript state. It never scans application sources,
+emits runtime CSS, starts watchers, or produces build reports.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `options` | `PreparePikaCSSOptions` | Project selectors, host identity, and optional diagnostic sink. |
+
+**Returns:** `Promise<PreparePikaCSSResult>`
+
+### runWithDiagnosticScope(scope, fn) {#function-runwithdiagnosticscope-scope-fn}
+
+Runs `fn` with the given diagnostic scope fields merged over the current
+scope, for the full async duration of `fn`.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `scope` | `DiagnosticScope` | Scope fields to establish; unset fields inherit from the enclosing scope. |
+| `fn` | `() => T` | The work whose diagnostics should carry this scope. |
+
+**Returns:** `T` - The return value of `fn`.
+
+**Remarks:**
+
+Nesting merges naturally: a bundler adapter establishes `generationId`
+around build work, the integration establishes `moduleId` around
+per-module work, and a diagnostic handler reads both.
+
+## Constants
+
+### consoleDiagnosticHandler {#const-consolediagnostichandler}
+
+Default diagnostic adapter used by official Node.js integrations.
+
+### JS\_PROCESSOR\_EXTENSIONS {#const-js-processor-extensions}
+
+File extensions handled by the built-in JS/TS processor.
+
+### jsProcessor {#const-jsprocessor}
+
+The built-in JavaScript/TypeScript processor.
+
+**Remarks:**
+
+Emitted literals always use single quotes for JS sources (engine invariant:
+the transformed output convention predates the AST compiler and is pinned by
+regression tests).
+
+### log {#const-log}
+
+Console-backed logger used by Node.js build-tool integrations.
+
+## Classes
+
+### PikaStaleTransformError {#class-pikastaletransformerror}
+
+Error thrown when a transform completes its provisional work but has been
+superseded by a newer revision of the same module (or a newer engine epoch)
+before reaching the commit boundary.
+
+**Constructors:**
+
+#### constructor(options) {#class-pikastaletransformerror-constructor-options}
+
+Creates an error for a transform superseded before its commit boundary.
+
+| Parameter | Type | Description | Default |
+|---|---|---|---|
+| `options` | `{ id: string; }` | Superseded transform details. | — |
+| `options.id` | `string` | Normalized absolute path of the superseded module. | — |
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `id` | `string` | Normalized absolute path of the superseded module. | — |
+
+**Remarks:**
+
+A superseded attempt consumes zero committed IDs/engine state (#114), so it
+cannot produce transformed output — and it must not be reported as a
+successful no-op either: at the bundler boundary a `null` transform result
+means "serve the original source", which would let an unexpanded compile-time
+`pika()` macro reach the runtime (the bundler can still hand a stale
+transform result to its original caller even after invalidating the module).
+Failing the stale request loudly is safe and self-healing: the request that
+matters targets the newer content and is served by the newer transform.
+
+### PikaTransformError {#class-pikatransformerror}
+
+Error thrown when a module cannot be transformed.
+
+**Constructors:**
+
+#### constructor(options) {#class-pikatransformerror-constructor-options}
+
+Creates an error describing the module and pipeline stage that failed.
+
+| Parameter | Type | Description | Default |
+|---|---|---|---|
+| `options` | `{ id: string; stage: TransformErrorStage; message: string; loc?: TransformErrorLoc \| null; cause?: unknown; }` | Transform failure details. | — |
+| `options.id` | `string` | Normalized absolute path of the failing module. | — |
+| `options.stage` | `TransformErrorStage` | Pipeline stage where the failure occurred. | — |
+| `options.message` | `string` | Human-readable description of the failure. | — |
+| `options.loc?` | `TransformErrorLoc \| null` | One-based source position of the failure, when known. | — |
+| `options.cause?` | `unknown` | Underlying error, when one caused the failure. | — |
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `id` | `string` | Normalized absolute path of the failing module. | — |
+| `loc` | `TransformErrorLoc \| null` | One-based position of the failure inside the module, when known. | — |
+| `stage` | `TransformErrorStage` | Pipeline stage that failed. | — |
+
+**Remarks:**
+
+Module transforms are atomic: any failure aborts the whole module without
+committing partial results, and this error propagates to the bundler (dev
+overlay / failed build). The `id` and `loc` fields follow the shape bundlers
+(Vite/Rollup) read to render code frames for plugin errors.
+
+## Types
+
+### AnalyzedModule {#interface-analyzedmodule}
+
+Result of analyzing one module.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `fnName` | `string` | Reserved compile-time root used to classify/evaluate retained argument AST. | — |
+| `id` | `string` | Source identifier used for diagnostics and subsequent rewriting. | — |
+| `code` | `string` | Original source text from which the calls were collected. | — |
+| `calls` | `readonly MacroCall[]` | Recognized calls for `fnName`, ordered by their source offset. | — |
+
+### AnalyzedProjectModule {#interface-analyzedprojectmodule}
+
+One physical-source analysis grouped by configured project root.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `id` | `string` | Source identifier used for diagnostics and subsequent rewriting. | — |
+| `code` | `string` | Original physical source text analyzed for all configured roots. | — |
+| `modules` | `ReadonlyMap<string, AnalyzedModule>` | Analyzed modules keyed by their configured reserved-root name. | — |
+
+### AnalyzeJsOptions {#interface-analyzejsoptions}
+
+Optional parser and source-position settings for JavaScript analysis.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `offsets?` | `ParseOffsets` | Position offsets to apply when the source is an embedded chunk. | No offset. |
+| `quote?` | `'"' \| '\''` | Quote character recorded for transformed literals. | `'`. |
+| `parseMode?` | `'program' \| 'expression'` | Parser input mode. | `'program'`. |
+| `excludedRoots?` | `ReadonlySet<string>` | Configured roots to ignore during call collection. | An empty set. |
+
+### DesignTokensProductionReport {#interface-designtokensproductionreport}
+
+Snapshot returned by the built-in design-token production report.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `totalTokens` | `number` | Total number of design tokens in the captured generation. | — |
+| `used` | `readonly string[]` | Used design-token names in deterministic report order. | — |
+| `unused` | `readonly string[]` | Unused design-token names in deterministic report order. | — |
+| `deprecatedInUse` | `readonly string[]` | Deprecated token names that remain in use. | — |
+| `strictViolations` | `Readonly<{ warning: number; error: number; }>` | Strict-mode violation counts grouped by severity. | — |
+
+### DiagnosticScope {#interface-diagnosticscope}
+
+Host execution context for a diagnostic, kept separate from the semantic
+`Diagnostic` payload owned by `@pikacss/core`.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `generationId?` | `number` | The bundler build generation the current work was started for, if any. | — |
+| `moduleId?` | `string` | Normalized absolute path of the module currently being processed, if any. | — |
+
+**Remarks:**
+
+`generationId` identifies one bundler build/rebuild generation and is
+established by the bundler adapter around work it starts for that
+generation. `moduleId` is the normalized absolute source file the
+integration is currently analyzing/preparing — established by
+`@pikacss/integration` itself so integration-owned work (like the
+production full scan) is attributed too. Project-level work (config
+evaluation, engine setup) intentionally carries no `moduleId`.
+
+### EvaluateContext {#interface-evaluatecontext}
+
+Context for bounded static evaluation.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `id` | `string` | Normalized absolute path of the module, used in diagnostics. | — |
+| `stage?` | `TransformErrorStage` | Pipeline stage owning evaluation errors. | `'evaluate'` |
+| `shadowedGlobals?` | `ReadonlySet<string>` | Recognized static globals shadowed at the analyzed base-call site. | — |
+| `pika?` | `PikaStaticEvaluateContext` | Engine-backed Pika static roots. Omitted outside Prepare. | — |
+
+### FnConfig {#interface-fnconfig}
+
+Compiler configuration derived from the reserved Pika function identifier.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `fnName` | `string` | The configured reserved compile-time identifier (e.g. `'pika'`). | — |
+| `roots` | `ReadonlySet<string>` | Root identifiers recognized by framework shadowing logic. | — |
+
+**Remarks:**
+
+v1 has exactly one transform-call form: the configured base
+identifier itself. Static authoring extensions are value sources inside that
+base call's accepted argument tree, not callable output-format variants.
+
+### FrameworkProcessor {#interface-frameworkprocessor}
+
+Framework-specific source analyzer. Processors analyze only; rewriting is centralized.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `name` | `string` | Stable processor identifier used when selecting and diagnosing a processor. | — |
+| `analyze` | `(code: string, id: string, options: ProcessorOptions) => Promise<AnalyzedModule> \| AnalyzedModule` | Analyzes one source module without rewriting its source. | — |
+| `analyzeProject?` | `(code: string, id: string, options: ProcessorProjectOptions) => Promise<AnalyzedProjectModule> \| AnalyzedProjectModule` | Optional single-parse/traverse project analyzer; legacy/custom processors may omit it. | — |
+
+### InitPikaCSSOptions {#interface-initpikacssoptions}
+
+Inputs for conservative canonical project scaffolding.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `cwd?` | `string` | Project root. Defaults to the current process working directory. | — |
+| `host` | `PikaCSSHostContext` | Outer host identity and generated-state defaults. | — |
+
+### InitPikaCSSResult {#interface-initpikacssresult}
+
+Immutable scaffolding facts returned by `initPikaCSS()`.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `projectRoot` | `string` | Absolute project root used for scaffolding. | — |
+| `configPath` | `string` | Absolute canonical config path selected or created. | — |
+| `created` | `boolean` | Whether this call created the config file. | — |
+| `language` | `'typescript' \| 'javascript'` | Detected project source language used for the scaffold filename. | — |
+| `moduleMode` | `'esm' \| 'commonjs'` | Detected package module mode used for the scaffold syntax. | — |
+| `stateDir` | `string` | Absolute generated-state directory implied by the host defaults. | — |
+| `declarationPath` | `string` | Absolute path where `preparePikaCSS()` will publish `pika.gen.ts`. | — |
+| `typeProjectFile` | `'tsconfig.json' \| 'jsconfig.json'` | Project config file preferred for including generated Typegen. | — |
+| `generatedStatePath` | `string` | Project-root-relative generated-state path suitable for ignore/include guidance. | — |
+
+### JsDialect {#type-jsdialect}
+
+JavaScript dialect a source chunk is parsed as.
+
+**Type:** `'js' | 'jsx' | 'ts' | 'tsx'`
+
+**Remarks:**
+
+`.ts` sources must NOT enable the `jsx` plugin: TypeScript angle-bracket
+casts (`<T>expr`) are only parseable without it. `.tsx` enables both.
+
+### MacroCall {#interface-macrocall}
+
+One analyzed base `pika()` transform call.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `start` | `number` | Zero-based character offset where the base call begins. | — |
+| `end` | `number` | Zero-based character offset one past the base call's closing parenthesis. | — |
+| `loc` | `{ line: number; column: number; }` | One-based source position of the base call, for diagnostics. | — |
+| `arguments` | `Readonly<t.CallExpression['arguments']>` | Retained readonly Babel argument nodes; evaluated only during Prepare. | — |
+| `lexical` | `MacroLexicalFacts` | Minimal immutable scope facts required by the bounded evaluator. | — |
+| `quote` | `'"' \| '\''` | Quote character for the emitted literal at this site. | — |
+
+**Remarks:**
+
+Analyze retains Babel argument AST directly plus immutable lexical
+facts. It does not evaluate arguments and never carries `NodePath`, Scope, or
+traversal context across the Analyze → Prepare boundary.
+
+### MacroLexicalFacts {#interface-macrolexicalfacts}
+
+Immutable lexical facts needed by prepare-time bounded static evaluation.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `shadowedGlobals` | `ReadonlySet<string>` | Recognized static globals shadowed at this base-call site. | — |
+
+### ParsedModuleId {#interface-parsedmoduleid}
+
+Normalized identity of a bundler module id.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `file` | `string` | Normalized absolute file path with query/hash stripped. | — |
+| `query` | `string \| null` | Raw query string without the leading `?`, or `null` when the id has none. | — |
+| `ext` | `string` | Lowercase file extension without the leading dot, or `''` when the file has none. | — |
+
+**Remarks:**
+
+Bundler ids come in many shapes for the same physical file: absolute or
+cwd-relative paths, ids with query strings (`App.vue?vue&type=script`), and
+hash suffixes. All per-module state (usages, prepared results) must be keyed
+by the same canonical form, which is `file`.
+
+### ParseOffsets {#interface-parseoffsets}
+
+Position offsets applied to all emitted node positions, used when parsing an
+embedded source chunk (e.g. a Vue SFC block) so node offsets/locations are
+absolute into the surrounding file.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `startIndex?` | `number` | Zero-based character offset of the chunk inside the surrounding file. | — |
+| `startLine?` | `number` | One-based line of the chunk's first character. | — |
+| `startColumn?` | `number` | Zero-based column of the chunk's first character. | — |
+
+### PikaCSSContextOptions {#interface-pikacsscontextoptions}
+
+Creates the canonical context used by outer consumer adapters.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `projectRoot` | `string` | Immutable host project root. | — |
+| `config?` | `string` | Explicit project config path, or `undefined` for file auto-discovery. | — |
+| `publicEntryModule` | `string` | Public package identity used by generated artifacts. | — |
+| `mode` | `() => 'live' \| 'oneshot'` | Current host mode. | — |
+| `onDiagnostic?` | `DiagnosticHandler` | Receives Integration diagnostics. | — |
+| `armDependencies` | `(dependencies: readonly EngineConfigDependency[]) => void \| Promise<void>` | Arms native host watchers for Integration-derived dependencies. | — |
+| `onActivated?` | `(activation: { readonly sourceIds: readonly string[]; readonly cssModules: readonly string[]; readonly runtimeCssFilepaths: readonly string[]; }) => void \| Promise<void>` | Receives host-neutral activation effects after Integration swaps generations. | — |
+
+**Remarks:**
+
+This is deliberately a narrow host bootstrap seam. The adapter supplies only
+the immutable project root, optional config-file path, host identity, and
+host-mechanics callbacks; Config and Integration retain all project semantics.
+
+### PikaCSSHostContext {#interface-pikacsshostcontext}
+
+Host-specific bindings used by shared PikaCSS project operations.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `publicEntryModule` | `string` | Directly installed public package root referenced by generated TypeScript. | — |
+| `defaultStateDir?` | `string` | Host/framework state directory default used only when config omits stateDir. | — |
+| `previewHref?` | `(absolutePath: string) => string` | Optional host-specific Markdown href projection for materialized previews. | — |
+| `vueTemplateGlobals?` | `boolean` | Explicit Vue template-global projection; auto-detected from the project when omitted. | — |
+
+### PreparePikaCSSOptions {#interface-preparepikacssoptions}
+
+Inputs for one deterministic generated-state preparation run.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `cwd?` | `string` | Project root. Defaults to the current process working directory. | — |
+| `config?` | `string` | Explicit project config path. Omit for canonical auto-discovery. | — |
+| `host` | `PikaCSSHostContext` | Outer host identity and generated-state defaults. | — |
+| `onDiagnostic?` | `DiagnosticHandler` | Optional sink for diagnostics emitted during derivation/publication. | — |
+
+### PreparePikaCSSResult {#interface-preparepikacssresult}
+
+Immutable facts from a successful generated-state preparation.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `projectRoot` | `string` | Absolute project root used for the preparation run. | — |
+| `selectedConfigPath` | `string \| null` | Absolute selected config path, or `null` when canonical defaults are used. | — |
+| `stateDir` | `string` | Absolute canonical generated-state directory. | — |
+| `declarationPath` | `string` | Absolute path to the published `pika.gen.ts` declaration. | — |
+| `previewPaths` | `readonly string[]` | Absolute paths to materialized Typegen preview assets. | — |
+| `diagnostics` | `readonly Diagnostic[]` | Non-fatal diagnostics emitted while deriving/materializing the successful publication. | — |
+| `entries` | `readonly Readonly<{ fnName: string; cssModule: string; }>[]` | Ordered public routing facts for the prepared entries. | — |
+
+### ProcessorLoader {#type-processorloader}
+
+Lazily loads a framework processor for a registered file-extension group.
+
+**Type:** `() => Promise<FrameworkProcessor>`
+
+### ProcessorOptions {#interface-processoroptions}
+
+Options handed to a processor's `analyze`.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `fnConfig` | `FnConfig` | Reserved-root configuration used by the processor's analysis pass. | — |
+
+### ProcessorProjectOptions {#interface-processorprojectoptions}
+
+Options handed to a processor's optional project-level analyzer.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `fnNames` | `readonly string[]` | Reserved-root names to analyze in one physical-source pass. | — |
+
+### ProcessorRegistry {#interface-processorregistry}
+
+Registry of framework processors keyed by normalized file extension.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `register` | `(extensions: string[], loader: ProcessorLoader) => void` | Registers a loader for one or more extensions, replacing prior loaders for those keys. | — |
+| `resolve` | `(ext: string) => Promise<FrameworkProcessor> \| null` | Resolves a registered extension to its lazily loaded processor. | — |
+| `has` | `(ext: string) => boolean` | Checks whether an extension has a registered processor loader. | — |
+
+### ProductionReportSummary {#interface-productionreportsummary}
+
+Host-presentable result of one Integration-owned final production report.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `entryIndex` | `number` | Zero-based canonical config entry index. | — |
+| `fnName` | `string` | Pika function name for the reported entry. | — |
+| `cssModule` | `string` | Logical CSS module routed by the reported entry. | — |
+| `domain` | `'design-tokens'` | Report domain discriminator. | — |
+| `report` | `DesignTokensProductionReport` | Frozen domain report produced from the captured generation. | — |
+| `outputPath` | `string \| null` | Absolute report output path when configured, otherwise `null`. | — |
+
+### TransformErrorLoc {#interface-transformerrorloc}
+
+One-based source position of a transform failure.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `line` | `number` | One-based line number of the failure. | — |
+| `column` | `number` | Zero-based column of the failure (Babel convention). | — |
+
+### TransformErrorStage {#type-transformerrorstage}
+
+Pipeline stage in which a transform failure occurred.
+
+* `'parse'` — source (or an embedded expression) failed to parse.
+* `'collect'` — the macro-call collector rejected a call site.
+* `'evaluate'` — a call argument is not statically evaluable.
+* `'prepare'` — resolving a call through the engine failed.
+
+**Type:** `'collect' | 'evaluate' | 'parse' | 'prepare'`
+
+### UsageRecord {#interface-usagerecord}
+
+Records a single `pika()` call result: the resolved atomic style IDs.
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `atomicStyleIds` | `string[]` | The list of atomic CSS class names generated by the engine for this call. | — |
+
+**Remarks:**
+
+Each source file may produce multiple `UsageRecord` entries — one per `pika()` call site.
+These records drive CSS output only; generated TypeScript declarations are a
+projection of the effective project/type configuration and never read them.
+
+## Next
+
+* [Unplugin integration](/integrations/unplugin)
+* [Unplugin API reference](/api/unplugin)
+* [API reference overview](/api/)
