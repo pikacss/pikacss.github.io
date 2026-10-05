@@ -1,0 +1,1 @@
+function e(e){return new Worker(`/playground/assets/vue.worker-BT5DHmZU.js`,{type:`module`,name:e?.name})}export{e as default};

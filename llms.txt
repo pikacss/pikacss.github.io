@@ -1,0 +1,72 @@
+# PikaCSS
+
+> Atomic CSS-in-JS Engine
+
+Write styles in JS objects. Ship zero-runtime atomic CSS.
+
+## Table of Contents
+
+### Getting Started
+
+- [What is PikaCSS](/getting-started/what-is-pikacss.md): An overview of PikaCSS, the instant on-demand atomic CSS-in-JS engine.
+- [Comparison](/getting-started/comparison.md): How PikaCSS compares to UnoCSS, Tailwind CSS, Panda CSS, and vanilla-extract.
+- [Setup](/getting-started/setup.md): Install PikaCSS, configure a supported build adapter, and prepare generated authoring state.
+- [Usage](/getting-started/usage.md): Learn the compile-time pika() authoring model and common style patterns.
+- [Dynamic Styles](/getting-started/dynamic-styles.md): Patterns for runtime-driven styling under PikaCSS's static-analyzability constraint.
+- [Engine Config](/getting-started/engine-config.md): Configure the canonical PikaCSS project and its Engine semantics.
+- [ESLint Config](/getting-started/eslint-config.md): Set up ESLint rules to enforce static pika() arguments in your project.
+- [How PikaCSS Generates CSS](/getting-started/how-pikacss-generates-css.md): The runtime model — deduplication, property overrides, value fallbacks, ordering, and layer grouping.
+
+### Integrations
+
+- [Unplugin](/integrations/unplugin.md): Configure PikaCSS with supported Rollup-family and Webpack-family bundlers.
+- [Nuxt](/integrations/nuxt.md): Zero-config PikaCSS integration for Nuxt applications.
+- [Frameworks](/integrations/frameworks.md): Wiring PikaCSS into Vue, React, and Solid components.
+- [SSR & Production](/integrations/ssr-and-production.md): Why server-side rendering needs no special handling, and what to expect from PikaCSS in dev and production builds.
+- [Agent Skills](/integrations/agent-skills.md): AI-assisted development skill for using and extending PikaCSS.
+
+### Customizations
+
+- [Layers](/customizations/layers.md): Control CSS cascade ordering with @layer declarations in PikaCSS.
+- [Important](/customizations/important.md): Make all generated atomic CSS declarations use !important.
+- [Preflights](/customizations/preflights.md): Inject base CSS styles before utility classes in PikaCSS.
+- [Variables](/customizations/variables.md): Define object-only local and external CSS custom properties with domain-owned suggestions.
+- [Keyframes](/customizations/keyframes.md): Define object-form CSS keyframes with generated authoring metadata.
+- [Selectors](/customizations/selectors.md): Define object-form static and dynamic selector semantics.
+- [Shortcuts](/customizations/shortcuts.md): Define reusable object-form style-item aliases and dynamic shortcut families.
+- [Autocomplete](/customizations/autocomplete.md): Understand domain-owned PikaCSS Typegen and deterministic editor suggestions.
+
+### Official Plugins
+
+- [Reset](/official-plugins/reset.md): Inject community CSS reset stylesheets as preflight using the reset plugin.
+- [Typography](/official-plugins/typography.md): Semantic prose styling for long-form content with the typography plugin.
+- [Icons](/official-plugins/icons.md): Resolve icon shortcut classes via Iconify with the icons plugin.
+- [Fonts](/official-plugins/fonts.md): Manage web font loading with provider abstraction using the fonts plugin.
+- [Design Tokens](/official-plugins/design-tokens.md): Convert W3C design tokens and design.md documents into CSS variables, with external aliases, multi-theme sources, autocomplete, and strict-mode governance.
+
+### Plugin Development
+
+- [Create a Plugin](/plugin-development/create-a-plugin.md): Learn how to create a PikaCSS engine plugin with defineEnginePlugin.
+- [Available Hooks](/plugin-development/available-hooks.md): Complete reference of PikaCSS engine plugin lifecycle hooks.
+- [Type Augmentation](/plugin-development/type-augmentation.md): Extend EngineConfig/Engine types and contribute generated authoring types through the Typegen manager.
+- [Define Helpers](/plugin-development/define-helpers.md): Define helpers for type-safe PikaCSS configuration and plugin authoring.
+
+### API Reference
+
+- [API Reference](/api.md): Overview of all PikaCSS package APIs and exports.
+- [Core API reference](/api/core.md): Generated API reference for @pikacss/core from exported surface and JSDoc.
+- [Config API reference](/api/config.md): Generated API reference for @pikacss/config from exported surface and JSDoc.
+- [Integration API reference](/api/integration.md): Generated API reference for @pikacss/integration from exported surface and JSDoc.
+- [Unplugin API reference](/api/unplugin.md): Generated API reference for @pikacss/unplugin-pikacss from exported surface and JSDoc.
+- [Nuxt API reference](/api/nuxt.md): Generated API reference for @pikacss/nuxt-pikacss from exported surface and JSDoc.
+- [Plugin Reset API reference](/api/plugin-reset.md): Generated API reference for @pikacss/plugin-reset from exported surface and JSDoc.
+- [Plugin Icons API reference](/api/plugin-icons.md): Generated API reference for @pikacss/plugin-icons from exported surface and JSDoc.
+- [Plugin Fonts API reference](/api/plugin-fonts.md): Generated API reference for @pikacss/plugin-fonts from exported surface and JSDoc.
+- [Plugin Typography API reference](/api/plugin-typography.md): Generated API reference for @pikacss/plugin-typography from exported surface and JSDoc.
+- [Plugin Design Tokens API reference](/api/plugin-design-tokens.md): Generated API reference for @pikacss/plugin-design-tokens from exported surface and JSDoc.
+- [ESLint Config API reference](/api/eslint-config.md): Generated API reference for @pikacss/eslint-config from exported surface and JSDoc.
+
+### Troubleshooting
+
+- [FAQ](/troubleshooting/faq.md): Frequently asked questions and troubleshooting tips for PikaCSS.
+
